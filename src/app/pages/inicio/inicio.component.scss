@@ -1,0 +1,66 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #e2eeb7;
+}
+
+.supermarket-card {
+    max-width: 650px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background: white;
+    padding: 16px;
+}
+
+.header-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.supermarket-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+mat-card-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+mat-card-subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+mat-card-content{
+    border-radius: 5px;
+}
+
+mat-card-footer p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.5;
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+mat-icon {
+    margin-right: 5px;
+}
+
+button {
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.1);
+}

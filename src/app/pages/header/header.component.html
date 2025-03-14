@@ -1,1 +1,41 @@
-<p>header works!</p>
+<div class="header-content">
+  <button mat-button [matMenuTriggerFor]="aboveMenu">
+    <mat-icon>person</mat-icon> Usuarios
+  </button>
+
+  <mat-menu #aboveMenu="matMenu" yPosition="above">
+    <button mat-menu-item>
+      <mat-icon>visibility</mat-icon> Ver usuarios
+    </button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="belowMenu">
+    <mat-icon>store</mat-icon> Productos
+  </button>
+
+  <mat-menu #belowMenu="matMenu" yPosition="below">
+    <button mat-menu-item>
+      <mat-icon>shopping_cart</mat-icon> Ver productos
+    </button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="beforeMenu">
+    <mat-icon>group</mat-icon> Clientes
+  </button>
+
+  <mat-menu #beforeMenu="matMenu" xPosition="before">
+    <button mat-menu-item>
+        <mat-icon>assignment_ind</mat-icon> Ver clientes
+    </button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="afterMenu">
+    <mat-icon>local_shipping</mat-icon> Proveedores
+  </button>
+  
+  <mat-menu #afterMenu="matMenu" xPosition="after">
+    <button mat-menu-item>
+      <mat-icon>inventory</mat-icon> Ver proveedores
+    </button>
+  </mat-menu>
+</div>
