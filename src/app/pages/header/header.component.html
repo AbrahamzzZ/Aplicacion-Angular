@@ -1,10 +1,15 @@
 <div class="header-content">
+
+  <button mat-icon-button routerLink="/home">
+		<mat-icon>home</mat-icon>
+	</button>
+
   <button mat-button [matMenuTriggerFor]="aboveMenu">
     <mat-icon>person</mat-icon> Usuarios
   </button>
 
   <mat-menu #aboveMenu="matMenu" yPosition="above">
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/usuario">
       <mat-icon>visibility</mat-icon> Ver usuarios
     </button>
   </mat-menu>
@@ -14,7 +19,7 @@
   </button>
 
   <mat-menu #belowMenu="matMenu" yPosition="below">
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/producto">
       <mat-icon>shopping_cart</mat-icon> Ver productos
     </button>
   </mat-menu>
@@ -24,18 +29,28 @@
   </button>
 
   <mat-menu #beforeMenu="matMenu" xPosition="before">
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/cliente">
         <mat-icon>assignment_ind</mat-icon> Ver clientes
     </button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="afterMenu">
+  <button mat-button [matMenuTriggerFor]="afterMenuProveedor">
     <mat-icon>local_shipping</mat-icon> Proveedores
   </button>
   
-  <mat-menu #afterMenu="matMenu" xPosition="after">
-    <button mat-menu-item>
+  <mat-menu #afterMenuProveedor="matMenu" xPosition="after">
+    <button mat-menu-item routerLink="/proveedor">
       <mat-icon>inventory</mat-icon> Ver proveedores
+    </button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="afterMenuTransportista">
+    <mat-icon>local_shipping</mat-icon> Transportista
+  </button>
+
+  <mat-menu #afterMenuTransportista="matMenu" xPosition="after">
+    <button mat-menu-item routerLink="/transportista">
+      <mat-icon>inventory</mat-icon> Ver transportista
     </button>
   </mat-menu>
 </div>

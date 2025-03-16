@@ -1,0 +1,44 @@
+.container{
+    margin: 20px;
+    padding: 10px;
+}
+
+.title {
+    font-size: 2rem;
+    color: #000000;
+    text-align: center; 
+    margin-bottom: 20px; 
+    font-weight: bold; 
+    text-transform: uppercase;
+    letter-spacing: 1.5px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.table-container {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #1abc9c;
+    color: white;
+    text-align: left;
+}
+
+td, th {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+button {
+    margin: 5px;
+}
+
+.mat-icon {
+    font-size: 20px;
+}

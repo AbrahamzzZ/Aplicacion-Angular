@@ -1,0 +1,86 @@
+<div class="container">
+    <h1 class="title">Productos del supermercado Paradisia</h1>
+    <div class="table-container">
+        <button mat-raised-button color="primary">Registrar producto</button>
+        <table mat-table  class="mat-elevation-z8">
+    
+            <!-- No. -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+            </ng-container>
+    
+            <!-- Código -->
+            <ng-container matColumnDef="codigo">
+              <th mat-header-cell *matHeaderCellDef> Código </th>
+              <td mat-cell *matCellDef="let element"> {{ element.codigo }} </td>
+            </ng-container>
+    
+            <!-- Nombre -->
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> Nombres </th>
+              <td mat-cell *matCellDef="let element"> {{ element.nombre }} </td>
+            </ng-container>
+    
+            <!-- Descripción -->
+            <ng-container matColumnDef="descripcion">
+              <th mat-header-cell *matHeaderCellDef> Descripción</th>
+              <td mat-cell *matCellDef="let element"> {{ element.descripcion }} </td>
+            </ng-container>
+    
+            <!-- Categoría -->
+            <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef> Categoría </th>
+                <td mat-cell *matCellDef="let element"> {{ element.categoria }} </td>
+            </ng-container>
+    
+            <!-- País Origen -->
+            <ng-container matColumnDef="pais_origen">
+                <th mat-header-cell *matHeaderCellDef> País Origen </th>
+                <td mat-cell *matCellDef="let element"> {{ element.pais_origen }} </td>
+            </ng-container>
+    
+            <!-- Stock -->
+            <ng-container matColumnDef="stock">
+                <th mat-header-cell *matHeaderCellDef> Stock </th>
+                <td mat-cell *matCellDef="let element"> {{ element.stock }} </td>
+            </ng-container>
+
+            <!-- Precio Venta -->
+            <ng-container matColumnDef="precio_venta">
+                <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
+                <td mat-cell *matCellDef="let element"> {{ element.precio_venta }} </td>
+            </ng-container>
+
+            <!-- Estado -->
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+            </ng-container>
+    
+            <!-- Fecha de Registro -->
+            <ng-container matColumnDef="fecha_registro">
+                <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
+                <td mat-cell *matCellDef="let element"> {{ element.fecha_registro }} </td>
+            </ng-container>
+    
+            <!-- Acciones -->
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef> Acción </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="accent">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
+

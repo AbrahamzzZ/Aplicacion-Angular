@@ -1,0 +1,85 @@
+<div class="container">
+    <h1 class="title">Transportistas del supermercado Paradisia</h1>
+    <div class="table-container">
+        <button mat-raised-button color="primary">Registrar transportista</button>
+        <table mat-table  class="mat-elevation-z8">
+    
+            <!-- No. -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+            </ng-container>
+    
+            <!-- Código -->
+            <ng-container matColumnDef="codigo">
+              <th mat-header-cell *matHeaderCellDef> Código </th>
+              <td mat-cell *matCellDef="let element"> {{ element.codigo }} </td>
+            </ng-container>
+    
+            <!-- Nombres -->
+            <ng-container matColumnDef="nombres">
+              <th mat-header-cell *matHeaderCellDef> Nombres </th>
+              <td mat-cell *matCellDef="let element"> {{ element.nombres }} </td>
+            </ng-container>
+    
+            <!-- Apellidos -->
+            <ng-container matColumnDef="apellidos">
+              <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+              <td mat-cell *matCellDef="let element"> {{ element.apellidos }} </td>
+            </ng-container>
+    
+            <!-- Cédula -->
+            <ng-container matColumnDef="cedula">
+                <th mat-header-cell *matHeaderCellDef> Cédula </th>
+                <td mat-cell *matCellDef="let element"> {{ element.cedula }} </td>
+            </ng-container>
+    
+            <!-- Teléfono -->
+            <ng-container matColumnDef="telefono">
+                <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+                <td mat-cell *matCellDef="let element"> {{ element.telefono }} </td>
+            </ng-container>
+    
+            <!-- Correo Electrónico -->
+            <ng-container matColumnDef="correo_electronico">
+                <th mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
+                <td mat-cell *matCellDef="let element"> {{ element.correo_electronico }} </td>
+            </ng-container>
+
+            <!-- Imagen -->
+            <ng-container matColumnDef="imagen">
+                <th mat-header-cell *matHeaderCellDef> Foto </th>
+                <td mat-cell *matCellDef="let element"> {{ element.imagen }} </td>
+            </ng-container>
+
+            <!-- Estado -->
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+            </ng-container>
+    
+            <!-- Fecha de Registro -->
+            <ng-container matColumnDef="fecha_registro">
+                <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
+                <td mat-cell *matCellDef="let element"> {{ element.fecha_registro }} </td>
+            </ng-container>
+    
+            <!-- Acciones -->
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef> Acción </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="accent">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+
