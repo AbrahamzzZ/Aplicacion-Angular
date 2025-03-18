@@ -1,0 +1,54 @@
+<div class="container">
+    <mat-card class="card">
+		<mat-card-header class="card__title">
+			<mat-card-title>Registro</mat-card-title>
+		</mat-card-header>
+    </mat-card>
+    <mat-card-content>
+        <form class="form" [formGroup]="formGroup" >
+            <mat-form-field>
+                <mat-label>Nombres: </mat-label> 
+                <input matInput type="text" formControlName="nombres">
+                @if(nombresField.hasError('required')){
+                    <mat-error>Ingrese sus nombres.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Apellidos: </mat-label> 
+                <input matInput type="text" formControlName="apellidos">
+                @if(apellidosField.hasError('required')){
+                    <mat-error>Ingrese sus apellidos.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Cédula: </mat-label> 
+                <input matInput type="text" formControlName="cedula">
+                @if(cedulaField.hasError('required')){
+                    <mat-error>Ingrese su cédula.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Telefono: </mat-label> 
+                <input matInput type="text" formControlName="telefono">
+                @if(telefonoField.hasError('required')){
+                    <mat-error>Ingrese su telefono.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Correo Electrónico: </mat-label> 
+                <input matInput type="text" formControlName="correoElectronico">
+                @if(correoElectronicoField.hasError('required')){
+                    <mat-error>Ingrese su Correo Electrónico.</mat-error>
+                }
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" >Registrar</button>
+        </form>
+    </mat-card-content>
+</div>
+
+

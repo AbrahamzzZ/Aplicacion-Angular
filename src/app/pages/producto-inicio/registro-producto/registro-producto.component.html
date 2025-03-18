@@ -1,0 +1,61 @@
+<div class="container">
+    <mat-card class="card">
+		<mat-card-header class="card__title">
+			<mat-card-title>Registro</mat-card-title>
+		</mat-card-header>
+    </mat-card>
+    <mat-card-content>
+        <form class="form" [formGroup]="formGroup" >
+            <mat-form-field>
+                <mat-label>Nombre: </mat-label> 
+                <input matInput type="text" formControlName="nombre">
+                @if(nombreField.hasError('required')){
+                    <mat-error>Ingrese un nombre.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Descripción: </mat-label> 
+                <input matInput type="text" formControlName="descripcion">
+                @if(descripcionField.hasError('required')){
+                    <mat-error>Ingrese una descripción.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Categoría: </mat-label> 
+                <input matInput type="text" formControlName="categoria">
+                @if(categoriaField.hasError('required')){
+                    <mat-error>Ingrese su cédula.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>País de origen: </mat-label> 
+                <input matInput type="text" formControlName="paisOrigen">
+                @if(paisOrigenField.hasError('required')){
+                    <mat-error>Ingrese el pais de origen.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Stock: </mat-label> 
+                <input matInput type="text" formControlName="stock">
+                @if(stockField.hasError('required')){
+                    <mat-error>Ingrese el stock.</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Precio: </mat-label> 
+                <input matInput type="text" formControlName="precioVenta">
+                @if(precioVentaField.hasError('required')){
+                    <mat-error>Ingrese el precio.</mat-error>
+                }
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" >Registrar</button>
+        </form>
+    </mat-card-content>
+</div>
+
