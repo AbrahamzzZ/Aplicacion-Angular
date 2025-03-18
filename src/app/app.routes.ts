@@ -6,11 +6,11 @@ import { PaginaNoEncontradaComponent } from './pages/pagina-no-encontrada/pagina
 import { TransportistaInicioComponent } from './pages/transportista-inicio/transportista-inicio.component';
 import { ProveedorInicioComponent } from './pages/proveedor-inicio/proveedor-inicio.component';
 import { ProductoInicioComponent } from './pages/producto-inicio/producto-inicio.component';
-import { ProductoComponent } from './pages/producto-inicio/producto/producto.component';
-import { ClienteComponent } from './pages/cliente-inicio/cliente/cliente.component';
-import { UsuarioComponent } from './pages/usuario-inicio/usuario/usuario.component';
-import { TransportistaComponent } from './pages/transportista-inicio/transportista/transportista.component';
-import { ProveedorComponent } from './pages/proveedor-inicio/proveedor/proveedor.component';
+import { ProductoComponent } from './pages/producto-inicio/registro-producto/registro-producto.component';
+import { ClienteComponent } from './pages/cliente-inicio/registro-cliente/registro-cliente.component';
+import { UsuarioComponent } from './pages/usuario-inicio/registro-usuario/registro-usuario.component';
+import { TransportistaComponent } from './pages/transportista-inicio/registro-transportista/registro-transportista.component';
+import { ProveedorComponent } from './pages/proveedor-inicio/registro-proveedor/registro-proveedor.component';
 
 export const routes: Routes = [
     {path: 'home', component: InicioComponent, title: 'Supermercado Paradisia'},
