@@ -11,6 +11,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './proveedor-inicio.component.html',
   styleUrl: './proveedor-inicio.component.scss'
 })
-export class ProveedorInicioComponent {
+export class RegistroProveedorInicioComponent {
   displayedColumns: string[] = ['id', 'codigo', 'nombres', 'apellidos', 'cedula', 'telefono', 'correo_electronico', 'estado', 'fecha_registro', 'accion'];
 }
