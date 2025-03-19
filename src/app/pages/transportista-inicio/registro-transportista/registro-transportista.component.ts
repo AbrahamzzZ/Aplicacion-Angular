@@ -4,23 +4,56 @@ import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import { Validaciones } from '../../../../utility/validaciones';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-transportista',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, ReactiveFormsModule],
+  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule, CommonModule, MatIcon, RouterLink],
   templateUrl: './registro-transportista.component.html',
   styleUrl: './registro-transportista.component.scss'
 })
-export class TransportistaComponent {
-private readonly formBuilder = inject(FormBuilder);
+export class RegistroTransportistaComponent {
+  private readonly formBuilder = inject(FormBuilder);
+  imagenURL: string | null = null;
+
   formGroup = this.formBuilder.nonNullable.group({
-    nombres: ['', Validators.required],
-    apellidos: ['', Validators.required],
-    cedula: ['', Validators.required],
-    telefono: ['', Validators.required],
-    correoElectronico: ['', Validators.required, Validators.email]
+    nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
+    telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
+    correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+    estado: [false],
+    imagen: [null, [Validaciones.imagenRequerida(), Validaciones.tamanoMaximo(2*1024*1024)]]
   });
+
+  subirImagen(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      // Guardar la imagen en el formulario
+      this.imagenField.setValue(file);
+      this.imagenField.markAsTouched();
+
+      // Generar vista previa de la imagen
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenURL = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  eliminarImagen(): void {
+    this.imagenField.setValue(null);
+    this.imagenField.markAsUntouched();
+    this.imagenURL = null;
+  }
 
   get nombresField(): FormControl<string> {
     return this.formGroup.controls.nombres;
@@ -30,7 +63,7 @@ private readonly formBuilder = inject(FormBuilder);
     return this.formGroup.controls.apellidos;
   }
 
-  get cedulalField(): FormControl<string> {
+  get cedulaField(): FormControl<string> {
     return this.formGroup.controls.cedula;
   }
 
@@ -40,5 +73,9 @@ private readonly formBuilder = inject(FormBuilder);
 
   get correoElectronicoField(): FormControl<string> {
     return this.formGroup.controls.correoElectronico;
+  }
+
+  get imagenField(): FormControl<File | null> { 
+    return this.formGroup.controls.imagen; 
   }
 }
