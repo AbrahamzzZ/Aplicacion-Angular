@@ -35,12 +35,12 @@
   </mat-menu>
 
   <button mat-button [matMenuTriggerFor]="afterMenuProveedor">
-    <mat-icon>local_shipping</mat-icon> Proveedores
+    <mat-icon>inventory</mat-icon> Proveedores
   </button>
   
   <mat-menu #afterMenuProveedor="matMenu" xPosition="after">
     <button mat-menu-item routerLink="/proveedor">
-      <mat-icon>inventory</mat-icon> Ver proveedores
+      <mat-icon>group</mat-icon> Ver proveedores
     </button>
   </mat-menu>
 
@@ -50,7 +50,7 @@
 
   <mat-menu #afterMenuTransportista="matMenu" xPosition="after">
     <button mat-menu-item routerLink="/transportista">
-      <mat-icon>inventory</mat-icon> Ver transportista
+      <mat-icon>group</mat-icon> Ver transportista
     </button>
   </mat-menu>
 </div>
