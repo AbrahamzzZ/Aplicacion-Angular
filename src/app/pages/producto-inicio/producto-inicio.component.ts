@@ -11,6 +11,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './producto-inicio.component.html',
   styleUrl: './producto-inicio.component.scss'
 })
-export class ProductoInicioComponent {
+export class RegistroProductoInicioComponent {
   displayedColumns: string[] = ['id', 'codigo', 'descripcion', 'nombre', 'categoria', 'pais_origen', 'stock', 'precio_venta', 'estado', 'accion'];
 }
