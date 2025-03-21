@@ -6,7 +6,7 @@ export interface ITransportista{
     cedula: string;
     telefono: string;
     correo_electronico: string;
-    //imagen: ;
+    imagen: string | Uint8Array | File | null;
     estado: boolean;
     fecha_registro: string;
 }
