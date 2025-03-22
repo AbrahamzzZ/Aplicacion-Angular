@@ -18,7 +18,7 @@ export class ClienteService {
   }
 
   obtener(id:number){
-    return this.http.get<ICliente[]>(`${this.apiUrl}/${id}`);
+    return this.http.get<ICliente>(`${this.apiUrl}/${id}`);
   }
 
   registrar(cliente:ICliente){

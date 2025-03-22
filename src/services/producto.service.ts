@@ -18,7 +18,7 @@ export class ProductoService {
   }
   
   obtener(id:number){
-      return this.http.get<IProducto[]>(`${this.apiUrl}/${id}`);
+      return this.http.get<IProducto>(`${this.apiUrl}/${id}`);
   }
   
   registrar(producto:IProducto){

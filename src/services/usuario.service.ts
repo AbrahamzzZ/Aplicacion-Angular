@@ -19,7 +19,7 @@ export class UsuarioService {
   }
   
   obtener(id:number){
-    return this.http.get<IUsuario[]>(`${this.apiUrl}/${id}`);
+    return this.http.get<IUsuario>(`${this.apiUrl}/${id}`);
   }
   
   registrar(usuario:IUsuario){

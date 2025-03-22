@@ -19,7 +19,7 @@ export class ProveedorService {
   }
     
   obtener(id:number){
-    return this.http.get<IProveedor[]>(`${this.apiUrl}/${id}`);
+    return this.http.get<IProveedor>(`${this.apiUrl}/${id}`);
   }
     
   registrar(proveedor:IProveedor){
