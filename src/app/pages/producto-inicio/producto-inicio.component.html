@@ -1,8 +1,8 @@
 <div class="container">
     <h1 class="title">Productos del supermercado Paradisia</h1>
     <div class="table-container">
-        <button mat-raised-button color="primary" routerLink="producto-registro">Registrar producto</button>
-        <table mat-table  class="mat-elevation-z8">
+        <button mat-raised-button color="primary" (click)="nuevo()">Registrar producto</button>
+        <table mat-table [dataSource]="listaProducto" class="mat-elevation-z8">
     
             <!-- No. -->
             <ng-container matColumnDef="id">
@@ -35,9 +35,9 @@
             </ng-container>
     
             <!-- País Origen -->
-            <ng-container matColumnDef="pais_origen">
+            <ng-container matColumnDef="pais_Origen">
                 <th mat-header-cell *matHeaderCellDef> País Origen </th>
-                <td mat-cell *matCellDef="let element"> {{ element.pais_origen }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.pais_Origen }} </td>
             </ng-container>
     
             <!-- Stock -->
@@ -47,15 +47,15 @@
             </ng-container>
 
             <!-- Precio Venta -->
-            <ng-container matColumnDef="precio_venta">
+            <ng-container matColumnDef="precio_Venta">
                 <th mat-header-cell *matHeaderCellDef> Precio Venta </th>
-                <td mat-cell *matCellDef="let element"> {{ element.precio_venta }} </td>
+                <td mat-cell *matCellDef="let element"> ${{ element.precio_Venta }} </td>
             </ng-container>
 
             <!-- Estado -->
             <ng-container matColumnDef="estado">
                 <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+                <td mat-cell *matCellDef="let element"> {{ getEstado(element.estado) }} </td>
             </ng-container>
     
             <!-- Fecha de Registro -->
@@ -68,7 +68,7 @@
             <ng-container matColumnDef="accion">
                 <th mat-header-cell *matHeaderCellDef> Acción </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="accent">
+                    <button mat-icon-button color="accent" (click)="editar(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn">

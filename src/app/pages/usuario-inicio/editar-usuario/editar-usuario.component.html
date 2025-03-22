@@ -1,0 +1,47 @@
+<div class="container">
+    <mat-card class="card">
+		<mat-card-header class="card__title">
+			<mat-card-title>Editar información del usuario</mat-card-title>
+		</mat-card-header>
+
+        <mat-card-content>
+            <form class="form" [formGroup]="formUsuario" >
+                <mat-form-field>
+                    <mat-label>Nombre completo: </mat-label> 
+                    <input matInput type="text" formControlName="nombreCompleto" maxlength="30" minlength="5">
+                    @if(nombreCompletoField.hasError('required')){
+                        <mat-error>Ingrese su nombre completo.</mat-error>
+                    }@else if (nombreCompletoField.hasError('minlength')) {
+                        <mat-error>Nombre demasiado corto.</mat-error>
+                    }@else if (nombreCompletoField.hasError('soloLetras')) {
+                        <mat-error>El nombre completo solo debe contener letras.</mat-error>
+                    }
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Clave: </mat-label> 
+                    <input matInput type="text" formControlName="clave">
+                    @if(claveField.hasError('required')){
+                        <mat-error>Ingrese su clave.</mat-error>
+                    }@else if (claveField.hasError('formatoClave')) {
+                        <mat-error>La contraseña debe tener mínimo 8 caracteres, incluyendo letras, números y un carácter especial.</mat-error>
+                    }
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Correo Electrónico: </mat-label> 
+                    <input matInput type="text" formControlName="correoElectronico">
+                    @if(correoElectronicoField.hasError('required')){
+                        <mat-error>Ingrese su Correo Electrónico.</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-checkbox formControlName="estado">Activo</mat-checkbox>
+    
+                <button mat-raised-button color="primary" >Editar</button>
+                <button mat-raised-button color="primary" (click)="regresar()">Regresar</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+

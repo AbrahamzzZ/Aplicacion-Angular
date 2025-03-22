@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="title">Usuarios del supermercado Paradisia</h1>
     <div class="table-container">
-        <button mat-raised-button color="primary" routerLink="usuario-registro">Registrar usuario</button>
+        <button mat-raised-button color="primary" (click)="nuevo()">Registrar usuario</button>
         <table mat-table [dataSource]="listaUsuario"  class="mat-elevation-z8">
     
             <!-- No. -->
@@ -50,7 +50,7 @@
             <ng-container matColumnDef="accion">
                 <th mat-header-cell *matHeaderCellDef> Acción </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="accent">
+                    <button mat-icon-button color="accent" (click)="editar(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn">

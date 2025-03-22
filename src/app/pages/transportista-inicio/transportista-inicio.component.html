@@ -1,8 +1,8 @@
 <div class="container">
     <h1 class="title">Transportistas del supermercado Paradisia</h1>
     <div class="table-container">
-        <button mat-raised-button color="primary" routerLink="transportista-registro">Registrar transportista</button>
-        <table mat-table  class="mat-elevation-z8">
+        <button mat-raised-button color="primary" (click)="nuevo()">Registrar transportista</button>
+        <table mat-table [dataSource]="listaTransportista" class="mat-elevation-z8">
     
             <!-- No. -->
             <ng-container matColumnDef="id">
@@ -41,34 +41,36 @@
             </ng-container>
     
             <!-- Correo Electrónico -->
-            <ng-container matColumnDef="correo_electronico">
+            <ng-container matColumnDef="correo_Electronico">
                 <th mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
-                <td mat-cell *matCellDef="let element"> {{ element.correo_electronico }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.correo_Electronico }} </td>
             </ng-container>
 
             <!-- Imagen -->
             <ng-container matColumnDef="imagen">
                 <th mat-header-cell *matHeaderCellDef> Foto </th>
-                <td mat-cell *matCellDef="let element"> {{ element.imagen }} </td>
+                <td mat-cell *matCellDef="let element"> 
+                    <img [src]="element.imagen" alt="Foto de Transportista" >
+                </td>
             </ng-container>
 
             <!-- Estado -->
             <ng-container matColumnDef="estado">
                 <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+                <td mat-cell *matCellDef="let element"> {{ getEstado(element.estado) }} </td>
             </ng-container>
     
             <!-- Fecha de Registro -->
-            <ng-container matColumnDef="fecha_registro">
+            <ng-container matColumnDef="fecha_Registro">
                 <th mat-header-cell *matHeaderCellDef> Fecha de Registro </th>
-                <td mat-cell *matCellDef="let element"> {{ element.fecha_registro }} </td>
+                <td mat-cell *matCellDef="let element"> {{ getFechaRegistro(element.fecha_Registro) }} </td>
             </ng-container>
     
             <!-- Acciones -->
             <ng-container matColumnDef="accion">
                 <th mat-header-cell *matHeaderCellDef> Acción </th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button color="accent">
+                    <button mat-icon-button color="accent" (click)="editar(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button color="warn">

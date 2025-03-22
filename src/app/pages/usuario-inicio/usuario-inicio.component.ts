@@ -2,14 +2,14 @@ import { Component, inject } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { IUsuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-usuario-inicio',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIcon, RouterLink, RouterOutlet],
+  imports: [MatTableModule, MatButtonModule, MatIcon, RouterOutlet],
   templateUrl: './usuario-inicio.component.html',
   styleUrl: './usuario-inicio.component.scss'
 })
@@ -43,5 +43,13 @@ export class UsuarioInicioComponent {
   getFechaCreacion(fecha: string): string{
     const fechaObj = new Date(fecha);
     return fechaObj.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  nuevo(){
+    this.router.navigate(['usuario/usuario-registro',0]);
+  }
+
+  editar(usuario: IUsuario){
+    this.router.navigate(['usuario/usuario-editar',usuario.id]);
   }
 }

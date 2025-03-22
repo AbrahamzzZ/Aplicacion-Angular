@@ -26,12 +26,12 @@ table {
 
 th {
     background-color: #1abc9c;
-    text-align: left;
 }
 
 td, th {
     padding: 12px;
     border-bottom: 1px solid #ddd;
+    text-align: center;
 }
 
 button {
@@ -40,4 +40,10 @@ button {
 
 .mat-icon {
     font-size: 20px;
+}
+
+img{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
 }

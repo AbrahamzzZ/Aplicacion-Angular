@@ -1,11 +1,11 @@
 <div class="container">
     <mat-card class="card">
 		<mat-card-header class="card__title">
-			<mat-card-title>Registro de clientes</mat-card-title>
+			<mat-card-title>Editar proveedor</mat-card-title>
 		</mat-card-header>
 
         <mat-card-content>
-            <form class="form" [formGroup]="formGroup" >
+            <form class="form" [formGroup]="formProveedor" >
                 <mat-form-field>
                     <mat-label>Nombres: </mat-label> 
                     <input matInput type="text" formControlName="nombres" maxlength="30" minlength="5">
@@ -44,7 +44,7 @@
                     <mat-label>Telefono: </mat-label> 
                     <input matInput type="text" formControlName="telefono">
                     @if(telefonoField.hasError('required')){
-                        <mat-error>Ingrese su teléfono.</mat-error>
+                        <mat-error>Ingrese su telefono.</mat-error>
                     }@else if (telefonoField.hasError('soloNumeros')) {
                         <mat-error>Ingrese un numero de teléfono válido (10 dígitos).</mat-error>
                     }
@@ -57,10 +57,15 @@
                         <mat-error>Ingrese su Correo Electrónico.</mat-error>
                     }
                 </mat-form-field>
-            
-                <button mat-raised-button color="primary" >Registrar</button>
-                <button mat-raised-button color="primary" routerLink="/cliente">Regresar</button>
+
+                <mat-checkbox formControlName="estado">Activo</mat-checkbox>
+    
+                <button mat-raised-button color="primary" >Editar</button>
+                <button mat-raised-button color="primary" (click)="regresar()">Regresar</button>
             </form>
         </mat-card-content>
     </mat-card>
 </div>
+
+
+

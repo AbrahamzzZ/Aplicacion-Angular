@@ -23,7 +23,6 @@ export class RegistroClienteComponent {
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    estado: [false]
   });
 
   get nombresField(): FormControl<string> {
