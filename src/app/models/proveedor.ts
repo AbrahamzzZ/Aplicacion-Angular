@@ -5,7 +5,7 @@ export interface IProveedor{
     apellidos: string;
     cedula: string;
     telefono: string;
-    correo_electronico: string;
+    correo_Electronico: string;
     estado: boolean;
-    fecha_registro: string;
+    fecha_Registro: string;
 }

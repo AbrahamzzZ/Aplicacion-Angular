@@ -5,6 +5,6 @@ export interface ICliente{
     apellidos: string;
     cedula: string;
     telefono: string;
-    correo_electronico: string;
-    fecha_registro: string;
+    correo_Electronico: string;
+    fecha_Registro: string;
 }

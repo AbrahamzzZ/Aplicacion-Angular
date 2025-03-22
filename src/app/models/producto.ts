@@ -4,8 +4,8 @@ export interface IProducto{
     descripcion: string;
     nombre: string;
     categoria: string;
-    pais_origen: string;
+    pais_Origen: string;
     stock: number;
-    precio_venta: number;
+    precio_Venta: number;
     estado: boolean;
 }
