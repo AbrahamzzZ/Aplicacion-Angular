@@ -57,7 +57,7 @@ export class Validaciones{
         };
     }
     
-      static tipoArchivoPermitido(tiposPermitidos: string[]): ValidatorFn {
+    static tipoArchivoPermitido(tiposPermitidos: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
           const file = control.value as File;
           if (!file || tiposPermitidos.includes(file.type)) {
