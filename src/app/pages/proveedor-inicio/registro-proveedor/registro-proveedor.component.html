@@ -5,7 +5,12 @@
 		</mat-card-header>
 
         <mat-card-content>
-            <form class="form" [formGroup]="formGroup" >
+            <form class="form" [formGroup]="formProveedor" >
+                <mat-form-field>
+                    <mat-label>Codigo: </mat-label>
+                    <input matInput type="text" formControlName="codigo" readonly>
+                </mat-form-field>
+
                 <mat-form-field>
                     <mat-label>Nombres: </mat-label> 
                     <input matInput type="text" formControlName="nombres" maxlength="30" minlength="5">
@@ -60,8 +65,8 @@
 
                 <mat-checkbox formControlName="estado">Activo</mat-checkbox>
     
-                <button mat-raised-button color="primary" >Registrar</button>
-                <button mat-raised-button color="primary" routerLink="/proveedor">Regresar</button>
+                <button mat-raised-button color="primary" (click)="registrarProveedor()">Registrar</button>
+                <button mat-raised-button color="primary" (click)="regresar()">Regresar</button>
             </form>
         </mat-card-content>
     </mat-card>

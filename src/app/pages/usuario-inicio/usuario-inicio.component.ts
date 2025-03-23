@@ -46,7 +46,7 @@ export class UsuarioInicioComponent {
   }
 
   nuevo(){
-    this.router.navigate(['usuario/usuario-registro',0]);
+    this.router.navigate(['usuario/usuario-registro', 0]);
   }
 
   editar(usuario: IUsuario){

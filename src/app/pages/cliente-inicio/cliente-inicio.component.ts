@@ -5,6 +5,8 @@ import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../services/cliente.service';
 import { ICliente } from '../../models/cliente';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmacion/dialogo-confirmacion.component';
 
 @Component({
   selector: 'app-cliente-inicio',
@@ -18,6 +20,10 @@ export class ClienteInicioComponent {
   public listaCliente: ICliente[]=[];
   displayedColumns: string[] = ['id', 'codigo', 'nombres', 'apellidos', 'cedula', 'telefono', 'correo_Electronico', 'fecha_Registro', 'accion'];
 
+  constructor(private router:Router, private dialog: MatDialog){
+    this.obtenerCliente();
+  }
+  
   obtenerCliente(){
     this.clienteService.lista().subscribe({
       next:(data)=>{
@@ -32,10 +38,27 @@ export class ClienteInicioComponent {
     });
   }
 
-  constructor(private router:Router){
-    this.obtenerCliente();
-  }
+  eliminar(cliente: ICliente){
+    const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
+      width: '350px',
+      data: { mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?` }
+    });
   
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.clienteService.eliminar(cliente.id).subscribe({
+          next: (data) => {
+            if (data.isSuccess) {
+              this.obtenerCliente();
+            }
+          },
+          error: (err) => {
+            console.log(err.message);
+          }
+        });
+      }
+    });
+  }
   
   getFechaRegistro(fecha: string): string{
     const fechaObj = new Date(fecha);
