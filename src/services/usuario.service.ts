@@ -26,7 +26,7 @@ export class UsuarioService {
     return this.http.post<IApi>(this.apiUrl, usuario);
   }
   
-  editar(usuario:IUsuario){
+  editar(usuario:Partial<IUsuario>){
     return this.http.put<IApi>(this.apiUrl, usuario);
   }
   

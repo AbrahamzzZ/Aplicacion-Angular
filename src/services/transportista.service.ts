@@ -18,7 +18,7 @@ export class TransportistaService {
   }
   
   obtener(id:number){
-      return this.http.get<ITransportista[]>(`${this.apiUrl}/${id}`);
+      return this.http.get<ITransportista>(`${this.apiUrl}/${id}`);
   }
   
   /*registrar(transportista:ITransportista){

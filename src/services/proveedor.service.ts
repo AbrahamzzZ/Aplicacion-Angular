@@ -26,7 +26,7 @@ export class ProveedorService {
     return this.http.post<IApi>(this.apiUrl, proveedor);
   }
     
-  editar(proveedor:IProveedor){
+  editar(proveedor:Partial<IProveedor>){
     return this.http.put<IApi>(this.apiUrl, proveedor);
   }
     

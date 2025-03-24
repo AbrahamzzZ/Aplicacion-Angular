@@ -25,7 +25,7 @@ export class ProductoService {
       return this.http.post<IApi>(this.apiUrl, producto);
   }
   
-  editar(producto:IProducto){
+  editar(producto:Partial<IProducto>){
       return this.http.put<IApi>(this.apiUrl, producto);
   }
   

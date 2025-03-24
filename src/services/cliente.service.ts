@@ -25,7 +25,7 @@ export class ClienteService {
     return this.http.post<IApi>(this.apiUrl, cliente);
   }
 
-  editar(cliente:ICliente){
+  editar(cliente: Partial<ICliente>){
     return this.http.put<IApi>(this.apiUrl, cliente);
   }
 
