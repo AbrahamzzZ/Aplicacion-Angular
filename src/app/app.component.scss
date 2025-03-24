@@ -10,9 +10,6 @@ html, body {
     min-height: 100vh; // Toda la pantalla
   }
   
-  router-outlet {
-    flex: 1; // Ocupa el espacio disponible
-  }
   app-footer {
     margin-top: auto; // Mantiene el footer siempre abajo
     width: 100%;
