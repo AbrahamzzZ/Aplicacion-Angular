@@ -8,6 +8,8 @@ import { MatInput } from '@angular/material/input';
 import { ProductoService } from '../../../../services/producto.service';
 import { Validaciones } from '../../../../utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IProducto } from '../../../models/producto';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-producto-editar',
@@ -19,6 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductoEditarComponent implements OnInit{
   private productoServicio = inject(ProductoService);
   private activatedRoute = inject(ActivatedRoute);
+  private snackBar = inject(MatSnackBar);
   private formBuild = inject(FormBuilder);
   idProducto!: number;
 
@@ -64,8 +67,42 @@ export class ProductoEditarComponent implements OnInit{
     });
   }
 
+  editarProducto(): void{
+    const producto: Partial<IProducto> = {
+      id: this.idProducto,
+      nombre: this.formProducto.value.nombre!,
+      descripcion: this.formProducto.value.descripcion!,
+      categoria: this.formProducto.value.categoria!,
+      pais_Origen: this.formProducto.value.paisOrigen!,
+      stock: this.formProducto.value.stock!,
+      precio_Venta: this.formProducto.value.precioVenta!,
+      estado: this.formProducto.value.estado
+    };
+
+    this.productoServicio.editar(producto).subscribe({
+      next:(data)=>{
+        if(data.isSuccess){
+          this.router.navigate(['/producto']);
+          this.mostrarMensaje('✔ Producto editado correctamente.');
+        }
+      }, 
+      error:(err)=>{
+        console.log(err);
+        this.mostrarMensaje('❌ Error al editar la información el producto.');
+      }
+    });
+  }
+
   regresar(){
     this.router.navigate(["/producto"]);
+  }
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Producto', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 
   get nombreField(): FormControl<string> {

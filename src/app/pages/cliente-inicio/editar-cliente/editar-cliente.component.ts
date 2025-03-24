@@ -8,6 +8,8 @@ import { MatButton } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ClienteService } from '../../../../services/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ICliente } from '../../../models/cliente';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editar-cliente',
@@ -19,12 +21,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditarClienteComponent implements OnInit{
   private clienteServicio = inject(ClienteService);
   private activatedRoute = inject(ActivatedRoute);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
   idCliente!: number;
     
   public formCliente = this.formBuilder.nonNullable.group({
     nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
-    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloNumeros()]],
+    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]]
@@ -60,11 +63,42 @@ export class EditarClienteComponent implements OnInit{
     });
   }
 
+  editarCliente(): void{
+    const cliente: Partial<ICliente> = {
+      id: this.idCliente,
+      nombres: this.formCliente.value.nombres!,
+      apellidos: this.formCliente.value.apellidos!,
+      cedula: this.formCliente.value.cedula!,
+      telefono: this.formCliente.value.telefono!,
+      correo_Electronico: this.formCliente.value.correoElectronico!
+    };
+
+    this.clienteServicio.editar(cliente).subscribe({
+      next:(data)=>{
+        if(data.isSuccess){
+          this.router.navigate(['/cliente']);
+          this.mostrarMensaje('✔ Cliente editado correctamente.');
+        }
+      }, 
+      error:(err)=>{
+        console.log(err);
+        this.mostrarMensaje('❌ Error al editar la información del cliente.');
+      }
+    });
+  }
+
   regresar(){
     this.router.navigate(["/cliente"]);
   }
   
-  
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Cliente', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
+  }
+
   get nombresField(): FormControl<string> {
     return this.formCliente.controls.nombres;
   }
@@ -84,11 +118,4 @@ export class EditarClienteComponent implements OnInit{
   get correoElectronicoField(): FormControl<string> {
     return this.formCliente.controls.correoElectronico;
   }
-
-    /*guadar(){
-      const cliente: ICliente = {
-        id: this.idCliente,
-        nombres: this.formCliente.value.nombres,
-      }
-    }*/
 }

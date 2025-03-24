@@ -11,6 +11,7 @@ import { IUsuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Metodos } from '../../../../utility/metodos';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-usuario',
@@ -23,6 +24,7 @@ export class RegistroUsuarioComponent implements OnInit{
   @Input('id') idUsuario!: number;
   private route = inject(ActivatedRoute);
   private usuarioServicio = inject(UsuarioService);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
   
   public formUsuario = this.formBuilder.nonNullable.group({
@@ -61,9 +63,8 @@ export class RegistroUsuarioComponent implements OnInit{
     this.usuarioServicio.registrar(usuario).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-           this.router.navigate(['/usuario']);
-        } else {
-          console.log('Error en la respuesta:', data);
+          this.router.navigate(['/usuario']);
+          this.mostrarMensaje('✔ Usuario registrado correctamente.');
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -71,6 +72,7 @@ export class RegistroUsuarioComponent implements OnInit{
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
+          this.mostrarMensaje('❌ Error al registrar al usuario.');
         }
       }
     });
@@ -78,6 +80,14 @@ export class RegistroUsuarioComponent implements OnInit{
 
   regresar(){
     this.router.navigate(["/usuario"])
+  }
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Usuario', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 
   get nombreCompletoField(): FormControl<string> {

@@ -11,6 +11,7 @@ import { ICliente } from '../../../models/cliente';
 import { Metodos } from '../../../../utility/metodos';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClienteService } from '../../../../services/cliente.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cliente',
@@ -23,6 +24,7 @@ export class RegistroClienteComponent implements OnInit{
   @Input('id') idCliente!: number;
   private route = inject(ActivatedRoute);
   private clienteServicio = inject(ClienteService);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
 
   public formCliente = this.formBuilder.nonNullable.group({
@@ -64,8 +66,7 @@ export class RegistroClienteComponent implements OnInit{
       next: (data) => {
         if (data.isSuccess) {
            this.router.navigate(['/cliente']);
-        } else {
-          console.log('Error en la respuesta:', data);
+           this.mostrarMensaje('✔ Cliente registrado correctamente.');
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -73,6 +74,7 @@ export class RegistroClienteComponent implements OnInit{
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
+          this.mostrarMensaje('❌ Error al registrar al cliente.');
         }
       }
     });
@@ -80,6 +82,14 @@ export class RegistroClienteComponent implements OnInit{
 
   regresar(){
     this.router.navigate(["/cliente"])
+  }
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Cliente', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 
   get nombresField(): FormControl<string> {

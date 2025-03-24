@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IProducto } from '../../../models/producto';
 import { Metodos } from '../../../../utility/metodos';
 import { ProductoService } from '../../../../services/producto.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-producto',
@@ -23,6 +24,7 @@ export class ProductoComponent implements OnInit{
   @Input('id') idProducto!: number;
   private route = inject(ActivatedRoute);
   private productoServicio = inject(ProductoService);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
   
   public formProducto = this.formBuilder.nonNullable.group({
@@ -68,8 +70,7 @@ export class ProductoComponent implements OnInit{
       next: (data) => {
         if (data.isSuccess) {
            this.router.navigate(['/producto']);
-        } else {
-          console.log('Error en la respuesta:', data);
+           this.mostrarMensaje('✔ Producto registrado correctamente.');
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -77,6 +78,7 @@ export class ProductoComponent implements OnInit{
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
+          this.mostrarMensaje('❌ Error al registrar el producto.');
         }
       }
     });
@@ -84,6 +86,14 @@ export class ProductoComponent implements OnInit{
 
   regresar(){
     this.router.navigate(["/producto"])
+  }
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Producto', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 
   get nombreField(): FormControl<string> {

@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ITransportista } from '../../../models/transportista';
 import { Metodos } from '../../../../utility/metodos';
 import { TransportistaService } from '../../../../services/transportista.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-transportista',
@@ -25,6 +26,7 @@ export class RegistroTransportistaComponent implements OnInit{
   @Input('id') idProveedor!: number;
   private route = inject(ActivatedRoute);
   private transportistaServicio = inject(TransportistaService);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
   imagenURL: string | null = null;
 
@@ -117,8 +119,7 @@ export class RegistroTransportistaComponent implements OnInit{
         next: (data) => {
           if (data.isSuccess) {
             this.router.navigate(['/transportista']);
-          } else {
-            console.log('Error en la respuesta:', data);
+            this.mostrarMensaje('✔ Transportista registrado correctamente.');
           }
         },
         error: (err: HttpErrorResponse) => {
@@ -134,6 +135,14 @@ export class RegistroTransportistaComponent implements OnInit{
 
   regresar(){
     this.router.navigate(["/transportista"])
+  }
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Transportista', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 
   subirImagen(event: Event) {

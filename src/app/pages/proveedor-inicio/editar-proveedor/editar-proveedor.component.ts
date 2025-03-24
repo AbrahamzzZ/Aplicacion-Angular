@@ -8,6 +8,8 @@ import { MatInput } from '@angular/material/input';
 import { Validaciones } from '../../../../utility/validaciones';
 import { ProveedorService } from '../../../../services/proveedor.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IProveedor } from '../../../models/proveedor';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editar-proveedor',
@@ -19,6 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class EditarProveedorComponent implements OnInit{
   private proveedorServicio = inject(ProveedorService);
   private activatedRoute = inject(ActivatedRoute);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
   idProveedor!: number;
 
@@ -62,28 +65,60 @@ export class EditarProveedorComponent implements OnInit{
     });
   }
 
+  editarProveedor(): void{
+    const proveedor: Partial<IProveedor> = {
+      id: this.idProveedor,
+      nombres: this.formProveedor.value.nombres!,
+      apellidos: this.formProveedor.value.apellidos!,
+      cedula: this.formProveedor.value.cedula!,
+      telefono: this.formProveedor.value.telefono!,
+      correo_Electronico: this.formProveedor.value.correoElectronico!,
+      estado: this.formProveedor.value.estado
+    };
+
+    this.proveedorServicio.editar(proveedor).subscribe({
+      next:(data)=>{
+        if(data.isSuccess){
+          this.router.navigate(['/proveedor']);
+          this.mostrarMensaje('✔ Proveedor editado correctamente.');
+        }
+      }, 
+      error:(err)=>{
+        console.log(err);
+        this.mostrarMensaje('❌ Error al editar la información del proveedor.');
+      }
+    });
+  }
+
   regresar(){
     this.router.navigate(["/proveedor"]);
   }
 
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Proveedor', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
+  }
+
+  get nombresField(): FormControl<string> {
+    return this.formProveedor.controls.nombres;
+  }
   
-    get nombresField(): FormControl<string> {
-      return this.formProveedor.controls.nombres;
-    }
+  get apellidosField(): FormControl<string> {
+    return this.formProveedor.controls.apellidos;
+  }
   
-    get apellidosField(): FormControl<string> {
-      return this.formProveedor.controls.apellidos;
-    }
+  get cedulaField(): FormControl<string> {
+    return this.formProveedor.controls.cedula;
+  }
   
-    get cedulaField(): FormControl<string> {
-      return this.formProveedor.controls.cedula;
-    }
+  get telefonoField(): FormControl<string> {
+    return this.formProveedor.controls.telefono;
+  }
   
-    get telefonoField(): FormControl<string> {
-      return this.formProveedor.controls.telefono;
-    }
-  
-    get correoElectronicoField(): FormControl<string> {
-      return this.formProveedor.controls.correoElectronico;
-    }
+  get correoElectronicoField(): FormControl<string> {
+    return this.formProveedor.controls.correoElectronico;
+  }
 }

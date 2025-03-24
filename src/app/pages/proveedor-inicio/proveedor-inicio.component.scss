@@ -41,3 +41,24 @@ button {
 .mat-icon {
     font-size: 20px;
 }
+
+.no-data-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fafafa;
+    border-radius: 4px;
+
+    mat-icon {
+        margin-right: 8px;
+        font-size: 24px;
+        opacity: 0.7;
+    }
+
+    span {
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.7);
+    }
+}

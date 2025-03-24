@@ -11,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IProveedor } from '../../../models/proveedor';
 import { Metodos } from '../../../../utility/metodos';
 import { ProveedorService } from '../../../../services/proveedor.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-proveedor',
@@ -23,6 +24,7 @@ export class ProveedorComponent implements OnInit{
   @Input('id') idProveedor!: number;
   private route = inject(ActivatedRoute);
   private proveedorServicio = inject(ProveedorService);
+  private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
 
   public formProveedor = this.formBuilder.nonNullable.group({
@@ -66,8 +68,7 @@ export class ProveedorComponent implements OnInit{
       next: (data) => {
         if (data.isSuccess) {
            this.router.navigate(['/proveedor']);
-        } else {
-          console.log('Error en la respuesta:', data);
+           this.mostrarMensaje('✔ Proveedor registrado correctamente.');
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -75,6 +76,7 @@ export class ProveedorComponent implements OnInit{
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
+          this.mostrarMensaje('❌ Error al registrar al proveedor.');
         }
       }
     });
@@ -82,6 +84,14 @@ export class ProveedorComponent implements OnInit{
 
   regresar(){
     this.router.navigate(["/proveedor"])
+  }
+
+  mostrarMensaje(mensaje: string) {
+    this.snackBar.open(mensaje, 'Módulo Proveedor', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom'
+    });
   }
 
   get nombresField(): FormControl<string> {
