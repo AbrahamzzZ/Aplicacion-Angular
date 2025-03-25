@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
@@ -8,18 +8,20 @@ import { ITransportista } from '../../models/transportista';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-transportista-inicio',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIcon, RouterOutlet],
+  imports: [MatTableModule, MatButtonModule, MatIcon, MatFormFieldModule, MatInputModule, RouterOutlet],
   templateUrl: './transportista-inicio.component.html',
   styleUrl: './transportista-inicio.component.scss'
 })
 export class TransportistaInicioComponent {
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
-  public listaTransportista: ITransportista[] = [];
+  public listaTransportista = new MatTableDataSource<ITransportista>();
   public displayedColumns: string[] = ['id', 'codigo', 'nombres', 'apellidos', 'cedula', 'telefono', 'correo_Electronico', 'imagen', 'estado', 'fecha_Registro', 'accion'];
 
   constructor(private router:Router, private dialog: MatDialog){
@@ -29,17 +31,14 @@ export class TransportistaInicioComponent {
   obtenerTransportista(){
     this.transportistaServicio.lista().subscribe({
       next: (data) => {
-        if (data.length > 0) {
-          console.log('Transportista obtenido: ', data);
-          this.listaTransportista = data.map(transportista => {
-            if (transportista.imagenBase64 && typeof transportista.imagenBase64 === 'string') {
-              transportista.imagen = `data:image/png;base64,${transportista.imagenBase64}`;
-            } else {
-              transportista.imagen = 'assets/default-user.png'; // Imagen por defecto si no hay foto
-            }
-            return transportista;
-          });
-        }
+        this.listaTransportista.data = data.map(transportista => {
+          if (transportista.imagenBase64 && typeof transportista.imagenBase64 === 'string') {
+            transportista.imagen = `data:image/png;base64,${transportista.imagenBase64}`;
+          } else {
+            transportista.imagen = 'assets/default-user.png'; // Imagen por defecto si no hay foto
+          }
+          return transportista;
+        });
       },
       error: (err) => {
         console.log(err.message);
@@ -85,6 +84,10 @@ export class TransportistaInicioComponent {
       horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
+  }
+
+  filtrarTransportistas(termino: string) {
+    this.listaTransportista.filter = termino.trim().toLowerCase();
   }
 
   getEstado(estado: boolean): string{

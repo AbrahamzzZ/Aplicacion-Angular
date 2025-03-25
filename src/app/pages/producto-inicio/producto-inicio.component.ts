@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
@@ -8,18 +8,20 @@ import { IProducto } from '../../models/producto';
 import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-producto-inicio',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIcon, RouterOutlet],
+  imports: [MatTableModule, MatButtonModule, MatIcon, MatFormFieldModule, MatInputModule, RouterOutlet],
   templateUrl: './producto-inicio.component.html',
   styleUrl: './producto-inicio.component.scss'
 })
 export class RegistroProductoInicioComponent {
   private productoServicio = inject(ProductoService);
   private snackBar = inject(MatSnackBar);
-  public listaProducto: IProducto[]=[];
+  public listaProducto = new MatTableDataSource<IProducto>();
   public displayedColumns: string[] = ['id', 'codigo', 'descripcion', 'nombre', 'categoria', 'pais_Origen', 'stock', 'precio_Venta', 'estado', 'accion'];
 
   constructor(private router:Router, private dialog: MatDialog){
@@ -29,10 +31,7 @@ export class RegistroProductoInicioComponent {
   obtenerProducto(){
     this.productoServicio.lista().subscribe({
       next:(data)=>{
-        if(data.length > 0){
-          console.log('Usuario obtenido: ', data);
-          this.listaProducto = data;
-        }
+        this.listaProducto.data = data;
       },
       error:(err)=>{
         console.log(err.message);
@@ -78,6 +77,10 @@ export class RegistroProductoInicioComponent {
       horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
+  }
+
+  filtrarProductos(termino: string) {
+    this.listaProducto.filter = termino.trim().toLowerCase();
   }
 
   getEstado(estado: boolean): string{

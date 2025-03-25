@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
@@ -8,18 +8,20 @@ import { IUsuario } from '../../models/usuario';
 import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-usuario-inicio',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIcon, RouterOutlet],
+  imports: [MatTableModule, MatButtonModule, MatIcon, MatFormFieldModule, MatInputModule, RouterOutlet],
   templateUrl: './usuario-inicio.component.html',
   styleUrl: './usuario-inicio.component.scss'
 })
 export class UsuarioInicioComponent {
   private usuarioServicio = inject(UsuarioService);
   private snackBar = inject(MatSnackBar);
-  public listaUsuario: IUsuario[]=[];
+  public listaUsuario = new MatTableDataSource<IUsuario>();
   public displayedColumns: string[] = ['id', 'codigo', 'nombre_Completo', 'correo_Electronico', 'clave', 'estado', 'fecha_Creacion', 'accion'];
 
   constructor(private router:Router, private dialog: MatDialog){
@@ -29,10 +31,7 @@ export class UsuarioInicioComponent {
   obtenerUsuario(){
     this.usuarioServicio.lista().subscribe({
       next:(data)=>{
-        if(data.length > 0){
-          console.log('Usuario obtenido: ', data);
-          this.listaUsuario = data;
-        }
+        this.listaUsuario.data = data;
       },
       error:(err)=>{
         console.log(err.message);
@@ -78,6 +77,10 @@ export class UsuarioInicioComponent {
       horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
+  }
+
+  filtrarUsuarios(termino: string) {
+    this.listaUsuario.filter = termino.trim().toLowerCase();
   }
 
   getEstado(estado: boolean): string{

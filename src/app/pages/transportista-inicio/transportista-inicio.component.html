@@ -1,7 +1,24 @@
 <div class="container">
     <h1 class="title">Transportistas del supermercado Paradisia</h1>
     <div class="table-container">
-        <button mat-raised-button color="primary" (click)="nuevo()">Registrar transportista</button>
+        <!-- Mensaje cuando no hay datos -->
+        @if(listaTransportista.data.length === 0){
+            <div class="no-data-message" >
+                <mat-icon>info_outline</mat-icon>
+                <span>No hay transportistas que mostrar.</span>
+            </div>
+        }   
+
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Buscar transportista</mat-label>
+                <input matInput #searchInput (keyup)="filtrarTransportistas(searchInput.value)" placeholder="Ingrese nombre, código o cédula">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="nuevo()">Registrar transportista</button>
+        </div>
+
         <table mat-table [dataSource]="listaTransportista" class="mat-elevation-z8">
     
             <!-- No. -->
