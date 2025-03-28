@@ -16,29 +16,13 @@ import { EditarProveedorComponent } from './pages/proveedor-inicio/editar-provee
 import { EditarTransportistaComponent } from './pages/transportista-inicio/editar-transportista/editar-transportista.component';
 import { EditarUsuarioComponent } from './pages/usuario-inicio/editar-usuario/editar-usuario.component';
 import { EditarClienteComponent } from './pages/cliente-inicio/editar-cliente/editar-cliente.component';
+import { FormularioIncompleto } from './guards/formulario-incompleto.guard';
+
 
 export const routes: Routes = [
-    /*{path: 'home', component: InicioComponent, title: 'Supermercado Paradisia'},
-    {path: 'usuario', component: UsuarioInicioComponent, title: 'Usuarios', children: [{
-        path: 'usuario-detalle', component: UsuarioComponent, title: 'Información del Usuario'
-    }]},
-    {path: 'cliente', component: ClienteInicioComponent, title: 'Clientes', children: [{
-        path: 'cliente-detalle', component: ClienteComponent, title: 'Información del Cliente'
-    }]},
-    {path: 'transportista', component: TransportistaInicioComponent, title: 'Transportistas', children: [{
-        path: 'transportista-detalle', component: TransportistaComponent, title: 'Información del Transportista'
-    }]},
-    {path: 'proveedor', component: ProveedorInicioComponent, title: 'Proveedor', children: [{
-        path: 'proveedor-detalle', component: ProveedorComponent, title: 'Información del Proveedor'
-    }]},
-    {path: 'producto', component: ProductoInicioComponent, title: 'Productos', children: [{
-        path: 'producto-detalle', component: ProductoComponent, title: 'Información del Producto'
-    }]},
-    {path: '', redirectTo: '/home', pathMatch: 'full'},
-    {path: '**', component: PaginaNoEncontradaComponent}*/
     {path: 'home', component: InicioComponent, title: 'Supermercado Paradisia'},
     {path: 'usuario', component: UsuarioInicioComponent, title: 'Usuarios'},
-    {path: 'usuario/usuario-registro/:id', component: RegistroUsuarioComponent, title: 'Información del Usuario'},
+    {path: 'usuario/usuario-registro/:id', canDeactivate: [FormularioIncompleto], component: RegistroUsuarioComponent, title: 'Información del Usuario'},
     {path: 'usuario/usuario-editar/:id', component: EditarUsuarioComponent, title: 'Editar usuario'},
     {path: 'cliente', component: ClienteInicioComponent, title: 'Clientes'},
     {path: 'cliente/cliente-registro/:id', component: RegistroClienteComponent, title: 'Información del Cliente'},
