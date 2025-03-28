@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +12,9 @@ import { Metodos } from '../../../../utility/metodos';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClienteService } from '../../../../services/cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 
 @Component({
   selector: 'app-cliente',
@@ -20,12 +23,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './registro-cliente.component.html',
   styleUrl: './registro-cliente.component.scss'
 })
-export class RegistroClienteComponent implements OnInit{
+export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
   @Input('id') idCliente!: number;
+  public dialogo = inject(MatDialog);
   private route = inject(ActivatedRoute);
   private clienteServicio = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent){
+    const formulario_valido = Object.values(this.formCliente.controls).some((control)=>control.value !== '');
+    if(formulario_valido){
+      e.preventDefault();
+    }
+    return;
+  }
 
   public formCliente = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -37,6 +50,12 @@ export class RegistroClienteComponent implements OnInit{
   });
 
   constructor(private router:Router) {
+  }
+  
+  canDeactive(): boolean | Observable<boolean>{
+    console.log('****canDeactivate REGISTERPAGE********');
+    const formulario = Object.values(this.formCliente.controls).some((control) => control.value !== '');
+    return formulario || false;
   }
 
   ngOnInit(): void {
