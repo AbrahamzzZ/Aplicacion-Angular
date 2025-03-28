@@ -117,3 +117,67 @@ mat-checkbox label {
         transform: scale(1.1);
     }
 }
+
+.file-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+}
+
+.file-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #79acde;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.file-button:hover {
+    background: #5a90c7;
+    transform: translateY(-2px);
+}
+
+.file-button mat-icon {
+    color: white;
+    font-size: 20px;
+}
+
+.file-filename {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    min-height: 20px;
+}
+
+.file-input-container:hover {
+    border-color: #79acde;
+    background: #f0f8ff;
+}
+
+.file-input-container:hover .file-button {
+    background: #5a90c7;
+}

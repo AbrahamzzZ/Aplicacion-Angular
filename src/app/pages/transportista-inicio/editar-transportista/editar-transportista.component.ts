@@ -26,7 +26,7 @@ export class EditarTransportistaComponent implements OnInit{
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
   idTransportista!: number;
-  imagenURL: string | null = null;
+  public imagenURL: string | null = null;
 
   public formTransportista = this.formBuilder.nonNullable.group({
     nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
@@ -34,8 +34,9 @@ export class EditarTransportistaComponent implements OnInit{
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    estado: [false],
-    imagen: [null, [Validaciones.imagenRequerida(), Validaciones.tamanoMaximo(2*1024*1024)]]
+    imageBase64: [''],
+    imagen: [''],
+    estado: [false]
   });
     
   constructor(private router: Router) {}
@@ -87,28 +88,28 @@ export class EditarTransportistaComponent implements OnInit{
     this.router.navigate(["/transportista"])
   }
   
-    subirImagen(event: Event) {
-      const input = event.target as HTMLInputElement;
-      if (input.files && input.files.length > 0) {
-        const file = input.files[0];
-  
-        // Guardar la imagen en el formulario
-        this.imagenField.setValue(file);
+  subirImagen(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.imagenURL = reader.result as string; // Vista previa de la imagen
+        
+        this.formTransportista.controls.imagen.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
         this.imagenField.markAsTouched();
-  
-        // Generar vista previa de la imagen
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.imagenURL = reader.result as string;
-        };
-        reader.readAsDataURL(file);
-      }
+        console.log(this.imagenURL);
+      };
+
+      reader.readAsDataURL(file); // Convierte la imagen a Base64
     }
+  }
   
   eliminarImagen(): void {
-    this.imagenField.setValue(null);
+    this.imagenField.setValue('');
     this.imagenField.markAsUntouched();
-    this.imagenURL = null;
+    this.imagenURL = '';
   }
 
   get nombresField(): FormControl<string> {
@@ -131,7 +132,7 @@ export class EditarTransportistaComponent implements OnInit{
     return this.formTransportista.controls.correoElectronico;
   }
   
-  get imagenField(): FormControl<File | null> { 
+  get imagenField(): FormControl<string> { 
     return this.formTransportista.controls.imagen; 
   }
 }

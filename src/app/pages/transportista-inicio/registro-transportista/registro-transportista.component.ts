@@ -23,12 +23,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './registro-transportista.component.scss'
 })
 export class RegistroTransportistaComponent implements OnInit{
-  @Input('id') idProveedor!: number;
+  @Input('id') idTransportista!: number;
   private route = inject(ActivatedRoute);
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
-  imagenURL: string | null = null;
+  public imagenURL: string | ArrayBuffer | null = null;
 
   public formTransportista = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -37,8 +37,10 @@ export class RegistroTransportistaComponent implements OnInit{
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    estado: [false],
-    imagen: [null, [Validaciones.imagenRequerida(), Validaciones.tamanoMaximo(2*1024*1024)]]
+    imageBase64: [''],
+    imagen: [''],
+    estado: [false]
+
   });
 
   constructor(private router:Router) {
@@ -46,36 +48,42 @@ export class RegistroTransportistaComponent implements OnInit{
 
   ngOnInit(): void {
     if(this.route.snapshot.params['id']){
-      this.idProveedor= parseInt(this.route.snapshot.params['id']);
+      this.idTransportista= parseInt(this.route.snapshot.params['id']);
     }
   }
 
-  /*registrarTransportista(){
-      const transportista: ITransportista = {
-      id: this.idProveedor || 0,
+  registrarTransportista() {
+
+    if (!this.formTransportista.valid) {
+      this.formTransportista.markAllAsTouched(); // Marca todos los campos como tocados
+      return;
+    }
+
+    const transportista: ITransportista = {
+      id: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formTransportista.value.nombres?.trim() ?? '',
       apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
-      cedula: this.formTransportista.value.cedula?.trim() ?? '',
-      telefono: this.formTransportista.value.telefono?.trim() ?? '',
+      cedula: this.formTransportista.value.cedula ?? '',
+      telefono: this.formTransportista.value.telefono ?? '',
       correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
-      imagen: '', 
-      imagenBase64: this.imagenURL,
+      imagen: this.formTransportista.value.imagen ?? '',
+      imagenBase64: this.formTransportista.value.imageBase64 ?? '',
       estado: this.formTransportista.value.estado ?? false,
       fecha_Registro: Metodos.getFechaCreacion()
     };
-    
+        
     if (!this.formTransportista.valid) {
       console.log('Formulario inválido:', this.formTransportista);
       return;
     }
-    
+
     this.transportistaServicio.registrar(transportista).subscribe({
       next: (data) => {
-        if (data.isSuccess) {
-           this.router.navigate(['/transportista']);
-        } else {
-          console.log('Error en la respuesta:', data);
+        
+        if(data.isSuccess){
+          this.router.navigate(['/transportista']);
+          this.mostrarMensaje('✔ Transportista registrado correctamente.');
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -83,55 +91,11 @@ export class RegistroTransportistaComponent implements OnInit{
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
+          this.mostrarMensaje('❌ Error al registrar al transportista.');
         }
       }
     });
-  }*/
-
-    registrarTransportista() {
-      const transportista: ITransportista = {
-        id: this.idProveedor || 0,
-        codigo: Metodos.generarCodigo(),
-        nombres: this.formTransportista.value.nombres?.trim() ?? '',
-        apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
-        cedula: this.formTransportista.value.cedula?.trim() ?? '',
-        telefono: this.formTransportista.value.telefono?.trim() ?? '',
-        correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
-        imagen: this.imagenField.value,
-        imagenBase64: this.imagenURL,
-        estado: this.formTransportista.value.estado ?? false,
-        fecha_Registro: Metodos.getFechaCreacion()
-      };
-    
-      if (!this.formTransportista.valid) {
-        console.log('Formulario inválido:', this.formTransportista);
-        return;
-      }
-    
-      const formData = new FormData();
-      formData.append('transportista', JSON.stringify(transportista));
-      
-      if (this.imagenField.value) {
-        formData.append('imagen', this.imagenField.value);
-      }
-    
-      this.transportistaServicio.registrar(formData).subscribe({
-        next: (data) => {
-          if (data.isSuccess) {
-            this.router.navigate(['/transportista']);
-            this.mostrarMensaje('✔ Transportista registrado correctamente.');
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log('Error 400:', err.error);
-          if (err.error?.errors) {
-            Object.entries(err.error.errors).forEach(([campo, errores]) => {
-              console.log(`Error en ${campo}:`, errores);
-            });
-          }
-        }
-      });
-    }
+  }
 
   regresar(){
     this.router.navigate(["/transportista"])
@@ -149,21 +113,25 @@ export class RegistroTransportistaComponent implements OnInit{
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-
       const reader = new FileReader();
+
       reader.onload = () => {
-        this.imagenURL = reader.result as string;
-        this.imagenField.setValue(file);
+        this.imagenURL = reader.result as string; // Vista previa de la imagen
+        
+        this.formTransportista.controls.imagen.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
         this.imagenField.markAsTouched();
+        console.log(this.imagenURL);
       };
-      reader.readAsDataURL(file);
+
+      reader.readAsDataURL(file); // Convierte la imagen a Base64
     }
   }
+    
 
   eliminarImagen(): void {
-    this.imagenField.setValue(null);
+    this.imagenField.setValue('');
     this.imagenField.markAsUntouched();
-    this.imagenURL = null;
+    this.imagenURL = '';
   }
 
   get nombresField(): FormControl<string> {
@@ -186,7 +154,7 @@ export class RegistroTransportistaComponent implements OnInit{
     return this.formTransportista.controls.correoElectronico;
   }
 
-  get imagenField(): FormControl<File | null> { 
+  get imagenField(): FormControl<string> { 
     return this.formTransportista.controls.imagen; 
   }
 }

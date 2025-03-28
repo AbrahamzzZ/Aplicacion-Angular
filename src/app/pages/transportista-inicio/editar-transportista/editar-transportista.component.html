@@ -60,18 +60,22 @@
 
                 <div class="form-group">
                     <label>Foto del Transportista:</label>
-                    <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista>
-
-                    @if(imagenField.touched && !imagenField.valid){
-                        @if (imagenField.errors?.['imagenRequerida']) {
+                    <div class="file-input-container">
+                        <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput">
+                        <label for="fileInput" class="file-label">
+                            <span class="file-button">
+                                <mat-icon>cloud_upload</mat-icon>
+                                Seleccionar Foto
+                            </span>
+                            <span class="file-filename" *ngIf="imagenURL">
+                                {{ imagenURL ? 'Archivo seleccionado' : '' }}
+                            </span>
+                        </label>
+                        @if(imagenField.invalid && (imagenField.dirty || imagenField.touched)){
                             <mat-error>Es obligatorio subir una foto del transportista.</mat-error>
-                        }@else if (imagenField.errors?.['tamanoMaximo']) {
-                            <mat-error>La imagen supera el tamaño máximo permitido (2MB).</mat-error>
-                        }@else if (imagenField.errors?.['tipoInvalido']) {
-                            <mat-error>Solo se aceptan archivos de tipo imagen.</mat-error>
                         }
-                    }
-
+                    </div>
+                    
                     <!-- Vista previa de la imagen -->
                     <div class="preview-container" *ngIf="imagenURL">
                         <img [src]="imagenURL" alt="Foto del transportista">
