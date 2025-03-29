@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TransportistaService } from '../../../../services/transportista.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ITransportista } from '../../../models/transportista';
+import { Metodos } from '../../../../utility/metodos';
 
 @Component({
   selector: 'app-editar-transportista',
@@ -48,6 +50,34 @@ export class EditarTransportistaComponent implements OnInit{
         this.cargarTransportista();
       }
     });
+  }
+
+  editarTransportista(): void{
+    const transportista: Partial<ITransportista>={
+      id: this.idTransportista || 0,
+      codigo: Metodos.generarCodigo(),
+      nombres: this.formTransportista.value.nombres?.trim() ?? '',
+      apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
+      cedula: this.formTransportista.value.cedula ?? '',
+      telefono: this.formTransportista.value.telefono ?? '',
+      correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
+      imagen: this.formTransportista.value.imagen ?? '',
+      imagenBase64: this.formTransportista.value.imageBase64 ?? '',
+      estado: this.formTransportista.value.estado ?? false,
+    }
+
+    this.transportistaServicio.editar(transportista).subscribe({
+      next:(data)=>{
+        if(data.isSuccess){
+          this.router.navigate(['/transportista']);
+          this.mostrarMensaje('✔ Transportista editado correctamente.');
+        }
+      },
+      error:(err)=>{
+        console.log(err);
+        this.mostrarMensaje('❌ Error al editar la información del transportista.');
+      }
+    })
   }
  
   cargarTransportista(): void {
@@ -97,9 +127,8 @@ export class EditarTransportistaComponent implements OnInit{
       reader.onload = () => {
         this.imagenURL = reader.result as string; // Vista previa de la imagen
         
-        this.formTransportista.controls.imagen.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
+        this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
         this.imagenField.markAsTouched();
-        console.log(this.imagenURL);
       };
 
       reader.readAsDataURL(file); // Convierte la imagen a Base64

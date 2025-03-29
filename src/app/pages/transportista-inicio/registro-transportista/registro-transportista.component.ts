@@ -14,6 +14,8 @@ import { ITransportista } from '../../../models/transportista';
 import { Metodos } from '../../../../utility/metodos';
 import { TransportistaService } from '../../../../services/transportista.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 
 @Component({
   selector: 'app-transportista',
@@ -22,7 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './registro-transportista.component.html',
   styleUrl: './registro-transportista.component.scss'
 })
-export class RegistroTransportistaComponent implements OnInit{
+export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive{
   @Input('id') idTransportista!: number;
   private route = inject(ActivatedRoute);
   private transportistaServicio = inject(TransportistaService);
@@ -80,10 +82,9 @@ export class RegistroTransportistaComponent implements OnInit{
 
     this.transportistaServicio.registrar(transportista).subscribe({
       next: (data) => {
-        
         if(data.isSuccess){
-          this.router.navigate(['/transportista']);
           this.mostrarMensaje('✔ Transportista registrado correctamente.');
+          this.router.navigate(['/transportista'], {skipLocationChange: true});
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -118,9 +119,8 @@ export class RegistroTransportistaComponent implements OnInit{
       reader.onload = () => {
         this.imagenURL = reader.result as string; // Vista previa de la imagen
         
-        this.formTransportista.controls.imagen.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
+        this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
         this.imagenField.markAsTouched();
-        console.log(this.imagenURL);
       };
 
       reader.readAsDataURL(file); // Convierte la imagen a Base64
@@ -132,6 +132,14 @@ export class RegistroTransportistaComponent implements OnInit{
     this.imagenField.setValue('');
     this.imagenField.markAsUntouched();
     this.imagenURL = '';
+  }
+
+  canDeactive(): boolean | Observable<boolean>{
+    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposVacios = camposEditables.some(campo => this.formTransportista.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(campo => this.formTransportista.get(campo)?.value !== '');
+      
+    return camposConDatos && camposVacios ? false : true;
   }
 
   get nombresField(): FormControl<string> {
