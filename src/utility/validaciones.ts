@@ -17,9 +17,12 @@ export class Validaciones{
     }
 
     static stockValido(): ValidatorFn{
-        return (control: AbstractControl): ValidationErrors | null =>{
-            const regex = /^[1-9]\d*$/;
-            return regex.test(control.value) ? null: {stockValido: true};
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (control.value === null || control.value === undefined || control.value === '') {
+                return { stockValido: true }; // Evita valores vacíos
+            }
+            const valor = Number(control.value);
+            return Number.isInteger(valor) && valor >= 0 ? null : { stockValido: true };
         };
     }
 
