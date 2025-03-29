@@ -12,9 +12,9 @@ import { Metodos } from '../../../../utility/metodos';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClienteService } from '../../../../services/cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cliente',
@@ -25,20 +25,10 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
 })
 export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
   @Input('id') idCliente!: number;
-  public dialogo = inject(MatDialog);
   private route = inject(ActivatedRoute);
   private clienteServicio = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
-
-  @HostListener('window:beforeunload', ['$event'])
-  onBeforeReload(e: BeforeUnloadEvent){
-    const formulario_valido = Object.values(this.formCliente.controls).some((control)=>control.value !== '');
-    if(formulario_valido){
-      e.preventDefault();
-    }
-    return;
-  }
 
   public formCliente = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -50,12 +40,6 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
   });
 
   constructor(private router:Router) {
-  }
-  
-  canDeactive(): boolean | Observable<boolean>{
-    console.log('****canDeactivate REGISTERPAGE********');
-    const formulario = Object.values(this.formCliente.controls).some((control) => control.value !== '');
-    return formulario || false;
   }
 
   ngOnInit(): void {
@@ -84,8 +68,8 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
     this.clienteServicio.registrar(cliente).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-           this.router.navigate(['/cliente']);
-           this.mostrarMensaje('✔ Cliente registrado correctamente.');
+          this.mostrarMensaje('✔ Cliente registrado correctamente.');
+          this.router.navigate(['/cliente'], {skipLocationChange: true});
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -109,6 +93,14 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
       horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
+  }
+
+  canDeactive(): boolean | Observable<boolean>{
+    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposVacios = camposEditables.some(campo => this.formCliente.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(campo => this.formCliente.get(campo)?.value !== '');
+    
+    return camposConDatos && camposVacios ? false : true;
   }
 
   get nombresField(): FormControl<string> {

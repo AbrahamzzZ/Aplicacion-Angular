@@ -36,6 +36,7 @@ td, th {
 
 button {
     margin: 5px;
+    bottom: 10px;
 }
 
 .mat-icon {
@@ -61,4 +62,21 @@ button {
         font-size: 16px;
         color: rgba(0, 0, 0, 0.7);
     }
+}
+
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.search-container mat-form-field {
+    flex-grow: 1; 
+    min-width: 250px;
+}
+
+.search-container button {
+    white-space: nowrap; 
 }

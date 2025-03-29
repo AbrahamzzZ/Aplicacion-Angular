@@ -70,7 +70,7 @@
                     <input matInput type="text" formControlName="precioVenta">
                     @if(precioVentaField.hasError('required')){
                         <mat-error>Ingrese el precio.</mat-error>
-                    }@else if (precioVentaField.hasError('formtaoPrecio')) {
+                    }@else if (precioVentaField.hasError('formatoPrecio')) {
                         <mat-error>Ingrese un precio valido.</mat-error>
                     }
                 </mat-form-field>

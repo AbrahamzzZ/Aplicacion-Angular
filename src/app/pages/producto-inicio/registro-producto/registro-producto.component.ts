@@ -12,6 +12,8 @@ import { IProducto } from '../../../models/producto';
 import { Metodos } from '../../../../utility/metodos';
 import { ProductoService } from '../../../../services/producto.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 
 @Component({
   selector: 'app-producto',
@@ -20,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './registro-producto.component.html',
   styleUrl: './registro-producto.component.scss'
 })
-export class ProductoComponent implements OnInit{
+export class ProductoComponent implements OnInit, CanComponentDeactive{
   @Input('id') idProducto!: number;
   private route = inject(ActivatedRoute);
   private productoServicio = inject(ProductoService);
@@ -33,8 +35,8 @@ export class ProductoComponent implements OnInit{
     descripcion: ['', Validators.required],
     categoria: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validaciones.soloLetras()]],
     paisOrigen: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validaciones.soloLetras()]],
-    stock: [0, [Validators.required, Validaciones.stockValido()]],
-    precioVenta: [0.00, [Validators.required, Validaciones.formatoPrecio()]],
+    stock: [null, [Validators.required, Validaciones.stockValido()]],
+    precioVenta: [null, [Validators.required, Validaciones.formatoPrecio()]],
     estado: [false],
 
   });
@@ -69,8 +71,8 @@ export class ProductoComponent implements OnInit{
     this.productoServicio.registrar(producto).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-           this.router.navigate(['/producto']);
-           this.mostrarMensaje('✔ Producto registrado correctamente.');
+          this.mostrarMensaje('✔ Producto registrado correctamente.');
+          this.router.navigate(['/producto'], {skipLocationChange: true});
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -96,6 +98,14 @@ export class ProductoComponent implements OnInit{
     });
   }
 
+  canDeactive(): boolean | Observable<boolean>{
+    const camposEditables = ['nombre', 'descripcion', 'categoria', 'paisOrigen', 'stock', 'precioVenta'];
+    const camposVacios = camposEditables.some(campo => this.formProducto.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(campo => this.formProducto.get(campo)?.value !== '');
+    
+    return camposConDatos && camposVacios ? false : true;
+  }
+
   get nombreField(): FormControl<string> {
     return this.formProducto.controls.nombre;
   }
@@ -112,11 +122,11 @@ export class ProductoComponent implements OnInit{
     return this.formProducto.controls.paisOrigen;
   }
 
-  get stockField(): FormControl<number> {
+  get stockField(): FormControl<number | null> {
     return this.formProducto.controls.stock;
   }
 
-  get precioVentaField(): FormControl<number> {
+  get precioVentaField(): FormControl<number | null> {
     return this.formProducto.controls.precioVenta;
   }
 }

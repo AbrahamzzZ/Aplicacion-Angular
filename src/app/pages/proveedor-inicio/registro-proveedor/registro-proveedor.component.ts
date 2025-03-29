@@ -12,6 +12,8 @@ import { IProveedor } from '../../../models/proveedor';
 import { Metodos } from '../../../../utility/metodos';
 import { ProveedorService } from '../../../../services/proveedor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-proveedor',
@@ -20,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './registro-proveedor.component.html',
   styleUrl: './registro-proveedor.component.scss'
 })
-export class ProveedorComponent implements OnInit{
+export class ProveedorComponent implements OnInit, CanComponentDeactive{
   @Input('id') idProveedor!: number;
   private route = inject(ActivatedRoute);
   private proveedorServicio = inject(ProveedorService);
@@ -67,8 +69,8 @@ export class ProveedorComponent implements OnInit{
     this.proveedorServicio.registrar(proveedor).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-           this.router.navigate(['/proveedor']);
-           this.mostrarMensaje('✔ Proveedor registrado correctamente.');
+          this.mostrarMensaje('✔ Proveedor registrado correctamente.');
+          this.router.navigate(['/proveedor'], {skipLocationChange: true});
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -92,6 +94,14 @@ export class ProveedorComponent implements OnInit{
       horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
+  }
+
+  canDeactive(): boolean | Observable<boolean>{
+    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposVacios = camposEditables.some(campo => this.formProveedor.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(campo => this.formProveedor.get(campo)?.value !== '');
+      
+    return camposConDatos && camposVacios ? false : true;
   }
 
   get nombresField(): FormControl<string> {

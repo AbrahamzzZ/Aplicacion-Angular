@@ -12,6 +12,8 @@ import { UsuarioService } from '../../../../services/usuario.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Metodos } from '../../../../utility/metodos';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 
 @Component({
   selector: 'app-usuario',
@@ -20,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './registro-usuario.component.html',
   styleUrl: './registro-usuario.component.scss'
 })
-export class RegistroUsuarioComponent implements OnInit{
+export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive{
   @Input('id') idUsuario!: number;
   private route = inject(ActivatedRoute);
   private usuarioServicio = inject(UsuarioService);
@@ -63,8 +65,8 @@ export class RegistroUsuarioComponent implements OnInit{
     this.usuarioServicio.registrar(usuario).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-          this.router.navigate(['/usuario']);
           this.mostrarMensaje('✔ Usuario registrado correctamente.');
+          this.router.navigate(['/usuario'], {skipLocationChange: true});
         }
       },error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
@@ -88,6 +90,14 @@ export class RegistroUsuarioComponent implements OnInit{
       horizontalPosition: 'end',
       verticalPosition: 'bottom'
     });
+  }
+
+  canDeactive(): boolean | Observable<boolean>{
+    const camposEditables = ['nombreCompleto', 'clave', 'correoElectronico'];
+    const camposVacios = camposEditables.some(campo => this.formUsuario.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(campo => this.formUsuario.get(campo)?.value !== '');
+      
+    return camposConDatos && camposVacios ? false : true;
   }
 
   get nombreCompletoField(): FormControl<string> {
