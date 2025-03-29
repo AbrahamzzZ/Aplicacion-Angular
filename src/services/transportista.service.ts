@@ -24,7 +24,7 @@ export class TransportistaService {
         return this.http.post<IApi>(this.apiUrl, transportista);
     }
   
-    editar(transportista:ITransportista){
+    editar(transportista:Partial<ITransportista>){
         return this.http.put<IApi>(this.apiUrl, transportista);
     }
   
