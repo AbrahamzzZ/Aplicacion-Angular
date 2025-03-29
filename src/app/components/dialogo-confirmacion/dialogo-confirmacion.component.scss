@@ -1,34 +1,72 @@
-.dialog-container {
-    text-align: center;
-    padding: 16px;
+$primary-color: #333;
+$warning-color: #d32f2f;
+$warning-hover: #b71c1c;
+$cancel-color: #555;
+$padding: 16px;
+$border-radius: 8px;
+$transition: all 0.3s ease;
+
+@mixin flex-center($justify: space-between) {
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+}
+
+@mixin button-style($bg-color, $text-color: white) {
+  background-color: $bg-color;
+  color: $text-color;
+  padding: 10px 16px;
+  border-radius: $border-radius;
+  transition: $transition;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
   }
-  
+}
+
+.dialog-container {
+  text-align: center;
+  padding: $padding;
+
+  h2 {
+    @include flex-center(center);
+    font-size: 20px;
+    font-weight: bold;
+    color: $primary-color;
+  }
+
   .warning-icon {
-    color: #d32f2f; 
+    color: $warning-color;
     vertical-align: middle;
     margin-right: 8px;
   }
-  
+
   .dialog-message {
     font-size: 16px;
-    color: #333;
-    margin: 16px 0;
+    color: $primary-color;
+    margin: $padding 0;
   }
-  
+
   .dialog-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 15px;
+
+    .cancel-button {
+      color: $cancel-color;
+      padding: 10px 16px;
+      border-radius: $border-radius;
+      transition: $transition;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($cancel-color, 40%);
+      }
+    }
+
+    .delete-button {
+      @include button-style($warning-color);
+    }
   }
-  
-  .cancel-button {
-    color: #555;
-  }
-  
-  .delete-button {
-    background-color: #d32f2f;
-    color: white;
-  }
-  
-  .delete-button:hover {
-    background-color: #b71c1c;
-  }
+}
