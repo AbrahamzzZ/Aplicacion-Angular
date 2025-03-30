@@ -8,29 +8,28 @@ import { IApi } from '../app/models/api';
   providedIn: 'root'
 })
 export class UsuarioService {
-
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl+"Usuario";
+  private apiUrl: string = appsettings.apiUrl + 'Usuario';
 
-  constructor() { }
+  constructor() {}
 
-  lista(){
+  lista() {
     return this.http.get<IUsuario[]>(this.apiUrl);
   }
-  
-  obtener(id:number){
+
+  obtener(id: number) {
     return this.http.get<IUsuario>(`${this.apiUrl}/${id}`);
   }
-  
-  registrar(usuario:IUsuario){
+
+  registrar(usuario: IUsuario) {
     return this.http.post<IApi>(this.apiUrl, usuario);
   }
-  
-  editar(usuario:Partial<IUsuario>){
+
+  editar(usuario: Partial<IUsuario>) {
     return this.http.put<IApi>(this.apiUrl, usuario);
   }
-  
-  eliminar(id: number){
+
+  eliminar(id: number) {
     return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
   }
 }

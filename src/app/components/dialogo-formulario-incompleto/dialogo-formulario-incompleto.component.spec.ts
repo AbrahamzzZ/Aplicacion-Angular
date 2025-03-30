@@ -9,9 +9,8 @@ describe('DialogoFormularioIncompletoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DialogoFormularioIncompletoComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DialogoFormularioIncompletoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

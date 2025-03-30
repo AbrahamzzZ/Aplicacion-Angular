@@ -11,7 +11,7 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './dialogo-confirmacion.component.scss'
 })
 export class DialogoConfirmacionComponent {
- constructor(
+  constructor(
     public dialogRef: MatDialogRef<DialogoConfirmacionComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { mensaje: string }
   ) {}

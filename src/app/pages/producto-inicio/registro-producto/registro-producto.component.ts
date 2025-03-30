@@ -18,39 +18,68 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
 @Component({
   selector: 'app-producto',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './registro-producto.component.html',
   styleUrl: './registro-producto.component.scss'
 })
-export class ProductoComponent implements OnInit, CanComponentDeactive{
+export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
   @Input('id') idProducto!: number;
   private route = inject(ActivatedRoute);
   private productoServicio = inject(ProductoService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
-  
+
   public formProducto = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    nombre: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     descripcion: ['', Validators.required],
-    categoria: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validaciones.soloLetras()]],
-    paisOrigen: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validaciones.soloLetras()]],
+    categoria: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
+    paisOrigen: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     stock: [null, [Validators.required, Validaciones.stockValido()]],
     precioVenta: [null, [Validators.required, Validaciones.formatoPrecio()]],
-    estado: [false],
-
+    estado: [false]
   });
 
-  constructor(private router:Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if(this.route.snapshot.params['id']){
+    if (this.route.snapshot.params['id']) {
       this.idProducto = parseInt(this.route.snapshot.params['id']);
     }
   }
 
-  registrarProducto(){
+  registrarProducto() {
     const producto: IProducto = {
       id: this.idProducto || 0,
       codigo: Metodos.generarCodigo(),
@@ -62,19 +91,20 @@ export class ProductoComponent implements OnInit, CanComponentDeactive{
       precio_Venta: this.formProducto.value.precioVenta ?? 0,
       estado: this.formProducto.value.estado ?? false
     };
-    
+
     if (!this.formProducto.valid) {
-      console.log('Formulario inválido:', this.formProducto);
+      this.mostrarMensaje('Formulario inválido.');
       return;
     }
-    
+
     this.productoServicio.registrar(producto).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.mostrarMensaje('✔ Producto registrado correctamente.');
-          this.router.navigate(['/producto'], {skipLocationChange: true});
+          this.router.navigate(['/producto'], { skipLocationChange: true });
         }
-      },error: (err: HttpErrorResponse) => {
+      },
+      error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
         if (err.error?.errors) {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
@@ -86,8 +116,8 @@ export class ProductoComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  regresar(){
-    this.router.navigate(["/producto"])
+  regresar() {
+    this.router.navigate(['/producto']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -98,11 +128,22 @@ export class ProductoComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  canDeactive(): boolean | Observable<boolean>{
-    const camposEditables = ['nombre', 'descripcion', 'categoria', 'paisOrigen', 'stock', 'precioVenta'];
-    const camposVacios = camposEditables.some(campo => this.formProducto.get(campo)?.value === '');
-    const camposConDatos = camposEditables.some(campo => this.formProducto.get(campo)?.value !== '');
-    
+  canDeactive(): boolean | Observable<boolean> {
+    const camposEditables = [
+      'nombre',
+      'descripcion',
+      'categoria',
+      'paisOrigen',
+      'stock',
+      'precioVenta'
+    ];
+    const camposVacios = camposEditables.some(
+      (campo) => this.formProducto.get(campo)?.value === ''
+    );
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formProducto.get(campo)?.value !== ''
+    );
+
     return camposConDatos && camposVacios ? false : true;
   }
 

@@ -14,11 +14,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-editar-usuario',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './editar-usuario.component.html',
   styleUrl: './editar-usuario.component.scss'
 })
-export class EditarUsuarioComponent implements OnInit{
+export class EditarUsuarioComponent implements OnInit {
   private usuarioServicio = inject(UsuarioService);
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
@@ -33,35 +40,35 @@ export class EditarUsuarioComponent implements OnInit{
   });
 
   constructor(private router: Router) {}
-      
-    ngOnInit(): void {
-      this.activatedRoute.params.subscribe(params => {
-        this.idUsuario = +params['id']; 
-        if (this.idUsuario) {
-          this.cargarUsuario();
-        }
-      });
-    }
-      
-    cargarUsuario(): void {
-      this.usuarioServicio.obtener(this.idUsuario).subscribe({
-        next: (data) => {
-          if (data) {
-            this.formUsuario.patchValue({
-                nombreCompleto: data.nombre_Completo,
-                correoElectronico: data.correo_Electronico,
-                clave: data.clave,
-                estado: data.estado
-              });
-            }
-          },
-          error: (err) => {
-        console.error('Error al obtener proveedor:', err);
-        }
-      });
-    }
 
-  editarUsuario(): void{
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      this.idUsuario = +params['id'];
+      if (this.idUsuario) {
+        this.cargarUsuario();
+      }
+    });
+  }
+
+  cargarUsuario(): void {
+    this.usuarioServicio.obtener(this.idUsuario).subscribe({
+      next: (data) => {
+        if (data) {
+          this.formUsuario.patchValue({
+            nombreCompleto: data.nombre_Completo,
+            correoElectronico: data.correo_Electronico,
+            clave: data.clave,
+            estado: data.estado
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener proveedor:', err);
+      }
+    });
+  }
+
+  editarUsuario(): void {
     const usuario: Partial<IUsuario> = {
       id: this.idUsuario,
       nombre_Completo: this.formUsuario.value.nombreCompleto!,
@@ -70,22 +77,27 @@ export class EditarUsuarioComponent implements OnInit{
       estado: this.formUsuario.value.estado
     };
 
+    if (!this.formUsuario.valid) {
+      this.mostrarMensaje('Formulatio inválido');
+      return;
+    }
+
     this.usuarioServicio.editar(usuario).subscribe({
-      next:(data)=>{
-        if(data.isSuccess){
+      next: (data) => {
+        if (data.isSuccess) {
           this.router.navigate(['/usuario']);
           this.mostrarMensaje('✔ Usuario editado correctamente.');
         }
-      }, 
-      error:(err)=>{
+      },
+      error: (err) => {
         console.log(err);
         this.mostrarMensaje('❌ Error al editar la información del usuario.');
       }
     });
   }
-  
-  regresar(){
-    this.router.navigate(["/usuario"]);
+
+  regresar() {
+    this.router.navigate(['/usuario']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -99,11 +111,11 @@ export class EditarUsuarioComponent implements OnInit{
   get nombreCompletoField(): FormControl<string> {
     return this.formUsuario.controls.nombreCompleto;
   }
-  
+
   get claveField(): FormControl<string> {
     return this.formUsuario.controls.clave;
   }
-  
+
   get correoElectronicoField(): FormControl<string> {
     return this.formUsuario.controls.correoElectronico;
   }

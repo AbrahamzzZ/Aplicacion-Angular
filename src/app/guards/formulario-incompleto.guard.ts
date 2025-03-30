@@ -1,21 +1,23 @@
-import { inject } from "@angular/core";
-import { CanDeactivateFn } from "@angular/router";
-import {  Observable } from "rxjs";
-import { MatDialog } from "@angular/material/dialog";
-import { DialogoFormularioIncompletoComponent } from "../components/dialogo-formulario-incompleto/dialogo-formulario-incompleto.component";
+import { inject } from '@angular/core';
+import { CanDeactivateFn } from '@angular/router';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogoFormularioIncompletoComponent } from '../components/dialogo-formulario-incompleto/dialogo-formulario-incompleto.component';
 
-export interface CanComponentDeactive{
-    canDeactive: () =>Observable<boolean> | boolean;
+export interface CanComponentDeactive {
+  canDeactive: () => Observable<boolean> | boolean;
 }
 
-export const FormularioIncompleto: CanDeactivateFn<CanComponentDeactive> = (component: CanComponentDeactive)=>{
-    const formularioValido = component.canDeactive();
+export const FormularioIncompleto: CanDeactivateFn<CanComponentDeactive> = (
+  component: CanComponentDeactive
+) => {
+  const formularioValido = component.canDeactive();
 
-    console.log(formularioValido);
-    if(!formularioValido){
-        const dialogo = inject(MatDialog);
-        const reference = dialogo.open(DialogoFormularioIncompletoComponent);
-        return reference.afterClosed();
-    }
-    return true;
+  console.log(formularioValido);
+  if (!formularioValido) {
+    const dialogo = inject(MatDialog);
+    const reference = dialogo.open(DialogoFormularioIncompletoComponent);
+    return reference.afterClosed();
+  }
+  return true;
 };

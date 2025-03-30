@@ -19,11 +19,18 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-cliente',
   standalone: true,
-  imports: [ MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './registro-cliente.component.html',
   styleUrl: './registro-cliente.component.scss'
 })
-export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
+export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
   @Input('id') idCliente!: number;
   private route = inject(ActivatedRoute);
   private clienteServicio = inject(ClienteService);
@@ -32,23 +39,38 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
 
   public formCliente = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
-    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    nombres: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
+    apellidos: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
-    correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+    correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]]
   });
 
-  constructor(private router:Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if(this.route.snapshot.params['id']){
+    if (this.route.snapshot.params['id']) {
       this.idCliente = parseInt(this.route.snapshot.params['id']);
     }
   }
 
-  registrarCliente(){
+  registrarCliente() {
     const cliente: ICliente = {
       id: this.idCliente || 0,
       codigo: Metodos.generarCodigo(),
@@ -59,19 +81,20 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
       correo_Electronico: this.formCliente.value.correoElectronico?.trim() ?? '',
       fecha_Registro: Metodos.getFechaCreacion()
     };
-    
+
     if (!this.formCliente.valid) {
-      console.log('Formulario inválido:', this.formCliente);
+      this.mostrarMensaje('Formulario inválido.');
       return;
     }
-    
+
     this.clienteServicio.registrar(cliente).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.mostrarMensaje('✔ Cliente registrado correctamente.');
-          this.router.navigate(['/cliente'], {skipLocationChange: true});
+          this.router.navigate(['/cliente'], { skipLocationChange: true });
         }
-      },error: (err: HttpErrorResponse) => {
+      },
+      error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
         if (err.error?.errors) {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
@@ -83,8 +106,8 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  regresar(){
-    this.router.navigate(["/cliente"])
+  regresar() {
+    this.router.navigate(['/cliente']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -95,31 +118,33 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  canDeactive(): boolean | Observable<boolean>{
+  canDeactive(): boolean | Observable<boolean> {
     const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-    const camposVacios = camposEditables.some(campo => this.formCliente.get(campo)?.value === '');
-    const camposConDatos = camposEditables.some(campo => this.formCliente.get(campo)?.value !== '');
-    
+    const camposVacios = camposEditables.some((campo) => this.formCliente.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formCliente.get(campo)?.value !== ''
+    );
+
     return camposConDatos && camposVacios ? false : true;
   }
 
   get nombresField(): FormControl<string> {
-		return this.formCliente.controls.nombres;
-	}
+    return this.formCliente.controls.nombres;
+  }
 
-	get apellidosField(): FormControl<string> {
-		return this.formCliente.controls.apellidos;
-	}
+  get apellidosField(): FormControl<string> {
+    return this.formCliente.controls.apellidos;
+  }
 
-	get cedulaField(): FormControl<string> {
-		return this.formCliente.controls.cedula;
-	}
+  get cedulaField(): FormControl<string> {
+    return this.formCliente.controls.cedula;
+  }
 
-	get telefonoField(): FormControl<string> {
-		return this.formCliente.controls.telefono;
-	}
+  get telefonoField(): FormControl<string> {
+    return this.formCliente.controls.telefono;
+  }
 
-	get correoElectronicoField(): FormControl<string> {
-		return this.formCliente.controls.correoElectronico;
-	}
+  get correoElectronicoField(): FormControl<string> {
+    return this.formCliente.controls.correoElectronico;
+  }
 }

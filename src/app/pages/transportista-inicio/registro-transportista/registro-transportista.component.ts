@@ -20,11 +20,20 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
 @Component({
   selector: 'app-transportista',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule, CommonModule, MatIcon],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIcon
+  ],
   templateUrl: './registro-transportista.component.html',
   styleUrl: './registro-transportista.component.scss'
 })
-export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive{
+export class RegistroTransportistaComponent implements OnInit, CanComponentDeactive {
   @Input('id') idTransportista!: number;
   private route = inject(ActivatedRoute);
   private transportistaServicio = inject(TransportistaService);
@@ -34,28 +43,41 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
 
   public formTransportista = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
-    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    nombres: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
+    apellidos: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     imageBase64: [''],
     imagen: [''],
     estado: [false]
-
   });
 
-  constructor(private router:Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if(this.route.snapshot.params['id']){
-      this.idTransportista= parseInt(this.route.snapshot.params['id']);
+    if (this.route.snapshot.params['id']) {
+      this.idTransportista = parseInt(this.route.snapshot.params['id']);
     }
   }
 
   registrarTransportista() {
-
     if (!this.formTransportista.valid) {
       this.formTransportista.markAllAsTouched(); // Marca todos los campos como tocados
       return;
@@ -74,19 +96,20 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
       estado: this.formTransportista.value.estado ?? false,
       fecha_Registro: Metodos.getFechaCreacion()
     };
-        
+
     if (!this.formTransportista.valid) {
-      console.log('Formulario inválido:', this.formTransportista);
+      this.mostrarMensaje('Formulario inválido.');
       return;
     }
 
     this.transportistaServicio.registrar(transportista).subscribe({
       next: (data) => {
-        if(data.isSuccess){
+        if (data.isSuccess) {
           this.mostrarMensaje('✔ Transportista registrado correctamente.');
-          this.router.navigate(['/transportista'], {skipLocationChange: true});
+          this.router.navigate(['/transportista'], { skipLocationChange: true });
         }
-      },error: (err: HttpErrorResponse) => {
+      },
+      error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
         if (err.error?.errors) {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
@@ -98,8 +121,8 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     });
   }
 
-  regresar(){
-    this.router.navigate(["/transportista"])
+  regresar() {
+    this.router.navigate(['/transportista']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -118,7 +141,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
 
       reader.onload = () => {
         this.imagenURL = reader.result as string; // Vista previa de la imagen
-        
+
         this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
         this.imagenField.markAsTouched();
       };
@@ -126,7 +149,6 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
       reader.readAsDataURL(file); // Convierte la imagen a Base64
     }
   }
-    
 
   eliminarImagen(): void {
     this.imagenField.setValue('');
@@ -134,11 +156,15 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     this.imagenURL = '';
   }
 
-  canDeactive(): boolean | Observable<boolean>{
+  canDeactive(): boolean | Observable<boolean> {
     const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-    const camposVacios = camposEditables.some(campo => this.formTransportista.get(campo)?.value === '');
-    const camposConDatos = camposEditables.some(campo => this.formTransportista.get(campo)?.value !== '');
-      
+    const camposVacios = camposEditables.some(
+      (campo) => this.formTransportista.get(campo)?.value === ''
+    );
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formTransportista.get(campo)?.value !== ''
+    );
+
     return camposConDatos && camposVacios ? false : true;
   }
 
@@ -162,7 +188,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     return this.formTransportista.controls.correoElectronico;
   }
 
-  get imagenField(): FormControl<string> { 
-    return this.formTransportista.controls.imagen; 
+  get imagenField(): FormControl<string> {
+    return this.formTransportista.controls.imagen;
   }
 }

@@ -18,11 +18,18 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-proveedor',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './registro-proveedor.component.html',
   styleUrl: './registro-proveedor.component.scss'
 })
-export class ProveedorComponent implements OnInit, CanComponentDeactive{
+export class RegistroProveedorComponent implements OnInit, CanComponentDeactive {
   @Input('id') idProveedor!: number;
   private route = inject(ActivatedRoute);
   private proveedorServicio = inject(ProveedorService);
@@ -31,24 +38,39 @@ export class ProveedorComponent implements OnInit, CanComponentDeactive{
 
   public formProveedor = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
-    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    nombres: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
+    apellidos: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     estado: [false]
   });
 
-  constructor(private router:Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if(this.route.snapshot.params['id']){
-      this.idProveedor= parseInt(this.route.snapshot.params['id']);
+    if (this.route.snapshot.params['id']) {
+      this.idProveedor = parseInt(this.route.snapshot.params['id']);
     }
   }
 
-  registrarProveedor(){
+  registrarProveedor() {
     const proveedor: IProveedor = {
       id: this.idProveedor || 0,
       codigo: Metodos.generarCodigo(),
@@ -60,19 +82,20 @@ export class ProveedorComponent implements OnInit, CanComponentDeactive{
       estado: this.formProveedor.value.estado ?? false,
       fecha_Registro: Metodos.getFechaCreacion()
     };
-    
+
     if (!this.formProveedor.valid) {
-      console.log('Formulario inválido:', this.formProveedor);
+      this.mostrarMensaje('Formulario inválido.');
       return;
     }
-    
+
     this.proveedorServicio.registrar(proveedor).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.mostrarMensaje('✔ Proveedor registrado correctamente.');
-          this.router.navigate(['/proveedor'], {skipLocationChange: true});
+          this.router.navigate(['/proveedor'], { skipLocationChange: true });
         }
-      },error: (err: HttpErrorResponse) => {
+      },
+      error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
         if (err.error?.errors) {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
@@ -84,8 +107,8 @@ export class ProveedorComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  regresar(){
-    this.router.navigate(["/proveedor"])
+  regresar() {
+    this.router.navigate(['/proveedor']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -96,11 +119,15 @@ export class ProveedorComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  canDeactive(): boolean | Observable<boolean>{
+  canDeactive(): boolean | Observable<boolean> {
     const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-    const camposVacios = camposEditables.some(campo => this.formProveedor.get(campo)?.value === '');
-    const camposConDatos = camposEditables.some(campo => this.formProveedor.get(campo)?.value !== '');
-      
+    const camposVacios = camposEditables.some(
+      (campo) => this.formProveedor.get(campo)?.value === ''
+    );
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formProveedor.get(campo)?.value !== ''
+    );
+
     return camposConDatos && camposVacios ? false : true;
   }
 

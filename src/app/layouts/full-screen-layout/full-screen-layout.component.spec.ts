@@ -9,9 +9,8 @@ describe('FullScreenLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FullScreenLayoutComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(FullScreenLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

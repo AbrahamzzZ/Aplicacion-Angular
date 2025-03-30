@@ -8,28 +8,27 @@ import { IApi } from '../app/models/api';
   providedIn: 'root'
 })
 export class ClienteService {
-
   private http = inject(HttpClient);
-  private apiUrl: string = appsettings.apiUrl+"Cliente";
-  constructor() { }
+  private apiUrl: string = appsettings.apiUrl + 'Cliente';
+  constructor() {}
 
-  lista(){
+  lista() {
     return this.http.get<ICliente[]>(this.apiUrl);
   }
 
-  obtener(id:number){
+  obtener(id: number) {
     return this.http.get<ICliente>(`${this.apiUrl}/${id}`);
   }
 
-  registrar(cliente:ICliente){
+  registrar(cliente: ICliente) {
     return this.http.post<IApi>(this.apiUrl, cliente);
   }
 
-  editar(cliente: Partial<ICliente>){
+  editar(cliente: Partial<ICliente>) {
     return this.http.put<IApi>(this.apiUrl, cliente);
   }
 
-  eliminar(id: number){
+  eliminar(id: number) {
     return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
   }
 }

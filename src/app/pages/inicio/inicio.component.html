@@ -1,23 +1,33 @@
 <div class="container">
-    <mat-card class="supermarket-card">
-        <mat-card-header>
-            <div mat-card-avatar class="header-logo">
-                <img src="../../../assets/images/logo.png" alt="Supermercado Logo">
-            </div>
-            <mat-card-title>Supermercado Gran Aki</mat-card-title>
-            <mat-card-subtitle>Siempre productos frescos y al mejor precio</mat-card-subtitle>
-        </mat-card-header>
+  <mat-card class="supermarket">
+    <mat-card-header class="supermarket__header">
+      <div class="supermarket__header-avatar">
+        <img
+          src="../../../assets/images/logo.png"
+          alt="Supermercado Logo"
+          class="supermarket__header-logo"
+        />
+      </div>
+      <mat-card-title class="supermarket__title">Supermercado Gran Aki</mat-card-title>
+      <mat-card-subtitle class="supermarket__subtitle"
+        >Siempre productos frescos y al mejor precio</mat-card-subtitle
+      >
+    </mat-card-header>
 
-        <mat-card-content>
-            <img mat-card-image class="supermarket-image" src="../../../assets/images/supermercadoGranAki.png" alt="Supermercado">
-        </mat-card-content>
-        
-        <mat-card-footer>
-            <p>
-                <strong>📍 Dirección:</strong> Av. Principal 123, Ciudad <br>
-                <strong>🕒 Horario:</strong> Lunes a Domingo, 7:00 AM - 10:00 PM <br>
-                <strong>🏷️ Promociones:</strong> Descuentos especiales todos los viernes
-            </p>
-        </mat-card-footer>
-    </mat-card>
+    <mat-card-content class="supermarket__content">
+      <img
+        src="../../../assets/images/supermercadoGranAki.png"
+        alt="Supermercado"
+        class="supermarket__image"
+      />
+    </mat-card-content>
+
+    <mat-card-footer class="supermarket__footer">
+      <p class="supermarket__info">
+        <strong>📍 Dirección:</strong> Av. Principal 123, Ciudad <br />
+        <strong>🕒 Horario:</strong> Lunes a Domingo, 7:00 AM - 10:00 PM <br />
+        <strong>🏷️ Promociones:</strong> Descuentos especiales todos los viernes
+      </p>
+    </mat-card-footer>
+  </mat-card>
 </div>

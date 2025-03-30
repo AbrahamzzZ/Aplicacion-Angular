@@ -9,9 +9,8 @@ describe('PaginaNoEncontradaComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PaginaNoEncontradaComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PaginaNoEncontradaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

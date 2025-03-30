@@ -9,6 +9,4 @@ import { MatDialogModule } from '@angular/material/dialog';
   templateUrl: './dialogo-formulario-incompleto.component.html',
   styleUrl: './dialogo-formulario-incompleto.component.scss'
 })
-export class DialogoFormularioIncompletoComponent {
-
-}
+export class DialogoFormularioIncompletoComponent {}

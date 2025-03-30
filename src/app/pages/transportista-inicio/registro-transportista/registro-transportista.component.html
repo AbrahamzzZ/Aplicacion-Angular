@@ -1,101 +1,122 @@
 <div class="container">
-    <mat-card class="card">
-		<mat-card-header class="card__title">
-			<mat-card-title>Registro de transportistas</mat-card-title>
-		</mat-card-header>
+  <mat-card class="container__card">
+    <mat-card-header class="container__header">
+      <mat-card-title class="container__title">Registro de transportistas</mat-card-title>
+    </mat-card-header>
 
-        <mat-card-content>
-            <form class="form" [formGroup]="formTransportista" >
-                <mat-form-field>
-                    <mat-label>Codigo: </mat-label>
-                    <input matInput type="text" formControlName="codigo" readonly>
-                </mat-form-field>
+    <mat-card-content>
+      <form class="form" [formGroup]="formTransportista">
+        <mat-form-field class="form__field">
+          <mat-label>Codigo: </mat-label>
+          <input matInput type="text" formControlName="codigo" readonly />
+        </mat-form-field>
 
-                <mat-form-field>
-                    <mat-label>Nombres: </mat-label> 
-                    <input matInput type="text" formControlName="nombres">
-                    @if(nombresField.hasError('required')){
-                        <mat-error>Ingrese sus nombres.</mat-error>
-                    }@else if (nombresField.hasError('minlength')) {
-                        <mat-error>Nombres demasiados cortos.</mat-error>
-                    }@else if (nombresField.hasError('soloLetras')) {
-                        <mat-error>Los nombres solo debe contener letras.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Apellidos: </mat-label> 
-                    <input matInput type="text" formControlName="apellidos">
-                    @if(apellidosField.hasError('required')){
-                        <mat-error>Ingrese sus apellidos.</mat-error>
-                    }@else if (apellidosField.hasError('minlength')) {
-                        <mat-error>Apellidos demasiados cortos.</mat-error>
-                    }@else if (apellidosField.hasError('soloLetras')) {
-                        <mat-error>Los apellidos solo debe contener letras.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Cédula: </mat-label> 
-                    <input matInput type="text" formControlName="cedula">
-                    @if(cedulaField.hasError('required')){
-                        <mat-error>Ingrese su cédula.</mat-error>
-                    }@else if (cedulaField.hasError('soloNumeros')) {
-                        <mat-error>Ingrese una cédula válida (10 dígitos).</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Telefono: </mat-label> 
-                    <input matInput type="text" formControlName="telefono">
-                    @if(telefonoField.hasError('required')){
-                        <mat-error>Ingrese su telefono.</mat-error>
-                    }@else if (telefonoField.hasError('soloNumeros')) {
-                        <mat-error>Ingrese un numero de teléfono válido (10 dígitos).</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Correo Electrónico: </mat-label> 
-                    <input matInput type="text" formControlName="correoElectronico">
-                    @if(correoElectronicoField.hasError('required')){
-                        <mat-error>Ingrese su Correo Electrónico</mat-error>
-                    }
-                </mat-form-field>
+        <mat-form-field class="form__field">
+          <mat-label>Nombres: </mat-label>
+          <input matInput type="text" formControlName="nombres" />
+          @if (nombresField.hasError('required')) {
+            <mat-error class="form__error">Ingrese sus nombres.</mat-error>
+          } @else if (nombresField.hasError('minlength')) {
+            <mat-error class="form__error">Nombres demasiados cortos.</mat-error>
+          } @else if (nombresField.hasError('soloLetras')) {
+            <mat-error class="form__error">Los nombres solo debe contener letras.</mat-error>
+          }
+        </mat-form-field>
 
-                <div class="form-group">
-                    <label>Foto del Transportista:</label>
-                    <div class="file-input-container">
-                        <input type="file" (change)="subirImagen($event)" accept="image/*" #fotoTransportista class="file-input" id="fileInput">
-                        <label for="fileInput" class="file-label">
-                            <span class="file-button">
-                                <mat-icon>cloud_upload</mat-icon>
-                                Seleccionar Foto
-                            </span>
-                            <span class="file-filename" *ngIf="imagenURL">
-                                {{ imagenURL ? 'Archivo seleccionado' : '' }}
-                            </span>
-                        </label>
-                        @if(imagenField.invalid && (imagenField.dirty || imagenField.touched)){
-                            <mat-error>Es obligatorio subir una foto del transportista.</mat-error>
-                        }
-                    </div>
+        <mat-form-field class="form__field">
+          <mat-label>Apellidos: </mat-label>
+          <input matInput type="text" formControlName="apellidos" />
+          @if (apellidosField.hasError('required')) {
+            <mat-error class="form__error">Ingrese sus apellidos.</mat-error>
+          } @else if (apellidosField.hasError('minlength')) {
+            <mat-error class="form__error">Apellidos demasiados cortos.</mat-error>
+          } @else if (apellidosField.hasError('soloLetras')) {
+            <mat-error class="form__error">Los apellidos solo debe contener letras.</mat-error>
+          }
+        </mat-form-field>
 
-                    
-                    <!-- Vista previa de la imagen -->
-                    <div class="preview-container" *ngIf="imagenURL">
-                        <img [src]="imagenURL" alt="Foto del transportista">
-                        <button mat-icon-button class="delete-button" (click)="eliminarImagen()">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
+        <mat-form-field class="form__field">
+          <mat-label>Cédula: </mat-label>
+          <input matInput type="text" formControlName="cedula" />
+          @if (cedulaField.hasError('required')) {
+            <mat-error class="form__error">Ingrese su cédula.</mat-error>
+          } @else if (cedulaField.hasError('soloNumeros')) {
+            <mat-error class="form__error">Ingrese una cédula válida (10 dígitos).</mat-error>
+          }
+        </mat-form-field>
 
-                <mat-checkbox formControlName="estado">Activo</mat-checkbox>
-    
-                <button mat-raised-button color="primary" (click)="registrarTransportista()">Registrar</button>
-                <button mat-raised-button color="primary" (click)="regresar()">Regresar</button>
-            </form>
-        </mat-card-content>
-    </mat-card>
+        <mat-form-field class="form__field">
+          <mat-label>Telefono: </mat-label>
+          <input matInput type="text" formControlName="telefono" />
+          @if (telefonoField.hasError('required')) {
+            <mat-error class="form__error">Ingrese su telefono.</mat-error>
+          } @else if (telefonoField.hasError('soloNumeros')) {
+            <mat-error class="form__error"
+              >Ingrese un numero de teléfono válido (10 dígitos).</mat-error
+            >
+          }
+        </mat-form-field>
+
+        <mat-form-field class="form__field">
+          <mat-label>Correo Electrónico: </mat-label>
+          <input matInput type="text" formControlName="correoElectronico" />
+          @if (correoElectronicoField.hasError('required')) {
+            <mat-error class="form__error">Ingrese su Correo Electrónico</mat-error>
+          } @else if (correoElectronicoField) {
+            <mat-error class="form__error">Ingrese un Correo Electrónico válido.</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="form-group">
+          <label>Foto del Transportista:</label>
+          <div class="file-input-container">
+            <input
+              type="file"
+              (change)="subirImagen($event)"
+              accept="image/*"
+              #fotoTransportista
+              class="file-input"
+              id="fileInput"
+            />
+            <label for="fileInput" class="file-label">
+              <span class="file-button">
+                <mat-icon>cloud_upload</mat-icon>
+                Seleccionar Foto
+              </span>
+              <span class="file-filename" *ngIf="imagenURL">
+                {{ imagenURL ? 'Archivo seleccionado' : '' }}
+              </span>
+            </label>
+            @if (imagenField.invalid && (imagenField.dirty || imagenField.touched)) {
+              <mat-error class="form__error"
+                >Es obligatorio subir una foto del transportista.</mat-error
+              >
+            }
+          </div>
+
+          <!-- Vista previa de la imagen -->
+          <div class="preview-container" *ngIf="imagenURL">
+            <img [src]="imagenURL" alt="Foto del transportista" />
+            <button mat-icon-button class="delete-button" (click)="eliminarImagen()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <mat-checkbox class="form__checkbox" formControlName="estado">Activo</mat-checkbox>
+
+        <button
+          class="form__button"
+          mat-raised-button
+          color="primary"
+          (click)="registrarTransportista()"
+        >
+          Registrar
+        </button>
+        <button class="form__button" mat-raised-button color="primary" (click)="regresar()">
+          Regresar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

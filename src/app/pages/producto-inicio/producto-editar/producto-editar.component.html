@@ -1,82 +1,86 @@
 <div class="container">
-    <mat-card class="card">
-		<mat-card-header class="card__title">
-			<mat-card-title>Editar información del producto</mat-card-title>
-		</mat-card-header>
+  <mat-card class="container__card">
+    <mat-card-header class="container__header">
+      <mat-card-title class="container__title">Editar información del producto</mat-card-title>
+    </mat-card-header>
 
-        <mat-card-content>
-            <form class="form" [formGroup]="formProducto" >
-                <mat-form-field>
-                    <mat-label>Nombre: </mat-label> 
-                    <input matInput type="text" formControlName="nombre">
-                    @if(nombreField.hasError('required')){
-                        <mat-error>Ingrese un nombre.</mat-error>
-                    }@else if (nombreField.hasError('minlength')) {
-                        <mat-error>El nombre del producto es demasiado corto.</mat-error>
-                    }@else if (nombreField.hasError('soloLetras')) {
-                        <mat-error>El nombre del producto solo debe contener letras.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Descripción: </mat-label> 
-                    <input matInput type="text" formControlName="descripcion">
-                    @if(descripcionField.hasError('required')){
-                        <mat-error>Ingrese una descripción.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Categoría: </mat-label> 
-                    <input matInput type="text" formControlName="categoria">
-                    @if(categoriaField.hasError('required')){
-                        <mat-error>Ingrese una categoría.</mat-error>
-                    }@else if (categoriaField.hasError('minlength')) {
-                        <mat-error>Categoría demasiada corta.</mat-error>
-                    }@else if (categoriaField.hasError('soloLetras')) {
-                        <mat-error>La categoría solo debe contener letras.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>País de origen: </mat-label> 
-                    <input matInput type="text" formControlName="paisOrigen">
-                    @if(paisOrigenField.hasError('required')){
-                        <mat-error>Ingrese un país.</mat-error>
-                    }@else if (paisOrigenField.hasError('minlength')) {
-                        <mat-error>País demasiada corta.</mat-error>
-                    }@else if (paisOrigenField.hasError('soloLetras')) {
-                        <mat-error>El país solo debe contener letras.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Stock: </mat-label> 
-                    <input matInput type="text" formControlName="stock">
-                    @if(stockField.hasError('required')){
-                        <mat-error>Ingrese el stock.</mat-error>
-                    }@else if (stockField.hasError('stockValido')) {
-                        <mat-error>Ingrese un número valido.</mat-error>
-                    }
-                </mat-form-field>
-    
-                <mat-form-field>
-                    <mat-label>Precio: </mat-label> 
-                    <input matInput type="text" formControlName="precioVenta">
-                    @if(precioVentaField.hasError('required')){
-                        <mat-error>Ingrese el precio.</mat-error>
-                    }@else if (precioVentaField.hasError('formtaoPrecio')) {
-                        <mat-error>Ingrese un precio valido.</mat-error>
-                    }
-                </mat-form-field>
+    <mat-card-content>
+      <form class="form" [formGroup]="formProducto">
+        <mat-form-field class="form__field">
+          <mat-label>Nombre: </mat-label>
+          <input matInput type="text" formControlName="nombre" />
+          @if (nombreField.hasError('required')) {
+            <mat-error class="form__error">Ingrese un nombre.</mat-error>
+          } @else if (nombreField.hasError('minlength')) {
+            <mat-error class="form__error">El nombre del producto es demasiado corto.</mat-error>
+          } @else if (nombreField.hasError('soloLetras')) {
+            <mat-error class="form__error"
+              >El nombre del producto solo debe contener letras.</mat-error
+            >
+          }
+        </mat-form-field>
 
-                <mat-checkbox formControlName="estado">Activo</mat-checkbox>
-    
-                <button mat-raised-button color="primary" (click)="editarProducto()">Editar</button>
-                <button mat-raised-button color="primary" (click)="regresar()">Regresar</button>
-            </form>
-        </mat-card-content>
-    </mat-card>
+        <mat-form-field class="form__field">
+          <mat-label>Descripción: </mat-label>
+          <input matInput type="text" formControlName="descripcion" />
+          @if (descripcionField.hasError('required')) {
+            <mat-error class="form__error">Ingrese una descripción.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="form__field">
+          <mat-label>Categoría: </mat-label>
+          <input matInput type="text" formControlName="categoria" />
+          @if (categoriaField.hasError('required')) {
+            <mat-error class="form__error">Ingrese una categoría.</mat-error>
+          } @else if (categoriaField.hasError('minlength')) {
+            <mat-error class="form__error">Categoría demasiada corta.</mat-error>
+          } @else if (categoriaField.hasError('soloLetras')) {
+            <mat-error class="form__error">La categoría solo debe contener letras.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="form__field">
+          <mat-label>País de origen: </mat-label>
+          <input matInput type="text" formControlName="paisOrigen" />
+          @if (paisOrigenField.hasError('required')) {
+            <mat-error class="form__error">Ingrese un país.</mat-error>
+          } @else if (paisOrigenField.hasError('minlength')) {
+            <mat-error class="form__error">País demasiada corta.</mat-error>
+          } @else if (paisOrigenField.hasError('soloLetras')) {
+            <mat-error class="form__error">El país solo debe contener letras.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="form__field">
+          <mat-label>Stock: </mat-label>
+          <input matInput type="text" formControlName="stock" />
+          @if (stockField.hasError('required')) {
+            <mat-error class="form__error">Ingrese el stock.</mat-error>
+          } @else if (stockField.hasError('stockValido')) {
+            <mat-error class="form__error">Ingrese un número valido.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="form__field">
+          <mat-label>Precio: </mat-label>
+          <input matInput type="text" formControlName="precioVenta" />
+          @if (precioVentaField.hasError('required')) {
+            <mat-error class="form__error">Ingrese el precio.</mat-error>
+          } @else if (precioVentaField.hasError('formtaoPrecio')) {
+            <mat-error class="form__error">Ingrese un precio valido.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox class="form__checkbox" formControlName="estado">Activo</mat-checkbox>
+
+        <button class="form__button" mat-raised-button color="primary" (click)="editarProducto()">
+          Editar
+        </button>
+        <button class="form__button" mat-raised-button color="primary" (click)="regresar()">
+          Regresar
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
-
-

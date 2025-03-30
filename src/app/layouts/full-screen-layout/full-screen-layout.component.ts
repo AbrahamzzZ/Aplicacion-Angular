@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './full-screen-layout.component.html',
   styleUrl: './full-screen-layout.component.scss'
 })
-export class FullScreenLayoutComponent {
-
-}
+export class FullScreenLayoutComponent {}

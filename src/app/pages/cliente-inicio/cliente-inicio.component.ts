@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatButtonModule} from '@angular/material/button';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../services/cliente.service';
@@ -14,7 +14,14 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-cliente-inicio',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, MatIcon, MatFormFieldModule, MatInputModule, RouterOutlet],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIcon,
+    MatFormFieldModule,
+    MatInputModule,
+    RouterOutlet
+  ],
   templateUrl: './cliente-inicio.component.html',
   styleUrl: './cliente-inicio.component.scss'
 })
@@ -22,30 +29,45 @@ export class ClienteInicioComponent {
   private clienteServicio = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
   public listaCliente = new MatTableDataSource<ICliente>();
-  displayedColumns: string[] = ['id', 'codigo', 'nombres', 'apellidos', 'cedula', 'telefono', 'correo_Electronico', 'fecha_Registro', 'accion'];
+  displayedColumns: string[] = [
+    'id',
+    'codigo',
+    'nombres',
+    'apellidos',
+    'cedula',
+    'telefono',
+    'correo_Electronico',
+    'fecha_Registro',
+    'accion'
+  ];
 
-  constructor(private router:Router, private dialog: MatDialog){
+  constructor(
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.obtenerCliente();
   }
-  
-  obtenerCliente(){
+
+  obtenerCliente() {
     this.clienteServicio.lista().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.listaCliente.data = data;
-      }, 
-      error:(err)=>{
+      },
+      error: (err) => {
         console.log(err.message);
       }
     });
   }
 
-  eliminar(cliente: ICliente){
+  eliminar(cliente: ICliente) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
-      data: { mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?` }
+      data: {
+        mensaje: `¿Está seguro de eliminar al cliente ${cliente.nombres} ${cliente.apellidos}?`
+      }
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
+
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.clienteServicio.eliminar(cliente.id).subscribe({
           next: (data) => {
@@ -63,12 +85,12 @@ export class ClienteInicioComponent {
     });
   }
 
-  nuevo(){
-    this.router.navigate(['cliente/cliente-registro',0]);
+  nuevo() {
+    this.router.navigate(['cliente/cliente-registro', 0]);
   }
 
-  editar(cliente: ICliente){
-    this.router.navigate(['cliente/cliente-editar',cliente.id]);
+  editar(cliente: ICliente) {
+    this.router.navigate(['cliente/cliente-editar', cliente.id]);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -83,8 +105,12 @@ export class ClienteInicioComponent {
     this.listaCliente.filter = termino.trim().toLowerCase();
   }
 
-  getFechaRegistro(fecha: string): string{
+  getFechaRegistro(fecha: string): string {
     const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    return fechaObj.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
   }
 }

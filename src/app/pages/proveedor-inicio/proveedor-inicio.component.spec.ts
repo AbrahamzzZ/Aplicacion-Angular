@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ProveedorInicioComponent } from './proveedor-inicio.component';
 
 describe('ProveedorInicioComponent', () => {
@@ -9,9 +8,8 @@ describe('ProveedorInicioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ProveedorInicioComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProveedorInicioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

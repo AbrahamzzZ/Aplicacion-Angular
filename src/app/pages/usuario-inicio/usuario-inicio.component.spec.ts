@@ -9,9 +9,8 @@ describe('UsuarioInicioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UsuarioInicioComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(UsuarioInicioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

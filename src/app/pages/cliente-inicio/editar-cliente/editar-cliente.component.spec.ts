@@ -9,9 +9,8 @@ describe('EditarClienteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [EditarClienteComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EditarClienteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

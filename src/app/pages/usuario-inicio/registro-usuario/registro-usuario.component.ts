@@ -18,35 +18,44 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './registro-usuario.component.html',
   styleUrl: './registro-usuario.component.scss'
 })
-export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive{
+export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
   @Input('id') idUsuario!: number;
   private route = inject(ActivatedRoute);
   private usuarioServicio = inject(UsuarioService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
-  
+
   public formUsuario = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombreCompleto: ['', [Validators.required, Validaciones.soloLetras(), Validators.maxLength(30)]],
+    nombreCompleto: [
+      '',
+      [Validators.required, Validaciones.soloLetras(), Validators.maxLength(30)]
+    ],
     clave: ['', [Validators.required, Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     estado: [false]
   });
 
-  constructor(private router:Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if(this.route.snapshot.params['id']){
+    if (this.route.snapshot.params['id']) {
       this.idUsuario = parseInt(this.route.snapshot.params['id']);
     }
   }
 
-  registrarUsuario(){
+  registrarUsuario() {
     const usuario: IUsuario = {
       id: this.idUsuario || 0,
       codigo: Metodos.generarCodigo(),
@@ -56,19 +65,20 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive{
       estado: this.formUsuario.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()
     };
-    
+
     if (!this.formUsuario.valid) {
-      console.log('Formulario inválido:', this.formUsuario);
+      this.mostrarMensaje('Formulatio inválido');
       return;
     }
-    
+
     this.usuarioServicio.registrar(usuario).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.mostrarMensaje('✔ Usuario registrado correctamente.');
-          this.router.navigate(['/usuario'], {skipLocationChange: true});
+          this.router.navigate(['/usuario'], { skipLocationChange: true });
         }
-      },error: (err: HttpErrorResponse) => {
+      },
+      error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
         if (err.error?.errors) {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
@@ -80,8 +90,8 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  regresar(){
-    this.router.navigate(["/usuario"])
+  regresar() {
+    this.router.navigate(['/usuario']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -92,11 +102,13 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive{
     });
   }
 
-  canDeactive(): boolean | Observable<boolean>{
+  canDeactive(): boolean | Observable<boolean> {
     const camposEditables = ['nombreCompleto', 'clave', 'correoElectronico'];
-    const camposVacios = camposEditables.some(campo => this.formUsuario.get(campo)?.value === '');
-    const camposConDatos = camposEditables.some(campo => this.formUsuario.get(campo)?.value !== '');
-      
+    const camposVacios = camposEditables.some((campo) => this.formUsuario.get(campo)?.value === '');
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formUsuario.get(campo)?.value !== ''
+    );
+
     return camposConDatos && camposVacios ? false : true;
   }
 

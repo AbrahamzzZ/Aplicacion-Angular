@@ -1,5 +1,11 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -14,11 +20,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-producto-editar',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './producto-editar.component.html',
   styleUrl: './producto-editar.component.scss'
 })
-export class ProductoEditarComponent implements OnInit{
+export class ProductoEditarComponent implements OnInit {
   private productoServicio = inject(ProductoService);
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
@@ -26,10 +39,34 @@ export class ProductoEditarComponent implements OnInit{
   idProducto!: number;
 
   public formProducto = this.formBuild.nonNullable.group({
-    nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    nombre: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     descripcion: ['', Validators.required],
-    categoria: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validaciones.soloLetras()]],
-    paisOrigen: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validaciones.soloLetras()]],
+    categoria: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
+    paisOrigen: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     stock: [0, [Validators.required, Validaciones.stockValido()]],
     precioVenta: [0, [Validators.required, Validaciones.formatoPrecio()]],
     estado: [false]
@@ -38,8 +75,8 @@ export class ProductoEditarComponent implements OnInit{
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.idProducto = +params['id']; 
+    this.activatedRoute.params.subscribe((params) => {
+      this.idProducto = +params['id'];
       if (this.idProducto) {
         this.cargarProducto();
       }
@@ -51,23 +88,23 @@ export class ProductoEditarComponent implements OnInit{
       next: (data) => {
         if (data) {
           this.formProducto.patchValue({
-              nombre: data.nombre,
-              descripcion: data.descripcion,
-              categoria: data.categoria,
-              paisOrigen: data.pais_Origen,
-              stock: data.stock,
-              precioVenta: data.precio_Venta,
-              estado: data.estado
-            });
-          }
-        },
-        error: (err) => {
-      console.error('Error al obtener cliente:', err);
+            nombre: data.nombre,
+            descripcion: data.descripcion,
+            categoria: data.categoria,
+            paisOrigen: data.pais_Origen,
+            stock: data.stock,
+            precioVenta: data.precio_Venta,
+            estado: data.estado
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener cliente:', err);
       }
     });
   }
 
-  editarProducto(): void{
+  editarProducto(): void {
     const producto: Partial<IProducto> = {
       id: this.idProducto,
       nombre: this.formProducto.value.nombre!,
@@ -79,22 +116,27 @@ export class ProductoEditarComponent implements OnInit{
       estado: this.formProducto.value.estado
     };
 
+    if (!this.formProducto.valid) {
+      this.mostrarMensaje('Formulario inválido.');
+      return;
+    }
+
     this.productoServicio.editar(producto).subscribe({
-      next:(data)=>{
-        if(data.isSuccess){
+      next: (data) => {
+        if (data.isSuccess) {
           this.router.navigate(['/producto']);
           this.mostrarMensaje('✔ Producto editado correctamente.');
         }
-      }, 
-      error:(err)=>{
+      },
+      error: (err) => {
         console.log(err);
         this.mostrarMensaje('❌ Error al editar la información el producto.');
       }
     });
   }
 
-  regresar(){
-    this.router.navigate(["/producto"]);
+  regresar() {
+    this.router.navigate(['/producto']);
   }
 
   mostrarMensaje(mensaje: string) {
@@ -108,23 +150,23 @@ export class ProductoEditarComponent implements OnInit{
   get nombreField(): FormControl<string> {
     return this.formProducto.controls.nombre;
   }
-  
+
   get descripcionField(): FormControl<string> {
     return this.formProducto.controls.descripcion;
   }
-  
+
   get categoriaField(): FormControl<string> {
     return this.formProducto.controls.categoria;
   }
-  
+
   get paisOrigenField(): FormControl<string> {
     return this.formProducto.controls.paisOrigen;
   }
-  
+
   get stockField(): FormControl<number> {
     return this.formProducto.controls.stock;
   }
-  
+
   get precioVentaField(): FormControl<number> {
     return this.formProducto.controls.precioVenta;
   }

@@ -17,12 +17,20 @@ import { Metodos } from '../../../../utility/metodos';
 @Component({
   selector: 'app-editar-transportista',
   standalone: true,
-  imports: [MatCardModule, MatInput, MatFormFieldModule, MatButton, MatCheckboxModule, ReactiveFormsModule, CommonModule, MatIcon],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIcon
+  ],
   templateUrl: './editar-transportista.component.html',
   styleUrl: './editar-transportista.component.scss'
 })
-export class EditarTransportistaComponent implements OnInit{
-
+export class EditarTransportistaComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
@@ -31,8 +39,24 @@ export class EditarTransportistaComponent implements OnInit{
   public imagenURL: string | null = null;
 
   public formTransportista = this.formBuilder.nonNullable.group({
-    nombres: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
-    apellidos: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validaciones.soloLetras()]],
+    nombres: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
+    apellidos: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30),
+        Validaciones.soloLetras()
+      ]
+    ],
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
@@ -40,20 +64,20 @@ export class EditarTransportistaComponent implements OnInit{
     imagen: [''],
     estado: [false]
   });
-    
+
   constructor(private router: Router) {}
-    
+
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.idTransportista = +params['id']; 
+    this.activatedRoute.params.subscribe((params) => {
+      this.idTransportista = +params['id'];
       if (this.idTransportista) {
         this.cargarTransportista();
       }
     });
   }
 
-  editarTransportista(): void{
-    const transportista: Partial<ITransportista>={
+  editarTransportista(): void {
+    const transportista: Partial<ITransportista> = {
       id: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formTransportista.value.nombres?.trim() ?? '',
@@ -63,48 +87,53 @@ export class EditarTransportistaComponent implements OnInit{
       correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
       imagen: this.formTransportista.value.imagen ?? '',
       imagenBase64: this.formTransportista.value.imageBase64 ?? '',
-      estado: this.formTransportista.value.estado ?? false,
+      estado: this.formTransportista.value.estado ?? false
+    };
+
+    if (!this.formTransportista.valid) {
+      this.mostrarMensaje('Formulario inválido.');
+      return;
     }
 
     this.transportistaServicio.editar(transportista).subscribe({
-      next:(data)=>{
-        if(data.isSuccess){
+      next: (data) => {
+        if (data.isSuccess) {
           this.router.navigate(['/transportista']);
           this.mostrarMensaje('✔ Transportista editado correctamente.');
         }
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err);
         this.mostrarMensaje('❌ Error al editar la información del transportista.');
       }
-    })
+    });
   }
- 
+
   cargarTransportista(): void {
     this.transportistaServicio.obtener(this.idTransportista).subscribe({
       next: (data) => {
         if (data) {
           this.formTransportista.patchValue({
-              nombres: data.nombres,
-              apellidos: data.apellidos,
-              cedula: data.cedula,
-              telefono: data.telefono,
-              correoElectronico: data.correo_Electronico,
-              estado: data.estado
-            });
-            
-            if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
-              this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
-            } else {
-              this.imagenURL = 'assets/default-user.png'; // Imagen por defecto
-            }
+            nombres: data.nombres,
+            apellidos: data.apellidos,
+            cedula: data.cedula,
+            telefono: data.telefono,
+            correoElectronico: data.correo_Electronico,
+            estado: data.estado
+          });
+
+          if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
+            this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
+          } else {
+            this.imagenURL = 'assets/default-user.png'; // Imagen por defecto
           }
-        },
-        error: (err) => {
-      console.error('Error al obtener cliente:', err);
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener cliente:', err);
       }
     });
-  } 
+  }
 
   mostrarMensaje(mensaje: string) {
     this.snackBar.open(mensaje, 'Módulo Transportista', {
@@ -114,10 +143,10 @@ export class EditarTransportistaComponent implements OnInit{
     });
   }
 
-  regresar(){
-    this.router.navigate(["/transportista"])
+  regresar() {
+    this.router.navigate(['/transportista']);
   }
-  
+
   subirImagen(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -126,7 +155,7 @@ export class EditarTransportistaComponent implements OnInit{
 
       reader.onload = () => {
         this.imagenURL = reader.result as string; // Vista previa de la imagen
-        
+
         this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
         this.imagenField.markAsTouched();
       };
@@ -134,7 +163,7 @@ export class EditarTransportistaComponent implements OnInit{
       reader.readAsDataURL(file); // Convierte la imagen a Base64
     }
   }
-  
+
   eliminarImagen(): void {
     this.imagenField.setValue('');
     this.imagenField.markAsUntouched();
@@ -144,24 +173,24 @@ export class EditarTransportistaComponent implements OnInit{
   get nombresField(): FormControl<string> {
     return this.formTransportista.controls.nombres;
   }
-  
+
   get apellidosField(): FormControl<string> {
     return this.formTransportista.controls.apellidos;
   }
-  
+
   get cedulaField(): FormControl<string> {
     return this.formTransportista.controls.cedula;
   }
-  
+
   get telefonoField(): FormControl<string> {
     return this.formTransportista.controls.telefono;
   }
-  
+
   get correoElectronicoField(): FormControl<string> {
     return this.formTransportista.controls.correoElectronico;
   }
-  
-  get imagenField(): FormControl<string> { 
-    return this.formTransportista.controls.imagen; 
+
+  get imagenField(): FormControl<string> {
+    return this.formTransportista.controls.imagen;
   }
 }

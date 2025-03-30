@@ -1,3 +1,3 @@
-export interface IApi{
-    isSuccess: boolean;
+export interface IApi {
+  isSuccess: boolean;
 }

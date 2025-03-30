@@ -8,6 +8,4 @@ import { RouterLink } from '@angular/router';
   templateUrl: './pagina-no-encontrada.component.html',
   styleUrl: './pagina-no-encontrada.component.scss'
 })
-export class PaginaNoEncontradaComponent {
-
-}
+export class PaginaNoEncontradaComponent {}
