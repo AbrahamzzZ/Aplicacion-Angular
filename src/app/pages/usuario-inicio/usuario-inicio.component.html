@@ -16,6 +16,10 @@
       <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
         <mat-icon>person_add</mat-icon> Registrar usuario
       </button>
+
+      <button class="container__excel__button" mat-raised-button color="accent" (click)="exportarExcel()">
+        <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
+      </button>
     </div>
 
     <table class="table" mat-table [dataSource]="listaUsuario">

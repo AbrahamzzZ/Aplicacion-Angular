@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -65,6 +65,19 @@ export class EditarTransportistaComponent implements OnInit {
     estado: [false]
   });
 
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeReload(e: BeforeUnloadEvent) {
+      const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+      const camposConDatos = camposEditables.some(
+        (campo) => this.formTransportista.get(campo)?.value !== ''
+      );
+    
+      if (camposConDatos) {
+        e.preventDefault();
+        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      }
+    }
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -77,6 +90,10 @@ export class EditarTransportistaComponent implements OnInit {
   }
 
   editarTransportista(): void {
+    const imagenOriginal = this.imagenURL?.split(',')[1] ?? '';
+    const nuevaImagen = this.formTransportista.value.imageBase64 ?? '';
+    const imagenFinal = nuevaImagen || imagenOriginal;
+
     const transportista: Partial<ITransportista> = {
       id: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
@@ -86,9 +103,10 @@ export class EditarTransportistaComponent implements OnInit {
       telefono: this.formTransportista.value.telefono ?? '',
       correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
       imagen: this.formTransportista.value.imagen ?? '',
-      imagenBase64: this.formTransportista.value.imageBase64 ?? '',
+      imagenBase64: imagenFinal,
       estado: this.formTransportista.value.estado ?? false
     };
+    console.log("Transportista: ",transportista);
 
     if (!this.formTransportista.valid) {
       this.mostrarMensaje('Formulario inválido.');
@@ -124,8 +142,9 @@ export class EditarTransportistaComponent implements OnInit {
 
           if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
             this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
+            console.log("Imagen cargada: ",data.imagenBase64);
           } else {
-            this.imagenURL = 'assets/default-user.png'; // Imagen por defecto
+            this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
           }
         }
       },

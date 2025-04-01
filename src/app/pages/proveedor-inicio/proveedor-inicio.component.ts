@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgClass } from '@angular/common';
+import { Metodos } from '../../../utility/metodos';
 
 @Component({
   selector: 'app-proveedor-inicio',
@@ -107,6 +108,30 @@ export class ProveedorInicioComponent {
 
   filtrarProveedores(termino: string) {
     this.listaProveedor.filter = termino.trim().toLowerCase();
+  }
+
+  exportarExcel() {
+    const datos = this.listaProveedor.data.map(proveedor => ({
+      ID: proveedor.id,
+      Código: proveedor.codigo,
+      Nombres: proveedor.nombres,
+      Apellidos: proveedor.apellidos,
+      Cedula: proveedor.cedula,
+      Telefono: proveedor.telefono,
+      'Correo Electronico': proveedor.correo_Electronico,
+      Estado: this.getEstado(proveedor.estado),
+      'Fecha Registro': this.getFechaRegistro(proveedor.fecha_Registro)
+    }));
+
+    if (!datos || datos.length === 0) {
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      return;
+    }
+  
+    Metodos.exportarExcel('Productos', datos, [
+      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
+      'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
+    ]);
   }
 
   getEstado(estado: boolean): string {

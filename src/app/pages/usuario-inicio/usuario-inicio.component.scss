@@ -40,6 +40,18 @@ $table-border-color: #b3aeae;
     }
   }
 
+  &__excel{
+    &__button {
+      white-space: nowrap;
+      margin: 5px;
+      bottom: 10px;
+    }
+
+    &__icon {
+      font-size: 18px;
+    }
+  }
+
   &__table {
     padding: 20px;
     overflow-x: auto;

@@ -17,7 +17,7 @@
             matInput
             type="text"
             formControlName="nombreCompleto"
-            maxlength="30"
+            maxlength="60"
             minlength="5"
           />
           @if (nombreCompletoField.hasError('required')) {
@@ -54,10 +54,10 @@
 
         <mat-checkbox formControlName="estado">Activo</mat-checkbox>
 
-        <button class="form__button" mat-raised-button color="primary" (click)="registrarUsuario()">
+        <button class="form__button" mat-raised-button color="primary" type="button" (click)="registrarUsuario()">
           Registrar
         </button>
-        <button class="form__button" mat-raised-button color="primary" (click)="regresar()">
+        <button class="form__button" mat-raised-button color="primary" type="button" (click)="regresar()">
           Regresar
         </button>
       </form>

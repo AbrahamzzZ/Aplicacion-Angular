@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgClass } from '@angular/common';
+import { Metodos } from '../../../utility/metodos';
 
 @Component({
   selector: 'app-producto-inicio',
@@ -34,8 +35,8 @@ export class ProductoInicioComponent {
   public displayedColumns: string[] = [
     'id',
     'codigo',
-    'descripcion',
     'nombre',
+    'descripcion',
     'categoria',
     'pais_Origen',
     'stock',
@@ -104,6 +105,30 @@ export class ProductoInicioComponent {
 
   filtrarProductos(termino: string) {
     this.listaProducto.filter = termino.trim().toLowerCase();
+  }
+
+  exportarExcel() {
+    const datos = this.listaProducto.data.map(producto => ({
+      ID: producto.id,
+      Código: producto.codigo,
+      Nombre: producto.nombre,
+      Descripción: producto.descripcion,
+      Categoría: producto.categoria,
+      'País Origen': producto.pais_Origen,
+      Stock: producto.stock,
+      'Precio Venta': producto.precio_Venta,
+      Estado: this.getEstado(producto.estado)
+    }));
+
+    if (!datos || datos.length === 0) {
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      return;
+    }
+  
+    Metodos.exportarExcel('Productos', datos, [
+      'ID', 'Código', 'Nombre', 'Descripción', 'Categoría', 
+      'País Origen', 'Stock', 'Precio Venta', 'Estado'
+    ]);
   }
 
   getEstado(estado: boolean): string {

@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgClass } from '@angular/common';
+import { Metodos } from '../../../utility/metodos';
 
 @Component({
   selector: 'app-usuario-inicio',
@@ -36,7 +37,6 @@ export class UsuarioInicioComponent {
     'codigo',
     'nombre_Completo',
     'correo_Electronico',
-    'clave',
     'estado',
     'fecha_Creacion',
     'accion'
@@ -102,6 +102,26 @@ export class UsuarioInicioComponent {
 
   filtrarUsuarios(termino: string) {
     this.listaUsuario.filter = termino.trim().toLowerCase();
+  }
+
+  exportarExcel() {
+    const datos = this.listaUsuario.data.map(usuario => ({
+      ID: usuario.id,
+      Código: usuario.codigo,
+      'Nombre Completo': usuario.nombre_Completo,
+      'Correo Electronico': usuario.correo_Electronico,
+      Estado: this.getEstado(usuario.estado),
+      'Fecha Creacion': this.getFechaCreacion(usuario.fecha_Creacion)
+    }));
+
+    if (!datos || datos.length === 0) {
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      return;
+    }
+  
+    Metodos.exportarExcel('Productos', datos, [
+      'ID', 'Código', 'Nombre Completo', 'Correo Electronico', 'Estado', 'Fecha Creacion'
+    ]);
   }
 
   getEstado(estado: boolean): string {

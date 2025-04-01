@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgClass } from '@angular/common';
+import { Metodos } from '../../../utility/metodos';
 
 @Component({
   selector: 'app-transportista-inicio',
@@ -114,6 +115,30 @@ export class TransportistaInicioComponent {
 
   filtrarTransportistas(termino: string) {
     this.listaTransportista.filter = termino.trim().toLowerCase();
+  }
+
+  exportarExcel() {
+    const datos = this.listaTransportista.data.map(transportista => ({
+      ID: transportista.id,
+      Código: transportista.codigo,
+      Nombres: transportista.nombres,
+      Apellidos: transportista.apellidos,
+      Cedula: transportista.cedula,
+      Telefono: transportista.telefono,
+      'Correo Electronico': transportista.correo_Electronico,
+      Estado: this.getEstado(transportista.estado),
+      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Registro)
+    }));
+
+    if (!datos || datos.length === 0) {
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      return;
+    }
+  
+    Metodos.exportarExcel('Productos', datos, [
+      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
+      'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
+    ]);
   }
 
   getEstado(estado: boolean): string {

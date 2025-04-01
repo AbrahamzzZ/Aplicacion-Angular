@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../utility/validaciones';
 import { MatCardModule } from '@angular/material/card';
@@ -55,6 +55,19 @@ export class EditarClienteComponent implements OnInit {
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]]
   });
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formCliente.get(campo)?.value !== ''
+    );
+  
+    if (camposConDatos) {
+      e.preventDefault();
+      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+    }
+  }
 
   constructor(private router: Router) {}
 

@@ -13,7 +13,7 @@
 
         <mat-form-field class="form__field">
           <mat-label>Nombre: </mat-label>
-          <input matInput type="text" formControlName="nombre" />
+          <input matInput type="text" formControlName="nombre" maxlength="30" minlength="4"/>
           @if (nombreField.hasError('required')) {
             <mat-error class="form__error">Ingrese un nombre.</mat-error>
           } @else if (nombreField.hasError('minlength')) {
@@ -27,15 +27,17 @@
 
         <mat-form-field class="form__field">
           <mat-label>Descripción: </mat-label>
-          <input matInput type="text" formControlName="descripcion" />
+          <textarea matInput formControlName="descripcion" maxlength="50" minlength="4"></textarea>
           @if (descripcionField.hasError('required')) {
             <mat-error class="form__error">Ingrese una descripción.</mat-error>
+          }@else if (descripcionField.hasError('minlength')) {
+            <mat-error class="form__error">Descripción demasiada corta.</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field class="form__field">
           <mat-label>Categoría: </mat-label>
-          <input matInput type="text" formControlName="categoria" />
+          <input matInput type="text" formControlName="categoria" maxlength="30" minlength="4"/>
           @if (categoriaField.hasError('required')) {
             <mat-error class="form__error">Ingrese una categoría.</mat-error>
           } @else if (categoriaField.hasError('minlength')) {
@@ -47,7 +49,7 @@
 
         <mat-form-field class="form__field">
           <mat-label>País de origen: </mat-label>
-          <input matInput type="text" formControlName="paisOrigen" />
+          <input matInput type="text" formControlName="paisOrigen" maxlength="30" minlength="3"/>
           @if (paisOrigenField.hasError('required')) {
             <mat-error class="form__error">Ingrese un país.</mat-error>
           } @else if (paisOrigenField.hasError('minlength')) {
@@ -69,7 +71,7 @@
 
         <mat-form-field class="form__field">
           <mat-label>Precio: </mat-label>
-          <input matInput type="text" formControlName="precioVenta" />
+          <input matInput type="text" formControlName="precioVenta">
           @if (precioVentaField.hasError('required')) {
             <mat-error class="form__error">Ingrese el precio.</mat-error>
           } @else if (precioVentaField.hasError('formatoPrecio')) {
@@ -77,17 +79,18 @@
           }
         </mat-form-field>
 
-        <mat-checkbox class="form__checkbox" formControlName="estado">Activo</mat-checkbox>
+        <mat-checkbox class="form__checkbox" formControlName="estado">Agotado</mat-checkbox>
 
         <button
           class="form__button"
           mat-raised-button
           color="primary"
+          type="button"
           (click)="registrarProducto()"
         >
           Registrar
         </button>
-        <button class="form__button" mat-raised-button color="primary" (click)="regresar()">
+        <button class="form__button" mat-raised-button color="primary" type="button" (click)="regresar()">
           Regresar
         </button>
       </form>

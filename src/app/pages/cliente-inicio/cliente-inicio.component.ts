@@ -10,6 +10,7 @@ import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmac
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Metodos } from '../../../utility/metodos';
 
 @Component({
   selector: 'app-cliente-inicio',
@@ -103,6 +104,29 @@ export class ClienteInicioComponent {
 
   filtrarClientes(termino: string) {
     this.listaCliente.filter = termino.trim().toLowerCase();
+  }
+
+  exportarExcel() {
+    const datos = this.listaCliente.data.map(cliente => ({
+      ID: cliente.id,
+      Código: cliente.codigo,
+      Nombres: cliente.nombres,
+      Apellidos: cliente.apellidos,
+      Cedula: cliente.cedula,
+      Telefono: cliente.telefono,
+      'Correo Electronico': cliente.correo_Electronico,
+      'Fecha Registro': this.getFechaRegistro(cliente.fecha_Registro)
+    }));
+
+    if (!datos || datos.length === 0) {
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      return;
+    }
+  
+    Metodos.exportarExcel('Productos', datos, [
+      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
+      'Telefono', 'Correo Electronico', 'Fecha Registro'
+    ]);
   }
 
   getFechaRegistro(fecha: string): string {

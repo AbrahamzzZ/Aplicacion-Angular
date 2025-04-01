@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -48,7 +48,7 @@ export class ProductoEditarComponent implements OnInit {
         Validaciones.soloLetras()
       ]
     ],
-    descripcion: ['', Validators.required],
+    descripcion: ['', [Validators.required, Validators.maxLength(50)]],
     categoria: [
       '',
       [
@@ -72,6 +72,22 @@ export class ProductoEditarComponent implements OnInit {
     estado: [false]
   });
 
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeReload(e: BeforeUnloadEvent) {
+      const camposEditables = ['nombre',
+      'descripcion',
+      'categoria',
+      'paisOrigen'];
+      const camposConDatos = camposEditables.some(
+        (campo) => this.formProducto.get(campo)?.value !== ''
+      );
+    
+      if (camposConDatos) {
+        e.preventDefault();
+        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      }
+    }  
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -87,6 +103,7 @@ export class ProductoEditarComponent implements OnInit {
     this.productoServicio.obtener(this.idProducto).subscribe({
       next: (data) => {
         if (data) {
+
           this.formProducto.patchValue({
             nombre: data.nombre,
             descripcion: data.descripcion,
@@ -99,7 +116,7 @@ export class ProductoEditarComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al obtener cliente:', err);
+        console.error('Error al obtener producto:', err);
       }
     });
   }

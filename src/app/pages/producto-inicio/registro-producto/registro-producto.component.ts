@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -47,12 +47,12 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
         Validaciones.soloLetras()
       ]
     ],
-    descripcion: ['', Validators.required],
+    descripcion: ['', [Validators.required, Validators.maxLength(50)]],
     categoria: [
       '',
       [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(5),
         Validators.maxLength(30),
         Validaciones.soloLetras()
       ]
@@ -66,10 +66,26 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
         Validaciones.soloLetras()
       ]
     ],
-    stock: [null, [Validators.required, Validaciones.stockValido()]],
-    precioVenta: [null, [Validators.required, Validaciones.formatoPrecio()]],
+    stock: [0, [Validators.required, Validaciones.stockValido()]],
+    precioVenta: [0, [Validators.required, Validaciones.formatoPrecio()]],
     estado: [false]
   });
+
+    @HostListener('window:beforeunload', ['$event'])
+    onBeforeReload(e: BeforeUnloadEvent) {
+      const camposEditables = ['nombre',
+      'descripcion',
+      'categoria',
+      'paisOrigen'];
+      const camposConDatos = camposEditables.some(
+        (campo) => this.formProducto.get(campo)?.value !== ''
+      );
+    
+      if (camposConDatos) {
+        e.preventDefault();
+        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      }
+    }
 
   constructor(private router: Router) {}
 
@@ -133,9 +149,7 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
       'nombre',
       'descripcion',
       'categoria',
-      'paisOrigen',
-      'stock',
-      'precioVenta'
+      'paisOrigen'
     ];
     const camposVacios = camposEditables.some(
       (campo) => this.formProducto.get(campo)?.value === ''
@@ -163,11 +177,11 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     return this.formProducto.controls.paisOrigen;
   }
 
-  get stockField(): FormControl<number | null> {
+  get stockField(): FormControl<number> {
     return this.formProducto.controls.stock;
   }
 
-  get precioVentaField(): FormControl<number | null> {
+  get precioVentaField(): FormControl<number> {
     return this.formProducto.controls.precioVenta;
   }
 }

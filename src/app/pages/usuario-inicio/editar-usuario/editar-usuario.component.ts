@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -33,11 +33,27 @@ export class EditarUsuarioComponent implements OnInit {
   idUsuario!: number;
 
   formUsuario = this.formBuilder.nonNullable.group({
-    nombreCompleto: ['', [Validators.required, Validaciones.soloLetras()]],
+    nombreCompleto: [
+      '',
+      [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]
+    ],
     clave: ['', [Validators.required, Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     estado: [false]
   });
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombreCompleto', 'clave', 'correoElectronico'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formUsuario.get(campo)?.value !== ''
+    );
+
+    if (camposConDatos) {
+      e.preventDefault();
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+    }
+  }
 
   constructor(private router: Router) {}
 

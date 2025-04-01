@@ -16,6 +16,10 @@
       <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
         <mat-icon class="container__search__icon">add_circle</mat-icon>Registrar producto
       </button>
+
+      <button class="container__excel__button" mat-raised-button color="accent" (click)="exportarExcel()">
+        <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
+      </button>
     </div>
 
     <table class="table" mat-table [dataSource]="listaProducto">
@@ -84,10 +88,10 @@
       </ng-container>
 
       <!-- Fecha de Registro -->
-      <ng-container matColumnDef="fecha_registro">
+      <!--<ng-container matColumnDef="fecha_registro">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
         <td class="table__cell" mat-cell *matCellDef="let element">{{ element.fecha_registro }}</td>
-      </ng-container>
+      </ng-container>-->
 
       <!-- Acciones -->
       <ng-container matColumnDef="accion">
