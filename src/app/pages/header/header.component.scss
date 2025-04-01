@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-
+  
   &__button {
     background: transparent;
     border: none;
@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
   }
-
+  
   &__trigger {
     display: flex;
     align-items: center;
@@ -38,37 +38,6 @@
     border: none;
     cursor: pointer;
     transition: color 0.3s ease;
-  }
-
-  &__dropdown {
-    ::ng-deep .mat-menu-panel {
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      min-width: 200px;
-    }
-
-    ::ng-deep .mat-menu-item {
-      font-size: 16px;
-      font-weight: 500;
-      color: #333;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-radius: 6px;
-      transition: all 0.3s ease-in-out;
-
-      &:hover {
-        background-color: #507fae;
-        color: white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      &:hover mat-icon {
-        color: white;
-      }
-    }
   }
 
   &__item-icon {
