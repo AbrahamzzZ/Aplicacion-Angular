@@ -17,8 +17,9 @@ import { EditarTransportistaComponent } from './pages/transportista-inicio/edita
 import { EditarUsuarioComponent } from './pages/usuario-inicio/editar-usuario/editar-usuario.component';
 import { EditarClienteComponent } from './pages/cliente-inicio/editar-cliente/editar-cliente.component';
 import { FormularioIncompleto } from './guards/formulario-incompleto.guard';
-import { AppComponent } from './app.component';
-import { FullScreenLayoutComponent } from './layouts/full-screen-layout/full-screen-layout.component';
+import { OfertaInicioComponent } from './pages/oferta-inicio/oferta-inicio.component';
+import { RegistroOfertaComponent } from './pages/oferta-inicio/registro-oferta/registro-oferta.component';
+import { EditarOfertaComponent } from './pages/oferta-inicio/editar-oferta/editar-oferta.component';
 
 export const routes: Routes = [
   { path: 'home', component: InicioComponent, title: 'Supermercado Paradisia' },
@@ -82,33 +83,18 @@ export const routes: Routes = [
     component: ProductoEditarComponent,
     title: 'Editar producto'
   },
+  {path: 'oferta', component: OfertaInicioComponent, title: 'Ofertas'},
+  {
+    path: 'oferta/oferta-registro/:id',
+    canDeactivate: [FormularioIncompleto],
+    component: RegistroOfertaComponent,
+    title: 'Información de la Oferta'
+  },
+  {
+    path: 'oferta/oferta-editar/:id',
+    component: EditarOfertaComponent,
+    title: 'Editar oferta'
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PaginaNoEncontradaComponent, title: 'Pagina no existente' }
-  /*{
-        path: '', component: AppComponent, children: [
-            {path: 'home', component: InicioComponent, title: 'Supermercado Paradisia'},
-            {path: 'usuario', component: UsuarioInicioComponent, title: 'Usuarios'},
-            {path: 'usuario/usuario-registro/:id', component: RegistroUsuarioComponent, title: 'Información del Usuario'},
-            {path: 'usuario/usuario-editar/:id', component: EditarUsuarioComponent, title: 'Editar usuario'},
-            {path: 'cliente', component: ClienteInicioComponent, title: 'Clientes'},
-            {path: 'cliente/cliente-registro/:id', canDeactivate: [FormularioIncompleto], component: RegistroClienteComponent, title: 'Información del Cliente'},
-            {path: 'cliente/cliente-editar/:id', component: EditarClienteComponent, title: 'Editar cliente'},
-            {path: 'transportista', component: TransportistaInicioComponent, title: 'Transportistas'},
-            {path: 'transportista/transportista-registro/:id', component: RegistroTransportistaComponent, title: 'Información del Transportista'},
-            {path: 'transportista/transportista-editar/:id', component: EditarTransportistaComponent, title: 'Editar transportista'},
-            {path: 'proveedor', component: RegistroProveedorInicioComponent, title: 'Proveedor'},
-            {path: 'proveedor/proveedor-registro/:id', component: ProveedorComponent, title: 'Información del Proveedor'},
-            {path: 'proveedor/proveedor-editar/:id', component:EditarProveedorComponent, title: 'Editar proveedor'},
-            {path: 'producto', component: RegistroProductoInicioComponent, title: 'Productos'},
-            {path: 'producto/producto-registro/:id', component: ProductoComponent, title: 'Información del Producto'},
-            {path: 'producto/producto-editar/:id', component: ProductoEditarComponent, title: 'Editar producto'},
-            {path: '', redirectTo: '/home', pathMatch: 'full'}
-        ]
-    },
-    {
-        path: '**', component: FullScreenLayoutComponent, children:[
-            {path: '**', component:PaginaNoEncontradaComponent}
-        ],
-        title: 'Página no encontrada'
-    }*/
 ];
