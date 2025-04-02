@@ -10,4 +10,5 @@ export interface IOferta{
     fecha_Fin: string;
     descuento: number;
     estado: boolean;
+    fecha_Creacion: string;
 }
