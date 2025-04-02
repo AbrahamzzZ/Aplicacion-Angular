@@ -39,4 +39,29 @@ export class Validaciones {
       return regex.test(control.value) ? null : { formatoClave: true };
     };
   }
+
+  static fechaFinValida(fechaCreacion: Date): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null; // Permitir valor vacío si es opcional
+      }
+
+      const fechaFin = new Date(control.value);
+      const fechaActual = new Date(fechaCreacion);
+
+      // Validar que la fecha fin sea posterior a la fecha actual
+      if (fechaFin < fechaActual) {
+        return { fechaFinInvalida: true };
+      }
+
+      return null;
+    };
+  }
+
+  static ofertaValida(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const regex = /^\d+(\.\d{1,2})?$/; 
+      return regex.test(control.value) ? null : { soloNumeros: true };
+    };
+  }
 }
