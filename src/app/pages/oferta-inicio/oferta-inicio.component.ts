@@ -38,7 +38,6 @@ export class OfertaInicioComponent {
     'fecha_Fin',
     'descuento',
     'estado',
-    'fecha_Creacion',
     'accion'
   ];
 
@@ -107,17 +106,14 @@ export class OfertaInicioComponent {
   }
 
   exportarExcel() {
-    const datos = this.listaOferta.data.map(oferta => ({
+    /*const datos = this.listaOferta.data.map(oferta => ({
       ID: oferta.id,
       Código: oferta.codigo,
-      Nombre: oferta.nombre,
-      Producto: oferta.oProducto.nombre,
-      Descripción: oferta.descripcion,
-      'Fecha Inicio': oferta.fecha_Fin,
-      'Fecha Fin': oferta.fecha_Fin,
-      Descuento: oferta.descuento,
-      Estado: this.getEstado(oferta.estado),
-      'Fecha Creacion': this.getFechaCreacion(oferta.fecha_Creacion)
+      Nombres: oferta.nombres,
+      Apellidos: oferta.apellidos,
+      Cedula: oferta.cedula,
+      Telefono: oferta.telefono,
+      'Correo Electronico': oferta.correo_Electronico,
     }));
 
     if (!datos || datos.length === 0) {
@@ -126,9 +122,9 @@ export class OfertaInicioComponent {
     }
   
     Metodos.exportarExcel('Productos', datos, [
-      'ID', 'Código', 'Nombre', 'Producto', 'Descripción',  
-      'Fecha Inicio', 'Fecha Fin', 'Descuento', 'Estado', 'Fecha Creacion'
-    ]);
+      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
+      'Telefono', 'Correo Electronico', 'Fecha Registro'
+    ]);*/
   }
 
   getEstado(estado: boolean): string {
@@ -136,15 +132,6 @@ export class OfertaInicioComponent {
   }
 
   getFechaInicioFin(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    return fechaObj.toLocaleDateString('es-ES', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    });
-  }
-
-  getFechaCreacion(fecha: string): string {
     const fechaObj = new Date(fecha);
     return fechaObj.toLocaleDateString('es-ES', {
       day: '2-digit',
