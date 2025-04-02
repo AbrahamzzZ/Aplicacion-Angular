@@ -71,7 +71,7 @@
         <ng-container matColumnDef="descuento">
           <th class="table__header" mat-header-cell *matHeaderCellDef>Descuento</th>
           <td class="table__cell" mat-cell *matCellDef="let element">
-            {{ element.descuento }}
+            {{ element.descuento }}%
           </td>
         </ng-container>
 
@@ -82,7 +82,15 @@
             {{ getEstado(element.estado) }}
           </td>
         </ng-container>
-  
+
+        <!-- Fecha de Creación -->
+        <ng-container matColumnDef="fecha_Creacion">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Creación</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">
+            {{ getFechaCreacion(element.fecha_Creacion) }}
+          </td>
+        </ng-container>
+    
         <!-- Acciones -->
         <ng-container matColumnDef="accion">
           <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
