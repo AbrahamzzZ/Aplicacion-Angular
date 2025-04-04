@@ -79,6 +79,8 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
       fecha_Creacion: Metodos.getFechaCreacion()
     };
 
+    this.formUsuario.markAllAsTouched();
+
     if (!this.formUsuario.valid) {
       this.mostrarMensaje('Formulatio inválido');
       return;
