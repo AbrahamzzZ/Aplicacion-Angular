@@ -43,7 +43,7 @@ export class Validaciones {
   static fechaFinValida(fechaCreacion: Date): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) {
-        return null; // Permitir valor vacío si es opcional
+        return null;
       }
 
       const fechaFin = new Date(control.value);
