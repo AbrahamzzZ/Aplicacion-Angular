@@ -14,22 +14,22 @@ export class OfertaService {
   constructor() { }
 
   lista() {
-      return this.http.get<IOferta[]>(this.apiUrl);
-    }
+    return this.http.get<IOferta[]>(this.apiUrl);
+  }
   
-    obtener(id: number) {
-      return this.http.get<IOferta>(`${this.apiUrl}/${id}`);
-    }
+  obtener(id: number) {
+    return this.http.get<IOferta>(`${this.apiUrl}/${id}`);
+  }
   
-    registrar(oferta: IOferta) {
-      return this.http.post<IApi>(this.apiUrl, oferta);
-    }
+  registrar(oferta: IOferta) {
+    return this.http.post<IApi>(this.apiUrl, oferta);
+  }
   
-    editar(oferta: Partial<IOferta>) {
-      return this.http.put<IApi>(this.apiUrl, oferta);
-    }
+  editar(oferta: Partial<IOferta>) {
+    return this.http.put<IApi>(this.apiUrl, oferta);
+  }
   
-    eliminar(id: number) {
-      return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
-    }
+  eliminar(id: number) {
+    return this.http.delete<IApi>(`${this.apiUrl}/${id}`);
+  }
 }
