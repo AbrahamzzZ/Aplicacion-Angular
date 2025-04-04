@@ -94,6 +94,8 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
       correo_Electronico: this.formCliente.value.correoElectronico?.trim() ?? '',
       fecha_Registro: Metodos.getFechaCreacion()
     };
+    
+    this.formCliente.markAllAsTouched();
 
     if (!this.formCliente.valid) {
       this.mostrarMensaje('Formulario inválido.');
