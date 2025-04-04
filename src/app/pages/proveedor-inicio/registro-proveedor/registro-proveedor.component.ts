@@ -96,6 +96,8 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
       fecha_Registro: Metodos.getFechaCreacion()
     };
 
+    this.formProveedor.markAllAsTouched();
+
     if (!this.formProveedor.valid) {
       this.mostrarMensaje('Formulario inválido.');
       return;
