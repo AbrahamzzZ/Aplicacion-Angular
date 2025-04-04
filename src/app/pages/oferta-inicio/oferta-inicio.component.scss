@@ -71,6 +71,20 @@ $table-border-color: #b3aeae;
         border-bottom: 1px solid $table-border-color;
         text-align: center;
       }
+
+      &__estado-activo {
+        color: green;
+        font-weight: bold;
+        padding: 5px;
+        text-align: center;
+      }
+
+      &__estado-no-activo {
+        color: red;
+        font-weight: bold;
+        padding: 5px;
+        text-align: center;
+      }
     }
   }
 

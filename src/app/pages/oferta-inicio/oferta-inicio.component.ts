@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../utility/metodos';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-oferta-inicio',
@@ -18,6 +19,7 @@ import { Metodos } from '../../../utility/metodos';
   imports: [MatTableModule,
       MatButtonModule,
       MatIcon,
+      NgClass,
       MatFormFieldModule,
       MatInputModule,
       RouterOutlet],

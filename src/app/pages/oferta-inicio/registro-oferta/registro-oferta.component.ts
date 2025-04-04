@@ -100,11 +100,6 @@ export class RegistroOfertaComponent {
   }
 
   registrarOferta() {
-    if (!this.formOferta.valid) {
-      this.mostrarMensaje('Formulario inválido.');
-      return;
-    }
-
     const productoId = this.formOferta.value.producto;
     const productoSeleccionado = this.productos.find(p => p.id === productoId)?? {} as IProducto;
 
@@ -120,6 +115,13 @@ export class RegistroOfertaComponent {
       estado: this.formOferta.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()
     };
+
+    this.formOferta.markAllAsTouched();
+
+    if (!this.formOferta.valid) {
+      this.mostrarMensaje('Formulario inválido.');
+      return;
+    }
 
     this.ofertaServicio.registrar(oferta).subscribe({
       next: (data) => {

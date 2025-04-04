@@ -8,7 +8,7 @@
             matInput
             #searchInput
             (keyup)="filtrarOfertas(searchInput.value)"
-            placeholder="Buscar clientes por varios criterios."
+            placeholder="Buscar ofertas por varios criterios."
           />
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
@@ -78,7 +78,10 @@
         <!-- Estado -->
         <ng-container matColumnDef="estado">
           <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
-          <td class="table__cell" mat-cell *matCellDef="let element">
+          <td class="table__cell" mat-cell *matCellDef="let element" [ngClass]="{
+            'table__estado-activo': element.estado,
+            'table__estado-no-activo': !element.estado
+          }">
             {{ getEstado(element.estado) }}
           </td>
         </ng-container>

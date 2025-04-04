@@ -7,10 +7,17 @@
       <mat-card-content>
         <form class="form" [formGroup]="formOferta">
           <mat-form-field class="form__field">
-            <mat-label>Codigo: </mat-label>
-            <input matInput type="text" formControlName="codigo" readonly />
+            <mat-label>Nombre: </mat-label>
+            <input matInput type="text" formControlName="nombre" maxlength="30" minlength="5" />
+            @if (nombreField.hasError('required')) {
+              <mat-error class="form__error">Ingrese un nombre.</mat-error>
+            } @else if (nombreField.hasError('minlength')) {
+              <mat-error class="form__error">Nombre demasiado corto.</mat-error>
+            } @else if (nombreField.hasError('soloLetras')) {
+              <mat-error class="form__error">El nombre solo debe contener letras.</mat-error>
+            }
           </mat-form-field>
-  
+          
           <mat-form-field class="form__field">
             <mat-label>Descripción: </mat-label>
              <textarea matInput formControlName="descripcion" maxlength="50" minlength="4"></textarea>
