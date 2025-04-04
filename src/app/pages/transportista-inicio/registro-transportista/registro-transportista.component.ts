@@ -91,11 +91,6 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
   }
 
   registrarTransportista() {
-    if (!this.formTransportista.valid) {
-      this.formTransportista.markAllAsTouched(); // Marca todos los campos como tocados
-      return;
-    }
-
     const transportista: ITransportista = {
       id: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
@@ -110,6 +105,8 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
       fecha_Registro: Metodos.getFechaCreacion()
     };
 
+    this.formTransportista.markAllAsTouched();
+
     if (!this.formTransportista.valid) {
       this.mostrarMensaje('Formulario inválido.');
       return;
@@ -121,6 +118,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
           this.mostrarMensaje('✔ Transportista registrado correctamente.');
           this.router.navigate(['/transportista'], { skipLocationChange: true });
         }
+        console.log(data);
       },
       error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
