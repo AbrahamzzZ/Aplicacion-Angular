@@ -30,4 +30,18 @@
       </p>
     </mat-card-footer>
   </mat-card>
+  @if(ofertaActual){
+    <div class="oferta-container">
+      <mat-card class="oferta-card">
+        <mat-card-header>
+          <mat-card-title>{{ ofertaActual.nombre }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>📝 {{ ofertaActual.descripcion }}</p>
+          <p><strong>💰 Descuento:</strong> {{ ofertaActual.descuento }}%</p>
+          <p><strong>📅 Válido hasta:</strong> {{ ofertaActual.fecha_Fin  | formatoFecha}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  }
 </div>

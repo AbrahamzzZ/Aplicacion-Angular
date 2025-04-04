@@ -1,72 +1,106 @@
 .container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  gap: 32px;
+  min-height: 100vh;
+  padding: 20px;
   background: #e2eeb7;
-}
 
-.supermarket {
-  max-width: 650px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background: white;
-  padding: 16px;
-
-  &__header {
-    display: flex;
-    align-items: center;
+  .supermarket {
+    max-width: 650px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background: white;
+    padding: 16px;
+    
+    &__header {
+      display: flex;
+      align-items: center;
+    }
+    
+    &__header-avatar {
+      margin-right: 10px;
+    }
+    
+    &__header-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    
+    &__title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    &__subtitle {
+      font-size: 16px;
+      color: #666;
+    }
+    
+    &__content {
+      border-radius: 5px;
+      margin: 10px;
+    }
+    
+    &__image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    
+    &__footer {
+      margin-top: 10px;
+    }
+    
+    &__info {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.5;
+      margin: 0 20px;
+    }
   }
 
-  &__header-avatar {
-    margin-right: 10px;
-  }
-
-  &__header-logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-
-  &__title {
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-  }
-
-  &__subtitle {
-    font-size: 16px;
-    color: #666;
-  }
-
-  &__content {
-    border-radius: 5px;
-    margin: 10px;
-  }
-
-  &__image {
+  .oferta-container {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-  }
+    max-width: 650px;
+    padding: 16px;
+    background: linear-gradient(135deg, #ffdd57, #ff9f43); 
+    border-radius: 12px;
 
-  &__footer {
-    margin-top: 10px;
-  }
-
-  &__info {
-    font-size: 16px;
-    color: #444;
-    line-height: 1.5;
-    margin: 0 20px;
-  }
-}
-
-.button {
-  font-weight: bold;
-  transition: transform 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
+    .oferta-card {
+      background: white;
+      border-radius: 16px; 
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      
+      mat-card-header {
+        background: #ff5722;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        border-radius: 12px 12px 0 0;
+        
+        mat-card-title {
+          font-size: 20px;
+          font-weight: bold;
+          color: #333;
+        }
+      }
+      
+      mat-card-content {
+        padding: 16px;
+        
+        p {
+          margin-bottom: 8px;
+          
+          strong {
+            color: #333;
+          }
+        }
+      }
+    }
   }
 }
