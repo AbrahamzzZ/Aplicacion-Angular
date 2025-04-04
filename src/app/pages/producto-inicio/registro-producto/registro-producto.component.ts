@@ -108,6 +108,8 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
       estado: this.formProducto.value.estado ?? false
     };
 
+    this.formProducto.markAllAsTouched();
+
     if (!this.formProducto.valid) {
       this.mostrarMensaje('Formulario inválido.');
       return;
