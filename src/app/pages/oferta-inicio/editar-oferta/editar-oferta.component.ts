@@ -126,7 +126,6 @@ export class EditarOfertaComponent implements OnInit{
   }
 
   editarOferta(): void {
-
     const productoId = this.formOferta.value.producto;
     const productoSeleccionado = this.productos.find(p => p.id === productoId)?? {} as IProducto;
 
@@ -140,6 +139,8 @@ export class EditarOfertaComponent implements OnInit{
       descuento: this.formOferta.value.descuento!,
       estado: this.formOferta.value.estado
     };
+
+    this.formOferta.markAllAsTouched();
 
     if (!this.formOferta.valid) {
       this.mostrarMensaje('Formulatio inválido');

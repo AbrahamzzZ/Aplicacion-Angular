@@ -30,7 +30,7 @@ export class OfertaInicioComponent {
   private ofertaServicio = inject(OfertaService);
   private snackBar = inject(MatSnackBar);
   public listaOferta = new MatTableDataSource<IOferta>();
-  displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     'id',
     'codigo',
     'nombre',
