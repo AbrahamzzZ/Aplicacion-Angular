@@ -52,6 +52,21 @@
           }
         </mat-form-field>
 
+        <mat-form-field class="form__field">
+          <mat-label>Seleccione un rol</mat-label>
+          <mat-select 
+            disableRipple 
+            formControlName="rol"
+            (selectionChange)="rolSeleccionado($event)">
+            @for (rol of roles; track $index) {
+              <mat-option [value]="rol.id">{{ rol.nombre }}</mat-option>
+            }
+          </mat-select>
+          @if(rolSeleccionadoField.hasError('required')){
+            <mat-error class="form__error">Debe seleccionar un rol.</mat-error>
+          }
+        </mat-form-field>
+
         <mat-checkbox formControlName="estado">Activo</mat-checkbox>
 
         <button class="form__button" mat-raised-button color="primary" type="button" (click)="registrarUsuario()">

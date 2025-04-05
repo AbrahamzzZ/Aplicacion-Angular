@@ -14,6 +14,9 @@ import { Metodos } from '../../../../utility/metodos';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { RolService } from '../../../../services/rol.service';
+import { IRol } from '../../../models/rol';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-usuario',
@@ -24,6 +27,7 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
     MatFormFieldModule,
     MatButton,
     MatCheckboxModule,
+    MatSelectModule,
     ReactiveFormsModule
   ],
   templateUrl: './registro-usuario.component.html',
@@ -33,6 +37,8 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
   @Input('id') idUsuario!: number;
   private route = inject(ActivatedRoute);
   private usuarioServicio = inject(UsuarioService);
+  private rolServicio = inject(RolService);
+  public roles:IRol [] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
 
@@ -44,6 +50,7 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
     ],
     clave: ['', [Validators.required, Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+    rol: [0, [Validators.required]],
     estado: [false]
   });
 
@@ -66,15 +73,28 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
     if (this.route.snapshot.params['id']) {
       this.idUsuario = parseInt(this.route.snapshot.params['id']);
     }
+
+    this.rolServicio.lista().subscribe({
+      next: (data) => {
+        this.roles = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener los roles:', err);
+      }
+    });
   }
 
   registrarUsuario() {
+    const rolId = this.formUsuario.value.rol;
+    const rolSeleccionado = this.roles.find(p => p.id === rolId)?? {} as IRol;
+
     const usuario: IUsuario = {
       id: this.idUsuario || 0,
       codigo: Metodos.generarCodigo(),
       nombre_Completo: this.formUsuario.value.nombreCompleto?.trim() ?? '',
       clave: this.formUsuario.value.clave ?? '',
       correo_Electronico: this.formUsuario.value.correoElectronico?.trim() ?? '',
+      oRol: rolSeleccionado,
       estado: this.formUsuario.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()
     };
@@ -127,6 +147,11 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
     return camposConDatos && camposVacios ? false : true;
   }
 
+  rolSeleccionado(event: MatSelectChange) {
+    const rolId = event.value;
+    this.formUsuario.controls.rol.setValue(rolId);
+  }
+
   get nombreCompletoField(): FormControl<string> {
     return this.formUsuario.controls.nombreCompleto;
   }
@@ -137,5 +162,9 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
 
   get correoElectronicoField(): FormControl<string> {
     return this.formUsuario.controls.correoElectronico;
+  }
+
+  get rolSeleccionadoField(): FormControl<number> {
+    return this.formUsuario.controls.rol;
   }
 }

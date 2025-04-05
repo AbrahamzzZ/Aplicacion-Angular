@@ -93,6 +93,8 @@ export class EditarUsuarioComponent implements OnInit {
       estado: this.formUsuario.value.estado
     };
 
+    this.formUsuario.markAllAsTouched();
+
     if (!this.formUsuario.valid) {
       this.mostrarMensaje('Formulatio inválido');
       return;

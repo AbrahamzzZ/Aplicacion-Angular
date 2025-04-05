@@ -37,6 +37,7 @@ export class UsuarioInicioComponent {
     'codigo',
     'nombre_Completo',
     'correo_Electronico',
+    'rol',
     'estado',
     'fecha_Creacion',
     'accion'
@@ -53,6 +54,7 @@ export class UsuarioInicioComponent {
     this.usuarioServicio.lista().subscribe({
       next: (data) => {
         this.listaUsuario.data = data;
+        console.log(data);
       },
       error: (err) => {
         console.log(err.message);
@@ -110,6 +112,7 @@ export class UsuarioInicioComponent {
       Código: usuario.codigo,
       'Nombre Completo': usuario.nombre_Completo,
       'Correo Electronico': usuario.correo_Electronico,
+      Rol: usuario.oRol.nombre,
       Estado: this.getEstado(usuario.estado),
       'Fecha Creacion': this.getFechaCreacion(usuario.fecha_Creacion)
     }));
@@ -120,7 +123,7 @@ export class UsuarioInicioComponent {
     }
   
     Metodos.exportarExcel('Productos', datos, [
-      'ID', 'Código', 'Nombre Completo', 'Correo Electronico', 'Estado', 'Fecha Creacion'
+      'ID', 'Código', 'Nombre Completo', 'Correo Electronico', 'Rol', 'Estado', 'Fecha Creacion'
     ]);
   }
 

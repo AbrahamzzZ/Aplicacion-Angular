@@ -57,6 +57,12 @@
         <td class="table__cell" mat-cell *matCellDef="let element">{{ element.clave }}</td>
       </ng-container>
 
+      <!-- Rol -->
+      <ng-container matColumnDef="rol">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Rol</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.oRol?.nombre }}</td>
+      </ng-container>
+
       <!-- Estado -->
       <ng-container matColumnDef="estado">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
