@@ -112,6 +112,8 @@ export class EditarProveedorComponent implements OnInit {
       estado: this.formProveedor.value.estado
     };
 
+    this.formProveedor.markAllAsTouched();
+
     if (!this.formProveedor.valid) {
       this.mostrarMensaje('Formulario inválido.');
       return;

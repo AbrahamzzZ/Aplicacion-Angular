@@ -133,6 +133,8 @@ export class ProductoEditarComponent implements OnInit {
       estado: this.formProducto.value.estado
     };
 
+    this.formProducto.markAllAsTouched();
+
     if (!this.formProducto.valid) {
       this.mostrarMensaje('Formulario inválido.');
       return;
