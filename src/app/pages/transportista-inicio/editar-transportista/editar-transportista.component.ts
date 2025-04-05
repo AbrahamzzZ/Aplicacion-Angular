@@ -60,7 +60,7 @@ export class EditarTransportistaComponent implements OnInit {
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    imageBase64: [''],
+    imageBase64: ['', [Validators.required]],
     imagen: [''],
     estado: [false]
   });
@@ -106,7 +106,8 @@ export class EditarTransportistaComponent implements OnInit {
       imagenBase64: imagenFinal,
       estado: this.formTransportista.value.estado ?? false
     };
-    console.log("Transportista: ",transportista);
+
+    this.formTransportista.markAllAsTouched();
 
     if (!this.formTransportista.valid) {
       this.mostrarMensaje('Formulario inválido.');
@@ -176,7 +177,7 @@ export class EditarTransportistaComponent implements OnInit {
         this.imagenURL = reader.result as string; // Vista previa de la imagen
 
         this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
-        this.imagenField.markAsTouched();
+        this.imagenBase64Field.markAsTouched();
       };
 
       reader.readAsDataURL(file); // Convierte la imagen a Base64
@@ -184,8 +185,8 @@ export class EditarTransportistaComponent implements OnInit {
   }
 
   eliminarImagen(): void {
-    this.imagenField.setValue('');
-    this.imagenField.markAsUntouched();
+    this.imagenBase64Field.setValue('');
+    this.imagenBase64Field.markAsUntouched();
     this.imagenURL = '';
   }
 
@@ -209,7 +210,7 @@ export class EditarTransportistaComponent implements OnInit {
     return this.formTransportista.controls.correoElectronico;
   }
 
-  get imagenField(): FormControl<string> {
-    return this.formTransportista.controls.imagen;
+  get imagenBase64Field(): FormControl<string> {
+    return this.formTransportista.controls.imageBase64;
   }
 }

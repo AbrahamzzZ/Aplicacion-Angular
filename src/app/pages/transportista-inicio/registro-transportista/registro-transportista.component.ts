@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Validaciones } from '../../../../utility/validaciones';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -28,7 +28,8 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
     MatCheckboxModule,
     ReactiveFormsModule,
     CommonModule,
-    MatIcon
+    MatIcon,
+    NgIf
   ],
   templateUrl: './registro-transportista.component.html',
   styleUrl: './registro-transportista.component.scss'
@@ -64,7 +65,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    imageBase64: [''],
+    imageBase64: ['',[Validators.required]],
     imagen: [''],
     estado: [false]
   });
@@ -154,7 +155,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
         this.imagenURL = reader.result as string; // Vista previa de la imagen
 
         this.formTransportista.controls.imageBase64.setValue(this.imagenURL?.split(',')[1]); // Guardar solo la parte Base64
-        this.imagenField.markAsTouched();
+        this.imagenBase64Field.markAsTouched();
       };
 
       reader.readAsDataURL(file); // Convierte la imagen a Base64
@@ -162,8 +163,8 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
   }
 
   eliminarImagen(): void {
-    this.imagenField.setValue('');
-    this.imagenField.markAsUntouched();
+    this.imagenBase64Field.setValue('');
+    this.imagenBase64Field.markAsUntouched();
     this.imagenURL = '';
   }
 
@@ -199,7 +200,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     return this.formTransportista.controls.correoElectronico;
   }
 
-  get imagenField(): FormControl<string> {
-    return this.formTransportista.controls.imagen;
+  get imagenBase64Field(): FormControl<string> {
+    return this.formTransportista.controls.imageBase64;
   }
 }

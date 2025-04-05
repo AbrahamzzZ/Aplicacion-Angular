@@ -87,7 +87,7 @@
                 {{ imagenURL ? 'Archivo seleccionado' : '' }}
               </span>
             </label>
-            @if (imagenField.invalid && (imagenField.dirty || imagenField.touched)) {
+            @if (imagenBase64Field.invalid && (imagenBase64Field.dirty || imagenBase64Field.touched)) {
               <mat-error class="form__error"
                 >Es obligatorio subir una foto del transportista.</mat-error
               >
