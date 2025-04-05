@@ -109,6 +109,8 @@ export class EditarClienteComponent implements OnInit {
       correo_Electronico: this.formCliente.value.correoElectronico!
     };
 
+    this.formCliente.markAllAsTouched();
+
     if (!this.formCliente.valid) {
       this.mostrarMensaje('Formulario inválido.');
       return;
