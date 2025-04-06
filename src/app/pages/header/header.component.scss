@@ -13,13 +13,46 @@
     color: #000000;
     padding: 5px 10px;
   }
+
+  &__salir {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .salir__button {
+    background: #e2eeb7;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    mat-icon {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background-color: #b8c09b; 
+      transform: scale(1.05); 
+    }
+
+    &:active {
+      background-color: #b8c09b;
+    }
+  }
 }
 
 .menu {
   display: flex;
   align-items: center;
   gap: 15px;
-  
+
   &__button {
     background: transparent;
     border: none;
@@ -27,13 +60,12 @@
     display: flex;
     align-items: center;
   }
-  
+
   &__trigger {
     display: flex;
     align-items: center;
     font-size: 16px;
     font-weight: bold;
-    color: white;
     background: none;
     border: none;
     cursor: pointer;
