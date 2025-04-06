@@ -10,6 +10,9 @@ import { UsuarioService } from '../../../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../models/usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IRol } from '../../../models/rol';
+import { RolService } from '../../../../services/rol.service';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -20,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatButton,
     MatCheckboxModule,
+    MatSelectModule,
     ReactiveFormsModule
   ],
   templateUrl: './editar-usuario.component.html',
@@ -27,6 +31,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class EditarUsuarioComponent implements OnInit {
   private usuarioServicio = inject(UsuarioService);
+  private rolServicio = inject(RolService);
+  public roles:IRol [] = [];
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
@@ -39,6 +45,7 @@ export class EditarUsuarioComponent implements OnInit {
     ],
     clave: ['', [Validators.required, Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+    rol: [0, [Validators.required, Validaciones.rolRequerido()]],
     estado: [false]
   });
 
@@ -62,6 +69,7 @@ export class EditarUsuarioComponent implements OnInit {
       this.idUsuario = +params['id'];
       if (this.idUsuario) {
         this.cargarUsuario();
+        this.cargarRoles();
       }
     });
   }
@@ -74,6 +82,7 @@ export class EditarUsuarioComponent implements OnInit {
             nombreCompleto: data.nombre_Completo,
             correoElectronico: data.correo_Electronico,
             clave: data.clave,
+            rol: data.oRol.id,
             estado: data.estado
           });
         }
@@ -84,12 +93,28 @@ export class EditarUsuarioComponent implements OnInit {
     });
   }
 
+  cargarRoles(): void {
+    this.rolServicio.lista().subscribe({
+      next: (productos) => {
+        this.roles = productos;
+      },
+      error: (err) => {
+        console.error('Error al cargar roles:', err);
+        this.mostrarMensaje('❌ Error al cargar los roles.');
+      }
+    });
+  }
+
   editarUsuario(): void {
+    const rolId = this.formUsuario.value.rol;
+    const rolSeleccionado = this.roles.find(p => p.id === rolId)?? {} as IRol;
+
     const usuario: Partial<IUsuario> = {
       id: this.idUsuario,
       nombre_Completo: this.formUsuario.value.nombreCompleto!,
       clave: this.formUsuario.value.clave!,
       correo_Electronico: this.formUsuario.value.correoElectronico!,
+      oRol: rolSeleccionado!,
       estado: this.formUsuario.value.estado
     };
 
@@ -126,6 +151,11 @@ export class EditarUsuarioComponent implements OnInit {
     });
   }
 
+  rolSeleccionado(event: MatSelectChange) {
+    const rolId = event.value;
+    this.formUsuario.controls.rol.setValue(rolId);
+  }
+
   get nombreCompletoField(): FormControl<string> {
     return this.formUsuario.controls.nombreCompleto;
   }
@@ -136,5 +166,9 @@ export class EditarUsuarioComponent implements OnInit {
 
   get correoElectronicoField(): FormControl<string> {
     return this.formUsuario.controls.correoElectronico;
+  }
+
+  get rolSeleccionadoField(): FormControl<number> {
+    return this.formUsuario.controls.rol;
   }
 }

@@ -54,7 +54,6 @@ export class UsuarioInicioComponent {
     this.usuarioServicio.lista().subscribe({
       next: (data) => {
         this.listaUsuario.data = data;
-        console.log(data);
       },
       error: (err) => {
         console.log(err.message);

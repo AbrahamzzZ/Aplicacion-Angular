@@ -50,7 +50,7 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
     ],
     clave: ['', [Validators.required, Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    rol: [0, [Validators.required]],
+    rol: [0, [Validators.required, Validaciones.rolRequerido()]],
     estado: [false]
   });
 

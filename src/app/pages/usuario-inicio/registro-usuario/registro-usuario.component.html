@@ -62,7 +62,7 @@
               <mat-option [value]="rol.id">{{ rol.nombre }}</mat-option>
             }
           </mat-select>
-          @if(rolSeleccionadoField.hasError('required')){
+          @if(rolSeleccionadoField.hasError('required') || rolSeleccionadoField.hasError('rolInvalido')){
             <mat-error class="form__error">Debe seleccionar un rol.</mat-error>
           }
         </mat-form-field>
