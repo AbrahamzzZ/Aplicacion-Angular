@@ -39,7 +39,7 @@
                 <mat-option [value]="producto.id">{{ producto.nombre }}</mat-option>
               }
             </mat-select>
-            @if(productoSeleccionadoField.hasError('required')){
+            @if(productoSeleccionadoField.hasError('required') || productoSeleccionadoField.hasError('productoInvalido')){
               <mat-error class="form__error">Debe seleccionar un producto.</mat-error>
             }
           </mat-form-field>

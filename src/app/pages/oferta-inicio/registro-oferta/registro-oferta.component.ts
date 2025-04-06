@@ -54,7 +54,7 @@ export class RegistroOfertaComponent {
         Validators.maxLength(30)
       ]
     ],
-    producto: [0, [Validators.required]],
+    producto: [0, [Validators.required, Validaciones.productoRequerido()]],
     descripcion: [
       '',
       [
