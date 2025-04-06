@@ -5,13 +5,3 @@ body {
   display: flex;
   flex-direction: column;
 }
-app-root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; // Toda la pantalla
-}
-
-app-footer {
-  margin-top: auto; // Mantiene el footer siempre abajo
-  width: 100%;
-}

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { UsuarioInicioComponent } from './pages/usuario-inicio/usuario-inicio.component';
 import { ClienteInicioComponent } from './pages/cliente-inicio/cliente-inicio.component';
-import { PaginaNoEncontradaComponent } from './pages/pagina-no-encontrada/pagina-no-encontrada.component';
+import { PaginaNoEncontradaComponent } from './pages/pagina-no-encontrada/pagina-no-encontrada.component'; 
 import { TransportistaInicioComponent } from './pages/transportista-inicio/transportista-inicio.component';
 import { ProveedorInicioComponent } from './pages/proveedor-inicio/proveedor-inicio.component';
 import { ProductoInicioComponent } from './pages/producto-inicio/producto-inicio.component';
@@ -20,81 +20,44 @@ import { FormularioIncompleto } from './guards/formulario-incompleto.guard';
 import { OfertaInicioComponent } from './pages/oferta-inicio/oferta-inicio.component';
 import { RegistroOfertaComponent } from './pages/oferta-inicio/registro-oferta/registro-oferta.component';
 import { EditarOfertaComponent } from './pages/oferta-inicio/editar-oferta/editar-oferta.component';
+import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { LoginComponent } from './pages/login/login.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { Autenticacion } from './guards/autenticacion.guard';
 
 export const routes: Routes = [
-  { path: 'home', component: InicioComponent, title: 'Supermercado Paradisia' },
-  { path: 'usuario', component: UsuarioInicioComponent, title: 'Usuarios' },
   {
-    path: 'usuario/usuario-registro/:id',
-    canDeactivate: [FormularioIncompleto],
-    component: RegistroUsuarioComponent,
-    title: 'Información del Usuario'
+    path: '',
+    component: LoginLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent, title: 'Iniciar Sesión' },
+    ]
   },
   {
-    path: 'usuario/usuario-editar/:id',
-    component: EditarUsuarioComponent,
-    title: 'Editar usuario'
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      { path: 'home', component: InicioComponent, canActivate: [Autenticacion], title: 'Inicio' },
+      { path: 'usuario', component: UsuarioInicioComponent, canActivate: [Autenticacion], title: 'Usuarios' },
+      { path: 'usuario/usuario-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroUsuarioComponent, title: 'Registro de Usuarios' },
+      { path: 'usuario/usuario-editar/:id', canActivate: [Autenticacion], component: EditarUsuarioComponent, title: 'Editar Usuario' },
+      { path: 'cliente', component: ClienteInicioComponent, canActivate: [Autenticacion], title: 'Clientes'},
+      { path: 'cliente/cliente-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroClienteComponent, title: 'Registro de Clientes' },
+      { path: 'cliente/cliente-editar/:id', canActivate: [Autenticacion], component: EditarClienteComponent, title: 'Editar Cliente' },
+      { path: 'transportista', component: TransportistaInicioComponent, canActivate: [Autenticacion], title: 'Transportistas' },
+      { path: 'transportista/transportista-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroTransportistaComponent, title: 'Registro de Transportistas' },
+      { path: 'transportista/transportista-editar/:id', canActivate: [Autenticacion], component: EditarTransportistaComponent, title: 'Editar Transportista' },
+      { path: 'proveedor', component: ProveedorInicioComponent, canActivate: [Autenticacion], title: 'Proveedor' },
+      { path: 'proveedor/proveedor-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProveedorComponent, title: 'Registro de Proveedores' },
+      { path: 'proveedor/proveedor-editar/:id', canActivate: [Autenticacion], component: EditarProveedorComponent, title: 'Editar Proveedor' },
+      { path: 'producto', component: ProductoInicioComponent, canActivate: [Autenticacion], title: 'Producto' },
+      { path: 'producto/producto-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProductoComponent, title: 'Registro de Productos' },
+      { path: 'producto/producto-editar/:id', canActivate: [Autenticacion], component: ProductoEditarComponent, title: 'Editar Producto' },
+      { path: 'oferta', component: OfertaInicioComponent, canActivate: [Autenticacion], title: 'Oferta' },
+      { path: 'oferta/oferta-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroOfertaComponent, title: 'Registro de Ofertas' },
+      { path: 'oferta/oferta-editar/:id', canActivate: [Autenticacion], component: EditarOfertaComponent, title: 'Editar Oferta' }
+    ]
   },
-  { path: 'cliente', component: ClienteInicioComponent, title: 'Clientes' },
-  {
-    path: 'cliente/cliente-registro/:id',
-    canDeactivate: [FormularioIncompleto],
-    component: RegistroClienteComponent,
-    title: 'Información del Cliente'
-  },
-  {
-    path: 'cliente/cliente-editar/:id',
-    component: EditarClienteComponent,
-    title: 'Editar cliente'
-  },
-  { path: 'transportista', component: TransportistaInicioComponent, title: 'Transportistas' },
-  {
-    path: 'transportista/transportista-registro/:id',
-    canDeactivate: [FormularioIncompleto],
-    component: RegistroTransportistaComponent,
-    title: 'Información del Transportista'
-  },
-  {
-    path: 'transportista/transportista-editar/:id',
-    component: EditarTransportistaComponent,
-    title: 'Editar transportista'
-  },
-  { path: 'proveedor', component: ProveedorInicioComponent, title: 'Proveedor' },
-  {
-    path: 'proveedor/proveedor-registro/:id',
-    canDeactivate: [FormularioIncompleto],
-    component: RegistroProveedorComponent,
-    title: 'Información del Proveedor'
-  },
-  {
-    path: 'proveedor/proveedor-editar/:id',
-    component: EditarProveedorComponent,
-    title: 'Editar proveedor'
-  },
-  { path: 'producto', component: ProductoInicioComponent, title: 'Productos' },
-  {
-    path: 'producto/producto-registro/:id',
-    canDeactivate: [FormularioIncompleto],
-    component: RegistroProductoComponent,
-    title: 'Información del Producto'
-  },
-  {
-    path: 'producto/producto-editar/:id',
-    component: ProductoEditarComponent,
-    title: 'Editar producto'
-  },
-  {path: 'oferta', component: OfertaInicioComponent, title: 'Ofertas'},
-  {
-    path: 'oferta/oferta-registro/:id',
-    canDeactivate: [FormularioIncompleto],
-    component: RegistroOfertaComponent,
-    title: 'Información de la Oferta'
-  },
-  {
-    path: 'oferta/oferta-editar/:id',
-    component: EditarOfertaComponent,
-    title: 'Editar oferta'
-  },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', component: PaginaNoEncontradaComponent, title: 'Pagina no existente' }
+  { path: '**', component: PaginaNoEncontradaComponent, title: 'Página no encontrada' }
 ];
