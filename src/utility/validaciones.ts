@@ -64,4 +64,16 @@ export class Validaciones {
       return regex.test(control.value) ? null : { soloNumeros: true };
     };
   }
+
+  static rolRequerido(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return control.value && control.value !== 0 ? null : { rolInvalido: true };
+    };
+  }
+
+  static productoRequerido(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return control.value && control.value !== 0 ? null : { productoInvalido: true };
+    };
+  }
 }
