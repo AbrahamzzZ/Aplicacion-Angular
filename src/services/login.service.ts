@@ -53,4 +53,14 @@ export class LoginService {
     }
     return null;
   }
+
+  obtenerPermisosDesdeToken(): string[] {
+    const token = localStorage.getItem('token');
+    if (!token) return [];
+  
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const permisos = payload['permiso']; // puede ser un string o array
+  
+    return Array.isArray(permisos) ? permisos : [permisos];
+  }
 }
