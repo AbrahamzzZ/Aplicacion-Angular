@@ -49,31 +49,33 @@ export class LoginComponent implements OnInit{
         correoElectronico: this.loginForm.get('correoElectronico')?.value,
         clave: this.loginForm.get('clave')?.value
       };
-
-      this.loginServicio.login(credenciales).subscribe({
-        next: (response: any) => {
-          console.log('Inicio de sesión exitoso:', response);
-
-          // Guardar el token en el almacenamiento local
-          this.loginServicio.guardarToken(response.token);
-
-          this.mostrarMensaje('✔ Inicio de sesión exitoso');
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          console.error('Error en inicio de sesión:', error);
-          this.mostrarMensaje('Error al iniciar sesión.');
-          alert('Usuario o contraseña incorrecta');
-        }
-      });
+        this.loginServicio.login(credenciales).subscribe({
+          next: (response: any) => {
+            console.log('Inicio de sesión exitoso:', response);
+  
+            // Guardar el token en el almacenamiento local
+            this.loginServicio.guardarToken(response.token);
+  
+            if(response){
+              this.mostrarMensaje('Inicio de sesión exitoso', 'success');
+              this.router.navigate(['/home']);
+            }
+          },
+          error: (error) => {
+            this.mostrarMensaje('Correo o clave incorrecta.', 'error');
+          }
+        });
     }
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Bienvenido al sistema', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Bienvenido al Sistema', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 }
