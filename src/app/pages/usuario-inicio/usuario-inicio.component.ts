@@ -73,12 +73,12 @@ export class UsuarioInicioComponent {
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerUsuario();
-              this.mostrarMensaje('✔ Usuario eliminado correctamente.');
+              this.mostrarMensaje('Usuario eliminado correctamente.', 'success');
             }
           },
           error: (err) => {
             console.log(err.message);
-            this.mostrarMensaje('❌ Error al eliminar al usuario.');
+            this.mostrarMensaje('Error al eliminar al usuario.', 'error');
           }
         });
       }
@@ -93,11 +93,14 @@ export class UsuarioInicioComponent {
     this.router.navigate(['usuario/usuario-editar', usuario.id]);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, ':)', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
@@ -117,13 +120,14 @@ export class UsuarioInicioComponent {
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
       return;
     }
   
     Metodos.exportarExcel('Productos', datos, [
       'ID', 'Código', 'Nombre Completo', 'Correo Electronico', 'Rol', 'Estado', 'Fecha Creacion'
     ]);
+    this.mostrarMensaje("Excel generado exitosamente.", "success");
   }
 
   getEstado(estado: boolean): string {

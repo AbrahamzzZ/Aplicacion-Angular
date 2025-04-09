@@ -121,7 +121,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.formUsuario.markAllAsTouched();
 
     if (!this.formUsuario.valid) {
-      this.mostrarMensaje('Formulatio inválido');
+      this.mostrarMensaje('Formulatio inválido', 'error');
       return;
     }
 
@@ -129,12 +129,12 @@ export class EditarUsuarioComponent implements OnInit {
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/usuario']);
-          this.mostrarMensaje('✔ Usuario editado correctamente.');
+          this.mostrarMensaje('¡Usuario editado exitosamente!', 'success');
         }
       },
       error: (err) => {
         console.log(err);
-        this.mostrarMensaje('❌ Error al editar la información del usuario.');
+        this.mostrarMensaje('Error al editar el Usuario', 'error');
       }
     });
   }
@@ -143,11 +143,14 @@ export class EditarUsuarioComponent implements OnInit {
     this.router.navigate(['/usuario']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Usuario', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
