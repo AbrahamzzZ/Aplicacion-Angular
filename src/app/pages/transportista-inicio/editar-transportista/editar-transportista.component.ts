@@ -110,7 +110,7 @@ export class EditarTransportistaComponent implements OnInit {
     this.formTransportista.markAllAsTouched();
 
     if (!this.formTransportista.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
@@ -118,12 +118,12 @@ export class EditarTransportistaComponent implements OnInit {
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/transportista']);
-          this.mostrarMensaje('✔ Transportista editado correctamente.');
+          this.mostrarMensaje('¡Transportista editado exitosamente!', 'success');
         }
       },
       error: (err) => {
         console.log(err);
-        this.mostrarMensaje('❌ Error al editar la información del transportista.');
+        this.mostrarMensaje('Error al editar el Transportista', 'error');
       }
     });
   }
@@ -155,14 +155,17 @@ export class EditarTransportistaComponent implements OnInit {
     });
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Transportista', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
-
+  
   regresar() {
     this.router.navigate(['/transportista']);
   }

@@ -85,12 +85,12 @@ export class TransportistaInicioComponent {
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerTransportista();
-              this.mostrarMensaje('✔ Transportista eliminado correctamente.');
+              this.mostrarMensaje('Transportista eliminado correctamente.', 'success');
             }
           },
           error: (err) => {
             console.log(err.message);
-            this.mostrarMensaje('❌ Error al eliminar al transportista.');
+            this.mostrarMensaje('Error al eliminar al transportista.', 'error');
           }
         });
       }
@@ -105,11 +105,14 @@ export class TransportistaInicioComponent {
     this.router.navigate(['transportista/transportista-editar', transportista.id]);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Transportista', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
@@ -131,7 +134,7 @@ export class TransportistaInicioComponent {
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
       return;
     }
   
@@ -139,6 +142,7 @@ export class TransportistaInicioComponent {
       'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
       'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
     ]);
+    this.mostrarMensaje("Excel generado exitosamente.", "success");
   }
 
   getEstado(estado: boolean): string {

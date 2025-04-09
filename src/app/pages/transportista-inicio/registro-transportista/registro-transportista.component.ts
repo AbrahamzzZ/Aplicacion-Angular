@@ -109,15 +109,15 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     this.formTransportista.markAllAsTouched();
 
     if (!this.formTransportista.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
     this.transportistaServicio.registrar(transportista).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-          this.mostrarMensaje('✔ Transportista registrado correctamente.');
           this.router.navigate(['/transportista'], { skipLocationChange: true });
+          this.mostrarMensaje('¡Transportista registrado exitosamente!', 'success');
         }
         console.log(data);
       },
@@ -127,7 +127,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
-          this.mostrarMensaje('❌ Error al registrar al transportista.');
+          this.mostrarMensaje('Error al registrar el Transportista', 'error');
         }
       }
     });
@@ -137,11 +137,14 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     this.router.navigate(['/transportista']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Transportista', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
