@@ -6,8 +6,22 @@
   background: #79acde;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 
+  &__info-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; // o 'center' si quieres centrar
+    gap: 4px;
+  }
+
   &__fecha,
   &__hora {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    padding: 5px 10px;
+  }
+
+  &__nombre-usuario{
     font-size: 16px;
     font-weight: bold;
     color: #000000;

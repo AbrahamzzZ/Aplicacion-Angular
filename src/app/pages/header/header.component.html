@@ -1,8 +1,11 @@
 <div class="container">
-  <span class="container__fecha">{{ fechaActual }}</span>
+  <div class="container__info-usuario">
+    <span class="container__nombre-usuario">{{ nombreUsuario }}</span>
+    <span class="container__fecha">{{ fechaActual }}</span>
+  </div>
 
   <div class="menu">
-    <button mat-icon-button routerLink="/home" class="menu__button">
+    <!--<button mat-icon-button routerLink="/home" class="menu__button">
       <mat-icon class="menu__icon">home</mat-icon>
     </button>
 
@@ -46,14 +49,18 @@
     </button>
     <mat-menu #afterMenuOferta="matMenu" xPosition="after">
       <button mat-menu-item routerLink="/oferta"> Ver oferta </button>
-    </mat-menu>
+    </mat-menu>-->
+    @for (menu of menus; track $index) {
+      <ng-container>
+        <button mat-button [routerLink]="menu.url" class="menu__trigger">
+          <mat-icon class="menu__icon">menu</mat-icon> {{ menu.nombre }}
+        </button>
+      </ng-container>
+    }
+    
   </div>
 
   <span class="container__hora">{{ horaActual }}</span>
-
-  <span class="container__nombre-usuario">
-    {{ nombreUsuario }} 
-  </span>
 
   <span class="container__salir">
     <button (click)="cerrarSesion()" class="salir__button">

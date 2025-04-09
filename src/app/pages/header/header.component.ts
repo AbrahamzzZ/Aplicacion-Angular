@@ -4,8 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
-import jwt_decode from 'jwt-decode';
-import { IToken } from '../../models/token';
+import { MenuService } from '../../../services/menu.service';
+import { IMenu } from '../../models/menu';
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -17,7 +18,9 @@ export class HeaderComponent implements OnInit {
   public fechaActual: string = '';
   public horaActual: string = '';
   public nombreUsuario: string = ''; 
+  public menus: IMenu[] = [];
   private loginServicio = inject(LoginService);
+  private menuServicio = inject(MenuService);
 
   constructor(private router: Router) {
     this.actualizarFechaHora();
@@ -25,7 +28,21 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerNombreUsuario();
+    const datosToken = this.loginServicio.obtenerDatosToken();
+
+    if (datosToken) {
+      this.nombreUsuario = datosToken.unique_name; // Mostrar nombre del usuario en el menú
+      const idUsuario = datosToken.nameid;
+
+      this.menuServicio.obtener(idUsuario).subscribe({
+        next: (data) => {
+          this.menus = data;
+        },
+        error: (err) => {
+          console.error('Error al cargar los menús:', err);
+        }
+      });
+    }
   }
 
   private actualizarFechaHora(): void {
@@ -41,20 +58,6 @@ export class HeaderComponent implements OnInit {
       minute: '2-digit',
       second: '2-digit'
     });
-  }
-
-  private obtenerNombreUsuario(): void {
-    const token = this.loginServicio.obtenerToken();
-    if (token) {
-      try {
-        // Decodificar el token y obtener el nombre
-        /*const decodedToken: IToken = jwt_decode(token);
-        this.nombreUsuario =  decodedToken.nombre_completo || 'Usuario';*/
-      } catch (error) {
-        console.error('Error al decodificar el token:', error);
-        this.nombreUsuario = 'Usuario';
-      }
-    }
   }
 
   cerrarSesion(){
