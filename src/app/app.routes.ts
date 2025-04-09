@@ -24,6 +24,7 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { LoginComponent } from './pages/login/login.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { Autenticacion } from './guards/autenticacion.guard';
+import { RolGuard } from './guards/rol.guard';
 
 export const routes: Routes = [
   {
@@ -39,16 +40,16 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: 'home', component: InicioComponent, canActivate: [Autenticacion], title: 'Inicio' },
-      { path: 'usuario', component: UsuarioInicioComponent, canActivate: [Autenticacion], title: 'Usuarios' },
+      { path: 'usuario', component: UsuarioInicioComponent, canMatch: [RolGuard],canActivate: [Autenticacion], title: 'Usuarios' },
       { path: 'usuario/usuario-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroUsuarioComponent, title: 'Registro de Usuarios' },
       { path: 'usuario/usuario-editar/:id', canActivate: [Autenticacion], component: EditarUsuarioComponent, title: 'Editar Usuario' },
-      { path: 'cliente', component: ClienteInicioComponent, canActivate: [Autenticacion], title: 'Clientes'},
+      { path: 'cliente', component: ClienteInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Clientes'},
       { path: 'cliente/cliente-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroClienteComponent, title: 'Registro de Clientes' },
       { path: 'cliente/cliente-editar/:id', canActivate: [Autenticacion], component: EditarClienteComponent, title: 'Editar Cliente' },
-      { path: 'transportista', component: TransportistaInicioComponent, canActivate: [Autenticacion], title: 'Transportistas' },
+      { path: 'transportista', component: TransportistaInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Transportistas' },
       { path: 'transportista/transportista-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroTransportistaComponent, title: 'Registro de Transportistas' },
       { path: 'transportista/transportista-editar/:id', canActivate: [Autenticacion], component: EditarTransportistaComponent, title: 'Editar Transportista' },
-      { path: 'proveedor', component: ProveedorInicioComponent, canActivate: [Autenticacion], title: 'Proveedor' },
+      { path: 'proveedor', component: ProveedorInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Proveedor' },
       { path: 'proveedor/proveedor-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProveedorComponent, title: 'Registro de Proveedores' },
       { path: 'proveedor/proveedor-editar/:id', canActivate: [Autenticacion], component: EditarProveedorComponent, title: 'Editar Proveedor' },
       { path: 'producto', component: ProductoInicioComponent, canActivate: [Autenticacion], title: 'Producto' },

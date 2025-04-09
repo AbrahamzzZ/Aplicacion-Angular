@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+import { CanMatch, Route, Router, UrlSegment } from '@angular/router';
+import { LoginService } from '../../services/login.service';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RolGuard implements CanMatch {
+  constructor(private authService: LoginService, private router: Router) {}
+
+  canMatch(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> {
+    const permisos = this.authService.obtenerPermisosDesdeToken();
+    const url = '/' + segments.map(s => s.path).join('/');
+    
+    if (permisos.includes(url)) {
+      return true;
+    } else {
+      this.router.navigate(['/home']); // redirigir si no tiene permiso
+      return false;
+    }
+  }
+}
