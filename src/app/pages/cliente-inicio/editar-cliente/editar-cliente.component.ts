@@ -112,7 +112,7 @@ export class EditarClienteComponent implements OnInit {
     this.formCliente.markAllAsTouched();
 
     if (!this.formCliente.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
@@ -120,12 +120,12 @@ export class EditarClienteComponent implements OnInit {
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/cliente']);
-          this.mostrarMensaje('✔ Cliente editado correctamente.');
+          this.mostrarMensaje('¡Cliente editado exitosamente!', 'success');
         }
       },
       error: (err) => {
         console.log(err);
-        this.mostrarMensaje('❌ Error al editar la información del cliente.');
+        this.mostrarMensaje('Error al editar el Cliente', 'error');
       }
     });
   }
@@ -134,11 +134,14 @@ export class EditarClienteComponent implements OnInit {
     this.router.navigate(['/cliente']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Cliente', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 

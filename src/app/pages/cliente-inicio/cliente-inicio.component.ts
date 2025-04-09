@@ -74,12 +74,12 @@ export class ClienteInicioComponent {
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerCliente();
-              this.mostrarMensaje('✔ Cliente eliminado correctamente.');
+              this.mostrarMensaje('Cliente eliminado correctamente.', 'success');
             }
           },
           error: (err) => {
             console.log(err.message);
-            this.mostrarMensaje('❌ Error al eliminar al cliente.');
+            this.mostrarMensaje('Error al eliminar al Cliente.', 'error');
           }
         });
       }
@@ -94,11 +94,14 @@ export class ClienteInicioComponent {
     this.router.navigate(['cliente/cliente-editar', cliente.id]);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Cliente', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
@@ -119,7 +122,7 @@ export class ClienteInicioComponent {
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
       return;
     }
   
@@ -127,6 +130,7 @@ export class ClienteInicioComponent {
       'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
       'Telefono', 'Correo Electronico', 'Fecha Registro'
     ]);
+    this.mostrarMensaje("Excel generado exitosamente.", "success");
   }
 
   getFechaRegistro(fecha: string): string {

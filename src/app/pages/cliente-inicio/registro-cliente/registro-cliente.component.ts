@@ -98,15 +98,15 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
     this.formCliente.markAllAsTouched();
 
     if (!this.formCliente.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
     this.clienteServicio.registrar(cliente).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-          this.mostrarMensaje('✔ Cliente registrado correctamente.');
           this.router.navigate(['/cliente'], { skipLocationChange: true });
+          this.mostrarMensaje('¡Cliente registrado exitosamente!', 'success');
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -115,7 +115,7 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
-          this.mostrarMensaje('❌ Error al registrar al cliente.');
+          this.mostrarMensaje('Error al registrar el Cliente', 'error');
         }
       }
     });
@@ -125,11 +125,14 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
     this.router.navigate(['/cliente']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Cliente', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
