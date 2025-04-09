@@ -136,7 +136,7 @@ export class ProductoEditarComponent implements OnInit {
     this.formProducto.markAllAsTouched();
 
     if (!this.formProducto.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
@@ -144,12 +144,12 @@ export class ProductoEditarComponent implements OnInit {
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/producto']);
-          this.mostrarMensaje('✔ Producto editado correctamente.');
+          this.mostrarMensaje('¡Producto editado exitosamente!', 'success');
         }
       },
       error: (err) => {
         console.log(err);
-        this.mostrarMensaje('❌ Error al editar la información el producto.');
+        this.mostrarMensaje('Error al editar el producto', 'error');
       }
     });
   }
@@ -158,11 +158,14 @@ export class ProductoEditarComponent implements OnInit {
     this.router.navigate(['/producto']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Producto', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 

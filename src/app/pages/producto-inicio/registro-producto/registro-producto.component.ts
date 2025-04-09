@@ -111,15 +111,15 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     this.formProducto.markAllAsTouched();
 
     if (!this.formProducto.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
     this.productoServicio.registrar(producto).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-          this.mostrarMensaje('✔ Producto registrado correctamente.');
           this.router.navigate(['/producto'], { skipLocationChange: true });
+          this.mostrarMensaje('¡Producto registrado exitosamente!', 'success');
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -128,7 +128,7 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
-          this.mostrarMensaje('❌ Error al registrar el producto.');
+          this.mostrarMensaje('Error al registrar el Producto', 'error');
         }
       }
     });
@@ -138,11 +138,14 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     this.router.navigate(['/producto']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Producto', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 

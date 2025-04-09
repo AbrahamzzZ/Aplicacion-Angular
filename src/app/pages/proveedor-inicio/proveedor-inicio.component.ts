@@ -78,12 +78,12 @@ export class ProveedorInicioComponent {
             console.log(data);
             if (data.isSuccess) {
               this.obtenerProveedor();
-              this.mostrarMensaje('✔ Proveedor eliminado correctamente.');
+              this.mostrarMensaje('Proveedor eliminado correctamente.', 'success');
             }
           },
           error: (err) => {
             console.log(err.message);
-            this.mostrarMensaje('❌ Error al eliminar al proveedor.');
+            this.mostrarMensaje('Error al eliminar el Proveedor.', 'error');
           }
         });
       }
@@ -98,11 +98,14 @@ export class ProveedorInicioComponent {
     this.router.navigate(['proveedor/proveedor-editar', proveedor.id]);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Proveedor', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
@@ -124,7 +127,7 @@ export class ProveedorInicioComponent {
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
       return;
     }
   
@@ -132,6 +135,7 @@ export class ProveedorInicioComponent {
       'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
       'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
     ]);
+    this.mostrarMensaje("Excel generado exitosamente.", "success");
   }
 
   getEstado(estado: boolean): string {

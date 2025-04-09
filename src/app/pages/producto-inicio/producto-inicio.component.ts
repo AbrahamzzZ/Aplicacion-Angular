@@ -75,12 +75,12 @@ export class ProductoInicioComponent {
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerProducto();
-              this.mostrarMensaje('✔ Producto eliminado correctamente.');
+              this.mostrarMensaje('Producto eliminado correctamente.', 'success');
             }
           },
           error: (err) => {
             console.log(err.message);
-            this.mostrarMensaje('❌ Error al eliminar el producto.');
+            this.mostrarMensaje('Error al eliminar el Producto.', 'error');
           }
         });
       }
@@ -95,11 +95,14 @@ export class ProductoInicioComponent {
     this.router.navigate(['producto/producto-editar', producto.id]);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Producto', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
@@ -121,7 +124,7 @@ export class ProductoInicioComponent {
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
       return;
     }
   
@@ -129,6 +132,7 @@ export class ProductoInicioComponent {
       'ID', 'Código', 'Nombre', 'Descripción', 'Categoría', 
       'País Origen', 'Stock', 'Precio Venta', 'Estado'
     ]);
+    this.mostrarMensaje("Excel generado exitosamente.", "success");
   }
 
   getEstado(estado: boolean): string {

@@ -99,15 +99,15 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
     this.formProveedor.markAllAsTouched();
 
     if (!this.formProveedor.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
     this.proveedorServicio.registrar(proveedor).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-          this.mostrarMensaje('✔ Proveedor registrado correctamente.');
           this.router.navigate(['/proveedor'], { skipLocationChange: true });
+          this.mostrarMensaje('¡Proveedor registrado exitosamente!', 'success');
         }
       },
       error: (err: HttpErrorResponse) => {
@@ -116,7 +116,7 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
           Object.entries(err.error.errors).forEach(([campo, errores]) => {
             console.log(`Error en ${campo}:`, errores);
           });
-          this.mostrarMensaje('❌ Error al registrar al proveedor.');
+          this.mostrarMensaje('Error al registrar el proveedor', 'error');
         }
       }
     });
@@ -126,11 +126,14 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
     this.router.navigate(['/proveedor']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Proveedor', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 

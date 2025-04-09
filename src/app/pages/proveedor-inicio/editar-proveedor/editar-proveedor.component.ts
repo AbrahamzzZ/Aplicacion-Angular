@@ -115,7 +115,7 @@ export class EditarProveedorComponent implements OnInit {
     this.formProveedor.markAllAsTouched();
 
     if (!this.formProveedor.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
@@ -123,12 +123,12 @@ export class EditarProveedorComponent implements OnInit {
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/proveedor']);
-          this.mostrarMensaje('✔ Proveedor editado correctamente.');
+          this.mostrarMensaje('¡Proveedor editado exitosamente!', 'success');
         }
       },
       error: (err) => {
         console.log(err);
-        this.mostrarMensaje('❌ Error al editar la información del proveedor.');
+        this.mostrarMensaje('Error al editar el Proveedor', 'error');
       }
     });
   }
@@ -137,13 +137,17 @@ export class EditarProveedorComponent implements OnInit {
     this.router.navigate(['/proveedor']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Proveedor', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
+
 
   get nombresField(): FormControl<string> {
     return this.formProveedor.controls.nombres;
