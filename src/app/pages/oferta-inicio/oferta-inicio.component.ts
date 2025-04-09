@@ -75,12 +75,12 @@ export class OfertaInicioComponent {
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerOferta();
-              this.mostrarMensaje('✔ Oferta eliminado correctamente.');
+              this.mostrarMensaje('Oferta eliminado correctamente.', 'success');
             }
           },
           error: (err) => {
             console.log(err.message);
-            this.mostrarMensaje('❌ Error al eliminar la oferta.');
+            this.mostrarMensaje('Error al eliminar la oferta.', 'error');
           }
         });
       }
@@ -95,11 +95,14 @@ export class OfertaInicioComponent {
     this.router.navigate(['oferta/oferta-editar', oferta.id]);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Oferta', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
@@ -122,7 +125,7 @@ export class OfertaInicioComponent {
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.");
+      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
       return;
     }
   
@@ -130,6 +133,7 @@ export class OfertaInicioComponent {
       'ID', 'Código', 'Nombre', 'Producto', 'Descripcion', 
       'Fecha Inicio', 'Fecha Fin', 'Descuento','Estado','Fecha Creacion'
     ]);
+    this.mostrarMensaje("Excel generado exitosamente.", "success");
   }
 
   getEstado(estado: boolean): string {

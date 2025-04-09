@@ -143,7 +143,7 @@ export class EditarOfertaComponent implements OnInit{
     this.formOferta.markAllAsTouched();
 
     if (!this.formOferta.valid) {
-      this.mostrarMensaje('Formulatio inválido');
+      this.mostrarMensaje('Formulatio inválido', 'error');
       return;
     }
 
@@ -151,12 +151,12 @@ export class EditarOfertaComponent implements OnInit{
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/oferta']);
-          this.mostrarMensaje('✔ Usuario editado correctamente.');
+          this.mostrarMensaje('¡Oferta editado exitosamente!', 'success');
         }
       },
       error: (err) => {
         console.log(err);
-        this.mostrarMensaje('❌ Error al editar la información del usuario.');
+        this.mostrarMensaje('Error al editar la Oferta', 'error');
       }
     });
   }
@@ -165,11 +165,14 @@ export class EditarOfertaComponent implements OnInit{
     this.router.navigate(['/oferta']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Oferta', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 

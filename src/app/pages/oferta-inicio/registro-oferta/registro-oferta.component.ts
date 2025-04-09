@@ -119,21 +119,21 @@ export class RegistroOfertaComponent {
     this.formOferta.markAllAsTouched();
 
     if (!this.formOferta.valid) {
-      this.mostrarMensaje('Formulario inválido.');
+      this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
 
     this.ofertaServicio.registrar(oferta).subscribe({
       next: (data) => {
         if (data.isSuccess) {
-          this.mostrarMensaje('✔ Oferta registrada correctamente.');
           this.router.navigate(['/oferta'], { skipLocationChange: true });
+          this.mostrarMensaje('¡Oferta registrado exitosamente!', 'success');
         }
         console.log(data);
       },
       error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
-        this.mostrarMensaje('❌ Error al registrar la oferta.');
+        this.mostrarMensaje('Error al registrar la Oferta', 'error');
       }
     });
   }
@@ -142,11 +142,14 @@ export class RegistroOfertaComponent {
     this.router.navigate(['/oferta']);
   }
 
-  mostrarMensaje(mensaje: string) {
-    this.snackBar.open(mensaje, 'Módulo Oferta', {
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
-      verticalPosition: 'bottom'
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 
