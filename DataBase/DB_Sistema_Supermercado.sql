@@ -48,7 +48,7 @@ VALUES
 ('Transportista', '/pages/transportista-inicio'),
 ('Ofertas', '/pages/oferta-inicio');
 
---Creación de la tabla intermendia Rol-Menu y sus inserciones
+--Creación de la tabla intermendia Permiso y sus inserciones
 CREATE TABLE PERMISO ( ID_PERMISO int primary key identity,
 ID_ROL int references ROL(ID_ROL),
 ID_MENU int references MENU(ID_MENU)
