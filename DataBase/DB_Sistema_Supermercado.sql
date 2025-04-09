@@ -41,12 +41,12 @@ END;
 GO
 INSERT INTO MENU (NOMBRE_MENU, URL_MENU)
 VALUES 
-('Usuarios', '/pages/usuario-inicio'),
-('Productos', '/pages/producto-inicio'),
-('Clientes', '/pages/cliente-inicio'),
-('Proveedores', '/pages/proveedor-inicio'),
-('Transportista', '/pages/transportista-inicio'),
-('Ofertas', '/pages/oferta-inicio');
+('Usuarios', '/usuario'),
+('Productos', '/producto'),
+('Clientes', '/cliente'),
+('Proveedores', '/proveedor'),
+('Transportista', '/transportista'),
+('Ofertas', '/oferta');
 
 --Creación de la tabla intermendia Permiso y sus inserciones
 CREATE TABLE PERMISO ( ID_PERMISO int primary key identity,
