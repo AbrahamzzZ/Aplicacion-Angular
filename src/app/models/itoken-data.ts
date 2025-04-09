@@ -1,5 +1,5 @@
 export interface ITokenData {
-    nameid: string;         // id del usuario
+    nameid: number;         // id del usuario
     unique_name: string;    // nombre completo
     email: string;          // correo
     role: string;           // rol
