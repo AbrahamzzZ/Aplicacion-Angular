@@ -20,3 +20,37 @@ app-footer {
   margin-top: auto; // Mantiene el footer siempre abajo
   width: 100%;
 }
+
+.success-snackbar,
+.error-snackbar { //Estilos personalizados para los snackbar
+  .mdc-snackbar__surface {
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .mdc-snackbar__label {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .mdc-button__label {
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+}
+
+.success-snackbar .mdc-snackbar__surface {
+  background-color: #4caf50 !important; 
+}
+
+.error-snackbar .mdc-snackbar__surface {
+  background-color: #f44336 !important; 
+}
+
+.mat-mdc-menu-content{ //Estilos personalizados para el submenu
+  padding: 2px!important;
+  background: #e2eeb7!important;
+}
