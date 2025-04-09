@@ -12,6 +12,6 @@ export class RolService{
     constructor() {}
     
     lista() {
-        return this.http.get<IRol[]>(this.apiUrl);
+      return this.http.get<IRol[]>(this.apiUrl);
     }
 }
