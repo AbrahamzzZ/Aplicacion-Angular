@@ -5,55 +5,13 @@
   </div>
 
   <div class="menu">
-    <!--<button mat-icon-button routerLink="/home" class="menu__button">
+    <button mat-icon-button routerLink="/home" class="menu__button">
       <mat-icon class="menu__icon">home</mat-icon>
     </button>
-
-    <button mat-button [matMenuTriggerFor]="menuUsuarios" class="menu__trigger">
-      <mat-icon class="menu__icon">person</mat-icon> Usuarios
-    </button>
-    <mat-menu #menuUsuarios="matMenu" yPosition="above">
-      <button mat-menu-item routerLink="/usuario"> Ver usuarios </button>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="menuProductos" class="menu__trigger">
-      <mat-icon class="menu__icon">store</mat-icon> Productos
-    </button>
-    <mat-menu #menuProductos="matMenu" yPosition="below">
-      <button mat-menu-item routerLink="/producto"> Ver productos </button>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="menuClientes" class="menu__trigger">
-      <mat-icon class="menu__icon">group</mat-icon> Clientes
-    </button>
-    <mat-menu #menuClientes="matMenu" xPosition="before">
-      <button mat-menu-item routerLink="/cliente"> Ver clientes </button>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="afterMenuProveedor" class="menu__trigger">
-      <mat-icon>inventory</mat-icon> Proveedores
-    </button>
-    <mat-menu #afterMenuProveedor="matMenu" xPosition="after">
-      <button mat-menu-item routerLink="/proveedor"> Ver proveedores </button>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="afterMenuTransportista" class="menu__trigger">
-      <mat-icon>local_shipping</mat-icon> Transportistas
-    </button>
-    <mat-menu #afterMenuTransportista="matMenu" xPosition="after">
-      <button mat-menu-item routerLink="/transportista"> Ver transportista </button>
-    </mat-menu>
-
-    <button mat-button [matMenuTriggerFor]="afterMenuOferta" class="menu__trigger">
-      <mat-icon>more</mat-icon> Ofertas
-    </button>
-    <mat-menu #afterMenuOferta="matMenu" xPosition="after">
-      <button mat-menu-item routerLink="/oferta"> Ver oferta </button>
-    </mat-menu>-->
     @for (menu of menus; track $index) {
       <ng-container>
         <button mat-button [routerLink]="menu.url" class="menu__trigger">
-          <mat-icon class="menu__icon">menu</mat-icon> {{ menu.nombre }}
+          <mat-icon>{{ menu.icono }}</mat-icon> {{ menu.nombre }}
         </button>
       </ng-container>
     }
