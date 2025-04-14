@@ -88,7 +88,7 @@ export class EditarUsuarioComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al obtener proveedor:', err);
+        console.error('Error al obtener usuario:', err);
       }
     });
   }
