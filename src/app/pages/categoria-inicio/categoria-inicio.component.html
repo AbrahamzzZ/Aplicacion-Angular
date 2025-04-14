@@ -1,1 +1,91 @@
-<p>categoria-inicio works!</p>
+<div class="container">
+    <h1 class="container__title">Categorias del supermercado Paradisia</h1>
+    <div class="container__table">
+      <div class="container__search">
+        <mat-form-field class="container__search__input" appearance="outline">
+          <mat-label>Buscar categorias</mat-label>
+          <input
+            matInput
+            #searchInput
+            (keyup)="filtrarCategorias(searchInput.value)"
+            placeholder="Buscar clientes por varios criterios."
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+  
+        <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
+          <mat-icon class="container__search__icon">person_add</mat-icon> Registrar categoria
+        </button>
+  
+        <button class="container__excel__button" mat-raised-button color="accent" (click)="exportarExcel()">
+          <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
+        </button>
+      </div>
+  
+      <table class="table" mat-table [dataSource]="listaCategoria">
+        <!-- No. -->
+        <ng-container matColumnDef="id">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+  
+        <!-- Código -->
+        <ng-container matColumnDef="codigo">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Código</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.codigo }}</td>
+        </ng-container>
+  
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombres">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Nombres</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombres }}</td>
+        </ng-container>
+
+        <!-- Estado -->
+        <ng-container matColumnDef="estado">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Estado</th>
+          <td class="table__cell" mat-cell *matCellDef="let element" [ngClass]="{
+            'table__estado-activo': element.estado,
+            'table__estado-no-activo': !element.estado
+          }">
+            {{ getEstado(element.estado) }}
+          </td>
+        </ng-container>
+  
+        <!-- Fecha de Registro -->
+        <ng-container matColumnDef="fecha_Registro">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">
+            {{ getFechaRegistro(element.fecha_Registro) }}
+          </td>
+        </ng-container>
+  
+        <!-- Acciones -->
+        <ng-container matColumnDef="accion">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Acción</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">
+            <button mat-icon-button color="accent" (click)="editar(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="eliminar(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+  
+      <!-- Mensaje cuando no hay datos -->
+      @if (listaCategoria.data.length === 0) {
+        <div class="container__message">
+          <mat-icon class="container__message__icon">info_outline</mat-icon>
+          <span class="container__message__text">No hay categorias que mostrar.</span>
+        </div>
+      }
+    </div>
+  </div>
+  
+  <router-outlet></router-outlet>
+  
