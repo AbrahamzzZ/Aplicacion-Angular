@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input } from '@angular/core';
+import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
  import { MatButton } from '@angular/material/button';
  import { MatCardModule } from '@angular/material/card';
@@ -13,11 +13,12 @@ import { Component, HostListener, inject, Input } from '@angular/core';
  import { IOferta } from '../../../models/oferta';
  import { HttpErrorResponse } from '@angular/common/http';
  import { Observable } from 'rxjs';
- import {MatSelectChange, MatSelectModule} from '@angular/material/select';
- import {MatDatepickerModule} from '@angular/material/datepicker';
+ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+ import { MatDatepickerModule } from '@angular/material/datepicker';
  import { ProductoService } from '../../../../services/producto.service';
  import { IProducto } from '../../../models/producto';
  import { MatNativeDateModule } from '@angular/material/core';
+import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 
  @Component({
   selector: 'app-registro-oferta',
@@ -35,7 +36,7 @@ import { Component, HostListener, inject, Input } from '@angular/core';
   styleUrl: './registro-oferta.component.scss'
 })
 
-export class RegistroOfertaComponent {
+export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
   @Input('id') idOferta!: number;
   private route = inject(ActivatedRoute);
   private ofertaServicio = inject(OfertaService);
@@ -65,7 +66,7 @@ export class RegistroOfertaComponent {
     ],
     fechaInicio: [new Date(), [Validators.required]],
     fechaFin: [new Date(), [Validators.required, Validaciones.fechaFinValida(new Date())]],
-    descuento: [0, [Validators.required, Validaciones.ofertaValida()]],
+    descuento: [0, [Validators.required, Validaciones.ofertaValida(), Validaciones.soloNumeros()]],
     estado: [false]
   });
 

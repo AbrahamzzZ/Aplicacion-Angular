@@ -71,6 +71,8 @@
             @if (descuentoField.hasError('required')) {
               <mat-error class="form__error">Ingrese un descuento.</mat-error>
             } @else if (descuentoField.hasError('ofertaValida')) {
+              <mat-error class="form__error">Descuento no válido.</mat-error>
+            } @else if(descripcionField.hasError('soloNumeros')){
               <mat-error class="form__error">El descuento solo debe contener numeros.</mat-error>
             }
           </mat-form-field>
