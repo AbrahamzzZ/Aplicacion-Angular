@@ -16,6 +16,9 @@ import { Validaciones } from '../../../../utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProducto } from '../../../models/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { CategoriaService } from '../../../../services/categoria.service';
+import { ICategoria } from '../../../models/categoria';
 
 @Component({
   selector: 'app-producto-editar',
@@ -26,13 +29,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatButton,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   templateUrl: './producto-editar.component.html',
   styleUrl: './producto-editar.component.scss'
 })
 export class ProductoEditarComponent implements OnInit {
   private productoServicio = inject(ProductoService);
+  private categoriaServicio = inject(CategoriaService);
+  public categorias:ICategoria [] = [];
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuild = inject(FormBuilder);
@@ -49,15 +55,7 @@ export class ProductoEditarComponent implements OnInit {
       ]
     ],
     descripcion: ['', [Validators.required, Validators.maxLength(50)]],
-    categoria: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(30),
-        Validaciones.soloLetras()
-      ]
-    ],
+    categoria: [0, [Validators.required, Validaciones.categoriaRequerida()]],
     paisOrigen: [
       '',
       [
@@ -94,6 +92,7 @@ export class ProductoEditarComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.idProducto = +params['id'];
       if (this.idProducto) {
+        this.cargarCategorias();
         this.cargarProducto();
       }
     });
@@ -107,7 +106,7 @@ export class ProductoEditarComponent implements OnInit {
           this.formProducto.patchValue({
             nombre: data.nombre,
             descripcion: data.descripcion,
-            categoria: data.categoria,
+            categoria: data.oCategoria.id,
             paisOrigen: data.pais_Origen,
             stock: data.stock,
             precioVenta: data.precio_Venta,
@@ -121,12 +120,27 @@ export class ProductoEditarComponent implements OnInit {
     });
   }
 
+  cargarCategorias(): void {
+    this.categoriaServicio.lista().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias;
+      },
+      error: (err) => {
+        console.error('Error al cargar categorías:', err);
+        this.mostrarMensaje('❌ Error al cargar las categorías.');
+      }
+    });
+  }
+
   editarProducto(): void {
+    const categoriaId = this.formProducto.value.categoria;
+    const categoriaSeleccionada = this.categorias.find(p => p.id === categoriaId)?? {} as ICategoria;
+
     const producto: Partial<IProducto> = {
       id: this.idProducto,
       nombre: this.formProducto.value.nombre!,
       descripcion: this.formProducto.value.descripcion!,
-      categoria: this.formProducto.value.categoria!,
+      oCategoria: categoriaSeleccionada!,
       pais_Origen: this.formProducto.value.paisOrigen!,
       stock: this.formProducto.value.stock!,
       precio_Venta: this.formProducto.value.precioVenta!,
@@ -169,6 +183,11 @@ export class ProductoEditarComponent implements OnInit {
     });
   }
 
+  categoriaSeleccionada(event: MatSelectChange) {
+    const categoriaId = event.value;
+    this.formProducto.controls.categoria.setValue(categoriaId);
+  }
+
   get nombreField(): FormControl<string> {
     return this.formProducto.controls.nombre;
   }
@@ -177,7 +196,7 @@ export class ProductoEditarComponent implements OnInit {
     return this.formProducto.controls.descripcion;
   }
 
-  get categoriaField(): FormControl<string> {
+  get categoriaSeleccionadaField(): FormControl<number> {
     return this.formProducto.controls.categoria;
   }
 
