@@ -36,14 +36,17 @@
         </mat-form-field>
 
         <mat-form-field class="form__field">
-          <mat-label>Categoría: </mat-label>
-          <input matInput type="text" formControlName="categoria" maxlength="30" minlength="4"/>
-          @if (categoriaField.hasError('required')) {
-            <mat-error class="form__error">Ingrese una categoría.</mat-error>
-          } @else if (categoriaField.hasError('minlength')) {
-            <mat-error class="form__error">Categoría demasiada corta.</mat-error>
-          } @else if (categoriaField.hasError('soloLetras')) {
-            <mat-error class="form__error">La categoría solo debe contener letras.</mat-error>
+          <mat-label>Seleccione una categoría</mat-label>
+          <mat-select 
+            disableRipple 
+            formControlName="categoria"
+            (selectionChange)="categoriaSeleccionada($event)">
+            @for (categoria of categorias; track $index) {
+              <mat-option [value]="categoria.id">{{ categoria.nombre }}</mat-option>
+            }
+          </mat-select>
+          @if(categoriaSeleccionadaField.hasError('required') || categoriaSeleccionadaField.hasError('categoriaInvalida')){
+            <mat-error class="form__error">Debe seleccionar una categoría.</mat-error>
           }
         </mat-form-field>
 

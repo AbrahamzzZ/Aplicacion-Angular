@@ -14,6 +14,9 @@ import { ProductoService } from '../../../../services/producto.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { CategoriaService } from '../../../../services/categoria.service';
+import { ICategoria } from '../../../models/categoria';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-producto',
@@ -24,7 +27,8 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
     MatFormFieldModule,
     MatButton,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   templateUrl: './registro-producto.component.html',
   styleUrl: './registro-producto.component.scss'
@@ -33,6 +37,8 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
   @Input('id') idProducto!: number;
   private route = inject(ActivatedRoute);
   private productoServicio = inject(ProductoService);
+  private categoriaServicio = inject(CategoriaService);
+  public categorias:ICategoria [] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
 
@@ -48,15 +54,7 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
       ]
     ],
     descripcion: ['', [Validators.required, Validators.maxLength(50)]],
-    categoria: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30),
-        Validaciones.soloLetras()
-      ]
-    ],
+    categoria: [0, [Validators.required, Validaciones.categoriaRequerida()]],
     paisOrigen: [
       '',
       [
@@ -93,15 +91,27 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     if (this.route.snapshot.params['id']) {
       this.idProducto = parseInt(this.route.snapshot.params['id']);
     }
+
+    this.categoriaServicio.lista().subscribe({
+      next: (data) => {
+        this.categorias = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener las categorías:', err);
+      }
+    });
   }
 
   registrarProducto() {
+    const categoriaId = this.formProducto.value.categoria;
+    const categoriaSeleccionada = this.categorias.find(p => p.id === categoriaId)?? {} as ICategoria;
+
     const producto: IProducto = {
       id: this.idProducto || 0,
       codigo: Metodos.generarCodigo(),
       nombre: this.formProducto.value.nombre?.trim() ?? '',
       descripcion: this.formProducto.value.descripcion?.trim() ?? '',
-      categoria: this.formProducto.value.categoria?.trim() ?? '',
+      oCategoria: categoriaSeleccionada,
       pais_Origen: this.formProducto.value.paisOrigen?.trim() ?? '',
       stock: this.formProducto.value.stock ?? 0,
       precio_Venta: this.formProducto.value.precioVenta ?? 0,
@@ -153,7 +163,6 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     const camposEditables = [
       'nombre',
       'descripcion',
-      'categoria',
       'paisOrigen'
     ];
     const camposVacios = camposEditables.some(
@@ -166,6 +175,11 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     return camposConDatos && camposVacios ? false : true;
   }
 
+  categoriaSeleccionada(event: MatSelectChange) {
+    const categoriaId = event.value;
+    this.formProducto.controls.categoria.setValue(categoriaId);
+  }
+
   get nombreField(): FormControl<string> {
     return this.formProducto.controls.nombre;
   }
@@ -174,7 +188,7 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     return this.formProducto.controls.descripcion;
   }
 
-  get categoriaField(): FormControl<string> {
+  get categoriaSeleccionadaField(): FormControl<number> {
     return this.formProducto.controls.categoria;
   }
 
