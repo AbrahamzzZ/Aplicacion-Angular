@@ -61,7 +61,8 @@ export class Validaciones {
   static ofertaValida(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const regex = /^\d+(\.\d{1,2})?$/; 
-      return regex.test(control.value) ? null : { soloNumeros: true };
+      const valor = control.value;
+      return regex.test(control.value) /*&& valor >= 1 && valor <= 100 */? null : { soloNumeros: true };
     };
   }
 
@@ -74,6 +75,12 @@ export class Validaciones {
   static productoRequerido(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return control.value && control.value !== 0 ? null : { productoInvalido: true };
+    };
+  }
+
+  static categoriaRequerida(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return control.value && control.value !== 0 ? null : { categoriaInvalida: true };
     };
   }
 }
