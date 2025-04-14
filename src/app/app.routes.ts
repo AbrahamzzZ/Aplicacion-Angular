@@ -25,6 +25,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { Autenticacion } from './guards/autenticacion.guard';
 import { RolGuard } from './guards/rol.guard';
+import { CategoriaInicioComponent } from './pages/categoria-inicio/categoria-inicio.component';
+import { RegistroCategoriaComponent } from './pages/categoria-inicio/registro-categoria/registro-categoria.component';
+import { EditarCategoriaComponent } from './pages/categoria-inicio/editar-categoria/editar-categoria.component';
 
 export const routes: Routes = [
   {
@@ -52,6 +55,9 @@ export const routes: Routes = [
       { path: 'proveedor', component: ProveedorInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Proveedor' },
       { path: 'proveedor/proveedor-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProveedorComponent, title: 'Registro de Proveedores' },
       { path: 'proveedor/proveedor-editar/:id', canActivate: [Autenticacion], component: EditarProveedorComponent, title: 'Editar Proveedor' },
+      { path: 'categoria', component: CategoriaInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Categoria'},
+      { path: 'categoria/categoria-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroCategoriaComponent, title: 'Registro de Categorías'},
+      { path: 'categoria/categoria-editar/:id', canActivate: [Autenticacion], component: EditarCategoriaComponent, title: 'Editar Categoría'},
       { path: 'producto', component: ProductoInicioComponent, canActivate: [Autenticacion], title: 'Producto' },
       { path: 'producto/producto-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProductoComponent, title: 'Registro de Productos' },
       { path: 'producto/producto-editar/:id', canActivate: [Autenticacion], component: ProductoEditarComponent, title: 'Editar Producto' },
