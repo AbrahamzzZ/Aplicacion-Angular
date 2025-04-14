@@ -116,7 +116,7 @@ export class ProductoInicioComponent {
       Código: producto.codigo,
       Nombre: producto.nombre,
       Descripción: producto.descripcion,
-      Categoría: producto.categoria,
+      Categoría: producto.oCategoria.nombre,
       'País Origen': producto.pais_Origen,
       Stock: producto.stock,
       'Precio Venta': producto.precio_Venta,
