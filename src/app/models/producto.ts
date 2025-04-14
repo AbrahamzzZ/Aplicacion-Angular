@@ -1,11 +1,13 @@
+import { ICategoria } from "./categoria";
+
 export interface IProducto {
-  id: number;
-  codigo: string;
-  descripcion: string;
-  nombre: string;
-  categoria: string;
-  pais_Origen: string;
-  stock: number;
-  precio_Venta: number;
-  estado: boolean;
+    id: number;
+    codigo: string;
+    descripcion: string;
+    nombre: string;
+    oCategoria: ICategoria;
+    pais_Origen: string;
+    stock: number;
+    precio_Venta: number;
+    estado: boolean;
 }
