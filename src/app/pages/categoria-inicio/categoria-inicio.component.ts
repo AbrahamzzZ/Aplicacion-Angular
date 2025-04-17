@@ -35,7 +35,7 @@ displayedColumns: string[] = [
     'codigo',
     'nombre',
     'estado',
-    'fecha_Registro',
+    'fecha_Creacion',
     'accion'
   ];
 
@@ -111,8 +111,8 @@ displayedColumns: string[] = [
       ID: categoria.id,
       Código: categoria.codigo,
       Nombre: categoria.nombre,
-      Estado: categoria.estado,
-      'Fecha Registro': this.getFechaRegistro(categoria.fecha_Registro)
+      Estado: this.getEstado(categoria.estado),
+      'Fecha Creacion': this.getFechaRegistro(categoria.fecha_Creacion)
     }));
 
     if (!datos || datos.length === 0) {
@@ -121,7 +121,7 @@ displayedColumns: string[] = [
     }
   
     Metodos.exportarExcel('Productos', datos, [
-      'ID', 'Código', 'Nombre', 'Estado', 'Fecha Registro'
+      'ID', 'Código', 'Nombre', 'Estado', 'Fecha Creacion'
     ]);
     this.mostrarMensaje("Excel generado exitosamente.", "success");
   }

@@ -36,9 +36,9 @@
         </ng-container>
   
         <!-- Nombre -->
-        <ng-container matColumnDef="nombres">
-          <th class="table__header" mat-header-cell *matHeaderCellDef>Nombres</th>
-          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombres }}</td>
+        <ng-container matColumnDef="nombre">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
         </ng-container>
 
         <!-- Estado -->
@@ -53,10 +53,10 @@
         </ng-container>
   
         <!-- Fecha de Registro -->
-        <ng-container matColumnDef="fecha_Registro">
-          <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
+        <ng-container matColumnDef="fecha_Creacion">
+          <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Creación</th>
           <td class="table__cell" mat-cell *matCellDef="let element">
-            {{ getFechaRegistro(element.fecha_Registro) }}
+            {{ getFechaRegistro(element.fecha_Creacion) }}
           </td>
         </ng-container>
   
