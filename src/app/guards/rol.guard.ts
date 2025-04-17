@@ -13,7 +13,7 @@ export class RolGuard implements CanMatch {
     const permisos = this.authService.obtenerPermisosDesdeToken();
     const url = '/' + segments.map(s => s.path).join('/');
     
-    if (permisos.includes(url)) {
+    if (permisos.some(p => url.startsWith(p))) { //Verifica si la URL actual comienza con algun permiso
       return true;
     } else {
       this.router.navigate(['/home']); // redirigir si no tiene permiso
