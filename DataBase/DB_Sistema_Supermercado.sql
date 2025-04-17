@@ -44,7 +44,7 @@ INSERT INTO MENU (NOMBRE_MENU, URL_MENU, NOMBRE_ICONO)
 VALUES 
 ('Usuarios', '/usuario', 'person'),
 ('Productos', '/producto', 'store'),
-('Categoria', '/categoria', ''),
+('Categorias', '/categoria', 'storage'),
 ('Clientes', '/cliente', 'group'),
 ('Proveedores', '/proveedor', 'inventory'),
 ('Transportista', '/transportista', 'local_shipping'),
@@ -372,7 +372,7 @@ GO
 CREATE PROCEDURE PA_LISTA_CATEGORIA
 AS
 BEGIN
-    SELECT ID_CATEGORIA, CODIGO, NOMBRE_CATEGORIA, ESTADO FROM CATEGORIA;
+    SELECT ID_CATEGORIA, CODIGO, NOMBRE_CATEGORIA, ESTADO, FECHA_CREACION FROM CATEGORIA;
 END;
 GO
 CREATE PROCEDURE PA_OBTENER_CATEGORIA(
@@ -380,7 +380,7 @@ CREATE PROCEDURE PA_OBTENER_CATEGORIA(
 )
 AS
 BEGIN
-    SELECT ID_CATEGORIA, CODIGO, NOMBRE_CATEGORIA, ESTADO FROM CATEGORIA
+    SELECT ID_CATEGORIA, CODIGO, NOMBRE_CATEGORIA, ESTADO, FECHA_CREACION FROM CATEGORIA
     WHERE ID_CATEGORIA = @Id_Categoria;
 END;
 GO
