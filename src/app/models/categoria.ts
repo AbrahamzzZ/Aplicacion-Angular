@@ -3,5 +3,5 @@ export interface ICategoria {
     codigo: string;
     nombre: string;
     estado: boolean;
-    fecha_Registro: string;
+    fecha_Creacion: string;
 }

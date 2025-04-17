@@ -55,7 +55,7 @@ export const routes: Routes = [
       { path: 'proveedor', component: ProveedorInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Proveedor' },
       { path: 'proveedor/proveedor-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProveedorComponent, title: 'Registro de Proveedores' },
       { path: 'proveedor/proveedor-editar/:id', canActivate: [Autenticacion], component: EditarProveedorComponent, title: 'Editar Proveedor' },
-      { path: 'categoria', component: CategoriaInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Categoria'},
+      { path: 'categoria', component: CategoriaInicioComponent, canActivate: [Autenticacion], title: 'Categoria'},
       { path: 'categoria/categoria-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroCategoriaComponent, title: 'Registro de Categorías'},
       { path: 'categoria/categoria-editar/:id', canActivate: [Autenticacion], component: EditarCategoriaComponent, title: 'Editar Categoría'},
       { path: 'producto', component: ProductoInicioComponent, canActivate: [Autenticacion], title: 'Producto' },
