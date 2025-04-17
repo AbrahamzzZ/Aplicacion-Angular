@@ -74,7 +74,7 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
       codigo: Metodos.generarCodigo(),
       nombre: this.formCategoria.value.nombre?.trim() ?? '',
       estado: this.formCategoria.value.estado ?? false,
-      fecha_Registro: Metodos.getFechaCreacion()
+      fecha_Creacion: Metodos.getFechaCreacion()
     };
 
     this.formCategoria.markAllAsTouched();
