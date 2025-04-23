@@ -1,8 +1,0 @@
-ID_MENU,NOMBRE_MENU,URL_MENU,NOMBRE_ICONO,FECHA_CREACION
-1,Usuarios,/usuario,person,2025-04-16 12:35:09.047
-2,Productos,/producto,store,2025-04-16 12:35:09.047
-3,Categoria,/categoria,storage,2025-04-16 12:35:09.047
-4,Clientes,/cliente,group,2025-04-16 12:35:09.047
-5,Proveedores,/proveedor,inventory,2025-04-16 12:35:09.047
-6,Transportista,/transportista,local_shipping,2025-04-16 12:35:09.047
-7,Ofertas,/oferta,more,2025-04-16 12:35:09.047
