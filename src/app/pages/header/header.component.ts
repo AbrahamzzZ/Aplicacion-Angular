@@ -16,7 +16,6 @@ import { IMenu } from '../../models/menu';
 })
 export class HeaderComponent implements OnInit {
   public fechaActual: string = '';
-  public horaActual: string = '';
   public nombreUsuario: string = ''; 
   public menus: IMenu[] = [];
   private loginServicio = inject(LoginService);
@@ -52,11 +51,6 @@ export class HeaderComponent implements OnInit {
       day: '2-digit',
       month: 'long',
       year: 'numeric'
-    });
-    this.horaActual = ahora.toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
     });
   }
 
