@@ -43,6 +43,8 @@ GO
 INSERT INTO MENU (NOMBRE_MENU, URL_MENU, NOMBRE_ICONO)
 VALUES 
 ('Usuarios', '/usuario', 'person'),
+('Compra', '/compra', 'local_grocery_store'),
+('Venta', '/venta', 'attach_money'),
 ('Productos', '/producto', 'store'),
 ('Categorias', '/categoria', 'storage'),
 ('Clientes', '/cliente', 'group'),
@@ -59,17 +61,21 @@ GO
 INSERT INTO PERMISO (ID_ROL, ID_MENU)
 VALUES 
 (1, 1), -- Administrador - Usuarios
-(1, 2), -- Administrador - Productos
-(1, 3), -- Administrador - Categorías
-(1, 4), -- Administrador - Clientes
-(1, 5), -- Administrador - Proveedores
-(1, 6), -- Administrador - Transportistas
-(1, 7); -- Administrador - Ofertas
+(1, 2), -- Administrador - Compras
+(1, 3), -- Administrador - Ventas
+(1, 4), -- Administrador - Productos
+(1, 5), -- Administrador - Categorías
+(1, 6), -- Administrador - Clientes
+(1, 7), -- Administrador - Proveedores
+(1, 8), -- Administrador - Transportistas
+(1, 9); -- Administrador - Ofertas
 
 INSERT INTO PERMISO (ID_ROL, ID_MENU)
 VALUES 
-(2, 2), -- Empleado - Productos
-(2, 7); -- Empleado - Ofertas
+(2, 2), -- Empleado - Compras
+(2, 3), -- Empleado - Ventas
+(2, 4), -- Empleado - Productos
+(2, 9); -- Empleado - Ofertas
 GO
 
 --Modulo Usuario Tabla-Procedimientos almacenados
