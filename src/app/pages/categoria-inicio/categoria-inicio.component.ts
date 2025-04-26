@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ICategoria } from '../../models/categoria';
 import { MatDialog } from '@angular/material/dialog';
 import { Metodos } from '../../../utility/metodos';
-import { DialogoConfirmacionComponent } from '../../components/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { NgClass } from '@angular/common';
 
 @Component({
