@@ -121,6 +121,11 @@
             <th mat-header-cell *matHeaderCellDef>Precio Compra</th>
             <td mat-cell *matCellDef="let element">{{element.precioCompra}}</td>
           </ng-container>
+
+          <ng-container matColumnDef="precioVenta">
+            <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
+            <td mat-cell *matCellDef="let element">{{element.precioVenta}}</td>
+          </ng-container>
     
           <ng-container matColumnDef="cantidad">
             <th mat-header-cell *matHeaderCellDef>Cantidad</th>

@@ -65,6 +65,12 @@
         <td class="table__cell" mat-cell *matCellDef="let element">{{ element.stock }}</td>
       </ng-container>
 
+      <!-- Precio Compra -->
+      <ng-container matColumnDef="precio_Compra">
+        <th class="table__header" mat-header-cell *matHeaderCellDef>Precio Compra</th>
+        <td class="table__cell" mat-cell *matCellDef="let element">${{ element.precio_Compra }}</td>
+      </ng-container>
+
       <!-- Precio Venta -->
       <ng-container matColumnDef="precio_Venta">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Precio Venta</th>
@@ -86,12 +92,6 @@
           {{ getEstado(element.estado) }}
         </td>
       </ng-container>
-
-      <!-- Fecha de Registro -->
-      <!--<ng-container matColumnDef="fecha_registro">
-        <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.fecha_registro }}</td>
-      </ng-container>-->
 
       <!-- Acciones -->
       <ng-container matColumnDef="accion">

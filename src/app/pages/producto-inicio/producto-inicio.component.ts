@@ -40,6 +40,7 @@ export class ProductoInicioComponent {
     'categoria',
     'pais_Origen',
     'stock',
+    'precio_Compra',
     'precio_Venta',
     'estado',
     'accion'
@@ -119,6 +120,7 @@ export class ProductoInicioComponent {
       Categoría: producto.oCategoria.nombre,
       'País Origen': producto.pais_Origen,
       Stock: producto.stock,
+      'Precio Compra': producto.precio_Compra,
       'Precio Venta': producto.precio_Venta,
       Estado: this.getEstado(producto.estado)
     }));
@@ -130,7 +132,7 @@ export class ProductoInicioComponent {
   
     Metodos.exportarExcel('Productos', datos, [
       'ID', 'Código', 'Nombre', 'Descripción', 'Categoría', 
-      'País Origen', 'Stock', 'Precio Venta', 'Estado'
+      'País Origen', 'Stock', 'Precio Compra', 'Precio Venta', 'Estado'
     ]);
     this.mostrarMensaje("Excel generado exitosamente.", "success");
   }

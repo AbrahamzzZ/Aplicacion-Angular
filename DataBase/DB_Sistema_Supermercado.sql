@@ -88,6 +88,8 @@ ID_ROL int references ROL(ID_ROL),
 ESTADO bit,
 FECHA_CREACION datetime default getdate()
 );
+GO
+INSERT INTO USUARIO (CODIGO, NOMBRE_COMPLETO, CORREO_ELECTRONICO, CLAVE, ID_ROL, ESTADO) VALUES ('00001', 'Abraham Andres Farfan Sanchez', 'hermanosfarfan@gmail.com', '1234qwer/.', 1, 1);
 GO 
 
 CREATE PROCEDURE PA_LISTA_USUARIO
@@ -226,6 +228,7 @@ AS
 BEGIN
 	DELETE FROM PROVEEDOR WHERE ID_PROVEEDOR = @Id_Proveedor;
 END;
+GO
 
 --Modulo Transportista Tabla-Procedimientos almacenados
 CREATE TABLE TRANSPORTISTA(ID_TRANSPORTISTA int primary key identity,
@@ -598,7 +601,7 @@ ID_PRODUCTO int references PRODUCTO (ID_PRODUCTO),
 PRECIO_COMPRA decimal (10,2) default 0,
 PRECIO_VENTA decimal (10,2) default 0,
 CANTIDAD int,
-MONTO_TOTAL decimal (10,2),
+SUBTOTAL decimal (10,2),
 FECHA_REGISTRO datetime default getdate()
 );
 GO
@@ -608,7 +611,7 @@ CREATE TYPE [dbo].[TI_Detalle_Compra] AS TABLE(
 [Precio_Compra] decimal(10,2) null,
 [Precio_Venta] decimal (10,2) null,
 [Cantidad] int null,
-[Monto_Total] decimal (10,2) null
+[SubTotal] decimal (10,2) null
 )
 GO
 
@@ -629,7 +632,7 @@ CREATE PROCEDURE PA_OBTENER_DETALLES_COMPRA(
 
 )AS
 BEGIN
-    select p.NOMBRE_PRODUCTO AS PRODUCTOS, dc.PRECIO_COMPRA, dc.CANTIDAD, dc.MONTO_TOTAL from DETALLE_COMPRA dc
+    select p.NOMBRE_PRODUCTO AS PRODUCTOS, dc.PRECIO_COMPRA, dc.CANTIDAD, dc.SUBTOTAL from DETALLE_COMPRA dc
     inner join PRODUCTO p on p.ID_PRODUCTO = dc.ID_PRODUCTO
     where dc.ID_COMPRA = @Id_Compra;
 END;
@@ -651,7 +654,7 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- 1. Calcular el monto total de la compra desde la tabla de detalles
-        SELECT @MONTO_TOTAL = SUM(Monto_Total) FROM @DETALLE_COMPRA;
+        SELECT @MONTO_TOTAL = SUM(SubTotal) FROM @DETALLE_COMPRA;
 
         -- 2. Insertar en la tabla COMPRA
         INSERT INTO COMPRA ( ID_USUARIO, ID_PROVEEDOR, ID_TRANSPORTISTA, TIPO_DOCUMENTO, NUMERO_DOCUMENTO, MONTO_TOTAL)
@@ -661,8 +664,8 @@ BEGIN
         DECLARE @ID_COMPRA INT = SCOPE_IDENTITY();
 
         -- 4. Insertar en DETALLE_COMPRA y actualizar STOCK del producto
-        INSERT INTO DETALLE_COMPRA (ID_COMPRA, ID_PRODUCTO, PRECIO_COMPRA, PRECIO_VENTA, CANTIDAD, MONTO_TOTAL)
-        SELECT @ID_COMPRA, Id_Producto, Precio_Compra, Precio_Venta, Cantidad, Monto_Total FROM @DETALLE_COMPRA;
+        INSERT INTO DETALLE_COMPRA (ID_COMPRA, ID_PRODUCTO, PRECIO_COMPRA, PRECIO_VENTA, CANTIDAD, SUBTOTAL)
+        SELECT @ID_COMPRA, Id_Producto, Precio_Compra, Precio_Venta, Cantidad, SubTotal FROM @DETALLE_COMPRA;
 
         -- 5. Actualizar el STOCK y precios del producto
         UPDATE P
@@ -768,7 +771,7 @@ BEGIN
         END
 
         -- Insertar detalles
-        INSERT INTO DETALLE_VENTA (ID_VENTA, ID_PRODUCTO, PRECIO_VENTA, CANTIDAD_PRODUCTO, SUBTOTAL, DESCUENTO)
+        INSERT INTO DETALLE_VENTA (ID_VENTA, ID_PRODUCTO, PRECIO_VENTA, CANTIDAD, SUBTOTAL, DESCUENTO)
 		SELECT @ID_VENTA, IdProducto, PrecioVenta, Cantidad, SubTotal, Descuento FROM @DETALLE_VENTA;
 
         -- Actualizar stock

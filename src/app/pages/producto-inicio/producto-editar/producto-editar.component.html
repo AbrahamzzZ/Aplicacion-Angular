@@ -57,26 +57,6 @@
           }
         </mat-form-field>
 
-        <mat-form-field class="form__field">
-          <mat-label>Stock: </mat-label>
-          <input matInput type="text" formControlName="stock" />
-          @if (stockField.hasError('required')) {
-            <mat-error class="form__error">Ingrese el stock.</mat-error>
-          } @else if (stockField.hasError('stockValido')) {
-            <mat-error class="form__error">Ingrese un número valido.</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field class="form__field">
-          <mat-label>Precio: </mat-label>
-          <input matInput type="text" formControlName="precioVenta" />
-          @if (precioVentaField.hasError('required')) {
-            <mat-error class="form__error">Ingrese el precio.</mat-error>
-          } @else if (precioVentaField.hasError('formtaoPrecio')) {
-            <mat-error class="form__error">Ingrese un precio valido.</mat-error>
-          }
-        </mat-form-field>
-
         <mat-checkbox class="form__checkbox" formControlName="estado">Agotado</mat-checkbox>
 
         <button class="form__button" mat-raised-button color="primary" type="button" (click)="editarProducto()">

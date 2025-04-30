@@ -65,8 +65,6 @@ export class ProductoEditarComponent implements OnInit {
         Validaciones.soloLetras()
       ]
     ],
-    stock: [0, [Validators.required, Validaciones.stockValido()]],
-    precioVenta: [0, [Validators.required, Validaciones.formatoPrecio()]],
     estado: [false]
   });
 
@@ -108,8 +106,6 @@ export class ProductoEditarComponent implements OnInit {
             descripcion: data.descripcion,
             categoria: data.oCategoria.id,
             paisOrigen: data.pais_Origen,
-            stock: data.stock,
-            precioVenta: data.precio_Venta,
             estado: data.estado
           });
         }
@@ -142,8 +138,6 @@ export class ProductoEditarComponent implements OnInit {
       descripcion: this.formProducto.value.descripcion!,
       oCategoria: categoriaSeleccionada!,
       pais_Origen: this.formProducto.value.paisOrigen!,
-      stock: this.formProducto.value.stock!,
-      precio_Venta: this.formProducto.value.precioVenta!,
       estado: this.formProducto.value.estado
     };
 
@@ -202,13 +196,5 @@ export class ProductoEditarComponent implements OnInit {
 
   get paisOrigenField(): FormControl<string> {
     return this.formProducto.controls.paisOrigen;
-  }
-
-  get stockField(): FormControl<number> {
-    return this.formProducto.controls.stock;
-  }
-
-  get precioVentaField(): FormControl<number> {
-    return this.formProducto.controls.precioVenta;
   }
 }
