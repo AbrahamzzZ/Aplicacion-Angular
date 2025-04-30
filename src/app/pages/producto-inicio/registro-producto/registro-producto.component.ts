@@ -64,8 +64,6 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
         Validaciones.soloLetras()
       ]
     ],
-    stock: [0, [Validators.required, Validaciones.stockValido()]],
-    precioVenta: [0, [Validators.required, Validaciones.formatoPrecio()]],
     estado: [false]
   });
 
@@ -113,10 +111,8 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
       descripcion: this.formProducto.value.descripcion?.trim() ?? '',
       oCategoria: categoriaSeleccionada,
       pais_Origen: this.formProducto.value.paisOrigen?.trim() ?? '',
-      stock: this.formProducto.value.stock ?? 0,
-      precio_Venta: this.formProducto.value.precioVenta ?? 0,
       estado: this.formProducto.value.estado ?? false
-    };
+    } as IProducto;
 
     this.formProducto.markAllAsTouched();
 
@@ -194,13 +190,5 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
 
   get paisOrigenField(): FormControl<string> {
     return this.formProducto.controls.paisOrigen;
-  }
-
-  get stockField(): FormControl<number> {
-    return this.formProducto.controls.stock;
-  }
-
-  get precioVentaField(): FormControl<number> {
-    return this.formProducto.controls.precioVenta;
   }
 }
