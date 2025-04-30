@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +16,13 @@ import { ModalProductoComponent } from '../../modal/modal-producto/modal-product
 import { MatIcon } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { IDetalleCompra } from '../../models/detalle-compra';
+import { ICompra } from '../../models/compra';
+import { CompraService } from '../../../services/compra.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoginService } from '../../../services/login.service';
+import { Metodos } from '../../../utility/metodos';
+import { IUsuario } from '../../models/usuario';
 
 @Component({
   selector: 'app-compra-inicio',
@@ -24,7 +31,7 @@ import { Router } from '@angular/router';
   templateUrl: './compra-inicio.component.html',
   styleUrl: './compra-inicio.component.scss'
 })
-export class CompraInicioComponent {
+export class CompraInicioComponent implements OnInit{
   public hoy = new Date().toISOString().substring(0, 10);
   public tipoComprobante: string = 'boleta';
   public proveedorSeleccionado: IProveedor | null = null;
@@ -33,9 +40,17 @@ export class CompraInicioComponent {
   public producto = { precioVenta: 0, precioCompra: 0, cantidad: 0, subTotal: 0 };
   public productosAgregados: any[] = [];
   public dataSource = new MatTableDataSource<any>();
-  public columnasTabla: string[] = ['ID', 'nombre', 'precioCompra', 'cantidad', 'subtotal', 'accion'];
+  public columnasTabla: string[] = ['ID', 'nombre', 'precioCompra', 'precioVenta', 'cantidad', 'subtotal', 'accion'];
+  private servicioCompra = inject(CompraService);
+  private snackBar = inject(MatSnackBar);
+  private loginServicio = inject(LoginService);
+  public numeroDocumento: string = '';
 
   constructor(private router: Router, private dialogo: MatDialog){}
+
+  ngOnInit(): void {
+    this.obtenerNumeroDocumento();
+  }
 
   abrirModalProveedores() {
     const dialogRef = this.dialogo.open(ModalProveedorComponent, {
@@ -77,13 +92,20 @@ export class CompraInicioComponent {
     this.router.navigate(['compra/detalle-compra']);
   }
 
+  obtenerNumeroDocumento() {
+    this.servicioCompra.obtenerNuevoNumeroDocumento().subscribe(response => {
+      this.numeroDocumento = response.numeroDocumento;
+    });
+  }
+
   agregarProducto() {
     if (this.productoSeleccionado && this.producto.cantidad > 0 && this.producto.precioCompra > 0) {
       const subtotalCalculado = Number(this.producto.precioCompra) * Number(this.producto.cantidad);
       const productoAgregado = {
         id: this.productoSeleccionado.id,
         nombre: this.productoSeleccionado.nombre,
-        precioCompra: this.producto.precioCompra,
+        precioCompra: Number(this.producto.precioCompra),
+        precioVenta: Number(this.producto.precioVenta),
         cantidad: this.producto.cantidad,
         subtotal: subtotalCalculado
       };
@@ -91,7 +113,7 @@ export class CompraInicioComponent {
       this.productosAgregados.push(productoAgregado);
       this.dataSource.data = [...this.productosAgregados]; // Actualizar el dataSource
       console.log(productoAgregado);
-      // Limpiar campos
+
       this.productoSeleccionado = null;
       this.producto = { precioVenta: 0, precioCompra: 0, cantidad: 0, subTotal: 0 };
     }
@@ -107,6 +129,56 @@ export class CompraInicioComponent {
   }
 
   registrarCompra() {
-    // Aquí envías toda la data a tu backend
+    if (!this.proveedorSeleccionado || !this.transportistaSeleccionado) {
+      alert('Debe seleccionar un proveedor y un transportista');
+      return;
+    }
+
+    const detalles: IDetalleCompra[] = this.productosAgregados.map(p => ({
+      idProducto: p.id,
+      Precio_Compra: Number(p.precioCompra),
+      Precio_Venta: Number(p.precioVenta),
+      cantidad: p.cantidad,
+      SubTotal: p.subtotal
+    }));
+
+    const datosToken = this.loginServicio.obtenerDatosToken();
+
+    const compra: ICompra = {
+      id: 0, 
+      numeroDocumento: this.numeroDocumento,
+      oUsuario: {
+        id: Number(datosToken?.nameid),
+        nombre_Completo: datosToken?.unique_name
+      } as IUsuario, 
+      oProveedor: this.proveedorSeleccionado,
+      oTransportista: this.transportistaSeleccionado,
+      tipoDocumento: this.tipoComprobante,
+      montoTotal: this.calcularTotal().toFixed(2),
+      detalleCompra: detalles,
+      fecha_Compra: Metodos.getFechaCreacion()
+    };
+    console.log(compra);
+    this.servicioCompra.registrar(compra).subscribe(response => {
+      if (response.isSuccess) {
+        this.mostrarMensaje('¡Compra registrada exitosamente!', 'success');
+        this.router.navigate(['/compra']);
+
+      } else {
+         this.mostrarMensaje('Error al registrar la compra', 'error');
+          
+      }
+    });
+  }
+
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: [className]
+    });
   }
 }
