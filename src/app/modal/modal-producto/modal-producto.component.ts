@@ -3,17 +3,18 @@ import { IProducto } from '../../models/producto';
 import { ProductoService } from '../../../services/producto.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-producto',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatIcon],
   templateUrl: './modal-producto.component.html',
   styleUrl: './modal-producto.component.scss'
 })
 export class ModalProductoComponent {
   listaProductos: IProducto[] = [];
-  columnas: string[] = ['id', 'codigo','nombre', 'categoria', 'stock', 'estado', 'accion'];
+  columnas: string[] = ['id', 'codigo','nombre', 'stock', 'estado', 'accion'];
 
   constructor(
     private dialogRef: MatDialogRef<ModalProductoComponent>,
