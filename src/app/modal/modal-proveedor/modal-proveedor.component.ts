@@ -3,11 +3,12 @@ import { IProveedor } from '../../models/proveedor';
 import { MatDialogRef} from '@angular/material/dialog';
 import { ProveedorService } from '../../../services/proveedor.service';
 import { MatTableModule } from '@angular/material/table';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modal-proveedor',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatIcon],
   templateUrl: './modal-proveedor.component.html',
   styleUrl: './modal-proveedor.component.scss'
 })
