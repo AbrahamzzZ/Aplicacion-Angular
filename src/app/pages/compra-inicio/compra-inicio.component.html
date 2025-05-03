@@ -1,7 +1,10 @@
-<div class="titulo">
-  <h1>Formulario de compra</h1>
+<div class="formulario">
+  <h1 class="titulo">Formulario de compra</h1>
 </div>
-<button mat-raised-button color="primary" (click)="verDetalleCompra()">Ver detalle compra</button>
+<button mat-raised-button color="primary" (click)="verDetalleCompra()">
+  <mat-icon>visibility</mat-icon>
+  Ver detalle compra
+</button>
 <div class="contenedor-formulario">
   <mat-card class="formulario-compra">
     <div class="contenedor-principal">
@@ -16,10 +19,15 @@
           <mat-form-field appearance="outline">
             <mat-label>Tipo Documento</mat-label>
             <mat-select [(value)]="tipoComprobante">
-              <mat-option value="boleta">Boleta</mat-option>
-              <mat-option value="factura">Factura</mat-option>
+              <mat-option value="Boleta">Boleta</mat-option>
+              <mat-option value="Factura">Factura</mat-option>
             </mat-select>
           </mat-form-field>
+
+          <button mat-raised-button color="warn" (click)="limpiar()">
+            <mat-icon>cleaning_services</mat-icon>
+            Limpiar
+          </button>
         </div>
       </div>
 
@@ -36,7 +44,10 @@
             <mat-form-field>
               <input matInput placeholder="Cédula" [value]="proveedorSeleccionado?.cedula" readonly>
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalProveedores()">Buscar</button>
+            <button mat-raised-button color="primary" (click)="abrirModalProveedores()">
+              <mat-icon>search</mat-icon>
+              Buscar
+            </button>
           </div>
         </div>
       
@@ -52,7 +63,10 @@
             <mat-form-field>
               <input matInput placeholder="Cédula" [value]="transportistaSeleccionado?.cedula" readonly>
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="abrirModalTransportistas()">Buscar</button>
+            <button mat-raised-button color="primary" (click)="abrirModalTransportistas()">
+              <mat-icon>search</mat-icon>
+              Buscar
+            </button>
           </div>
         </div>
       </div>
@@ -84,7 +98,10 @@
           <input type="number" matInput [(ngModel)]="producto.cantidad">
         </mat-form-field>
   
-        <button mat-raised-button color="primary" (click)="abrirModalProductos()">Buscar</button>
+        <button mat-raised-button color="primary" (click)="abrirModalProductos()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
       </div>
     </div>
   
@@ -92,8 +109,10 @@
       <!-- 5. Agregar Producto / Registrar Compra -->
       <div class="botones-acciones">
         <div class="contenedor">
-          <button mat-raised-button color="accent" (click)="agregarProducto()">Agregar Producto</button>
-    
+          <button mat-raised-button color="accent" (click)="agregarProducto()">
+            <mat-icon>add_circle</mat-icon>
+            Agregar Producto
+          </button>
           <mat-form-field appearance="outline">
             <mat-label>Total a Pagar</mat-label>
             <input matInput [value]="calcularTotal()" readonly>

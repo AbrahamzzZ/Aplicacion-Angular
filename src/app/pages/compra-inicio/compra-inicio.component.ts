@@ -33,7 +33,7 @@ import { IUsuario } from '../../models/usuario';
 })
 export class CompraInicioComponent implements OnInit{
   public hoy = new Date().toISOString().substring(0, 10);
-  public tipoComprobante: string = 'boleta';
+  public tipoComprobante: string = 'Boleta';
   public proveedorSeleccionado: IProveedor | null = null;
   public transportistaSeleccionado: ITransportista | null = null;
   public productoSeleccionado: IProducto | null = null;
@@ -130,7 +130,10 @@ export class CompraInicioComponent implements OnInit{
 
   registrarCompra() {
     if (!this.proveedorSeleccionado || !this.transportistaSeleccionado) {
-      alert('Debe seleccionar un proveedor y un transportista');
+      this.mostrarMensaje('Debe seleccionar un proveedor y un transportista.', 'error');
+      return;
+    }else if(this.productosAgregados.length === 0){
+      this.mostrarMensaje('Debe agregar al menos un producto.', 'error');
       return;
     }
 
@@ -180,5 +183,23 @@ export class CompraInicioComponent implements OnInit{
       verticalPosition: 'bottom',
       panelClass: [className]
     });
+  }
+
+  limpiar(){
+    this.proveedorSeleccionado = null;
+    this.transportistaSeleccionado = null;
+    this.productoSeleccionado = null;
+
+    this.producto = {
+      precioVenta: 0,
+      precioCompra: 0,
+      cantidad: 0,
+      subTotal: 0
+    };
+
+    this.tipoComprobante = 'Boleta';
+
+    this.productosAgregados = [];
+    this.dataSource.data = [];
   }
 }
