@@ -1,0 +1,106 @@
+.formulario{
+  margin: 20px;
+  padding: 10px;
+}
+
+.titulo {
+  font-size: 2rem;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+.contenedor-formulario {
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.formulario-venta {
+  display: flex;
+  gap: 16px;
+  padding: 30px;
+  box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
+  margin-bottom: 40px;
+}
+
+.fecha-comprobante,
+  .datos-proveedor,
+  .datos-transportista,
+  .datos-producto,
+  .tabla-productos,
+  .botones-acciones {
+  border: 2px solid rgb(137, 136, 136);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.contenedor-principal {
+  display: flex;
+  gap: 20px;
+  width: 1270px;
+}
+
+.fecha-comprobante {
+  flex: 2;
+  height: auto;
+}
+
+.grupo-proveedor-transportista {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.datos-proveedor,
+.datos-transportista {
+  width: 1000px;
+}
+
+.datos-producto {
+  grid-column: span 2;
+  gap: 10px;
+}
+
+.fila-productos {
+  display: flex;
+  gap: 20px;
+  grid-column: span 2;
+  box-sizing: border-box;
+  width: 1300px;
+}
+
+.botones-acciones {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.tabla-productos {
+  flex: 3;
+  box-sizing: border-box;
+}
+
+mat-form-field {
+  margin-right: 12px;
+  min-width: 200px;
+  max-width: 300px;
+  flex: 1;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
