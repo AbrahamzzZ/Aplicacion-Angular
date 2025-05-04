@@ -1,3 +1,4 @@
+import { IDetalleCompra } from "./detalle-compra";
 import { IProveedor } from "./proveedor";
 import { ITransportista } from "./transportista";
 import { IUsuario } from "./usuario";
@@ -10,4 +11,6 @@ export interface ICompra {
     oTransportista: ITransportista;
     tipoDocumento: string;
     montoTotal: string;
+    detalleCompra: IDetalleCompra [];
+    fecha_Compra: string;
 }
