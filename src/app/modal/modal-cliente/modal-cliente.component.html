@@ -21,11 +21,6 @@
     <td mat-cell *matCellDef="let cliente"> {{cliente.cedula}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="estado">
-    <th mat-header-cell *matHeaderCellDef> Estado </th>
-    <td mat-cell *matCellDef="let cliente"> {{cliente.estado ? 'Activo' : 'Inactivo'}} </td>
-  </ng-container>
-
   <ng-container matColumnDef="accion">
     <th mat-header-cell *matHeaderCellDef> Acción </th>
     <td mat-cell *matCellDef="let cliente">
