@@ -23,7 +23,12 @@
 
   <ng-container matColumnDef="estado">
     <th mat-header-cell *matHeaderCellDef> Estado </th>
-    <td mat-cell *matCellDef="let producto"> {{producto.estado ? 'Agotado' : 'No Agotado'}} </td>
+    <td class="table__cell" mat-cell *matCellDef="let element" [ngClass]="{
+        'table__estado-agotado': element.estado,
+        'table__estado-no-agotado': !element.estado
+      }">
+        {{ getEstado(element.estado) }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="accion">

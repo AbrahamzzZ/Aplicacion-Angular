@@ -38,11 +38,11 @@ td {
 }
 
 /* Centrar contenido de celdas */
-td.mat-cell, th.mat-header-cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  td.mat-cell, th.mat-header-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .table__estado-activo {
     color: green;
@@ -52,11 +52,11 @@ td.mat-cell, th.mat-header-cell {
   }
 
  .table__estado-no-activo {
-  color: red;
-  font-weight: bold;
-  padding: 5px;
-  text-align: center;
-}
+    color: red;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+  }
 
 /* Hover fila */
 tr:hover {

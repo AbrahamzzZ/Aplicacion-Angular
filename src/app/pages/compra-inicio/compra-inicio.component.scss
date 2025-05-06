@@ -105,3 +105,7 @@ table {
   align-items: center;
   justify-content: center;
 }
+
+.mdc-data-table__header-cell, .mat-mdc-cell {
+  text-align: center;
+}

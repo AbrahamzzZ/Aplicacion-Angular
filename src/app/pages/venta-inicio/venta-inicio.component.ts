@@ -45,11 +45,11 @@ export class VentaInicioComponent {
   private snackBar = inject(MatSnackBar);
   private loginServicio = inject(LoginService);
   public numeroDocumento: string = '';
+  public totalSinDescuento: number = 0;
   public pagaCon: number = 0;
   public cambio: number = 0;
   public totalConDescuento: number = 0;
   public montoDescuento: number = 0;
-  public totalSinDescuento: number = 0;
 
 
   constructor(private router: Router, private dialogo: MatDialog){}
@@ -106,28 +106,29 @@ export class VentaInicioComponent {
 
   agregarProducto() {
     if (this.productoSeleccionado && this.producto.cantidad > 0) {
-      const precioVenta = Number(this.productoSeleccionado.precio_Venta);
-      const cantidad = Number(this.producto.cantidad);
-      const descuento = this.ofertaSeleccionado?.descuento ?? 0;
-  
-      const subtotal = precioVenta * cantidad;
-      const montoDescuento = subtotal * (descuento / 100);
-      const subtotalConDescuento = subtotal - montoDescuento;
-  
-      const productoAgregado = {
-        id: this.productoSeleccionado.id,
-        nombre: this.productoSeleccionado.nombre,
-        precioVenta: precioVenta,
-        cantidad: cantidad,
-        descuento: descuento,
-        subtotal: subtotalConDescuento
-      };
-  
-      this.productosAgregados.push(productoAgregado);
-      this.dataSource.data = [...this.productosAgregados];
-  
-      this.calcularTotal();
-      console.log(productoAgregado);
+      if(this.producto.cantidad <= this.productoSeleccionado.stock){
+        const precioVenta = Number(this.productoSeleccionado.precio_Venta);
+        const cantidad = Number(this.producto.cantidad);
+        const descuento = this.ofertaSeleccionado?.descuento ?? 0;
+    
+        const subtotal = precioVenta * cantidad;
+        const montoDescuento = subtotal * (descuento / 100);
+        const subtotalConDescuento = subtotal - montoDescuento;
+    
+        const productoAgregado = {
+          id: this.productoSeleccionado.id,
+          nombre: this.productoSeleccionado.nombre,
+          precioVenta: precioVenta,
+          cantidad: cantidad,
+          descuento: descuento,
+          subtotal: subtotalConDescuento
+        };
+    
+        this.productosAgregados.push(productoAgregado);
+        this.dataSource.data = [...this.productosAgregados];
+    
+        this.calcularTotal();
+      }
     }
   }
 
@@ -160,6 +161,10 @@ export class VentaInicioComponent {
       this.cambio = this.pagaCon - this.totalConDescuento;
     }
   }  
+
+  mostrarTotal(){
+    return this.totalSinDescuento;
+  }
 
   registrarVenta() {
     if (!this.clienteSeleccionado) {

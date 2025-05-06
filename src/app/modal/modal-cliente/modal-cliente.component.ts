@@ -14,7 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class ModalClienteComponent {
   listaClientes: ICliente[] = [];
-  columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'estado', 'accion'];
+  columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'accion'];
 
   constructor(
     private dialogRef: MatDialogRef<ModalClienteComponent>,

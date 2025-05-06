@@ -4,11 +4,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { TransportistaService } from '../../../services/transportista.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-modal-transportista',
   standalone: true,
-  imports: [MatTableModule, MatIcon],
+  imports: [MatTableModule, MatIcon, NgClass],
   templateUrl: './modal-transportista.component.html',
   styleUrl: './modal-transportista.component.scss'
 })
@@ -36,5 +37,9 @@ export class ModalTransportistaComponent {
 
   cerrar() {
     this.dialogRef.close();
+  }
+
+  getEstado(estado: boolean): string {
+    return estado ? 'Activo' : 'No Activo';
   }
 }

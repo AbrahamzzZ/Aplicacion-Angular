@@ -4,11 +4,12 @@ import { ProductoService } from '../../../services/producto.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-modal-producto',
   standalone: true,
-  imports: [MatTableModule, MatIcon],
+  imports: [MatTableModule, MatIcon, NgClass],
   templateUrl: './modal-producto.component.html',
   styleUrl: './modal-producto.component.scss'
 })
@@ -36,5 +37,9 @@ export class ModalProductoComponent {
 
   cerrar() {
     this.dialogRef.close();
+  }
+
+  getEstado(estado: boolean): string {
+    return estado ? 'Agotado' : 'No Agotado';
   }
 }
