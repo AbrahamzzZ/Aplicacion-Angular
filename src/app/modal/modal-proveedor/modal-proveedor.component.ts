@@ -4,11 +4,12 @@ import { MatDialogRef} from '@angular/material/dialog';
 import { ProveedorService } from '../../../services/proveedor.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-modal-proveedor',
   standalone: true,
-  imports: [MatTableModule, MatIcon],
+  imports: [MatTableModule, MatIcon, NgClass],
   templateUrl: './modal-proveedor.component.html',
   styleUrl: './modal-proveedor.component.scss'
 })
@@ -36,5 +37,9 @@ export class ModalProveedorComponent {
 
   cerrar() {
     this.dialogRef.close();
+  }
+
+  getEstado(estado: boolean): string {
+    return estado ? 'Activo' : 'No Activo';
   }
 }
