@@ -40,7 +40,7 @@ export class VentaInicioComponent {
   public producto = { precioVenta: 0, cantidad: 0, subTotal: 0, descuento: 0 };
   public productosAgregados: any[] = [];
   public dataSource = new MatTableDataSource<any>();
-  public columnasTabla: string[] = ['ID', 'nombre', 'precioVenta', 'cantidad', 'subtotal', 'descuento','accion'];
+  public columnasTabla: string[] = ['ID', 'nombre', 'precioVenta', 'cantidad', 'subtotal', 'descuento', 'accion'];
   private servicioVenta = inject(VentaService);
   private snackBar = inject(MatSnackBar);
   private loginServicio = inject(LoginService);
@@ -95,7 +95,7 @@ export class VentaInicioComponent {
   }
 
   verDetalleVenta(){
-    this.router.navigate(['compra/detalle-venta']);
+    this.router.navigate(['venta/detalle-venta']);
   }
 
   obtenerNumeroDocumento() {
@@ -195,10 +195,10 @@ export class VentaInicioComponent {
       oCliente: this.clienteSeleccionado,
       oOferta: this.ofertaSeleccionado,
       tipoDocumento: this.tipoComprobante,
-      montoTotal: 0,
-      montoCambio: 0,
-      montoPago: 0,
-      descuento: 0,
+      montoTotal: this.totalSinDescuento,
+      montoCambio: this.cambio,
+      montoPago: this.pagaCon,
+      descuento: this.totalConDescuento,
       detalleVenta: detalles,
       fecha_Venta: Metodos.getFechaCreacion()
     };
