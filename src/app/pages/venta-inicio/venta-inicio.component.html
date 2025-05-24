@@ -1,12 +1,15 @@
 <div class="formulario">
   <h1 class="titulo">Formulario de venta</h1>
 </div>
-<button mat-raised-button color="primary" (click)="verDetalleVenta()">
-  <mat-icon>visibility</mat-icon>
-  Ver detalle venta
-</button>
+
 <div class="contenedor-formulario">
   <mat-card class="formulario-venta">
+    <div class="contenedor-ver-detalle">
+      <button mat-raised-button color="primary" (click)="verDetalleVenta()">
+        <mat-icon>visibility</mat-icon>
+        Ver detalle venta
+      </button>
+    </div>
     <div class="contenedor-principal">
       <!-- 1. Fecha y Tipo de Comprobante -->
       <div class="fecha-comprobante">
@@ -24,7 +27,7 @@
             </mat-select>
           </mat-form-field>
 
-          <button mat-raised-button color="warn" (click)="limpiar()">
+          <button class="btn" mat-raised-button color="warn" (click)="limpiar()">
             <mat-icon>cleaning_services</mat-icon>
             Limpiar
           </button>
@@ -107,13 +110,14 @@
       <!-- 5. Agregar Producto / Registrar Venta -->
       <div class="botones-acciones">
         <div class="contenedor">
-          <button mat-raised-button color="accent" (click)="agregarProducto()">
-            <mat-icon>add_circle</mat-icon>
-            Agregar Producto
-          </button>
           <mat-form-field appearance="outline">
             <mat-label>Total a Pagar</mat-label>
             <input matInput [value]="mostrarTotal() | currency:'USD':'symbol'" readonly>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Con descuento</mat-label>
+            <input matInput [value]="totalConDescuento | currency:'USD':'symbol'" readonly>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -126,12 +130,12 @@
             <input matInput [value]="cambio | currency:'USD':'symbol'" readonly>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Con descuento</mat-label>
-            <input matInput [value]="totalConDescuento | currency:'USD':'symbol'" readonly>
-          </mat-form-field>
+          <button class="btn"  mat-raised-button color="accent" (click)="agregarProducto()">
+            <mat-icon>add_circle</mat-icon>
+            Agregar Producto
+          </button>
 
-          <button mat-raised-button color="primary" (click)="registrarVenta()">Registrar Venta</button>
+          <button class="btn"  mat-raised-button color="primary" (click)="registrarVenta()">Registrar Venta</button>
         </div>
       </div>
     
