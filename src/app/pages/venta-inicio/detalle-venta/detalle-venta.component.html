@@ -1,1 +1,157 @@
-<p>detalle-venta works!</p>
+<div class="formulario">
+    <h1 class="titulo">Detalle de la Venta</h1>
+</div>
+  <div class="contenedor-formulario">
+    <div class="container__search">
+      <mat-form-field class="container__search__input" appearance="outline">
+        <mat-label>Buscar venta</mat-label>
+        <input
+          matInput
+          #searchInput
+          (keyup)="filtrarVenta(searchInput.value)"
+          placeholder="Buscar venta por su número de documento."
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <mat-card class="formulario-venta" [formGroup]="venta">
+      <div class="contenedor-principal">
+        <!-- 1. Información Venta-->
+        <div class="fecha-comprobante">
+          <div class="contenedor">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha</mat-label>
+              <input matInput formControlName="fecha" readonly>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline">
+              <mat-label>Tipo Documento</mat-label>
+              <input matInput formControlName="tipoDocumento" readonly />
+            </mat-form-field>
+  
+            <button mat-raised-button color="warn" (click)="limpiar()">
+              <mat-icon>cleaning_services</mat-icon>
+              Limpiar
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Información Usuario-->
+        <div class="grupo-usuario">
+          <div class="contenedor">
+            <mat-form-field appearance="outline">
+              <mat-label>Código</mat-label>
+              <input matInput formControlName="codigoUsuario" readonly>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline">
+              <mat-label>Usuario: </mat-label>
+              <input matInput formControlName="nombreUsuario" readonly />
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="grupo-proveedor-transportista">
+          <!-- 3. Información del Cliente -->
+          <div class="datos-proveedor">
+            <div class="contenedor">
+              <mat-form-field>
+                <input matInput formControlName="nombresCliente" readonly>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="apellidosCliente" readonly>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="cedulaCliente" readonly>
+              </mat-form-field>
+            </div>
+          </div>
+        
+          <!-- 4. Datos de la Oferta -->
+          <div class="datos-transportista">
+            <div class="contenedor">
+              <mat-form-field>
+                <input matInput placeholder="Código"  readonly>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Nombre"  readonly>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Descuento"  readonly>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="fila-productos">
+        <!-- 5. Monto Total / Descargar PDF -->
+        <div class="botones-acciones">
+          <div class="contenedor">
+            <button mat-raised-button color="accent" (click)="descargarPDF()">
+              <mat-icon>add_circle</mat-icon>
+              Descargar PDF
+            </button>
+            <mat-form-field appearance="outline">
+              <mat-label>Total a Pagar</mat-label>
+              <input matInput formControlName="totalPagar" readonly>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Paga con</mat-label>
+              <input matInput formControlName="pagaCon" readonly>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Cambio</mat-label>
+              <input matInput formControlName="cambio" readonly>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Con descuento</mat-label>
+              <input matInput formControlName="conDescuento" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      
+        <!-- 6. Tabla de Productos Agregados -->
+        <div class="tabla-productos">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let element">{{element.oProducto?.id}}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let element">{{element.oProducto?.nombre}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="precio_Venta">
+              <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
+              <td mat-cell *matCellDef="let element">{{element.precio_Venta | currency:'USD':'symbol'}}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+              <td mat-cell *matCellDef="let element">{{element.cantidad}}</td>
+            </ng-container>
+      
+            <ng-container matColumnDef="subTotal">
+              <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+              <td mat-cell *matCellDef="let element">{{element.subTotal | currency:'USD':'symbol'}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="descuento">
+              <th mat-header-cell *matHeaderCellDef>Descuento</th>
+              <td mat-cell *matCellDef="let element">{{element.descuento + '%'}}</td>
+            </ng-container>
+      
+            <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasTabla;"></tr>
+          </table>
+        </div>
+      </div>
+    </mat-card>
+</div>
