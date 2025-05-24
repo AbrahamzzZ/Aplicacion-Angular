@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IProducto } from '../../models/producto';
-import { ProductoService } from '../../../services/producto.service';
+import { IProducto } from '../../../models/producto';
+import { ProductoService } from '../../../../services/producto.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';

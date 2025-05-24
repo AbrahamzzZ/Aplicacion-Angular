@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ICliente } from '../../models/cliente';
-import { ClienteService } from '../../../services/cliente.service';
+import { ICliente } from '../../../models/cliente';
+import { ClienteService } from '../../../../services/cliente.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';

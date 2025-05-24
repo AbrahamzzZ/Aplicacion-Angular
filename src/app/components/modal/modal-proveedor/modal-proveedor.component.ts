@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IProveedor } from '../../models/proveedor';
+import { IProveedor } from '../../../models/proveedor';
 import { MatDialogRef} from '@angular/material/dialog';
-import { ProveedorService } from '../../../services/proveedor.service';
+import { ProveedorService } from '../../../../services/proveedor.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';

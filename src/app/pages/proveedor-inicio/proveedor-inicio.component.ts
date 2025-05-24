@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { ProveedorService } from '../../../services/proveedor.service';
 import { IProveedor } from '../../models/proveedor';
-import { DialogoConfirmacionComponent } from '../../dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -75,7 +75,6 @@ export class ProveedorInicioComponent {
       if (result) {
         this.proveedorServicio.eliminar(proveedor.id).subscribe({
           next: (data) => {
-            console.log(data);
             if (data.isSuccess) {
               this.obtenerProveedor();
               this.mostrarMensaje('Proveedor eliminado correctamente.', 'success');

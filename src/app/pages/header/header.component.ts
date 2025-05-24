@@ -15,16 +15,12 @@ import { IMenu } from '../../models/menu';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  public fechaActual: string = '';
   public nombreUsuario: string = ''; 
   public menus: IMenu[] = [];
   private loginServicio = inject(LoginService);
   private menuServicio = inject(MenuService);
 
-  constructor(private router: Router) {
-    this.actualizarFechaHora();
-    setInterval(() => this.actualizarFechaHora(), 1000); // Actualiza la hora cada segundo
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     const datosToken = this.loginServicio.obtenerDatosToken();
@@ -42,16 +38,6 @@ export class HeaderComponent implements OnInit {
         }
       });
     }
-  }
-
-  private actualizarFechaHora(): void {
-    const ahora = new Date();
-    this.fechaActual = ahora.toLocaleDateString('es-ES', {
-      weekday: 'long',
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric'
-    });
   }
 
   cerrarSesion(){
