@@ -6,7 +6,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { ClienteService } from '../../../services/cliente.service';
 import { ICliente } from '../../models/cliente';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogoConfirmacionComponent } from '../../dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
