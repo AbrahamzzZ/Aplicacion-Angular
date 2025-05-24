@@ -31,6 +31,7 @@ import { EditarCategoriaComponent } from './pages/categoria-inicio/editar-catego
 import { CompraInicioComponent } from './pages/compra-inicio/compra-inicio.component';
 import { VentaInicioComponent } from './pages/venta-inicio/venta-inicio.component';
 import { DetalleCompraComponent } from './pages/compra-inicio/detalle-compra/detalle-compra.component';
+import { DetalleVentaComponent } from './pages/venta-inicio/detalle-venta/detalle-venta.component';
 
 export const routes: Routes = [
   {
@@ -68,8 +69,9 @@ export const routes: Routes = [
       { path: 'oferta/oferta-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroOfertaComponent, title: 'Registro de Ofertas' },
       { path: 'oferta/oferta-editar/:id', canActivate: [Autenticacion], component: EditarOfertaComponent, title: 'Editar Oferta' },
       { path: 'compra', component: CompraInicioComponent, canActivate: [Autenticacion], title: 'Registrar Compras'},
-      { path: 'compra/detalle-compra',canActivate: [Autenticacion] , component: DetalleCompraComponent, title: 'Detalle de la compra'},
-      { path: 'venta', component: VentaInicioComponent, canActivate: [Autenticacion], title: 'Registrar Ventas'}
+      { path: 'compra/detalle-compra',canActivate: [Autenticacion], component: DetalleCompraComponent, title: 'Ver el detalle de la compra'},
+      { path: 'venta', component: VentaInicioComponent, canActivate: [Autenticacion], title: 'Registrar Ventas'},
+      { path: 'venta/detalle-venta', canActivate: [Autenticacion], component: DetalleVentaComponent, title: 'Ver el detalle de la venta'}
     ]
   },
   { path: '**', component: PaginaNoEncontradaComponent, title: 'Página no encontrada' }
