@@ -68,11 +68,13 @@
   
           <mat-form-field class="form__field">
             <mat-label>Descuento: </mat-label>
-            <input matInput type="text" formControlName="descuento" />
+            <input matInput type="number" formControlName="descuento" />
             @if (descuentoField.hasError('required')) {
               <mat-error class="form__error">Ingrese un descuento.</mat-error>
-            } @else if (descuentoField.hasError('ofertaValida')) {
-              <mat-error class="form__error">El descuento solo debe contener numeros.</mat-error>
+            }@else if(descuentoField.hasError('min')) {
+              <mat-error class="form__error">El descuento tiene que ser mayor que 0.</mat-error>
+            }@else if(descuentoField.hasError('max')) {
+              <mat-error class="form__error">El descuento no valido.</mat-error>
             }
           </mat-form-field>
   
