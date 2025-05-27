@@ -1,37 +1,87 @@
-.formulario{
+.venta-formulario {
   margin: 20px;
   padding: 10px;
 }
 
-.titulo {
+.venta-formulario__titulo {
   font-size: 2rem;
-  color: #000000;
+  color: #000;
   text-align: center;
   margin-bottom: 20px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-.contenedor-formulario {
-  display: flex;
-  justify-content: center;
-  align-items: center
 }
 
-.contenedor-ver-detalle {
+.venta-formulario__contenedor {
   display: flex;
-  justify-content: flex-start; 
+  justify-content: center;
+  align-items: center;
+}
+
+.venta-formulario__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 30px;
+  box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
+  margin-bottom: 40px;
+}
+
+.venta-formulario__detalle-boton {
+  display: flex;
+  justify-content: flex-start;
   margin-bottom: 16px;
 }
 
-.contenedor-ver-detalle button {
+.venta-formulario__detalle-boton button {
   max-width: 250px;
   width: 100%;
 }
 
-.contenedor {
+.venta-formulario__grupo-principal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.venta-formulario__grupo--cliente-oferta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.venta-formulario__bloque {
+  border: 2px solid rgb(137, 136, 136);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.venta-formulario__bloque--fecha-comprobante {
+  width: 30%;
+}
+
+.venta-formulario__bloque--cliente,
+.venta-formulario__bloque--oferta {
+  width: 100%;
+}
+
+.venta-formulario__bloque--fecha-comprobante,
+.venta-formulario__bloque--cliente,
+.venta-formulario__bloque--oferta {
+  box-sizing: border-box;
+}
+
+.venta-formulario__bloque--producto {
+  grid-column: span 2;
+}
+
+.venta-formulario__fila {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -39,76 +89,36 @@
   justify-content: center;
 }
 
-.formulario-venta {
-  display: flex;
-  gap: 16px;
-  padding: 30px;
-  box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
-  margin-bottom: 40px;
-}
-
-.fecha-comprobante,
-  .datos-proveedor,
-  .datos-transportista,
-  .datos-producto,
-  .tabla-productos,
-  .botones-acciones {
-  border: 2px solid rgb(137, 136, 136);
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.contenedor-principal {
+.venta-formulario__fila--acciones {
   display: flex;
   gap: 20px;
-  width: 1270px;
-}
-
-.fecha-comprobante {
-  flex: 2;
-  height: auto;
-}
-
-.grupo-proveedor-transportista {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.datos-proveedor,
-.datos-transportista {
-  width: 1000px;
-}
-
-.datos-producto {
-  grid-column: span 2;
-  gap: 10px;
-}
-
-.fila-productos {
-  display: flex;
-  gap: 20px;
-  grid-column: span 2;
-  box-sizing: border-box;
   width: 1300px;
+  align-items: flex-start;
 }
 
-.btn{
+.venta-formulario__acciones {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.venta-formulario__contenedor-boton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.venta-formulario__tabla {
+  flex: 3;
+  box-sizing: border-box;
+}
+
+.venta-formulario__btn {
   min-width: 200px;
   max-width: 300px;
   margin-right: 12px;
   flex: 1;
-}
-
-.botones-acciones {
-  flex: 1;
-  box-sizing: border-box;
-}
-
-.tabla-productos {
-  flex: 3;
-  box-sizing: border-box;
 }
 
 mat-form-field {
@@ -125,4 +135,76 @@ table {
 
 .mdc-data-table__header-cell, .mat-mdc-cell {
   text-align: center;
+}
+
+
+@media (max-width: 1024px) {
+  .venta-formulario__grupo-principal {
+    flex-direction: column;
+  }
+
+  .venta-formulario__bloque--fecha-comprobante,
+  .venta-formulario__bloque--cliente,
+  .venta-formulario__bloque--oferta {
+    width: 100%;
+  }
+
+  .venta-formulario__bloque--cliente,
+  .venta-formulario__bloque--oferta,
+  .venta-formulario__fila--acciones {
+    width: 100%;
+  }
+
+  .venta-formulario__btn,
+  mat-form-field {
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .venta-formulario__detalle-boton {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .venta-formulario {
+    padding: 10px 16px;
+  }
+
+  .venta-formulario__contenedor {
+    padding: 0 8px;
+  }
+
+  .venta-formulario__titulo {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .venta-formulario__card {
+    padding: clamp(15px, 4vw, 20px);
+  }
+
+  .venta-formulario__btn,
+  mat-form-field {
+    width: 100%;
+    margin-bottom: clamp(8px, 3vw, 12px);
+  }
+
+  .venta-formulario__detalle-boton {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .venta-formulario__fila {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .venta-formulario__tabla {
+    overflow-x: auto;
+    display: block;
+  }
+
+  table {
+    min-width: 600px;
+  }
 }
