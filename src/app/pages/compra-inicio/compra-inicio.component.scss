@@ -1,107 +1,124 @@
-.formulario{
+.compra-formulario {
   margin: 20px;
   padding: 10px;
 }
 
-.titulo {
+.compra-formulario__titulo {
   font-size: 2rem;
-  color: #000000;
+  color: #000;
   text-align: center;
   margin-bottom: 20px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  }
+}
 
-.contenedor-formulario {
+.compra-formulario__contenedor {
   display: flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
-.contenedor-ver-detalle {
+.compra-formulario__card {
   display: flex;
-  justify-content: flex-start; 
-  margin-bottom: 16px;
-}
-
-.contenedor-ver-detalle button {
-  max-width: 250px;
-  width: 100%;
-}
-
-.formulario-compra {
-  display: flex;
+  flex-direction: column;
   gap: 16px;
   padding: 30px;
   box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
   margin-bottom: 40px;
 }
 
-.fecha-comprobante,
-.datos-proveedor,
-.datos-transportista,
-.datos-producto,
-.tabla-productos,
-.botones-acciones {
-  border: 2px solid rgb(137, 136, 136);
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.contenedor-principal {
+.compra-formulario__detalle-boton {
   display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+}
+
+.compra-formulario__detalle-boton button {
+  max-width: 250px;
+  width: 100%;
+}
+
+.compra-formulario__grupo-principal {
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  width: 1270px; 
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.fecha-comprobante {
-  flex: 2;
-  height: auto; 
-}
-
-.grupo-proveedor-transportista {
+.compra-formulario__grupo--proveedor-transportista {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.datos-proveedor,
-.datos-transportista {
+.compra-formulario__bloque {
+  border: 2px solid rgb(137, 136, 136);
   padding: 12px;
-  width: 1000px;
+  border-radius: 8px;
 }
 
-.datos-producto {
+.compra-formulario__bloque--fecha-comprobante {
+  width: 30%;
+}
+
+.compra-formulario__bloque--proveedor,
+.compra-formulario__bloque--transportista {
+  width: 100%;
+}
+
+.compra-formulario__bloque--fecha-comprobante,
+.compra-formulario__bloque--proveedor,
+.compra-formulario__bloque--transportista {
+  box-sizing: border-box;
+}
+
+.compra-formulario__bloque--producto {
   grid-column: span 2;
-  gap: 10px;
 }
 
-.fila-productos {
+.compra-formulario__fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.compra-formulario__fila--acciones {
   display: flex;
   gap: 20px;
-  grid-column: span 2;
-  box-sizing: border-box;
   width: 1300px;
+  align-items: flex-start;
 }
 
-.btn{
+.compra-formulario__acciones {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.compra-formulario__contenedor-boton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.compra-formulario__tabla {
+  flex: 3;
+  box-sizing: border-box;
+}
+
+.compra-formulario__btn {
   min-width: 200px;
   max-width: 300px;
   margin-right: 12px;
   flex: 1;
-}
-
-.botones-acciones {
-  flex: 1;
-  box-sizing: border-box;
-}
-
-.tabla-productos {
-  flex: 3;
-  box-sizing: border-box;
 }
 
 mat-form-field {
@@ -116,14 +133,78 @@ table {
   margin-top: 20px;
 }
 
-.contenedor {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-}
-
 .mdc-data-table__header-cell, .mat-mdc-cell {
   text-align: center;
+}
+
+
+@media (max-width: 1024px) {
+  .compra-formulario__grupo-principal {
+    flex-direction: column;
+  }
+
+  .compra-formulario__bloque--fecha-comprobante,
+  .compra-formulario__bloque--proveedor,
+  .compra-formulario__bloque--transportista {
+    width: 100%;
+  }
+
+  .compra-formulario__bloque--proveedor,
+  .compra-formulario__bloque--transportista,
+  .compra-formulario__fila--acciones {
+    width: 100%;
+  }
+
+  .compra-formulario__btn,
+  mat-form-field {
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .compra-formulario__detalle-boton {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .compra-formulario {
+    padding: 10px 16px;
+  }
+
+  .compra-formulario__contenedor {
+    padding: 0 8px;
+  }
+
+  .compra-formulario__titulo {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .compra-formulario__card {
+    padding: clamp(15px, 4vw, 20px);
+  }
+
+  .compra-formulario__btn,
+  mat-form-field {
+    width: 100%;
+    margin-bottom: clamp(8px, 3vw, 12px);
+  }
+
+  .compra-formulario__detalle-boton {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .compra-formulario__fila {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .compra-formulario__tabla {
+    overflow-x: auto;
+    display: block;
+  }
+
+  table {
+    min-width: 600px;
+  }
 }
