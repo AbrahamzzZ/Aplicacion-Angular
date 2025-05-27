@@ -14,7 +14,6 @@ import { ClienteService } from '../../../../services/cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cliente',

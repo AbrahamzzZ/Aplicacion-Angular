@@ -106,6 +106,12 @@ export class VentaInicioComponent {
 
   agregarProducto() {
     if (this.productoSeleccionado && this.producto.cantidad > 0) {
+      
+      if (!Number.isInteger(this.producto.cantidad)) {
+        this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
+        return;
+      }
+      
       if(this.producto.cantidad <= this.productoSeleccionado.stock){
         const precioVenta = Number(this.productoSeleccionado.precio_Venta);
         const cantidad = Number(this.producto.cantidad);
@@ -128,7 +134,11 @@ export class VentaInicioComponent {
         this.dataSource.data = [...this.productosAgregados];
     
         this.calcularTotal();
+      }else{
+        this.mostrarMensaje('La cantidad supera al stock del producto.', 'error');
       }
+    }else{
+      this.mostrarMensaje('No se acepta cantidades negativas.', 'error');
     }
   }
 
