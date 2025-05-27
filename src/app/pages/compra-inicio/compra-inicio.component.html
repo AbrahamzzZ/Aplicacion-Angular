@@ -1,19 +1,19 @@
-<div class="formulario">
-  <h1 class="titulo">Formulario de compra</h1>
+<div class="compra-formulario">
+  <h1 class="compra-formulario__titulo">Formulario de compra</h1>
 </div>
 
-<div class="contenedor-formulario">
-  <mat-card class="formulario-compra">
-    <div class="contenedor-ver-detalle">
+<div class="compra-formulario__contenedor">
+  <mat-card class="compra-formulario__card">
+    <div class="compra-formulario__detalle-boton">
       <button mat-raised-button color="primary" (click)="verDetalleCompra()">
         <mat-icon>visibility</mat-icon>
         Ver detalle compra
       </button>
     </div>
-    <div class="contenedor-principal">
+    <div class="compra-formulario__grupo-principal">
       <!-- 1. Fecha y Tipo de Comprobante -->
-      <div class="fecha-comprobante">
-        <div class="contenedor">
+      <div class="compra-formulario__bloque compra-formulario__bloque--fecha-comprobante">
+        <div class="compra-formulario__fila">
           <mat-form-field appearance="outline">
             <mat-label>Fecha</mat-label>
             <input matInput [value]="hoy" readonly>
@@ -27,17 +27,17 @@
             </mat-select>
           </mat-form-field>
 
-          <button class="btn" mat-raised-button color="warn" (click)="limpiar()">
+          <button class="compra-formulario__btn" mat-raised-button color="warn" (click)="limpiar()">
             <mat-icon>cleaning_services</mat-icon>
             Limpiar
           </button>
         </div>
       </div>
 
-      <div class="grupo-proveedor-transportista">
+      <div class="compra-formulario__grupo compra-formulario__grupo--proveedor-transportista">
         <!-- 2. Datos del Proveedor -->
-        <div class="datos-proveedor">
-          <div class="contenedor">
+        <div class="compra-formulario__bloque compra-formulario__bloque--proveedor">
+          <div class="compra-formulario__fila">
             <mat-form-field>
               <input matInput placeholder="Nombres" [value]="proveedorSeleccionado?.nombres" readonly>
             </mat-form-field>
@@ -55,8 +55,8 @@
         </div>
       
         <!-- 3. Datos del Transportista -->
-        <div class="datos-transportista">
-          <div class="contenedor">
+        <div class="compra-formulario__bloque compra-formulario__bloque--transportista">
+          <div class="compra-formulario__fila">
             <mat-form-field>
               <input matInput placeholder="Nombres" [value]="transportistaSeleccionado?.nombres" readonly>
             </mat-form-field>
@@ -76,8 +76,8 @@
     </div>
 
     <!-- 4. Datos del Producto -->
-    <div class="datos-producto">
-      <div class="contenedor">
+    <div class="compra-formulario__bloque compra-formulario__bloque--producto">
+      <div class="compra-formulario__fila">
         <mat-form-field>
           <input matInput placeholder="Código" [value]="productoSeleccionado?.codigo" readonly>
         </mat-form-field>
@@ -108,26 +108,26 @@
       </div>
     </div>
   
-    <div class="fila-productos">
+    <div class="compra-formulario__fila compra-formulario__fila--acciones">
       <!-- 5. Agregar Producto / Registrar Compra -->
-      <div class="botones-acciones">
-        <div class="contenedor">
+      <div class="compra-formulario__acciones">
+        <div class="compra-formulario__contenedor-boton">
           <mat-form-field appearance="outline">
             <mat-label>Total a Pagar</mat-label>
             <input matInput [value]="calcularTotal()" readonly>
           </mat-form-field>
 
-          <button class="btn" mat-raised-button color="accent" (click)="agregarProducto()">
+          <button class="compra-formulario__btn" mat-raised-button color="accent" (click)="agregarProducto()">
             <mat-icon>add_circle</mat-icon>
             Agregar Producto
           </button>
       
-          <button class="btn" mat-raised-button color="primary" (click)="registrarCompra()">Registrar Compra</button>
+          <button class="compra-formulario__btn" mat-raised-button color="primary" (click)="registrarCompra()">Registrar Compra</button>
         </div>
       </div>
     
       <!-- 6. Tabla de Productos Agregados -->
-      <div class="tabla-productos">
+      <div class="compra-formulario__tabla">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
           <ng-container matColumnDef="ID">
