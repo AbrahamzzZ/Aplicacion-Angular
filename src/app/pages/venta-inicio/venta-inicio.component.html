@@ -1,19 +1,19 @@
-<div class="formulario">
-  <h1 class="titulo">Formulario de venta</h1>
+<div class="venta-formulario">
+  <h1 class="venta-formulario__titulo">Formulario de venta</h1>
 </div>
 
-<div class="contenedor-formulario">
-  <mat-card class="formulario-venta">
-    <div class="contenedor-ver-detalle">
+<div class="venta-formulario__contenedor">
+  <mat-card class="venta-formulario__card">
+    <div class="venta-formulario__detalle-boton">
       <button mat-raised-button color="primary" (click)="verDetalleVenta()">
         <mat-icon>visibility</mat-icon>
         Ver detalle venta
       </button>
     </div>
-    <div class="contenedor-principal">
+    <div class="venta-formulario__grupo-principal">
       <!-- 1. Fecha y Tipo de Comprobante -->
-      <div class="fecha-comprobante">
-        <div class="contenedor">
+      <div class="venta-formulario__bloque venta-formulario__bloque--fecha-comprobante">
+        <div class="venta-formulario__fila">
           <mat-form-field appearance="outline">
             <mat-label>Fecha</mat-label>
             <input matInput [value]="hoy" readonly>
@@ -27,17 +27,17 @@
             </mat-select>
           </mat-form-field>
 
-          <button class="btn" mat-raised-button color="warn" (click)="limpiar()">
+          <button class="venta-formulario__btn" mat-raised-button color="warn" (click)="limpiar()">
             <mat-icon>cleaning_services</mat-icon>
             Limpiar
           </button>
         </div>
       </div>
 
-      <div class="grupo-proveedor-transportista">
+      <div class="venta-formulario__grupo venta-formulario__grupo--cliente-oferta">
         <!-- 2. Datos del Cliente -->
-        <div class="datos-proveedor">
-          <div class="contenedor">
+        <div class="venta-formulario__bloque venta-formulario__bloque--cliente">
+          <div class="venta-formulario__fila">
             <mat-form-field>
               <input matInput placeholder="Nombres" [value]="clienteSeleccionado?.nombres" readonly>
             </mat-form-field>
@@ -55,8 +55,8 @@
         </div>
       
         <!-- 3. Datos de la Oferta -->
-        <div class="datos-transportista">
-          <div class="contenedor">
+        <div class="venta-formulario__bloque venta-formulario__bloque--oferta">
+          <div class="venta-formulario__fila">
             <mat-form-field>
               <input matInput placeholder="Código" [value]="ofertaSeleccionado?.codigo" readonly>
             </mat-form-field>
@@ -76,8 +76,8 @@
     </div>
 
     <!-- 4. Datos del Producto -->
-    <div class="datos-producto">
-      <div class="contenedor">
+    <div class="venta-formulario__bloque venta-formulario__bloque--producto">
+      <div class="venta-formulario__fila">
         <mat-form-field>
           <input matInput placeholder="Código" [value]="productoSeleccionado?.codigo" readonly>
         </mat-form-field>
@@ -106,10 +106,10 @@
       </div>
     </div>
   
-    <div class="fila-productos">
+    <div class="venta-formulario__fila venta-formulario__fila--acciones">
       <!-- 5. Agregar Producto / Registrar Venta -->
-      <div class="botones-acciones">
-        <div class="contenedor">
+      <div class="venta-formulario__acciones">
+        <div class="venta-formulario__contenedor-boton">
           <mat-form-field appearance="outline">
             <mat-label>Total a Pagar</mat-label>
             <input matInput [value]="mostrarTotal() | currency:'USD':'symbol'" readonly>
@@ -130,17 +130,17 @@
             <input matInput [value]="cambio | currency:'USD':'symbol'" readonly>
           </mat-form-field>
 
-          <button class="btn"  mat-raised-button color="accent" (click)="agregarProducto()">
+          <button class="venta-formulario__btn"  mat-raised-button color="accent" (click)="agregarProducto()">
             <mat-icon>add_circle</mat-icon>
             Agregar Producto
           </button>
 
-          <button class="btn"  mat-raised-button color="primary" (click)="registrarVenta()">Registrar Venta</button>
+          <button class="venta-formulario__btn"  mat-raised-button color="primary" (click)="registrarVenta()">Registrar Venta</button>
         </div>
       </div>
     
       <!-- 6. Tabla de Productos Agregados -->
-      <div class="tabla-productos">
+      <div class="venta-formulario__tabla">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
           <ng-container matColumnDef="ID">
