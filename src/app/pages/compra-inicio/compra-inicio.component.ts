@@ -99,28 +99,36 @@ export class CompraInicioComponent implements OnInit{
   }
 
   agregarProducto() {
-    if (this.productoSeleccionado && this.producto.cantidad > 0 && this.producto.precioCompra > 0) {
+    if (this.productoSeleccionado && this.producto.cantidad > 0) {
 
-      if (!Number.isInteger(this.producto.cantidad)) {
-        this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
-        return;
+      if (!isNaN(this.productoSeleccionado.precio_Compra) && !isNaN(this.productoSeleccionado.precio_Venta) && this.producto.precioCompra > 0 && this.producto.precioVenta > 0) {
+
+        if (!Number.isInteger(this.producto.cantidad)) {
+          this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
+          return;
+        }
+
+        const subtotalCalculado = Number(this.producto.precioCompra) * Number(this.producto.cantidad);
+        const productoAgregado = {
+          id: this.productoSeleccionado.id,
+          nombre: this.productoSeleccionado.nombre,
+          precioCompra: Number(this.producto.precioCompra),
+          precioVenta: Number(this.producto.precioVenta),
+          cantidad: this.producto.cantidad,
+          subtotal: subtotalCalculado
+        };
+        
+        this.productosAgregados.push(productoAgregado);
+        this.dataSource.data = [...this.productosAgregados]; // Actualizar el dataSource
+        console.log(productoAgregado);
+
+        this.productoSeleccionado = null;
+        this.producto = { precioVenta: 0, precioCompra: 0, cantidad: 0, subTotal: 0 };
+
+      }else{
+        this.mostrarMensaje('El precio debe ser un número válido.', 'error');
       }
-      const subtotalCalculado = Number(this.producto.precioCompra) * Number(this.producto.cantidad);
-      const productoAgregado = {
-        id: this.productoSeleccionado.id,
-        nombre: this.productoSeleccionado.nombre,
-        precioCompra: Number(this.producto.precioCompra),
-        precioVenta: Number(this.producto.precioVenta),
-        cantidad: this.producto.cantidad,
-        subtotal: subtotalCalculado
-      };
       
-      this.productosAgregados.push(productoAgregado);
-      this.dataSource.data = [...this.productosAgregados]; // Actualizar el dataSource
-      console.log(productoAgregado);
-
-      this.productoSeleccionado = null;
-      this.producto = { precioVenta: 0, precioCompra: 0, cantidad: 0, subTotal: 0 };
     }else{
       this.mostrarMensaje('No se acepta cantidades negativas.', 'error');
     }
