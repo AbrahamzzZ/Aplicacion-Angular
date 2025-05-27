@@ -164,11 +164,25 @@ export class VentaInicioComponent {
   calcularCambio() {
     this.calcularTotal();
 
-    if (this.pagaCon < this.totalConDescuento) {
-      this.mostrarMensaje('El monto ingresado en "Paga con" es insuficiente.', 'error');
+    if (!isNaN(this.pagaCon)) {
+
+      if (this.pagaCon < 0) {
+        this.mostrarMensaje('No se permiten valores negativos en "Paga con".', 'error');
+        this.cambio = 0;
+      }else{
+
+        if (this.pagaCon < this.totalConDescuento) {
+          this.mostrarMensaje('El monto ingresado en "Paga con" es insuficiente.', 'error');
+          this.cambio = 0;
+        } else {
+          this.cambio = this.pagaCon - this.totalConDescuento;
+        }
+        
+      }
+
+    }else{
+      this.mostrarMensaje('Debe ingresar un número válido en "Paga con".', 'error');
       this.cambio = 0;
-    } else {
-      this.cambio = this.pagaCon - this.totalConDescuento;
     }
   }  
 
