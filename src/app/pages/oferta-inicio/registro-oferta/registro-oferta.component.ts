@@ -66,7 +66,7 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
     ],
     fechaInicio: [new Date(), [Validators.required]],
     fechaFin: [new Date(), [Validators.required, Validaciones.fechaFinValida(new Date())]],
-    descuento: [0, [Validators.required, Validaciones.ofertaValida()/*, Validaciones.soloNumeros()*/]],
+    descuento: [0, [Validators.required, Validators.max(100), Validators.min(1)]],
     estado: [false]
   });
 

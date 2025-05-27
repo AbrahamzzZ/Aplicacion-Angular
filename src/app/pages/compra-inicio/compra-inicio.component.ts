@@ -100,6 +100,11 @@ export class CompraInicioComponent implements OnInit{
 
   agregarProducto() {
     if (this.productoSeleccionado && this.producto.cantidad > 0 && this.producto.precioCompra > 0) {
+
+      if (!Number.isInteger(this.producto.cantidad)) {
+        this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');
+        return;
+      }
       const subtotalCalculado = Number(this.producto.precioCompra) * Number(this.producto.cantidad);
       const productoAgregado = {
         id: this.productoSeleccionado.id,
@@ -116,6 +121,8 @@ export class CompraInicioComponent implements OnInit{
 
       this.productoSeleccionado = null;
       this.producto = { precioVenta: 0, precioCompra: 0, cantidad: 0, subTotal: 0 };
+    }else{
+      this.mostrarMensaje('No se acepta cantidades negativas.', 'error');
     }
   }
 

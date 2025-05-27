@@ -7,7 +7,7 @@ $table-border-color: #b3aeae;
   padding: 10px;
 
   &__title {
-    font-size: 2rem;
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
     color: #000000;
     text-align: center;
     margin-bottom: 20px;
@@ -19,6 +19,7 @@ $table-border-color: #b3aeae;
 
   &__search {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -26,13 +27,16 @@ $table-border-color: #b3aeae;
 
     &__input {
       flex-grow: 1;
-      min-width: 250px;
+      min-width: 200px;
+      width: 100%;
     }
 
     &__button {
       white-space: nowrap;
       margin: 5px;
       bottom: 10px;
+      flex-shrink: 0;
+      width: auto;
     }
 
     &__icon {
@@ -40,11 +44,16 @@ $table-border-color: #b3aeae;
     }
   }
 
-  &__excel{
+  &__excel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
     &__button {
       white-space: nowrap;
       margin: 5px;
       bottom: 10px;
+      width: auto;
     }
 
     &__icon {
@@ -59,6 +68,7 @@ $table-border-color: #b3aeae;
     .table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 600px;
 
       &__header {
         padding: $table-padding;
@@ -69,6 +79,20 @@ $table-border-color: #b3aeae;
       &__cell {
         padding: $table-padding;
         border-bottom: 1px solid $table-border-color;
+        text-align: center;
+      }
+
+      &__estado-activo {
+        color: green;
+        font-weight: bold;
+        padding: 5px;
+        text-align: center;
+      }
+
+      &__estado-no-activo {
+        color: red;
+        font-weight: bold;
+        padding: 5px;
         text-align: center;
       }
     }
@@ -92,6 +116,58 @@ $table-border-color: #b3aeae;
     &__text {
       font-size: 16px;
       color: rgba(0, 0, 0, 0.7);
+    }
+  }
+}
+
+// Media Query: Tablets y móviles
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__search {
+      flex-direction: column;
+      align-items: stretch;
+
+      &__input,
+      &__button {
+        width: 100%;
+      }
+    }
+
+    &__excel {
+      flex-direction: column;
+
+      &__button {
+        width: 100%;
+      }
+    }
+
+    &__table {
+      padding: 10px;
+
+      .table {
+        min-width: unset;
+
+        &__cell,
+        &__header {
+          font-size: 14px;
+          padding: 8px;
+        }
+      }
+    }
+
+    &__message {
+      flex-direction: column;
+      text-align: center;
+
+      &__icon {
+        margin-bottom: 10px;
+      }
     }
   }
 }

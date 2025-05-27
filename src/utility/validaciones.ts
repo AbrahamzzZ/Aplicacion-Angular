@@ -58,13 +58,13 @@ export class Validaciones {
     };
   }
 
-  static ofertaValida(): ValidatorFn {
+  /*static soloEntero(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const regex = /^\d+(\.\d{1,2})?$/; 
       const valor = control.value;
-      return regex.test(control.value) /*&& valor >= 1 && valor <= 100 */? null : { soloNumeros: true };
+      if (valor == null || valor === '') return null;
+      return Number.isInteger(valor) ? null : { noEntero: true };
     };
-  }
+  }*/
 
   static rolRequerido(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

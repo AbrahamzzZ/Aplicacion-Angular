@@ -20,6 +20,17 @@
   align-items: center
 }
 
+.contenedor-ver-detalle {
+  display: flex;
+  justify-content: flex-start; 
+  margin-bottom: 16px;
+}
+
+.contenedor-ver-detalle button {
+  max-width: 250px;
+  width: 100%;
+}
+
 .formulario-compra {
   display: flex;
   gap: 16px;
@@ -74,6 +85,13 @@
   grid-column: span 2;
   box-sizing: border-box;
   width: 1300px;
+}
+
+.btn{
+  min-width: 200px;
+  max-width: 300px;
+  margin-right: 12px;
+  flex: 1;
 }
 
 .botones-acciones {

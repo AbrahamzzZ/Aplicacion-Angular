@@ -96,7 +96,7 @@
     
         <mat-form-field appearance="outline">
           <mat-label>Cantidad</mat-label>
-          <input type="number" matInput [(ngModel)]="producto.cantidad">
+          <input type="number" step="1" matInput [(ngModel)]="producto.cantidad">
         </mat-form-field>
   
         <button mat-raised-button color="primary" (click)="abrirModalProductos()">

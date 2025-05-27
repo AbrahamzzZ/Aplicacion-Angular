@@ -307,24 +307,68 @@ li a:hover {
   animation: glow-star 2s infinite ease-in-out alternate 9s;
 }
 
-@media only screen and (max-width: 600px) {
-  .navbar-links {
-    display: none;
+@media only screen and (max-width: 768px) {
+  .central-body {
+    padding: 30% 5% 10% 5%;
   }
 
-  .custom-navbar {
-    text-align: center;
+  .image-404 {
+    width: 200px;
   }
 
-  .brand-logo img {
-    width: 120px;
+  .btn-go-home {
+    width: 140px;
+    font-size: 12px;
+  }
+
+  .object_earth {
+    width: 70px;
+    top: 15%;
+    left: 10%;
+  }
+
+  .object_moon {
+    width: 50px;
+    top: 10%;
+    left: 20%;
+  }
+
+  .object_rocket {
+    width: 30px;
+    top: 80%;
+  }
+
+  .object_astronaut {
+    width: 90px;
   }
 
   .box_astronaut {
-    top: 70%;
+    top: 65%;
+    right: 10%;
+  }
+}
+
+
+@media only screen and (max-width: 400px) {
+  .central-body {
+    padding-top: 35%;
   }
 
-  .central-body {
-    padding-top: 25%;
+  .btn-go-home {
+    width: 120px;
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+
+  .image-404 {
+    width: 160px;
+  }
+
+  .object_rocket {
+    top: 85%;
+  }
+
+  .box_astronaut {
+    right: 5%;
   }
 }
