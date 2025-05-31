@@ -1,206 +1,169 @@
-.formulario{
+.venta {
   margin: 20px;
   padding: 10px;
-}
 
-.titulo {
-  font-size: 2rem;
-  color: #000000;
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  &__titulo {
+    font-size: 2rem;
+    color: #000000;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-.container__search {
-  display: flex;
-  align-items: center;
-  gap: 14px; 
-}
-
-.container__search__input {
-  width: 100%;
-  max-width: 330px;
-}
-
-.container__search__message {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background-color: #fce4e4;
-  color: #d32f2f;
-  border: 1px solid #d32f2f;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.contenedor-formulario {
-  display: flex;
-  justify-content: center;
-  align-items: center
-}
-
-.contenedor {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.formulario-venta {
-  display: flex;
-  gap: 16px;
-  padding: 30px;
-  box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
-  margin-bottom: 40px;
-}
-
-.fecha-comprobante,
-  .datos-cliente,
-  .datos-usuario,
-  .datos-producto,
-  .tabla-productos,
-  .botones-acciones {
-  border: 2px solid rgb(137, 136, 136);
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.contenedor-principal {
-  display: flex;
-  gap: 20px;
-  width: 1270px;
-}
-
-.fecha-comprobante {
-  flex: 2;
-  height: auto;
-}
-
-.grupo-usuario-cliente {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 917px;
-}
-
-.datos-cliente,
-.datos-usuario {
-  width: 920px;
-}
-
-.datos-producto {
-  grid-column: span 2;
-  gap: 10px;
-}
-
-.fila-productos {
-  display: flex;
-  gap: 20px;
-  grid-column: span 2;
-  box-sizing: border-box;
-  width: 1300px;
-}
-
-.btn{
-  min-width: 200px;
-  max-width: 300px;
-  margin-right: 12px;
-  flex: 1;
-}
-
-.botones-acciones {
-  flex: 1;
-  box-sizing: border-box;
-}
-
-.tabla-productos {
-  flex: 3;
-  box-sizing: border-box;
-}
-
-mat-form-field {
-  margin-right: 12px;
-  min-width: 200px;
-  max-width: 300px;
-  flex: 1;
-}
-
-table {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.mdc-data-table__header-cell,
-.mat-mdc-cell {
-  text-align: center;
-}
-
-/* MEDIA QUERIES PARA RESPONSIVE DESIGN */
-
-@media (max-width: 1024px) {
-  .contenedor {
-    flex-direction: column;
+  &__contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .contenedor-principal,
-  .fila-productos {
-    flex-direction: column;
+  &__formulario {
+    display: flex;
     gap: 16px;
+    padding: 30px;
+    box-shadow: 1px 1px 1px 1px rgb(138, 137, 137);
+    margin-bottom: 40px;
+    flex-wrap: wrap;
   }
 
-  .formulario-venta {
-    padding: 20px;
-  }
-
-  mat-form-field {
+  &__busqueda {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
     width: 100%;
-    max-width: none;
-  }
-}
 
-@media (max-width: 768px) {
-  .titulo {
-    font-size: 1.5rem;
+    &-input {
+      width: 100%;
+      max-width: 330px;
+    }
+
+    &-mensaje {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background-color: #fce4e4;
+      color: #d32f2f;
+      border: 1px solid #d32f2f;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
-  .container__search__input {
-    max-width: 100%;
+  &__mensaje-error {
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
   }
 
-  .datos-cliente,
-  .datos-usuario {
+  &__seccion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+
+    &--datos,
+    &--productos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+    }
+  }
+
+  &__grupo {
+    flex: 1;
+    gap: 20px;
+
+    &--fecha-comprobante {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+      border: 2px solid rgb(137, 136, 136);
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    &--fecha-comprobante,
+    &--usuario-cliente {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+  }
+
+  &__subgrupo {
+    border: 2px solid rgb(137, 136, 136);
+    padding: 12px;
+    border-radius: 8px;
+
+    &--usuario,
+    &--cliente {
+      width: 100%;
+      align-items: center;
+    }
+  }
+
+  &__contenedor-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    mat-form-field {
+      margin-right: 12px;
+      min-width: 200px;
+      max-width: 400px;
+      flex: 1;
+    }
+  }
+
+  &__boton {
+    max-width: 250px;
+    width: 100%;
+
+    &--limpiar,
+    &--descargar {
+      min-width: 200px;
+      max-width: 300px;
+      margin-right: 12px;
+      flex: 1;
+    }
+  }
+
+  &__totales {
+    flex: 1;
+    box-sizing: border-box;
+    border: 2px solid rgb(137, 136, 136);
+    padding: 12px;
+    border-radius: 8px;
     width: 100%;
   }
 
-  .tabla-productos,
-  .botones-acciones {
+  &__tabla {
+    flex: 3;
+    box-sizing: border-box;
+    border: 2px solid rgb(137, 136, 136);
+    padding: 12px;
+    border-radius: 8px;
     width: 100%;
-  }
-}
+    overflow-x: auto;
 
-@media (max-width: 480px) {
-  .titulo {
-    font-size: 1.3rem;
-  }
+    table {
+      width: 100%;
+      margin-top: 20px;
+    }
 
-  .formulario {
-    margin: 10px;
-  }
-
-  mat-form-field {
-    width: 100%;
-    margin-right: 0;
-  }
-
-  .container__search {
-    flex-direction: column;
-    align-items: stretch;
+    .mdc-data-table__header-cell,
+    .mat-mdc-cell {
+      text-align: center;
+    }
   }
 }
