@@ -82,14 +82,14 @@ $table-border-color: #b3aeae;
         text-align: center;
       }
 
-      &__estado-activo {
+      &__estado-no-agotado {
         color: green;
         font-weight: bold;
         padding: 5px;
         text-align: center;
       }
 
-      &__estado-no-activo {
+      &__estado-agotado {
         color: red;
         font-weight: bold;
         padding: 5px;
