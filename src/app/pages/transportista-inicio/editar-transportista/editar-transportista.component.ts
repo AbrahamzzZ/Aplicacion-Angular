@@ -143,7 +143,7 @@ export class EditarTransportistaComponent implements OnInit {
 
           if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
             this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
-            console.log("Imagen cargada: ",data.imagenBase64);
+            this.formTransportista.controls.imageBase64.setValue(data.imagenBase64);
           } else {
             this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
           }
