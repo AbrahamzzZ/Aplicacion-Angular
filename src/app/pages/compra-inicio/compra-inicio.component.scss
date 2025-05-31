@@ -63,7 +63,7 @@
 }
 
 .compra-formulario__bloque--fecha-comprobante {
-  width: 30%;
+  width: 26%;
 }
 
 .compra-formulario__bloque--proveedor,
@@ -99,6 +99,9 @@
 .compra-formulario__acciones {
   flex: 1;
   box-sizing: border-box;
+  border: 2px solid rgb(137, 136, 136);
+  padding: 12px;
+  border-radius: 8px;
 }
 
 .compra-formulario__contenedor-boton {

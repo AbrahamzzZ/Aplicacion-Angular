@@ -20,7 +20,7 @@
           
           <mat-form-field class="form__field">
             <mat-label>Descripción: </mat-label>
-             <textarea matInput formControlName="descripcion" maxlength="50" minlength="4"></textarea>
+             <textarea matInput formControlName="descripcion" maxlength="250" minlength="4"></textarea>
              @if (descripcionField.hasError('required')) {
                <mat-error class="form__error">Ingrese una descripción.</mat-error>
              } @else if (descripcionField.hasError('minlength')) {

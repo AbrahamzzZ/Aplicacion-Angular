@@ -63,7 +63,7 @@
 }
 
 .venta-formulario__bloque--fecha-comprobante {
-  width: 30%;
+  width: 26%;
 }
 
 .venta-formulario__bloque--cliente,
@@ -99,6 +99,9 @@
 .venta-formulario__acciones {
   flex: 1;
   box-sizing: border-box;
+  border: 2px solid rgb(137, 136, 136);
+  padding: 12px;
+  border-radius: 8px;
 }
 
 .venta-formulario__contenedor-boton {

@@ -61,7 +61,7 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
       [
         Validators.required,
         Validators.minLength(5),
-        Validators.maxLength(50),
+        Validators.maxLength(250),
       ]
     ],
     fechaInicio: [new Date(), [Validators.required]],
