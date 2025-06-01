@@ -5,6 +5,124 @@ go
 USE Sistema_Supermercado;
 go
 
+--Modulo Negocio Tabla-Procedimiento almacenado-Inserción
+CREATE TABLE NEGOCIO (ID_NEGOCIO int primary key identity,
+NOMBRE varchar (60),
+TELEFONO varchar (10) unique,
+RUC varchar(13) unique,
+DIRECCION varchar(60),
+CORREO_ELECTRONICO varchar(40),
+LOGO varbinary(max)NUll
+);
+GO
+INSERT INTO NEGOCIO (NOMBRE, TELEFONO, RUC, DIRECCION, CORREO_ELECTRONICO) 
+VALUES('Supermercado Paradisia','0969810812','0102030405785','Mucho Lote 3 etapa','SupermercadoParadisia@gmail.com');
+GO
+
+CREATE PROCEDURE PA_OBTENER_NEGOCIO(
+	@Id_Negocio int
+)
+AS
+BEGIN
+	SELECT ID_NEGOCIO, NOMBRE, TELEFONO, RUC, DIRECCION, CORREO_ELECTRONICO, LOGO FROM NEGOCIO
+	WHERE ID_NEGOCIO = @Id_Negocio;
+END;
+GO
+
+CREATE PROCEDURE PA_EDITAR_NEGOCIO(
+@Id_Negocio int,
+@Nombre varchar(60),
+@Telefono varchar(10),
+@Ruc varchar(13),
+@Direccion varchar(60),
+@Correo_Electronico varchar(40),
+@Logo varbinary(max) = NULL,
+@Estado bit
+)
+AS
+BEGIN
+	UPDATE NEGOCIO set NOMBRE = @Nombre, TELEFONO = @Telefono, RUC = @Ruc, DIRECCION = @Direccion, CORREO_ELECTRONICO = @Correo_Electronico, LOGO = @Logo WHERE ID_NEGOCIO = @Id_Negocio;
+END;
+GO
+
+--Modulo Sucursal Tabla-Procedimiento almacenado-Inserción
+CREATE TABLE SUCURSAL (ID_SUCURSAL INT PRIMARY KEY IDENTITY,
+CODIGO VARCHAR(10) UNIQUE,
+ID_NEGOCIO INT FOREIGN KEY REFERENCES NEGOCIO(ID_NEGOCIO),
+NOMBRE_SUCURSAL VARCHAR(30),
+DIRECCION_SUCURSAL VARCHAR(250),
+UBICACION_SUCURSAL GEOGRAPHY,
+CIUDAD_SUCURSAL VARCHAR(30),
+ESTADO BIT
+);
+GO
+
+CREATE PROCEDURE PA_LISTA_SUCURSAL
+AS
+BEGIN
+    SELECT ID_SUCURSAL, CODIGO, O.ID_NEGOCIO, O.NOMBRE, O.TELEFONO, O.RUC, O.DIRECCION, O.CORREO_ELECTRONICO, NOMBRE_SUCURSAL, DIRECCION_SUCURSAL, UBICACION_SUCURSAL, CIUDAD_SUCURSAL, ESTADO FROM SUCURSAL S
+    INNER JOIN NEGOCIO O on S.ID_NEGOCIO = O.ID_NEGOCIO ;
+END;
+GO
+
+CREATE PROCEDURE PA_OBTENER_SUCURSAL(
+@Id_Sucursal int
+)
+AS
+BEGIN
+    SELECT ID_SUCURSAL, CODIGO, O.ID_NEGOCIO, O.NOMBRE, O.TELEFONO, O.RUC, O.DIRECCION, O.CORREO_ELECTRONICO, NOMBRE_SUCURSAL, DIRECCION_SUCURSAL, UBICACION_SUCURSAL, CIUDAD_SUCURSAL, ESTADO FROM SUCURSAL S
+    INNER JOIN NEGOCIO O on S.ID_NEGOCIO = O.ID_NEGOCIO 
+    WHERE ID_SUCURSAL = @Id_Sucursal;
+END;
+GO
+
+CREATE PROCEDURE PA_REGISTRAR_SUCURSAL(
+@Id_Negocio int,
+@Codigo varchar(10),
+@Nombre varchar(30),
+@Direccion varchar(250),
+@Ubicacion geography,
+@Ciudad varchar(30),
+@Estado bit
+)
+AS
+BEGIN
+	INSERT INTO SUCURSAL( CODIGO, ID_NEGOCIO, NOMBRE_SUCURSAL, DIRECCION_SUCURSAL, UBICACION_SUCURSAL, CIUDAD_SUCURSAL, ESTADO)
+	VALUES (@Codigo, @Id_Negocio, @Nombre, @Direccion, @Ubicacion, @Ciudad, @Estado);
+
+END;
+GO
+
+CREATE PROCEDURE PA_EDITAR_SUCURSAL(
+@Id_Sucursal int,
+@Nombre varchar(30),
+@Direccion varchar(250),
+@Ubicacion geography,
+@Ciudad varchar(30),
+@Estado bit
+)
+AS
+BEGIN
+    UPDATE SUCURSAL SET NOMBRE_SUCURSAL = @Nombre, DIRECCION_SUCURSAL = @Direccion, UBICACION_SUCURSAL = @Ubicacion, CIUDAD_SUCURSAL = @Ciudad, ESTADO = @Estado WHERE ID_SUCURSAL = @Id_Sucursal;
+END;
+GO
+
+CREATE PROCEDURE PA_ELIMINAR_SUCURSAL(
+    @Id_Sucursal int
+)
+AS
+BEGIN
+    DELETE FROM SUCURSAL WHERE ID_SUCURSAL = @Id_Sucursal;
+END;
+GO
+
+INSERT INTO SUCURSAL (ID_NEGOCIO, CODIGO, NOMBRE_SUCURSAL, DIRECCION_SUCURSAL, UBICACION_SUCURSAL, CIUDAD_SUCURSAL, ESTADO) 
+VALUES (1, '7247', 'SUCURSAL_9 DE OCT y LOS RIOS','AV. 9 DE OCTUBRE 803 Y LOS RIOS',geography::Point(-2.187746,-79.894365, 4326),'Guayaquil',1);
+GO
+INSERT INTO SUCURSAL (ID_NEGOCIO, CODIGO, NOMBRE_SUCURSAL, DIRECCION_SUCURSAL, UBICACION_SUCURSAL, CIUDAD_SUCURSAL, ESTADO) 
+VALUES (1, '6584','SUCURSAL_ALBANBORJA','AV.CARLOS JULIO AROSEMENA S/N',geography::Point(-2.169321,-79.917047, 4326),'Guayaquil',0);
+GO
+
 --Modulo Rol Tabla-Procedimiento almacenado-Inserción
 CREATE TABLE ROL ( ID_ROL int primary key identity,
 NOMBRE varchar(30),
@@ -17,6 +135,7 @@ BEGIN
 	SELECT ID_ROL, NOMBRE FROM ROL;
 END;
 GO
+
 INSERT INTO ROL (NOMBRE)
 VALUES ('Administrador'), ('Empleado');
 
@@ -45,12 +164,14 @@ VALUES
 ('Usuarios', '/usuario', 'person'),
 ('Compra', '/compra', 'local_grocery_store'),
 ('Venta', '/venta', 'attach_money'),
-('Productos', '/producto', 'store'),
+('Productos', '/producto', 'fa-apple-alt'),
 ('Categorias', '/categoria', 'storage'),
 ('Clientes', '/cliente', 'group'),
 ('Proveedores', '/proveedor', 'inventory'),
 ('Transportista', '/transportista', 'local_shipping'),
-('Ofertas', '/oferta', 'more');
+('Ofertas', '/oferta', 'more'),
+('Sucursales', '/sucursal', 'location_city'),
+('Negocio', '/negocio', 'store');
 
 --Creación de la tabla intermendia Permiso y sus inserciones
 CREATE TABLE PERMISO ( ID_PERMISO int primary key identity,
@@ -68,13 +189,16 @@ VALUES
 (1, 6), -- Administrador - Clientes
 (1, 7), -- Administrador - Proveedores
 (1, 8), -- Administrador - Transportistas
-(1, 9); -- Administrador - Ofertas
+(1, 9), -- Administrador - Ofertas
+(1, 10), --Administrador - Sucursales
+(1, 11); --Administrador - Negocio
 
 INSERT INTO PERMISO (ID_ROL, ID_MENU)
 VALUES 
 (2, 2), -- Empleado - Compras
 (2, 3), -- Empleado - Ventas
 (2, 4), -- Empleado - Productos
+(1, 5), -- Empleado - Categorías
 (2, 9); -- Empleado - Ofertas
 GO
 
