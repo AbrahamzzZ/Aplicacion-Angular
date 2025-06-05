@@ -36,8 +36,7 @@ CREATE PROCEDURE PA_EDITAR_NEGOCIO(
 @Ruc varchar(13),
 @Direccion varchar(60),
 @Correo_Electronico varchar(40),
-@Logo varbinary(max) = NULL,
-@Estado bit
+@Logo varbinary(max) = NULL
 )
 AS
 BEGIN
@@ -198,7 +197,7 @@ VALUES
 (2, 2), -- Empleado - Compras
 (2, 3), -- Empleado - Ventas
 (2, 4), -- Empleado - Productos
-(1, 5), -- Empleado - Categorías
+(2, 5), -- Empleado - Categorías
 (2, 9); -- Empleado - Ofertas
 GO
 
