@@ -59,10 +59,32 @@
   }
 
   /* Mejora la responsividad */
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     &__content {
       flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    &__left,
+    &__right {
+      justify-content: center;
       text-align: center;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__link {
+      font-size: 20px;
+    }
+
+    &__icon {
+      font-size: 20px;
+    }
+
+    &__text {
+      font-size: 12px;
     }
   }
 }
