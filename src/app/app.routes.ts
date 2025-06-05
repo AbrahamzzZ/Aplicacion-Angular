@@ -32,6 +32,10 @@ import { CompraInicioComponent } from './pages/compra-inicio/compra-inicio.compo
 import { VentaInicioComponent } from './pages/venta-inicio/venta-inicio.component';
 import { DetalleCompraComponent } from './pages/compra-inicio/detalle-compra/detalle-compra.component';
 import { DetalleVentaComponent } from './pages/venta-inicio/detalle-venta/detalle-venta.component';
+import { NegocioInicioComponent } from './pages/negocio-inicio/negocio-inicio.component';
+import { SucursalInicioComponent } from './pages/sucursal-inicio/sucursal-inicio.component';
+import { RegistrarSucursalComponent } from './pages/sucursal-inicio/registrar-sucursal/registrar-sucursal.component';
+import { EditarSucursalComponent } from './pages/sucursal-inicio/editar-sucursal/editar-sucursal.component';
 
 export const routes: Routes = [
   {
@@ -63,7 +67,7 @@ export const routes: Routes = [
       { path: 'categoria/categoria-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroCategoriaComponent, title: 'Registro de Categorías'},
       { path: 'categoria/categoria-editar/:id', canActivate: [Autenticacion], component: EditarCategoriaComponent, title: 'Editar Categoría'},
       { path: 'producto', component: ProductoInicioComponent, canActivate: [Autenticacion], title: 'Producto' },
-      { path: 'producto/producto-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProductoComponent, title: 'Registro de Productos' },
+      { path: 'producto/producto-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroProductoComponent, title: 'Registro de Productos'},
       { path: 'producto/producto-editar/:id', canActivate: [Autenticacion], component: ProductoEditarComponent, title: 'Editar Producto' },
       { path: 'oferta', component: OfertaInicioComponent, canActivate: [Autenticacion], title: 'Oferta' },
       { path: 'oferta/oferta-registro/:id', canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], component: RegistroOfertaComponent, title: 'Registro de Ofertas' },
@@ -71,7 +75,11 @@ export const routes: Routes = [
       { path: 'compra', component: CompraInicioComponent, canActivate: [Autenticacion], title: 'Registrar Compras'},
       { path: 'compra/detalle-compra',canActivate: [Autenticacion], component: DetalleCompraComponent, title: 'Ver el detalle de la compra'},
       { path: 'venta', component: VentaInicioComponent, canActivate: [Autenticacion], title: 'Registrar Ventas'},
-      { path: 'venta/detalle-venta', canActivate: [Autenticacion], component: DetalleVentaComponent, title: 'Ver el detalle de la venta'}
+      { path: 'venta/detalle-venta', canActivate: [Autenticacion], component: DetalleVentaComponent, title: 'Ver el detalle de la venta'},
+      { path: 'sucursal', component: SucursalInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Sucursales nacionales'},
+      { path: 'sucursal/sucursal-registro/:id', component: RegistrarSucursalComponent, canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], title: 'Registar Sucursal'},
+      { path: 'sucursal/sucursal-editar/:id', component: EditarSucursalComponent, canActivate: [Autenticacion],title: 'Editar Sucursal'},
+      { path: 'negocio', component: NegocioInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Información del negocio'}
     ]
   },
   { path: '**', component: PaginaNoEncontradaComponent, title: 'Página no encontrada' }

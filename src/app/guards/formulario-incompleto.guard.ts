@@ -13,7 +13,6 @@ export const FormularioIncompleto: CanDeactivateFn<CanComponentDeactive> = (
 ) => {
   const formularioValido = component.canDeactive();
 
-  console.log(formularioValido);
   if (!formularioValido) {
     const dialogo = inject(MatDialog);
     const reference = dialogo.open(DialogoFormularioIncompletoComponent);
