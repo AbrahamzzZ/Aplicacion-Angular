@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit{
       };
         this.loginServicio.login(credenciales).subscribe({
           next: (response: any) => {
-            console.log('Inicio de sesión exitoso:', response);
   
             // Guardar el token en el almacenamiento local
             this.loginServicio.guardarToken(response.token);
