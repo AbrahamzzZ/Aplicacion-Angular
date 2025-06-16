@@ -170,7 +170,7 @@ VALUES
 ('Transportista', '/transportista', 'local_shipping'),
 ('Ofertas', '/oferta', 'more'),
 ('Sucursales', '/sucursal', 'location_city'),
-('Negocio', '/negocio', 'store');
+('Negocio', '/negocio/1', 'store');
 
 --Creación de la tabla intermendia Permiso y sus inserciones
 CREATE TABLE PERMISO ( ID_PERMISO int primary key identity,

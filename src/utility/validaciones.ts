@@ -15,6 +15,13 @@ export class Validaciones {
     };
   }
 
+  static rucValido(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const regex = /^\d{13}$/;
+      return regex.test(control.value) ? null : { rucValido: true };
+    };
+  }
+
   static stockValido(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value === null || control.value === undefined || control.value === '') {
@@ -57,14 +64,6 @@ export class Validaciones {
       return null;
     };
   }
-
-  /*static soloEntero(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const valor = control.value;
-      if (valor == null || valor === '') return null;
-      return Number.isInteger(valor) ? null : { noEntero: true };
-    };
-  }*/
 
   static rolRequerido(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {

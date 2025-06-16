@@ -54,7 +54,7 @@
 
         <mat-form-field class="form__field">
           <mat-label>Correo Electrónico: </mat-label>
-          <input matInput type="text" formControlName="correoElectronico" />
+          <input matInput type="email" formControlName="correoElectronico" />
           @if (correoElectronicoField.hasError('required')) {
             <mat-error class="form__error">Ingrese su Correo Electrónico</mat-error>
           } @else if (correoElectronicoField) {

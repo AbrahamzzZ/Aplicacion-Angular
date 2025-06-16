@@ -77,7 +77,7 @@ export class EditarCategoriaComponent implements OnInit{
         }
       },
       error: (err) => {
-        console.error('Error al obtener categoría:', err);
+        this.mostrarMensaje('Error al obtener la categoría:', err);
       }
     });
   }

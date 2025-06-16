@@ -79,7 +79,7 @@ export const routes: Routes = [
       { path: 'sucursal', component: SucursalInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Sucursales nacionales'},
       { path: 'sucursal/sucursal-registro/:id', component: RegistrarSucursalComponent, canActivate: [Autenticacion], canDeactivate: [FormularioIncompleto], title: 'Registar Sucursal'},
       { path: 'sucursal/sucursal-editar/:id', component: EditarSucursalComponent, canActivate: [Autenticacion],title: 'Editar Sucursal'},
-      { path: 'negocio', component: NegocioInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Información del negocio'}
+      { path: 'negocio/1', component: NegocioInicioComponent, canMatch: [RolGuard], canActivate: [Autenticacion], title: 'Información del negocio'}
     ]
   },
   { path: '**', component: PaginaNoEncontradaComponent, title: 'Página no encontrada' }
