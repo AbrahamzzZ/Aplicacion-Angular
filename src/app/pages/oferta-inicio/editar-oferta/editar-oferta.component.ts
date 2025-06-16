@@ -119,8 +119,7 @@ export class EditarOfertaComponent implements OnInit{
         this.productos = productos;
       },
       error: (err) => {
-        console.error('Error al cargar productos:', err);
-        this.mostrarMensaje('❌ Error al cargar los productos.');
+        this.mostrarMensaje('Error al obtener la oferta:', err);
       }
     });
   }
