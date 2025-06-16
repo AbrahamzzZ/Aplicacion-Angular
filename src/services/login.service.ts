@@ -10,8 +10,6 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root'
 })
 export class LoginService {
-  public usuario:string = "dhajdhjsd";
-  public clave: string = "yuwuew";
   private apiUrl: string = appsettings.apiUrl + 'Usuario';;
 
   constructor(private http: HttpClient) {}
