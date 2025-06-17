@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../../utility/metodos';
 
@@ -23,12 +24,13 @@ import { Metodos } from '../../../utility/metodos';
     MatFormFieldModule,
     MatInputModule,
     RouterOutlet,
-    NgClass
+    NgClass,
+    MatPaginatorModule
   ],
   templateUrl: './usuario-inicio.component.html',
   styleUrl: './usuario-inicio.component.scss'
 })
-export class UsuarioInicioComponent {
+export class UsuarioInicioComponent implements AfterViewInit{
   private usuarioServicio = inject(UsuarioService);
   private snackBar = inject(MatSnackBar);
   public listaUsuario = new MatTableDataSource<IUsuario>();
@@ -48,6 +50,12 @@ export class UsuarioInicioComponent {
     private dialog: MatDialog
   ) {
     this.obtenerUsuario();
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.listaUsuario.paginator = this.paginator;
   }
 
   obtenerUsuario() {
@@ -106,6 +114,9 @@ export class UsuarioInicioComponent {
 
   filtrarUsuarios(termino: string) {
     this.listaUsuario.filter = termino.trim().toLowerCase();
+    if (this.listaUsuario.paginator) {
+      this.listaUsuario.paginator.firstPage();
+    }
   }
 
   exportarExcel() {

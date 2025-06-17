@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../../utility/metodos';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-producto-inicio',
@@ -23,12 +24,13 @@ import { Metodos } from '../../../utility/metodos';
     MatFormFieldModule,
     MatInputModule,
     RouterOutlet,
-    NgClass
+    NgClass,
+    MatPaginatorModule
   ],
   templateUrl: './producto-inicio.component.html',
   styleUrl: './producto-inicio.component.scss'
 })
-export class ProductoInicioComponent {
+export class ProductoInicioComponent implements AfterViewInit{
   private productoServicio = inject(ProductoService);
   private snackBar = inject(MatSnackBar);
   public listaProducto = new MatTableDataSource<IProducto>();
@@ -51,6 +53,12 @@ export class ProductoInicioComponent {
     private dialog: MatDialog
   ) {
     this.obtenerProducto();
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.listaProducto.paginator = this.paginator;
   }
 
   obtenerProducto() {
@@ -109,6 +117,9 @@ export class ProductoInicioComponent {
 
   filtrarProductos(termino: string) {
     this.listaProducto.filter = termino.trim().toLowerCase();
+    if (this.listaProducto.paginator) {
+      this.listaProducto.paginator.firstPage();
+    }
   }
 
   exportarExcel() {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { ICategoria } from '../../models/categoria';
 import { MatDialog } from '@angular/material/dialog';
 import { Metodos } from '../../../utility/metodos';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -22,11 +23,12 @@ import { NgClass } from '@angular/common';
       MatFormFieldModule,
       MatInputModule,
       RouterOutlet,
-      NgClass],
+      NgClass,
+    MatPaginatorModule],
   templateUrl: './categoria-inicio.component.html',
   styleUrl: './categoria-inicio.component.scss'
 })
-export class CategoriaInicioComponent {
+export class CategoriaInicioComponent implements AfterViewInit{
   private categoriaServicio = inject(CategoriaService);
   private snackBar = inject(MatSnackBar);
   public listaCategoria = new MatTableDataSource<ICategoria>();
@@ -44,6 +46,12 @@ displayedColumns: string[] = [
     private dialog: MatDialog
   ) {
     this.obtenerCategoria();
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.listaCategoria.paginator = this.paginator;
   }
 
   obtenerCategoria() {
@@ -104,6 +112,9 @@ displayedColumns: string[] = [
 
   filtrarCategorias(termino: string) {
     this.listaCategoria.filter = termino.trim().toLowerCase();
+    if (this.listaCategoria.paginator) {
+      this.listaCategoria.paginator.firstPage();
+    }
   }
 
   exportarExcel() {
