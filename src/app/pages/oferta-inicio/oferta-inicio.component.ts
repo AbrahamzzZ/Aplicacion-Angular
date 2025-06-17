@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../utility/metodos';
 import { NgClass } from '@angular/common';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-oferta-inicio',
@@ -22,11 +23,12 @@ import { NgClass } from '@angular/common';
       NgClass,
       MatFormFieldModule,
       MatInputModule,
-      RouterOutlet],
+      RouterOutlet,
+      MatPaginatorModule],
   templateUrl: './oferta-inicio.component.html',
   styleUrl: './oferta-inicio.component.scss'
 })
-export class OfertaInicioComponent {
+export class OfertaInicioComponent implements AfterViewInit{
   private ofertaServicio = inject(OfertaService);
   private snackBar = inject(MatSnackBar);
   public listaOferta = new MatTableDataSource<IOferta>();
@@ -48,6 +50,12 @@ export class OfertaInicioComponent {
     private dialog: MatDialog
   ) {
     this.obtenerOferta();
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.listaOferta.paginator = this.paginator;
   }
 
   obtenerOferta() {
@@ -108,6 +116,9 @@ export class OfertaInicioComponent {
 
   filtrarOfertas(termino: string) {
     this.listaOferta.filter = termino.trim().toLowerCase();
+    if (this.listaOferta.paginator) {
+      this.listaOferta.paginator.firstPage();
+    }
   }
 
   exportarExcel() {
