@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Metodos } from '../../../utility/metodos';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-cliente-inicio',
@@ -21,12 +22,13 @@ import { Metodos } from '../../../utility/metodos';
     MatIcon,
     MatFormFieldModule,
     MatInputModule,
-    RouterOutlet
+    RouterOutlet,
+    MatPaginatorModule
   ],
   templateUrl: './cliente-inicio.component.html',
   styleUrl: './cliente-inicio.component.scss'
 })
-export class ClienteInicioComponent {
+export class ClienteInicioComponent implements AfterViewInit{
   private clienteServicio = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
   public listaCliente = new MatTableDataSource<ICliente>();
@@ -47,6 +49,12 @@ export class ClienteInicioComponent {
     private dialog: MatDialog
   ) {
     this.obtenerCliente();
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.listaCliente.paginator = this.paginator;
   }
 
   obtenerCliente() {
@@ -107,6 +115,9 @@ export class ClienteInicioComponent {
 
   filtrarClientes(termino: string) {
     this.listaCliente.filter = termino.trim().toLowerCase();
+    if (this.listaCliente.paginator) {
+      this.listaCliente.paginator.firstPage();
+    }
   }
 
   exportarExcel() {
