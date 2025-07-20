@@ -5,6 +5,6 @@ export interface INegocio {
     ruc: string;
     direccion: string;
     correo_Electronico: string;
-    logo: string;
-    imagenBase64: string | Uint8Array | File | null;
+    logo?: string;
+    imagenBase64?: string | Uint8Array | File | null;
 }

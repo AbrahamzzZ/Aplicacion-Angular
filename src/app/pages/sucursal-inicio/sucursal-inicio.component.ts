@@ -96,7 +96,7 @@ export class SucursalInicioComponent implements AfterViewInit{
   }
 
   nuevo() {
-    this.router.navigate(['proveedor/sucursal-registro', 0]);
+    this.router.navigate(['sucursal/sucursal-registro', 0]);
   }
 
   editar(sucursal: ISucursal) {
