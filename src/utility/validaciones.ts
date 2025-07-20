@@ -82,4 +82,26 @@ export class Validaciones {
       return control.value && control.value !== 0 ? null : { categoriaInvalida: true };
     };
   }
+
+  static coordenadaValida(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valor = control.value;
+
+      if (valor === null || valor === undefined || valor === '') {
+        return { coordenadaInvalida: true };
+      }
+
+      const numero = parseFloat(valor);
+      if (isNaN(numero)) {
+        return { coordenadaInvalida: true };
+      }
+
+      if (numero < -180 || numero > 180) {
+        return { coordenadaInvalida: true };
+      }
+
+      return null;
+    };
+  }
+
 }
