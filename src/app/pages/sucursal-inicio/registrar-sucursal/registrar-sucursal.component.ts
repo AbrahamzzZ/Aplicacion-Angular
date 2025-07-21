@@ -66,7 +66,7 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
 
   @HostListener('window:beforeunload', ['$event'])
   onBeforeReload(e: BeforeUnloadEvent) {
-    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposEditables = ['nombre', 'direccion', 'latitud', 'longitud', 'ciudad'];
     const camposConDatos = camposEditables.some(
       (campo) => this.formSucursal.get(campo)?.value !== ''
     );
