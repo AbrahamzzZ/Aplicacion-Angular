@@ -96,7 +96,8 @@ export class EditarProveedorComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al obtener proveedor:', err);
+        this.mostrarMensaje('Error al cargar la infomación del proveedor.');
+        console.error(err);
       }
     });
   }
@@ -127,7 +128,7 @@ export class EditarProveedorComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.mostrarMensaje('Error al editar el Proveedor', 'error');
       }
     });

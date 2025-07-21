@@ -89,6 +89,34 @@ export class EditarTransportistaComponent implements OnInit {
     });
   }
 
+  cargarTransportista(): void {
+    this.transportistaServicio.obtener(this.idTransportista).subscribe({
+      next: (data) => {
+        if (data) {
+          this.formTransportista.patchValue({
+            nombres: data.nombres,
+            apellidos: data.apellidos,
+            cedula: data.cedula,
+            telefono: data.telefono,
+            correoElectronico: data.correo_Electronico,
+            estado: data.estado
+          });
+
+          if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
+            this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
+            this.formTransportista.controls.imageBase64.setValue(data.imagenBase64);
+          } else {
+            this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
+          }
+        }
+      },
+      error: (err) => {
+        this.mostrarMensaje('Error al cargar la infomación del transportista.');
+        console.error(err);
+      }
+    });
+  }
+
   editarTransportista(): void {
     const imagenOriginal = this.imagenURL?.split(',')[1] ?? '';
     const nuevaImagen = this.formTransportista.value.imageBase64 ?? '';
@@ -122,35 +150,8 @@ export class EditarTransportistaComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.mostrarMensaje('Error al editar el Transportista', 'error');
-      }
-    });
-  }
-
-  cargarTransportista(): void {
-    this.transportistaServicio.obtener(this.idTransportista).subscribe({
-      next: (data) => {
-        if (data) {
-          this.formTransportista.patchValue({
-            nombres: data.nombres,
-            apellidos: data.apellidos,
-            cedula: data.cedula,
-            telefono: data.telefono,
-            correoElectronico: data.correo_Electronico,
-            estado: data.estado
-          });
-
-          if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
-            this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
-            this.formTransportista.controls.imageBase64.setValue(data.imagenBase64);
-          } else {
-            this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
-          }
-        }
-      },
-      error: (err) => {
-        console.error('Error al obtener cliente:', err);
       }
     });
   }

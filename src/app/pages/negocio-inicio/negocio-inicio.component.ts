@@ -72,7 +72,8 @@ export class NegocioInicioComponent {
         }
       },
       error: (err) =>{
-        this.mostrarMensaje('Error al obtener la información del negocio:', err);
+        this.mostrarMensaje('Error al obtener la información del negocio.');
+        console.error(err);
       }
     });
   }
@@ -109,6 +110,7 @@ export class NegocioInicioComponent {
         }
       },
       error: (err) => {
+        console.error(err);
         this.mostrarMensaje('Error al editar la información del Negocio', 'error');      
       }
     });
@@ -135,6 +137,10 @@ export class NegocioInicioComponent {
     this.imagenBase64Field.setValue('');
     this.imagenBase64Field.markAsUntouched();
     this.imagenURL = '';
+  }
+
+  verEstadistica(){
+    this.router.navigate(['/negocio/1/estadistica']);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
