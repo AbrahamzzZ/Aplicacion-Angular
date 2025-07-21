@@ -102,4 +102,18 @@
       }
     }
   }
+
+  .map-container {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .map-title {
+    margin-top: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 }

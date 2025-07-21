@@ -108,7 +108,8 @@ export class EditarOfertaComponent implements OnInit{
         }
       },
       error: (err) => {
-        console.error('Error al obtener oferta:', err);
+        this.mostrarMensaje('Error al cargar la infomación de la oferta.');
+        console.error(err);
       }
     });
   }
@@ -119,7 +120,8 @@ export class EditarOfertaComponent implements OnInit{
         this.productos = productos;
       },
       error: (err) => {
-        this.mostrarMensaje('Error al obtener la oferta:', err);
+        this.mostrarMensaje('Error al obtener el producto.');
+        console.error(err);
       }
     });
   }
@@ -154,7 +156,7 @@ export class EditarOfertaComponent implements OnInit{
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.mostrarMensaje('Error al editar la Oferta', 'error');
       }
     });

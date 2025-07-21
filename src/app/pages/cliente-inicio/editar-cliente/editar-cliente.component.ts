@@ -94,7 +94,8 @@ export class EditarClienteComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al obtener cliente:', err);
+        this.mostrarMensaje('Error al cargar la infomación del cliente.');
+        console.error(err);
       }
     });
   }
@@ -124,7 +125,7 @@ export class EditarClienteComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.mostrarMensaje('Error al editar el Cliente', 'error');
       }
     });

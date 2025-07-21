@@ -88,19 +88,20 @@ export class EditarUsuarioComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al obtener usuario:', err);
+        this.mostrarMensaje('Error al cargar la infomación del usuario.');
+        console.error(err);
       }
     });
   }
 
   cargarRoles(): void {
     this.rolServicio.lista().subscribe({
-      next: (productos) => {
-        this.roles = productos;
+      next: (rol) => {
+        this.roles = rol;
       },
       error: (err) => {
-        console.error('Error al cargar roles:', err);
-        this.mostrarMensaje('❌ Error al cargar los roles.');
+        this.mostrarMensaje('Error al cargar los roles.');
+        console.error(err);
       }
     });
   }
@@ -133,7 +134,7 @@ export class EditarUsuarioComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.mostrarMensaje('Error al editar el Usuario', 'error');
       }
     });

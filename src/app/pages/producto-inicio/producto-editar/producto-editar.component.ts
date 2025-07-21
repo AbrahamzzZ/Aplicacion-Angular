@@ -1,8 +1,7 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
@@ -111,7 +110,8 @@ export class ProductoEditarComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al obtener producto:', err);
+        this.mostrarMensaje('Error al cargar la infomación del producto.');
+        console.log(err);
       }
     });
   }
@@ -122,8 +122,8 @@ export class ProductoEditarComponent implements OnInit {
         this.categorias = categorias;
       },
       error: (err) => {
-        console.error('Error al cargar categorías:', err);
-        this.mostrarMensaje('❌ Error al cargar las categorías.');
+        this.mostrarMensaje('Error al cargar las categorías.');
+        console.error(err);
       }
     });
   }
@@ -156,7 +156,7 @@ export class ProductoEditarComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         this.mostrarMensaje('Error al editar el producto', 'error');
       }
     });
