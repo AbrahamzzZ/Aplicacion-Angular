@@ -7,7 +7,7 @@ import { MatInput } from '@angular/material/input';
 import { Validaciones } from '../../../../utility/validaciones';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICliente } from '../../../models/cliente';
+import { ICliente } from '../../../interfaces/cliente';
 import { Metodos } from '../../../../utility/metodos';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ClienteService } from '../../../../services/cliente.service';

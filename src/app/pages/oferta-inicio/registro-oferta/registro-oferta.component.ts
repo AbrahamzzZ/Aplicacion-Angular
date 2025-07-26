@@ -10,13 +10,13 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { MatSnackBar } from '@angular/material/snack-bar';
  import { Metodos } from '../../../../utility/metodos';
  import { Validaciones } from '../../../../utility/validaciones';
- import { IOferta } from '../../../models/oferta';
+ import { IOferta } from '../../../interfaces/oferta';
  import { HttpErrorResponse } from '@angular/common/http';
  import { Observable } from 'rxjs';
  import { MatSelectChange, MatSelectModule } from '@angular/material/select';
  import { MatDatepickerModule } from '@angular/material/datepicker';
  import { ProductoService } from '../../../../services/producto.service';
- import { IProducto } from '../../../models/producto';
+ import { IProducto } from '../../../interfaces/producto';
  import { MatNativeDateModule } from '@angular/material/core';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 

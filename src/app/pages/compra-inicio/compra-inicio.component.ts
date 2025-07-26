@@ -7,22 +7,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { ModalProveedorComponent } from '../../components/modal/modal-proveedor/modal-proveedor.component';
-import { IProveedor } from '../../models/proveedor';
+import { IProveedor } from '../../interfaces/proveedor';
 import { MatDialog } from '@angular/material/dialog';
-import { ITransportista } from '../../models/transportista';
+import { ITransportista } from '../../interfaces/transportista';
 import { ModalTransportistaComponent } from '../../components/modal/modal-transportista/modal-transportista.component';
-import { IProducto } from '../../models/producto';
+import { IProducto } from '../../interfaces/producto';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { IDetalleCompra } from '../../models/detalle-compra';
-import { ICompra } from '../../models/compra';
+import { IDetalleCompra } from '../../interfaces/detalle-compra';
+import { ICompra } from '../../interfaces/compra';
 import { CompraService } from '../../../services/compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from '../../../services/login.service';
 import { Metodos } from '../../../utility/metodos';
-import { IUsuario } from '../../models/usuario';
+import { IUsuario } from '../../interfaces/usuario';
 
 @Component({
   selector: 'app-compra-inicio',

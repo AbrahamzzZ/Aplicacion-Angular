@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { ProductoService } from '../../../services/producto.service';
-import { IProducto } from '../../models/producto';
+import { IProducto } from '../../interfaces/producto';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';

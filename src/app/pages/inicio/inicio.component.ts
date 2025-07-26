@@ -3,11 +3,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { OfertaService } from '../../../services/oferta.service';
-import { IOferta } from '../../models/oferta';
+import { IOferta } from '../../interfaces/oferta';
 import { Subscription, interval } from 'rxjs';
 import { FormatoFechaPipe } from '../../pipes/formato-fecha.pipe';
 import * as L from 'leaflet';
-import { ISucursal } from '../../models/sucursal';
+import { ISucursal } from '../../interfaces/sucursal';
 
 @Component({
   selector: 'app-inicio',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
-import { IMenu } from '../app/models/menu';
+import { IMenu } from '../app/interfaces/menu';
 
 @Injectable({
   providedIn: 'root'

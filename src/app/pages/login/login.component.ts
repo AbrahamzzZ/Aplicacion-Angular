@@ -6,7 +6,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
-import { ILogin } from '../../models/login';
+import { ILogin } from '../../interfaces/login';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

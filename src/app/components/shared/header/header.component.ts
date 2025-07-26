@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../../../services/login.service';
 import { MenuService } from '../../../../services/menu.service';
-import { IMenu } from '../../../models/menu';
+import { IMenu } from '../../../interfaces/menu';
 import { NgClass } from '@angular/common';
 
 @Component({

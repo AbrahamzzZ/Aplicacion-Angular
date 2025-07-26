@@ -13,11 +13,11 @@ import { MatInput } from '@angular/material/input';
 import { ProductoService } from '../../../../services/producto.service';
 import { Validaciones } from '../../../../utility/validaciones';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProducto } from '../../../models/producto';
+import { IProducto } from '../../../interfaces/producto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { CategoriaService } from '../../../../services/categoria.service';
-import { ICategoria } from '../../../models/categoria';
+import { ICategoria } from '../../../interfaces/categoria';
 
 @Component({
   selector: 'app-producto-editar',

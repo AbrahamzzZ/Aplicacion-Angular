@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Metodos } from '../../../../utility/metodos';
 import { Validaciones } from '../../../../utility/validaciones';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ICategoria } from '../../../models/categoria';
+import { ICategoria } from '../../../interfaces/categoria';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 

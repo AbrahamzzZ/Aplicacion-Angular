@@ -8,9 +8,9 @@ import { MatInput } from '@angular/material/input';
 import { Validaciones } from '../../../../utility/validaciones';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUsuario } from '../../../models/usuario';
+import { IUsuario } from '../../../interfaces/usuario';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IRol } from '../../../models/rol';
+import { IRol } from '../../../interfaces/rol';
 import { RolService } from '../../../../services/rol.service';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 

@@ -8,20 +8,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
-import { IProducto } from '../../models/producto';
+import { IProducto } from '../../interfaces/producto';
 import { LoginService } from '../../../services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VentaService } from '../../../services/venta.service';
 import { ModalClienteComponent } from '../../components/modal/modal-cliente/modal-cliente.component';
-import { ICliente } from '../../models/cliente';
+import { ICliente } from '../../interfaces/cliente';
 import { ModalOfertaComponent } from '../../components/modal/modal-oferta/modal-oferta.component';
-import { IOferta } from '../../models/oferta';
+import { IOferta } from '../../interfaces/oferta';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
 import { Router } from '@angular/router';
-import { IUsuario } from '../../models/usuario';
+import { IUsuario } from '../../interfaces/usuario';
 import { Metodos } from '../../../utility/metodos';
-import { IVenta } from '../../models/venta';
-import { IDetalleVenta } from '../../models/detalle-venta';
+import { IVenta } from '../../interfaces/venta';
+import { IDetalleVenta } from '../../interfaces/detalle-venta';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { SucursalService } from '../../../services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ISucursal } from '../../models/sucursal';
+import { ISucursal } from '../../interfaces/sucursal';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';

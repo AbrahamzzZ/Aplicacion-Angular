@@ -1,4 +1,4 @@
-import { IProducto } from "./producto";
+import { IProducto } from "../interfaces/producto";
 
 export interface IDetalleVenta {
     idProducto: number;

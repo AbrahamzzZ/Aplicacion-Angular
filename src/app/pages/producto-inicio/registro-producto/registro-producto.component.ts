@@ -8,14 +8,14 @@ import { Validaciones } from '../../../../utility/validaciones';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IProducto } from '../../../models/producto';
+import { IProducto } from '../../../interfaces/producto';
 import { Metodos } from '../../../../utility/metodos';
 import { ProductoService } from '../../../../services/producto.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 import { CategoriaService } from '../../../../services/categoria.service';
-import { ICategoria } from '../../../models/categoria';
+import { ICategoria } from '../../../interfaces/categoria';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 @Component({

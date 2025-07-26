@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
-import { IOferta } from '../../../models/oferta';
+import { IOferta } from '../../../interfaces/oferta';
 import { OfertaService } from '../../../../services/oferta.service';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';

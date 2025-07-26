@@ -1,1 +1,25 @@
-<p>estadistica-negocio works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Estadísticas del Negocio</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div style="display: block;">
+      <canvas baseChart
+        [data]="chartData"
+        [type]="chartType"
+        [options]="chartOptions"
+        [plugins]="chartPlugins">
+      </canvas>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button (click)="verEstadisticas1()">Ver Productos más comprados</button>
+    <button mat-button (click)="verEstadisticas2()">Ver Productos más vendidos</button>
+    <button mat-button (click)="verEstadisticas3()">Ver Empleados más productivos</button>
+    <button mat-button (click)="verEstadisticas4()">Ver Clientes que más compraron</button>
+    <button mat-button (click)="verEstadisticas5()">Ver Proveedores preferidos</button>
+    <button mat-button (click)="verEstadisticas6()">Ver Viajes de transportistas</button>
+  </mat-card-actions>
+</mat-card>

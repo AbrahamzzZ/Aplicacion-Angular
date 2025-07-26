@@ -8,7 +8,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ClienteService } from '../../../../services/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ICliente } from '../../../models/cliente';
+import { ICliente } from '../../../interfaces/cliente';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

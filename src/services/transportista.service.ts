@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
-import { ITransportista } from '../app/models/transportista';
-import { IApi } from '../app/models/api';
+import { ITransportista } from '../app/interfaces/transportista';
+import { IApi } from '../app/interfaces/api';
 @Injectable({
   providedIn: 'root'
 })

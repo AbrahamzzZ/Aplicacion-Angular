@@ -12,10 +12,10 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { ProductoService } from '../../../../services/producto.service';
  import { OfertaService } from '../../../../services/oferta.service';
  import { MatSnackBar } from '@angular/material/snack-bar';
- import { IProducto } from '../../../models/producto';
+ import { IProducto } from '../../../interfaces/producto';
  import { Metodos } from '../../../../utility/metodos';
  import { Validaciones } from '../../../../utility/validaciones';
- import { IOferta } from '../../../models/oferta';
+ import { IOferta } from '../../../interfaces/oferta';
 
  @Component({
   selector: 'app-editar-oferta',
