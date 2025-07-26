@@ -143,6 +143,10 @@ export class NegocioInicioComponent {
     this.router.navigate(['/negocio/1/estadistica']);
   }
 
+  regresar() {
+    this.router.navigate(['/home']);
+  }
+
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
     
