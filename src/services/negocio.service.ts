@@ -3,6 +3,12 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { INegocio } from '../app/interfaces/negocio';
 import { IApi } from '../app/interfaces/api';
+import { ProductoMasVendido } from '../app/interfaces/interfaces-negocio/producto-mas-vendido';
+import { ProductoMasComprado } from '../app/interfaces/interfaces-negocio/producto-mas-comprado';
+import { TopClientes } from '../app/interfaces/interfaces-negocio/top-clientes';
+import { ProveedorPreferido } from '../app/interfaces/interfaces-negocio/proveedor-preferido';
+import { TransportistaViaje } from '../app/interfaces/interfaces-negocio/transportista-viaje';
+import { EmpleadoProductivo } from '../app/interfaces/interfaces-negocio/empleado-productivo';
 
 @Injectable({
   providedIn: 'root'
@@ -21,26 +27,26 @@ export class NegocioService {
   }
 
   obtenerProductosComprados(){
-    return this.http.get<IApi>(`${this.apiUrl}/producto-mas-comprado`);
+    return this.http.get<ProductoMasComprado[]>(`${this.apiUrl}/producto-mas-comprado`);
   }
 
   obtenerProveedorPreferencia(){
-    return this.http.get<IApi>(`${this.apiUrl}/proveedor-preferido`);
+    return this.http.get<ProveedorPreferido[]>(`${this.apiUrl}/proveedor-preferido`);
   }
 
   obtenerTransportistaViajesRealizados(){
-    return this.http.get<IApi>(`${this.apiUrl}/transportista-viajes-realizados`);
+    return this.http.get<TransportistaViaje[]>(`${this.apiUrl}/transportista-viajes-realizados`);
   }
 
   obtenerProductosVendidos(){
-    return this.http.get<IApi>(`${this.apiUrl}/producto-mas-vendido`);
+    return this.http.get<ProductoMasVendido[]>(`${this.apiUrl}/producto-mas-vendido`);
   }
 
   obtenerTopClientes(){
-    return this.http.get<IApi>(`${this.apiUrl}/top-clientes`);
+    return this.http.get<TopClientes[]>(`${this.apiUrl}/top-clientes`);
   }
 
   obtenerVentaEmpleados(){
-    return this.http.get<IApi>(`${this.apiUrl}/empleados-productivos`);
+    return this.http.get<EmpleadoProductivo[]>(`${this.apiUrl}/empleados-productivos`);
   }
 }

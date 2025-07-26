@@ -1,9 +1,17 @@
 :host {
   display: block;
+  max-height: 90vh; 
+  overflow: hidden;
   padding: 20px;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.productos-scroll {
+  max-height: 60vh; 
+  overflow-y: auto;
+  margin-bottom: 16px;
 }
 
 h2 {
@@ -37,7 +45,6 @@ td {
   text-align: center;
 }
 
-/* Centrar contenido de celdas */
 td.mat-cell, th.mat-header-cell {
   display: flex;
   align-items: center;
@@ -58,13 +65,11 @@ td.mat-cell, th.mat-header-cell {
   text-align: center;
 }
 
-/* Hover fila */
 tr:hover {
   background-color: #f5f5f5;
   cursor: pointer;
 }
 
-/* Botones */
 button[mat-button] {
   display: flex;
   align-items: center;
@@ -94,7 +99,6 @@ button[mat-button]:hover {
   vertical-align: middle;
 }
 
-/* Mejoras visuales */
 .mat-header-row,
 .mat-row {
   height: 48px;
@@ -106,7 +110,6 @@ button[mat-button]:hover {
   min-width: 120px;
 }
 
-/* Alternancia de colores */
 tr:nth-child(even) {
   background-color: #fafafa;
 }

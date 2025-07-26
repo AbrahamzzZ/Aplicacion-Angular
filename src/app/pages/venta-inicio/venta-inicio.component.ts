@@ -134,6 +134,8 @@ export class VentaInicioComponent {
         this.dataSource.data = [...this.productosAgregados];
     
         this.calcularTotal();
+        this.productoSeleccionado = null;
+        this.producto.cantidad = 0;
       }else{
         this.mostrarMensaje('La cantidad supera al stock del producto.', 'error');
       }

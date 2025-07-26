@@ -119,8 +119,7 @@ export class CompraInicioComponent implements OnInit{
         };
         
         this.productosAgregados.push(productoAgregado);
-        this.dataSource.data = [...this.productosAgregados]; // Actualizar el dataSource
-        console.log(productoAgregado);
+        this.dataSource.data = [...this.productosAgregados];
 
         this.productoSeleccionado = null;
         this.producto = { precioVenta: 0, precioCompra: 0, cantidad: 0, subTotal: 0 };

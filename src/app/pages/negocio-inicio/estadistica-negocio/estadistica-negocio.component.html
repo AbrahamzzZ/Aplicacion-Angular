@@ -1,11 +1,16 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Estadísticas del Negocio</mat-card-title>
+<mat-card class="estadistica-negocio">
+  <mat-card-header class="estadistica-negocio__header">
+    <mat-card-title class="estadistica-negocio__titulo">
+      Estadísticas del Negocio
+    </mat-card-title>
   </mat-card-header>
 
-  <mat-card-content>
-    <div style="display: block;">
-      <canvas baseChart
+  <mat-card-content class="estadistica-negocio__contenido">
+    <button mat-raised-button color="primary" (click)="descargarPDF()">Exportar gráfico a PDF</button>
+    <div class="estadistica-negocio__grafico-contenedor">
+      <canvas
+        baseChart
+        class="estadistica-negocio__canvas"
         [data]="chartData"
         [type]="chartType"
         [options]="chartOptions"
@@ -14,12 +19,14 @@
     </div>
   </mat-card-content>
 
-  <mat-card-actions>
-    <button mat-button (click)="verEstadisticas1()">Ver Productos más comprados</button>
-    <button mat-button (click)="verEstadisticas2()">Ver Productos más vendidos</button>
-    <button mat-button (click)="verEstadisticas3()">Ver Empleados más productivos</button>
-    <button mat-button (click)="verEstadisticas4()">Ver Clientes que más compraron</button>
-    <button mat-button (click)="verEstadisticas5()">Ver Proveedores preferidos</button>
-    <button mat-button (click)="verEstadisticas6()">Ver Viajes de transportistas</button>
+  <mat-card-actions class="estadistica-negocio__acciones">
+    <div class="estadistica-negocio__botones">
+      <button mat-raised-button color="primary" (click)="verEstadisticas1()">Productos más comprados</button>
+      <button mat-raised-button color="accent" (click)="verEstadisticas2()">Productos más vendidos</button>
+      <button mat-raised-button color="warn" (click)="verEstadisticas3()">Empleados más productivos</button>
+      <button mat-raised-button color="primary" (click)="verEstadisticas4()">Clientes frecuentes</button>
+      <button mat-raised-button color="accent" (click)="verEstadisticas5()">Proveedores preferidos</button>
+      <button mat-raised-button color="warn" (click)="verEstadisticas6()">Viajes transportistas</button>
+    </div>
   </mat-card-actions>
 </mat-card>

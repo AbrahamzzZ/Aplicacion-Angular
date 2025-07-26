@@ -1,50 +1,65 @@
 <h2>Seleccione un producto</h2>
-<table mat-table [dataSource]="listaProductos" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let producto"> {{producto.id}} </td>
-  </ng-container>
+<!--<mat-form-field  appearance="outline">
+  <mat-label>Buscar producto</mat-label>
+    <input
+      matInput
+      #searchInput
+      (keyup)="filtrarProductos(searchInput.value)"
+      placeholder="Buscar productos por varios criterios."
+    />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>-->
 
-  <ng-container matColumnDef="codigo">
-    <th mat-header-cell *matHeaderCellDef> Código </th>
-    <td mat-cell *matCellDef="let producto"> {{producto.codigo}} </td>
-  </ng-container>
+<div class="productos-scroll">
+  <table mat-table [dataSource]="listaProductos" >
 
-  <ng-container matColumnDef="nombre">
-    <th mat-header-cell *matHeaderCellDef> Nombres </th>
-    <td mat-cell *matCellDef="let producto"> {{producto.nombre}} </td>
-  </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let producto"> {{producto.id}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="stock">
-    <th mat-header-cell *matHeaderCellDef> Stock </th>
-    <td mat-cell *matCellDef="let producto"> {{producto.stock}} </td>
-  </ng-container>
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef> Código </th>
+      <td mat-cell *matCellDef="let producto"> {{producto.codigo}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="estado">
-    <th mat-header-cell *matHeaderCellDef> Estado </th>
-    <td class="table__cell" mat-cell *matCellDef="let element" [ngClass]="{
-        'table__estado-agotado': element.estado,
-        'table__estado-no-agotado': !element.estado
-      }">
-        {{ getEstado(element.estado) }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombres </th>
+      <td mat-cell *matCellDef="let producto"> {{producto.nombre}} </td>
+    </ng-container>
 
-  <ng-container matColumnDef="accion">
-    <th mat-header-cell *matHeaderCellDef> Acción </th>
-    <td mat-cell *matCellDef="let producto">
-      <div style="display: flex; justify-content: center;">
-        <button mat-button color="primary" (click)="seleccionarProducto(producto)">
-          <mat-icon>check_circle</mat-icon> Seleccionar
-        </button>
-      </div>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef> Stock </th>
+      <td mat-cell *matCellDef="let producto"> {{producto.stock}} </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-</table>
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td class="table__cell" mat-cell *matCellDef="let element" [ngClass]="{
+          'table__estado-agotado': element.estado,
+          'table__estado-no-agotado': !element.estado
+        }">
+          {{ getEstado(element.estado) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="accion">
+      <th mat-header-cell *matHeaderCellDef> Acción </th>
+      <td mat-cell *matCellDef="let producto">
+        <div style="display: flex; justify-content: center;">
+          <button mat-button color="primary" (click)="seleccionarProducto(producto)">
+            <mat-icon>check_circle</mat-icon> Seleccionar
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+  </table>
+</div>
+
 
 <div class="boton-cerrar">
   <button mat-button (click)="cerrar()">Cerrar</button>
