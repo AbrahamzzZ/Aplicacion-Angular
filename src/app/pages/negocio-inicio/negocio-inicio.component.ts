@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NegocioService } from '../../../services/negocio.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { INegocio } from '../../models/negocio';
+import { INegocio } from '../../interfaces/negocio';
 import { Validaciones } from '../../../utility/validaciones';
 
 @Component({

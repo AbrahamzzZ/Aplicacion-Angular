@@ -8,7 +8,7 @@ import { Validaciones } from '../../../../utility/validaciones';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IProveedor } from '../../../models/proveedor';
+import { IProveedor } from '../../../interfaces/proveedor';
 import { Metodos } from '../../../../utility/metodos';
 import { ProveedorService } from '../../../../services/proveedor.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

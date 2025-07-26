@@ -1,4 +1,4 @@
-import { IRol } from "./rol";
+import { IRol } from "../interfaces/rol";
 
 export interface IUsuario {
   id: number;

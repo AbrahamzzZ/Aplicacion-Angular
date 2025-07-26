@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ILogin } from '../app/models/login';
+import { ILogin } from '../app/interfaces/login';
 import { Observable } from 'rxjs';
 import { appsettings } from '../setting/appsettings';
-import { ITokenData } from '../app/models/itoken-data';
+import { ITokenData } from '../app/interfaces/itoken-data';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({

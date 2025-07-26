@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
-import { ISucursal } from '../app/models/sucursal';
-import { IApi } from '../app/models/api';
+import { ISucursal } from '../app/interfaces/sucursal';
+import { IApi } from '../app/interfaces/api';
 
 @Injectable({
   providedIn: 'root'

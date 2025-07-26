@@ -7,7 +7,7 @@ import { MatInput } from '@angular/material/input';
 import { Validaciones } from '../../../../utility/validaciones';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUsuario } from '../../../models/usuario';
+import { IUsuario } from '../../../interfaces/usuario';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Metodos } from '../../../../utility/metodos';
@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 import { RolService } from '../../../../services/rol.service';
-import { IRol } from '../../../models/rol';
+import { IRol } from '../../../interfaces/rol';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 @Component({

@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TransportistaService } from '../../../../services/transportista.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ITransportista } from '../../../models/transportista';
+import { ITransportista } from '../../../interfaces/transportista';
 import { Metodos } from '../../../../utility/metodos';
 
 @Component({

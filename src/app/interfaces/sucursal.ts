@@ -1,4 +1,4 @@
-import { INegocio } from "./negocio";
+import { INegocio } from "../interfaces/negocio";
 
 export interface ISucursal {
     id: number;

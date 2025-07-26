@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterOutlet } from '@angular/router';
 import { TransportistaService } from '../../../services/transportista.service';
-import { ITransportista } from '../../models/transportista';
+import { ITransportista } from '../../interfaces/transportista';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { MatSnackBar } from '@angular/material/snack-bar';

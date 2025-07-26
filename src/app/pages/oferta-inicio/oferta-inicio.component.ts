@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { OfertaService } from '../../../services/oferta.service';
-import { IOferta } from '../../models/oferta';
+import { IOferta } from '../../interfaces/oferta';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';

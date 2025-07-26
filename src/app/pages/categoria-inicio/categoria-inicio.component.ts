@@ -7,7 +7,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterOutlet } from '@angular/router';
 import { CategoriaService } from '../../../services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ICategoria } from '../../models/categoria';
+import { ICategoria } from '../../interfaces/categoria';
 import { MatDialog } from '@angular/material/dialog';
 import { Metodos } from '../../../utility/metodos';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';

@@ -8,7 +8,7 @@ import { MatInput } from '@angular/material/input';
 import { Validaciones } from '../../../../utility/validaciones';
 import { ProveedorService } from '../../../../services/proveedor.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProveedor } from '../../../models/proveedor';
+import { IProveedor } from '../../../interfaces/proveedor';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

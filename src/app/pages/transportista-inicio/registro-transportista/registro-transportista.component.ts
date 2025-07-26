@@ -10,7 +10,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ITransportista } from '../../../models/transportista';
+import { ITransportista } from '../../../interfaces/transportista';
 import { Metodos } from '../../../../utility/metodos';
 import { TransportistaService } from '../../../../services/transportista.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

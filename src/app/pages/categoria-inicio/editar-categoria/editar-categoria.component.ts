@@ -4,7 +4,7 @@ import { CategoriaService } from '../../../../services/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../utility/validaciones';
-import { ICategoria } from '../../../models/categoria';
+import { ICategoria } from '../../../interfaces/categoria';
 import { MatCardModule } from '@angular/material/card';
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IProveedor } from '../../../models/proveedor';
+import { IProveedor } from '../../../interfaces/proveedor';
 import { MatDialogRef} from '@angular/material/dialog';
 import { ProveedorService } from '../../../../services/proveedor.service';
 import { MatTableModule } from '@angular/material/table';

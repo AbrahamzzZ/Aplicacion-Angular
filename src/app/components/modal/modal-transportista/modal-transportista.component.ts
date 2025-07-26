@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ITransportista } from '../../../models/transportista';
+import { ITransportista } from '../../../interfaces/transportista';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TransportistaService } from '../../../../services/transportista.service';
 import { MatTableModule } from '@angular/material/table';
