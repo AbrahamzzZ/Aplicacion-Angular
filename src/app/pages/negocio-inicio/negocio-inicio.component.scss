@@ -185,20 +185,20 @@
   grid-template-columns: 2fr 1fr;
   align-items: start;
   margin-top: 10px;
-  max-width: 670px;
 }
 
 .form-left {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-width: 350px;
+  width: 340px;
 }
 
 .form-right {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 340px;
 }
 
 .boton-editar {
@@ -210,6 +210,7 @@
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
+    justify-content: center;
   }
 
   .boton-editar {

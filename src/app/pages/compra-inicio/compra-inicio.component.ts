@@ -175,10 +175,11 @@ export class CompraInicioComponent implements OnInit{
       detalleCompra: detalles,
       fecha_Compra: Metodos.getFechaCreacion()
     };
-    console.log(compra);
+
     this.servicioCompra.registrar(compra).subscribe(response => {
       if (response.isSuccess) {
         this.mostrarMensaje('¡Compra registrada exitosamente!', 'success');
+        this.limpiar();
         this.router.navigate(['/compra']);
 
       } else {
