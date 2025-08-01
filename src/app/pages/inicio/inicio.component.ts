@@ -8,7 +8,16 @@ import { Subscription, interval } from 'rxjs';
 import { FormatoFechaPipe } from '../../pipes/formato-fecha.pipe';
 import * as L from 'leaflet';
 import { ISucursal } from '../../interfaces/sucursal';
+import { SucursalService } from '../../../services/sucursal.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'assets/images/marker-icon-2x.png',
+  iconUrl: 'assets/images/marker-icon.png',
+  shadowUrl: 'assets/images/marker-shadow.png'
+});
 @Component({
   selector: 'app-inicio',
   standalone: true,
@@ -17,21 +26,22 @@ import { ISucursal } from '../../interfaces/sucursal';
   styleUrl: './inicio.component.scss'
 })
 export class InicioComponent implements OnInit, OnDestroy{
+  private snackBar = inject(MatSnackBar);
   private ofertaServicio = inject(OfertaService);
+  private sucursalServcio = inject(SucursalService);
+  public sucursales: ISucursal[] = [];
   public ofertas: IOferta[] = [];
   public ofertaActual: IOferta | null = null;
   private subscripcion!: Subscription;
   private indiceOferta = 0;
-  /*@Input() latitud!: number;
-  @Input() longitud!: number;*/
-  @Input() latitud: number = -2.203816;   // ejemplo: coordenadas de Guayaquil
-@Input() longitud: number = -79.897454;
-
   private map: L.Map | undefined;
+
+  
 
   ngOnInit(): void {
     this.obtenerOfertas();
-    this.initMap();
+    this.obtenerSucursales();
+    this.marcarSucursalesMapa();
   }
 
   obtenerOfertas() {
@@ -44,6 +54,20 @@ export class InicioComponent implements OnInit, OnDestroy{
       },
       error: (err) => {
         console.error('Error al obtener las ofertas:', err);
+        this.mostrarMensaje('Error al obtener las ofertas.', 'error');
+      }
+    });
+  }
+
+  obtenerSucursales(){
+    this.sucursalServcio.lista().subscribe({
+      next: (data) =>{
+        this.sucursales = data;
+        this.marcarSucursalesMapa();
+      },
+      error: (err) => {
+        console.error('Error al obtener las sucursales:', err);
+        this.mostrarMensaje('Error al obtener las sucursales.', 'error');
       }
     });
   }
@@ -67,21 +91,39 @@ export class InicioComponent implements OnInit, OnDestroy{
     }
   }
 
-  private initMap(): void {
-    this.map = L.map('map').setView([this.latitud, this.longitud], 15);
+  marcarSucursalesMapa(): void {
+    const sucursalInicial = this.sucursales.find(s => s.latitud && s.longitud);
+    if (!sucursalInicial) return;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(this.map);
+    if (!this.map) {
+      this.map = L.map('map').setView([sucursalInicial.latitud, sucursalInicial.longitud], 14);
 
-    L.marker([this.latitud, this.longitud]).addTo(this.map)
-      .bindPopup('Sucursal')
-      .openPopup();
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(this.map);
+    }
+
+    this.sucursales.forEach(sucursal => {
+      if (sucursal.latitud && sucursal.longitud) {
+        L.marker([sucursal.latitud, sucursal.longitud])
+          .addTo(this.map!)
+          .bindPopup(`
+            <strong>${sucursal.nombre}</strong><br>
+            ${sucursal.direccion}<br>
+            📍 ${sucursal.ciudad}
+          `);
+      }
+    });
   }
 
-  public sucursalSeleccionada?: ISucursal;
-
-  mostrarMapa(sucursal: ISucursal) {
-    this.sucursalSeleccionada = sucursal;
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+    
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: [className]
+    });
   }
 }
