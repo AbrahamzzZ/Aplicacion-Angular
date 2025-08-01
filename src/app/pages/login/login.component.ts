@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ILogin } from '../../interfaces/login';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -24,12 +24,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
-  hide = true;
+  public hide = true;
   private loginServicio = inject(LoginService);
   public loginForm!: FormGroup;
   private snackBar = inject(MatSnackBar);
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private route: ActivatedRoute){}
   
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -41,6 +41,18 @@ export class LoginComponent implements OnInit{
         Validators.required
       ])
     });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['motivo'] === 'inactividad') {
+        this.mostrarMensaje('La sesión fue cerrada por inactividad', 'error');
+      }
+    });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['motivo'] === 'sesion') {
+        this.mostrarMensaje('La sesión fue cerrada exitosamente', 'success');
+      }
+    });
   }
 
   login() {
@@ -51,16 +63,16 @@ export class LoginComponent implements OnInit{
       };
         this.loginServicio.login(credenciales).subscribe({
           next: (response: any) => {
-  
-            // Guardar el token en el almacenamiento local
             this.loginServicio.guardarToken(response.token);
   
             if(response){
+              this.loginServicio.iniciarMonitoreo();
               this.mostrarMensaje('Inicio de sesión exitoso', 'success');
               this.router.navigate(['/home']);
             }
           },
           error: (error) => {
+            console.error('Error al iniciar sesion: ', error);
             this.mostrarMensaje('Correo o clave incorrecta.', 'error');
           }
         });
