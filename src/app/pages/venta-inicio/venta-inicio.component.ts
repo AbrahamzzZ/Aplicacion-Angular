@@ -232,6 +232,7 @@ export class VentaInicioComponent {
     this.servicioVenta.registrar(venta).subscribe(response => {
       if (response.isSuccess) {
         this.mostrarMensaje('¡Venta registrada exitosamente!', 'success');
+        this.limpiar();
         this.router.navigate(['/venta']);
 
       } else {
