@@ -163,7 +163,7 @@ VALUES
 ('Usuarios', '/usuario', 'person'),
 ('Compra', '/compra', 'local_grocery_store'),
 ('Venta', '/venta', 'attach_money'),
-('Productos', '/producto', 'fa-apple-alt'),
+('Productos', '/producto', 'shopping_basket'),
 ('Categorias', '/categoria', 'storage'),
 ('Clientes', '/cliente', 'group'),
 ('Proveedores', '/proveedor', 'inventory'),
@@ -763,17 +763,20 @@ END;
 GO
 
 CREATE PROCEDURE PA_REGISTRAR_COMPRA(
-@ID_USUARIO INT,
-@ID_PROVEEDOR INT,
-@ID_TRANSPORTISTA INT,
-@TIPO_DOCUMENTO VARCHAR(50),
-@NUMERO_DOCUMENTO VARCHAR(50),
-@MONTO_TOTAL DECIMAL(10,2),
-@DETALLE_COMPRA [TI_Detalle_Compra] READONLY
+    @ID_USUARIO INT,
+    @ID_PROVEEDOR INT,
+    @ID_TRANSPORTISTA INT,
+    @TIPO_DOCUMENTO VARCHAR(50),
+    @NUMERO_DOCUMENTO VARCHAR(50),
+    @MONTO_TOTAL DECIMAL(10,2),
+    @DETALLE_COMPRA [TI_Detalle_Compra] READONLY,
+    @RESULTADO BIT OUTPUT
 )
 AS
 BEGIN
     SET NOCOUNT ON;
+    SET @RESULTADO = 0;
+
     BEGIN TRY
         BEGIN TRANSACTION;
 
@@ -801,9 +804,12 @@ BEGIN
         INNER JOIN @DETALLE_COMPRA D ON P.ID_PRODUCTO = D.ID_PRODUCTO;
 
         COMMIT TRANSACTION;
+
+        SET @RESULTADO = 1;
     END TRY
     BEGIN CATCH
         ROLLBACK TRANSACTION;
+        SET @RESULTADO = 0;
     END CATCH
 END;
 GO
@@ -872,11 +878,14 @@ CREATE PROCEDURE PA_REGISTRAR_VENTA(
 @MONTO_CAMBIO DECIMAL(10,2),
 @MONTO_TOTAL DECIMAL(10,2),
 @DESCUENTO DECIMAL(10,2),
-@DETALLE_VENTA dbo.TI_Detalle_Venta READONLY
+@DETALLE_VENTA dbo.TI_Detalle_Venta READONLY,
+@RESULTADO BIT OUTPUT
 )
 AS
 BEGIN
     SET NOCOUNT ON;
+    SET @RESULTADO = 0;
+
     BEGIN TRY
         BEGIN TRANSACTION;
 
@@ -905,9 +914,12 @@ BEGIN
         INNER JOIN @DETALLE_VENTA D ON P.ID_PRODUCTO = D.IdProducto;
 
         COMMIT TRANSACTION;
+
+        SET @RESULTADO = 1;
     END TRY
     BEGIN CATCH
         ROLLBACK TRANSACTION;
+        SET @RESULTADO = 0;
     END CATCH
 END;
 GO
