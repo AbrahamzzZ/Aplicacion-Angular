@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     const datosToken = this.loginServicio.obtenerDatosToken();
 
     if (datosToken) {
-      this.nombreUsuario = datosToken.unique_name; // Mostrar nombre del usuario en el menú
+      this.nombreUsuario = datosToken.unique_name;
       const idUsuario = datosToken.nameid;
 
       this.menuServicio.obtener(idUsuario).subscribe({
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   cerrarSesion(){
-    this.loginServicio.eliminarToken();
     this.router.navigate(['/login']);
+    this.loginServicio.logout();
   }
 }
