@@ -122,8 +122,8 @@ export class VentaInicioComponent {
         const subtotalConDescuento = subtotal - montoDescuento;
     
         const productoAgregado = {
-          id: this.productoSeleccionado.id,
-          nombre: this.productoSeleccionado.nombre,
+          id: this.productoSeleccionado.id_Producto,
+          nombre: this.productoSeleccionado.nombre_Producto,
           precioVenta: precioVenta,
           cantidad: cantidad,
           descuento: descuento,
@@ -216,7 +216,7 @@ export class VentaInicioComponent {
       id: 0, 
       numeroDocumento: this.numeroDocumento,
       oUsuario: {
-        id: Number(datosToken?.nameid),
+        id_Usuario: Number(datosToken?.nameid),
         nombre_Completo: datosToken?.unique_name
       } as IUsuario, 
       oCliente: this.clienteSeleccionado,

@@ -33,11 +33,11 @@ export class CategoriaInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaCategoria = new MatTableDataSource<ICategoria>();
 displayedColumns: string[] = [
-    'id',
+    'idCategoria',
     'codigo',
-    'nombre',
+    'nombreCategoria',
     'estado',
-    'fecha_Creacion',
+    'fechaCreacion',
     'accion'
   ];
 
@@ -69,13 +69,13 @@ displayedColumns: string[] = [
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
       data: {
-        mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombre}?`
+        mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombreCategoria}?`
       }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.categoriaServicio.eliminar(categoria.id).subscribe({
+        this.categoriaServicio.eliminar(categoria.idCategoria).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerCategoria();
@@ -96,7 +96,7 @@ displayedColumns: string[] = [
   }
 
   editar(categoria: ICategoria) {
-    this.router.navigate(['categoria/categoria-editar', categoria.id]);
+    this.router.navigate(['categoria/categoria-editar', categoria.idCategoria]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -119,11 +119,11 @@ displayedColumns: string[] = [
 
   exportarExcel() {
     const datos = this.listaCategoria.data.map(categoria => ({
-      ID: categoria.id,
+      ID: categoria.idCategoria,
       Código: categoria.codigo,
-      Nombre: categoria.nombre,
+      Nombre: categoria.nombreCategoria,
       Estado: this.getEstado(categoria.estado),
-      'Fecha Creacion': this.getFechaRegistro(categoria.fecha_Creacion)
+      'Fecha Creacion': this.getFechaRegistro(categoria.fechaCreacion)
     }));
 
     if (!datos || datos.length === 0) {

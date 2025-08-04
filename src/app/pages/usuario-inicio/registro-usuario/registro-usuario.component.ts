@@ -86,10 +86,10 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
 
   registrarUsuario() {
     const rolId = this.formUsuario.value.rol;
-    const rolSeleccionado = this.roles.find(p => p.id === rolId)?? {} as IRol;
+    const rolSeleccionado = this.roles.find(p => p.idRol === rolId)?? {} as IRol;
 
     const usuario: IUsuario = {
-      id: this.idUsuario || 0,
+      id_Usuario: this.idUsuario || 0,
       codigo: Metodos.generarCodigo(),
       nombre_Completo: this.formUsuario.value.nombreCompleto?.trim() ?? '',
       clave: this.formUsuario.value.clave ?? '',

@@ -13,18 +13,18 @@ export class VentaService {
   constructor() { }
 
   obtenerNuevoNumeroDocumento(){
-    return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/nuevo-numero-documento`);
+    return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);
   }
 
   obtener(documento: string){
-    return this.http.get<IVenta>(`${this.apiUrl}/documento/${documento}`);
+    return this.http.get<IVenta>(`${this.apiUrl}/${documento}`);
   }
 
   obtenerDetalleVenta(id: number){
-    return this.http.get<IVenta>(`${this.apiUrl}/${id}`);
+    return this.http.get<IVenta>(`${this.apiUrl}/detalles/${id}`);
   }
 
-  registrar(compra: IVenta){
-    return this.http.post<IApi>(this.apiUrl, compra);
+  registrar(venta: IVenta){
+    return this.http.post<IApi>(this.apiUrl, venta);
   }
 }

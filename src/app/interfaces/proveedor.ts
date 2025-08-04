@@ -1,11 +1,11 @@
 export interface IProveedor {
-  id: number;
+  idProveedor: number;
   codigo: string;
   nombres: string;
   apellidos: string;
   cedula: string;
   telefono: string;
-  correo_Electronico: string;
+  correoElectronico: string;
   estado: boolean;
-  fecha_Registro: string;
+  fechaRegistro: string;
 }

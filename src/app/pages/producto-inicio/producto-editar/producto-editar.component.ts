@@ -101,9 +101,9 @@ export class ProductoEditarComponent implements OnInit {
         if (data) {
 
           this.formProducto.patchValue({
-            nombre: data.nombre,
+            nombre: data.nombre_Producto,
             descripcion: data.descripcion,
-            categoria: data.oCategoria.id,
+            categoria: data.id_Categoria,
             paisOrigen: data.pais_Origen,
             estado: data.estado
           });
@@ -130,11 +130,11 @@ export class ProductoEditarComponent implements OnInit {
 
   editarProducto(): void {
     const categoriaId = this.formProducto.value.categoria;
-    const categoriaSeleccionada = this.categorias.find(p => p.id === categoriaId)?? {} as ICategoria;
+    const categoriaSeleccionada = this.categorias.find(p => p.idCategoria === categoriaId)?? {} as ICategoria;
 
     const producto: Partial<IProducto> = {
-      id: this.idProducto,
-      nombre: this.formProducto.value.nombre!,
+      id_Producto: this.idProducto,
+      nombre_Producto: this.formProducto.value.nombre!,
       descripcion: this.formProducto.value.descripcion!,
       oCategoria: categoriaSeleccionada!,
       pais_Origen: this.formProducto.value.paisOrigen!,

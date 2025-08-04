@@ -98,7 +98,7 @@ export class EditarTransportistaComponent implements OnInit {
             apellidos: data.apellidos,
             cedula: data.cedula,
             telefono: data.telefono,
-            correoElectronico: data.correo_Electronico,
+            correoElectronico: data.correoElectronico,
             estado: data.estado
           });
 
@@ -123,13 +123,13 @@ export class EditarTransportistaComponent implements OnInit {
     const imagenFinal = nuevaImagen || imagenOriginal;
 
     const transportista: Partial<ITransportista> = {
-      id: this.idTransportista || 0,
+      idTranportista: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formTransportista.value.nombres?.trim() ?? '',
       apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
       cedula: this.formTransportista.value.cedula ?? '',
       telefono: this.formTransportista.value.telefono ?? '',
-      correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
+      correoElectronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
       imagen: this.formTransportista.value.imagen ?? '',
       imagenBase64: imagenFinal,
       estado: this.formTransportista.value.estado ?? false

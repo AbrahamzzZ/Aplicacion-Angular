@@ -110,8 +110,8 @@ export class CompraInicioComponent implements OnInit{
 
         const subtotalCalculado = Number(this.producto.precioCompra) * Number(this.producto.cantidad);
         const productoAgregado = {
-          id: this.productoSeleccionado.id,
-          nombre: this.productoSeleccionado.nombre,
+          id: this.productoSeleccionado.id_Producto,
+          nombre: this.productoSeleccionado.nombre_Producto,
           precioCompra: Number(this.producto.precioCompra),
           precioVenta: Number(this.producto.precioVenta),
           cantidad: this.producto.cantidad,
@@ -165,7 +165,7 @@ export class CompraInicioComponent implements OnInit{
       id: 0, 
       numeroDocumento: this.numeroDocumento,
       oUsuario: {
-        id: Number(datosToken?.nameid),
+        id_Usuario: Number(datosToken?.nameid),
         nombre_Completo: datosToken?.unique_name
       } as IUsuario, 
       oProveedor: this.proveedorSeleccionado,

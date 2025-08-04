@@ -71,7 +71,7 @@ export class EditarCategoriaComponent implements OnInit{
       next: (data) => {
         if (data) {
           this.formCategoria.patchValue({
-            nombre: data.nombre,
+            nombre: data.nombreCategoria,
             estado: data.estado
           });
         }
@@ -85,8 +85,8 @@ export class EditarCategoriaComponent implements OnInit{
 
   editarCategoria(): void {
     const categoria: Partial<ICategoria> = {
-      id: this.idCategoria,
-      nombre: this.formCategoria.value.nombre!,
+      idCategoria: this.idCategoria,
+      nombreCategoria: this.formCategoria.value.nombre!,
       estado: this.formCategoria.value.estado
     };
 

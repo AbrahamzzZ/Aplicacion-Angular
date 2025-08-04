@@ -73,13 +73,13 @@ export class SucursalInicioComponent implements AfterViewInit{
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
       data: {
-        mensaje: `¿Está seguro de eliminar la sucursal ${sucursal.nombre}?`
+        mensaje: `¿Está seguro de eliminar la sucursal ${sucursal.nombre_Sucursal}?`
       }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.sucursalServicio.eliminar(sucursal.id).subscribe({
+        this.sucursalServicio.eliminar(sucursal.id_Sucursal).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerSucursal();
@@ -100,7 +100,7 @@ export class SucursalInicioComponent implements AfterViewInit{
   }
 
   editar(sucursal: ISucursal) {
-    this.router.navigate(['sucursal/sucursal-editar', sucursal.id]);
+    this.router.navigate(['sucursal/sucursal-editar', sucursal.id_Sucursal]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -123,13 +123,13 @@ export class SucursalInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaSucursal.data.map(sucursal => ({
-      ID: sucursal.id,
+      ID: sucursal.id_Sucursal,
       Código: sucursal.codigo,
-      Nombres: sucursal.nombre,
-      Direccion: sucursal.direccion,
+      Nombres: sucursal.nombre_Sucursal,
+      Direccion: sucursal.direccion_Sucursal,
       Latitud: sucursal.latitud,
       Longitud: sucursal.longitud,
-      Ciudad: sucursal.ciudad,
+      Ciudad: sucursal.ciudad_Sucursal,
       Estado: this.getEstado(sucursal.estado)
     }));
 

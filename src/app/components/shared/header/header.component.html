@@ -16,9 +16,9 @@
 
     @for (menu of menus; track $index) {
       <ng-container>
-        <button mat-button [routerLink]="menu.url" class="menu__trigger">
-          <mat-icon>{{ menu.icono }}</mat-icon>
-          {{ menu.nombre }}
+        <button mat-button [routerLink]="menu.urlMenu" class="menu__trigger">
+          <mat-icon>{{ menu.nombreIcono }}</mat-icon>
+          {{ menu.nombreMenu }}
         </button>
       </ng-container>
     }

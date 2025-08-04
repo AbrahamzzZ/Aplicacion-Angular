@@ -87,11 +87,11 @@ export class EditarSucursalComponent implements OnInit{
       next: (data) => {
         if (data) {
           this.formSucursal.patchValue({
-            nombre: data.nombre,
-            direccion: data.direccion,
+            nombre: data.nombre_Sucursal,
+            direccion: data.direccion_Sucursal,
             latitud: data.latitud.toString(),
             longitud: data.longitud.toString(),
-            ciudad: data.ciudad,
+            ciudad: data.ciudad_Sucursal,
             estado: data.estado
           });
         }
@@ -105,12 +105,12 @@ export class EditarSucursalComponent implements OnInit{
 
   editarSucursal(): void {
     const proveedor: Partial<ISucursal> = {
-      id: this.idSucursal,
-      nombre: this.formSucursal.value.nombre!,
-      direccion: this.formSucursal.value.direccion!,
+      id_Sucursal: this.idSucursal,
+      nombre_Sucursal: this.formSucursal.value.nombre!,
+      direccion_Sucursal: this.formSucursal.value.direccion!,
       latitud: parseFloat(this.formSucursal.value.latitud ?? '0'),
       longitud: parseFloat(this.formSucursal.value.longitud ?? '0'),
-      ciudad: this.formSucursal.value.ciudad!,
+      ciudad_Sucursal: this.formSucursal.value.ciudad!,
       estado: this.formSucursal.value.estado
     };
 

@@ -7,6 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { IProductoCategoria } from '../../../interfaces/Dto/iproducto-categoria';
 
 @Component({
   selector: 'app-modal-producto',
@@ -16,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './modal-producto.component.scss'
 })
 export class ModalProductoComponent {
-  listaProductos: IProducto[] = [];
+  listaProductos: IProductoCategoria[] = [];
   //public listaProducto = new MatTableDataSource<IProducto>();
   columnas: string[] = ['id', 'codigo','nombre', 'stock', 'estado', 'accion'];
 

@@ -65,13 +65,14 @@ export class TransportistaInicioComponent implements AfterViewInit{
     this.transportistaServicio.lista().subscribe({
       next: (data) => {
         this.listaTransportista.data = data.map((transportista) => {
-          if (transportista.imagenBase64 && typeof transportista.imagenBase64 === 'string') {
-            transportista.imagen = `data:image/png;base64,${transportista.imagenBase64}`;
+          if (transportista.imagen && typeof transportista.imagen === 'string') {
+            transportista.imagen = `data:image/*;base64,${transportista.imagen}`;
           } else {
-            transportista.imagen = 'assets/default-user.png'; // Imagen por defecto si no hay foto
+            transportista.imagen = 'assets/images/default-avatar.jpg'; // Imagen por defecto si no hay foto
           }
           return transportista;
         });
+        console.log(this.listaTransportista);
       },
       error: (err) => {
         console.log(err.message);
@@ -89,7 +90,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.transportistaServicio.eliminar(transportista.id).subscribe({
+        this.transportistaServicio.eliminar(transportista.idTranportista).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerTransportista();
@@ -110,7 +111,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
   }
 
   editar(transportista: ITransportista) {
-    this.router.navigate(['transportista/transportista-editar', transportista.id]);
+    this.router.navigate(['transportista/transportista-editar', transportista.idTranportista]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -133,15 +134,15 @@ export class TransportistaInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaTransportista.data.map(transportista => ({
-      ID: transportista.id,
+      ID: transportista.idTranportista,
       Código: transportista.codigo,
       Nombres: transportista.nombres,
       Apellidos: transportista.apellidos,
       Cedula: transportista.cedula,
       Telefono: transportista.telefono,
-      'Correo Electronico': transportista.correo_Electronico,
+      'Correo Electronico': transportista.correoElectronico,
       Estado: this.getEstado(transportista.estado),
-      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Registro)
+      'Fecha Registro': this.getFechaRegistro(transportista.fechaRegistro)
     }));
 
     if (!datos || datos.length === 0) {

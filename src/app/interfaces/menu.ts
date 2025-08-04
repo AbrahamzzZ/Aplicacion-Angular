@@ -1,6 +1,6 @@
 export interface IMenu {
-    id: number;
-    nombre: string;
-    url: string;
-    icono: string;
+    idMenu: number;
+    nombreMenu: string;
+    urlMenu: string;
+    nombreIcono: string;
 }

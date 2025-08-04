@@ -13,6 +13,7 @@ import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-co
 import { Metodos } from '../../../utility/metodos';
 import { NgClass } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
 
 @Component({
   selector: 'app-oferta-inicio',
@@ -31,12 +32,12 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 export class OfertaInicioComponent implements AfterViewInit{
   private ofertaServicio = inject(OfertaService);
   private snackBar = inject(MatSnackBar);
-  public listaOferta = new MatTableDataSource<IOferta>();
+  public listaOferta = new MatTableDataSource<IOfertaProducto>();
   public displayedColumns: string[] = [
     'id',
     'codigo',
     'nombre',
-    'producto',
+    'nombre_Producto',
     'descripcion',
     'fecha_Inicio',
     'fecha_Fin',
@@ -73,13 +74,13 @@ export class OfertaInicioComponent implements AfterViewInit{
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
       data: {
-        mensaje: `¿Está seguro de eliminar la oferta ${oferta.nombre}?`
+        mensaje: `¿Está seguro de eliminar la oferta ${oferta.nombre_Oferta}?`
       }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.ofertaServicio.eliminar(oferta.id).subscribe({
+        this.ofertaServicio.eliminar(oferta.id_Oferta).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerOferta();
@@ -100,7 +101,7 @@ export class OfertaInicioComponent implements AfterViewInit{
   }
 
   editar(oferta: IOferta) {
-    this.router.navigate(['oferta/oferta-editar', oferta.id]);
+    this.router.navigate(['oferta/oferta-editar', oferta.id_Oferta]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -123,10 +124,10 @@ export class OfertaInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaOferta.data.map(oferta => ({
-      ID: oferta.id,
+      ID: oferta.id_Oferta,
       Código: oferta.codigo,
-      Nombre: oferta.nombre,
-      Producto: oferta.oProducto.nombre,
+      Nombre: oferta.nombre_Oferta,
+      Producto: oferta.nombre_Producto,
       Descripcion: oferta.descripcion,
       'Fecha Inicio': oferta.fecha_Inicio,
       'Fecha Fin': oferta.fecha_Fin,

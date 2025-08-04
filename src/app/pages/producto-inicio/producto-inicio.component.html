@@ -26,7 +26,7 @@
       <!-- No. -->
       <ng-container matColumnDef="id">
         <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Producto }}</td>
       </ng-container>
 
       <!-- Código -->
@@ -38,7 +38,7 @@
       <!-- Nombre -->
       <ng-container matColumnDef="nombre">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Nombres</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre_Producto }}</td>
       </ng-container>
 
       <!-- Descripción -->
@@ -50,7 +50,7 @@
       <!-- Categoría -->
       <ng-container matColumnDef="categoria">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Categoría</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.oCategoria.nombre }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre_Categoria }}</td>
       </ng-container>
 
       <!-- País Origen -->

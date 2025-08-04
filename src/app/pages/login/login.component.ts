@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit{
   login() {
     if (this.loginForm.valid) {
       const credenciales: ILogin = {
-        correoElectronico: this.loginForm.get('correoElectronico')?.value,
+        correo_Electronico: this.loginForm.get('correoElectronico')?.value,
         clave: this.loginForm.get('clave')?.value
       };
         this.loginServicio.login(credenciales).subscribe({

@@ -70,11 +70,11 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
 
   registrarCategoria() {
     const usuario: ICategoria = {
-      id: this.idCategoria || 0,
+      idCategoria: this.idCategoria || 0,
       codigo: Metodos.generarCodigo(),
-      nombre: this.formCategoria.value.nombre?.trim() ?? '',
+      nombreCategoria: this.formCategoria.value.nombre?.trim() ?? '',
       estado: this.formCategoria.value.estado ?? false,
-      fecha_Creacion: Metodos.getFechaCreacion()
+      fechaCreacion: Metodos.getFechaCreacion()
     };
 
     this.formCategoria.markAllAsTouched();

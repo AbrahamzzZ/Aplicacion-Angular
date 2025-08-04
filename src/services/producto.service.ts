@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IProducto } from '../app/interfaces/producto';
 import { IApi } from '../app/interfaces/api';
+import { IProductoCategoria } from '../app/interfaces/Dto/iproducto-categoria';
+import { IProductoRespuesta } from '../app/interfaces/Dto/iproducto-respuesta';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,11 @@ export class ProductoService {
   constructor() {}
 
   lista() {
-    return this.http.get<IProducto[]>(this.apiUrl);
+    return this.http.get<IProductoCategoria[]>(this.apiUrl);
   }
 
   obtener(id: number) {
-    return this.http.get<IProducto>(`${this.apiUrl}/${id}`);
+    return this.http.get<IProductoRespuesta>(`${this.apiUrl}/${id}`);
   }
 
   registrar(producto: IProducto) {

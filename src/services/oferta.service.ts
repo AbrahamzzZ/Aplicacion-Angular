@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IOferta } from '../app/interfaces/oferta';
 import { IApi } from '../app/interfaces/api';
+import { IOfertaProducto } from '../app/interfaces/Dto/ioferta-producto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class OfertaService {
   constructor() { }
 
   lista() {
-    return this.http.get<IOferta[]>(this.apiUrl);
+    return this.http.get<IOfertaProducto[]>(this.apiUrl);
   }
   
   obtener(id: number) {
-    return this.http.get<IOferta>(`${this.apiUrl}/${id}`);
+    return this.http.get<IOfertaProducto>(`${this.apiUrl}/${id}`);
   }
   
   registrar(oferta: IOferta) {

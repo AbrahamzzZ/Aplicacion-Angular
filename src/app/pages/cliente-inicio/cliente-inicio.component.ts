@@ -78,7 +78,7 @@ export class ClienteInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.clienteServicio.eliminar(cliente.id).subscribe({
+        this.clienteServicio.eliminar(cliente.idCliente).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerCliente();
@@ -99,7 +99,7 @@ export class ClienteInicioComponent implements AfterViewInit{
   }
 
   editar(cliente: ICliente) {
-    this.router.navigate(['cliente/cliente-editar', cliente.id]);
+    this.router.navigate(['cliente/cliente-editar', cliente.idCliente]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -122,14 +122,14 @@ export class ClienteInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaCliente.data.map(cliente => ({
-      ID: cliente.id,
+      ID: cliente.idCliente,
       Código: cliente.codigo,
       Nombres: cliente.nombres,
       Apellidos: cliente.apellidos,
       Cedula: cliente.cedula,
       Telefono: cliente.telefono,
-      'Correo Electronico': cliente.correo_Electronico,
-      'Fecha Registro': this.getFechaRegistro(cliente.fecha_Registro)
+      'Correo Electronico': cliente.correoElectronico,
+      'Fecha Registro': this.getFechaRegistro(cliente.fechaRegistro)
     }));
 
     if (!datos || datos.length === 0) {

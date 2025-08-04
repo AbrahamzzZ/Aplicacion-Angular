@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../../utility/metodos';
+import { IUsuarioRol } from '../../interfaces/Dto/iusuario-rol';
 
 @Component({
   selector: 'app-usuario-inicio',
@@ -33,7 +34,7 @@ import { Metodos } from '../../../utility/metodos';
 export class UsuarioInicioComponent implements AfterViewInit{
   private usuarioServicio = inject(UsuarioService);
   private snackBar = inject(MatSnackBar);
-  public listaUsuario = new MatTableDataSource<IUsuario>();
+  public listaUsuario = new MatTableDataSource<IUsuarioRol>();
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -77,7 +78,7 @@ export class UsuarioInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.usuarioServicio.eliminar(usuario.id).subscribe({
+        this.usuarioServicio.eliminar(usuario.id_Usuario).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerUsuario();
@@ -97,8 +98,8 @@ export class UsuarioInicioComponent implements AfterViewInit{
     this.router.navigate(['usuario/usuario-registro', 0]);
   }
 
-  editar(usuario: IUsuario) {
-    this.router.navigate(['usuario/usuario-editar', usuario.id]);
+  editar(usuario: IUsuarioRol) {
+    this.router.navigate(['usuario/usuario-editar', usuario.id_Usuario]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -121,11 +122,11 @@ export class UsuarioInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaUsuario.data.map(usuario => ({
-      ID: usuario.id,
+      ID: usuario.id_Usuario,
       Código: usuario.codigo,
       'Nombre Completo': usuario.nombre_Completo,
       'Correo Electronico': usuario.correo_Electronico,
-      Rol: usuario.oRol.nombre,
+      Rol: usuario.nombre_Rol,
       Estado: this.getEstado(usuario.estado),
       'Fecha Creacion': this.getFechaCreacion(usuario.fecha_Creacion)
     }));

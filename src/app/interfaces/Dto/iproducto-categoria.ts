@@ -1,11 +1,10 @@
-import { ICategoria } from "../interfaces/categoria";
-
-export interface IProducto {
+export interface IProductoCategoria {
     id_Producto: number;
     codigo: string;
     descripcion: string;
     nombre_Producto: string;
-    oCategoria?: ICategoria;
+    id_Categoria: number;
+    nombre_Categoria?: string;
     pais_Origen: string;
     stock: number;
     precio_Compra: number;
