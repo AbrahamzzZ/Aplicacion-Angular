@@ -44,7 +44,7 @@
             formControlName="rol"
             (selectionChange)="rolSeleccionado($event)">
             @for (rol of roles; track $index) {
-              <mat-option [value]="rol.id">{{ rol.nombre }}</mat-option>
+              <mat-option [value]="rol.idRol">{{ rol.nombre }}</mat-option>
             }
           </mat-select>
           @if(rolSeleccionadoField.hasError('required') || rolSeleccionadoField.hasError('rolInvalido')){

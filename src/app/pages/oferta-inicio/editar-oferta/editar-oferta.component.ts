@@ -16,6 +16,7 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { Metodos } from '../../../../utility/metodos';
  import { Validaciones } from '../../../../utility/validaciones';
  import { IOferta } from '../../../interfaces/oferta';
+import { IProductoCategoria } from '../../../interfaces/Dto/iproducto-categoria';
 
  @Component({
   selector: 'app-editar-oferta',
@@ -96,8 +97,8 @@ export class EditarOfertaComponent implements OnInit{
       next: (data) => {
         if (data) {
           this.formOferta.patchValue({
-            nombre: data.nombre,
-            producto: data.oProducto.id,
+            nombre: data.nombre_Oferta,
+            producto: data.id_Producto,
             descripcion: data.descripcion,
             fechaInicio: data.fecha_Inicio? new Date(data.fecha_Inicio) : undefined,
             fechaFin: data.fecha_Fin? new Date(data.fecha_Fin) : undefined,
@@ -128,11 +129,11 @@ export class EditarOfertaComponent implements OnInit{
 
   editarOferta(): void {
     const productoId = this.formOferta.value.producto;
-    const productoSeleccionado = this.productos.find(p => p.id === productoId)?? {} as IProducto;
+    const productoSeleccionado = this.productos.find(p => p.id_Producto === productoId)?? {} as IProducto;
 
     const oferta: Partial<IOferta> = {
-      id: this.idOferta,
-      nombre: this.formOferta.value.nombre!,
+      id_Oferta: this.idOferta,
+      nombre_Oferta: this.formOferta.value.nombre!,
       oProducto: productoSeleccionado!,
       descripcion: this.formOferta.value.descripcion!,
       fecha_Inicio: this.formOferta.value.fechaInicio? this.formOferta.value.fechaInicio.toISOString().split('T')[0] : undefined,

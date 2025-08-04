@@ -1,7 +1,7 @@
 export interface ICategoria {
-    id: number;
+    idCategoria: number;
     codigo: string;
-    nombre: string;
+    nombreCategoria: string;
     estado: boolean;
-    fecha_Creacion: string;
+    fechaCreacion: string;
 }

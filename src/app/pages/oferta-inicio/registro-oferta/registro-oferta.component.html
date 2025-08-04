@@ -35,7 +35,7 @@
               formControlName="producto"
               (selectionChange)="productoSeleccionado($event)">
               @for (producto of productos; track $index) {
-                <mat-option [value]="producto.id">{{ producto.nombre }}</mat-option>
+                <mat-option [value]="producto.id_Producto">{{ producto.nombre_Producto }}</mat-option>
               }
             </mat-select>
             @if(productoSeleccionadoField.hasError('required') || productoSeleccionadoField.hasError('productoInvalido')){

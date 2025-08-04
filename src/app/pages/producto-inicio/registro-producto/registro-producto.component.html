@@ -42,7 +42,7 @@
             formControlName="categoria"
             (selectionChange)="categoriaSeleccionada($event)">
             @for (categoria of categorias; track $index) {
-              <mat-option [value]="categoria.id">{{ categoria.nombre }}</mat-option>
+              <mat-option [value]="categoria.idCategoria">{{ categoria.nombreCategoria }}</mat-option>
             }
           </mat-select>
           @if(categoriaSeleccionadaField.hasError('required') || categoriaSeleccionadaField.hasError('categoriaInvalida')){

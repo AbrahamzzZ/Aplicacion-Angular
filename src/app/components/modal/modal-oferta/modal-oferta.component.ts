@@ -5,6 +5,7 @@ import { IOferta } from '../../../interfaces/oferta';
 import { OfertaService } from '../../../../services/oferta.service';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
+import { IOfertaProducto } from '../../../interfaces/Dto/ioferta-producto';
 
 @Component({
   selector: 'app-modal-oferta',
@@ -14,7 +15,7 @@ import { NgClass } from '@angular/common';
   styleUrl: './modal-oferta.component.scss'
 })
 export class ModalOfertaComponent {
-  listaOfertas: IOferta[] = [];
+  listaOfertas: IOfertaProducto[] = [];
   columnas: string[] = ['id', 'codigo', 'nombre', 'producto', 'estado', 'accion'];
 
   constructor(

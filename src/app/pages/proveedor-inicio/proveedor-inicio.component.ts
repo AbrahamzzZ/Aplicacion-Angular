@@ -81,7 +81,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.proveedorServicio.eliminar(proveedor.id).subscribe({
+        this.proveedorServicio.eliminar(proveedor.idProveedor).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerProveedor();
@@ -102,7 +102,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
   }
 
   editar(proveedor: IProveedor) {
-    this.router.navigate(['proveedor/proveedor-editar', proveedor.id]);
+    this.router.navigate(['proveedor/proveedor-editar', proveedor.idProveedor]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -125,15 +125,15 @@ export class ProveedorInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaProveedor.data.map(proveedor => ({
-      ID: proveedor.id,
+      ID: proveedor.idProveedor,
       Código: proveedor.codigo,
       Nombres: proveedor.nombres,
       Apellidos: proveedor.apellidos,
       Cedula: proveedor.cedula,
       Telefono: proveedor.telefono,
-      'Correo Electronico': proveedor.correo_Electronico,
+      'Correo Electronico': proveedor.correoElectronico,
       Estado: this.getEstado(proveedor.estado),
-      'Fecha Registro': this.getFechaRegistro(proveedor.fecha_Registro)
+      'Fecha Registro': this.getFechaRegistro(proveedor.fechaRegistro)
     }));
 
     if (!datos || datos.length === 0) {

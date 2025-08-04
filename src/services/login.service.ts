@@ -20,7 +20,7 @@ export class LoginService {
   constructor(private http: HttpClient, private router: Router, private ngZone: NgZone, private dialog: MatDialog) {}
 
   login(credenciales: ILogin): Observable<any> {
-    return this.http.post(`${this.apiUrl}/IniciarSesion`, credenciales);
+    return this.http.post(`${this.apiUrl}/login`, credenciales);
   }
 
   guardarToken(token: string): void {

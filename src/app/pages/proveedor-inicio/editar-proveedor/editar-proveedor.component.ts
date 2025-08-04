@@ -90,7 +90,7 @@ export class EditarProveedorComponent implements OnInit {
             apellidos: data.apellidos,
             cedula: data.cedula,
             telefono: data.telefono,
-            correoElectronico: data.correo_Electronico,
+            correoElectronico: data.correoElectronico,
             estado: data.estado
           });
         }
@@ -104,12 +104,12 @@ export class EditarProveedorComponent implements OnInit {
 
   editarProveedor(): void {
     const proveedor: Partial<IProveedor> = {
-      id: this.idProveedor,
+      idProveedor: this.idProveedor,
       nombres: this.formProveedor.value.nombres!,
       apellidos: this.formProveedor.value.apellidos!,
       cedula: this.formProveedor.value.cedula!,
       telefono: this.formProveedor.value.telefono!,
-      correo_Electronico: this.formProveedor.value.correoElectronico!,
+      correoElectronico: this.formProveedor.value.correoElectronico!,
       estado: this.formProveedor.value.estado
     };
 

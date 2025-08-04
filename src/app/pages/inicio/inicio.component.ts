@@ -10,6 +10,7 @@ import * as L from 'leaflet';
 import { ISucursal } from '../../interfaces/sucursal';
 import { SucursalService } from '../../../services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -30,8 +31,8 @@ export class InicioComponent implements OnInit, OnDestroy{
   private ofertaServicio = inject(OfertaService);
   private sucursalServcio = inject(SucursalService);
   public sucursales: ISucursal[] = [];
-  public ofertas: IOferta[] = [];
-  public ofertaActual: IOferta | null = null;
+  public ofertas: IOfertaProducto[] = [];
+  public ofertaActual: IOfertaProducto | null = null;
   private subscripcion!: Subscription;
   private indiceOferta = 0;
   private map: L.Map | undefined;
@@ -108,9 +109,9 @@ export class InicioComponent implements OnInit, OnDestroy{
         L.marker([sucursal.latitud, sucursal.longitud])
           .addTo(this.map!)
           .bindPopup(`
-            <strong>${sucursal.nombre}</strong><br>
-            ${sucursal.direccion}<br>
-            📍 ${sucursal.ciudad}
+            <strong>${sucursal.nombre_Sucursal}</strong><br>
+            ${sucursal.direccion_Sucursal}<br>
+            📍 ${sucursal.ciudad_Sucursal}
           `);
       }
     });

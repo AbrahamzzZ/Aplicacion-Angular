@@ -26,7 +26,7 @@
       <!-- No. -->
       <ng-container matColumnDef="id">
         <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Sucursal }}</td>
       </ng-container>
 
       <!-- Código -->
@@ -38,13 +38,13 @@
       <!-- Nombre -->
       <ng-container matColumnDef="nombre">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre_Sucursal }}</td>
       </ng-container>
 
       <!-- Dirección -->
       <ng-container matColumnDef="direccion">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Dirección</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.direccion }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.direccion_Sucursal }}</td>
       </ng-container>
 
       <!-- Latitud -->
@@ -63,7 +63,7 @@
       <ng-container matColumnDef="ciudad">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Ciudad</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.ciudad }}
+          {{ element.ciudad_Sucursal }}
         </td>
       </ng-container>
 

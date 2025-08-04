@@ -13,15 +13,15 @@ export class CompraService {
   constructor() { }
 
   obtenerNuevoNumeroDocumento(){
-    return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/nuevo-numero-documento`);
+    return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);
   }
 
   obtener(documento: string){
-    return this.http.get<ICompra>(`${this.apiUrl}/documento/${documento}`);
+    return this.http.get<ICompra>(`${this.apiUrl}/${documento}`);
   }
 
   obtenerDetalleCompra(id: number){
-    return this.http.get<ICompra>(`${this.apiUrl}/${id}`);
+    return this.http.get<ICompra>(`${this.apiUrl}/detalles/${id}`);
   }
 
   registrar(compra: ICompra){

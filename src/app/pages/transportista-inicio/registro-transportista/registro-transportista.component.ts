@@ -93,17 +93,17 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
 
   registrarTransportista() {
     const transportista: ITransportista = {
-      id: this.idTransportista || 0,
+      idTranportista: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formTransportista.value.nombres?.trim() ?? '',
       apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
       cedula: this.formTransportista.value.cedula ?? '',
       telefono: this.formTransportista.value.telefono ?? '',
-      correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
+      correoElectronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
       imagen: this.formTransportista.value.imagen ?? '',
       imagenBase64: this.formTransportista.value.imageBase64 ?? '',
       estado: this.formTransportista.value.estado ?? false,
-      fecha_Registro: Metodos.getFechaCreacion()
+      fechaRegistro: Metodos.getFechaCreacion()
     };
 
     this.formTransportista.markAllAsTouched();

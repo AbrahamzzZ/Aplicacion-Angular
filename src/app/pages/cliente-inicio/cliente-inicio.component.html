@@ -26,7 +26,7 @@
       <!-- No. -->
       <ng-container matColumnDef="id">
         <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.idCliente }}</td>
       </ng-container>
 
       <!-- Código -->
@@ -63,7 +63,7 @@
       <ng-container matColumnDef="correo_Electronico">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Correo Electrónico</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ element.correo_Electronico }}
+          {{ element.correoElectronico }}
         </td>
       </ng-container>
 
@@ -71,7 +71,7 @@
       <ng-container matColumnDef="fecha_Registro">
         <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
         <td class="table__cell" mat-cell *matCellDef="let element">
-          {{ getFechaRegistro(element.fecha_Registro) }}
+          {{ getFechaRegistro(element.fechaRegistro) }}
         </td>
       </ng-container>
 

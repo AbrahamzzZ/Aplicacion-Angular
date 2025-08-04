@@ -1,13 +1,13 @@
 import { INegocio } from "../interfaces/negocio";
 
 export interface ISucursal {
-    id: number;
+    id_Sucursal: number;
     oNegocio: INegocio;
     codigo: string;
-    nombre: string;
-    direccion: string;
+    nombre_Sucursal: string;
+    direccion_Sucursal: string;
     latitud: number;
     longitud: number;
-    ciudad: string;
+    ciudad_Sucursal: string;
     estado: boolean;
 }

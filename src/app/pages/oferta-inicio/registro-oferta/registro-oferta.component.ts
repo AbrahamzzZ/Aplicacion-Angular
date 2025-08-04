@@ -19,6 +19,8 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { IProducto } from '../../../interfaces/producto';
  import { MatNativeDateModule } from '@angular/material/core';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
+import { IProductoCategoria } from '../../../interfaces/Dto/iproducto-categoria';
+import { IOfertaProducto } from '../../../interfaces/Dto/ioferta-producto';
 
  @Component({
   selector: 'app-registro-oferta',
@@ -102,12 +104,12 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
 
   registrarOferta() {
     const productoId = this.formOferta.value.producto;
-    const productoSeleccionado = this.productos.find(p => p.id === productoId)?? {} as IProducto;
+    const productoSeleccionado = this.productos.find(p => p.id_Producto === productoId)?? {} as IProducto;
 
     const oferta: IOferta = {
-      id: this.idOferta || 0,
+      id_Oferta: this.idOferta || 0,
       codigo: Metodos.generarCodigo(),
-      nombre: this.formOferta.value.nombre?.trim() ?? '',
+      nombre_Oferta: this.formOferta.value.nombre?.trim() ?? '',
       oProducto: productoSeleccionado,
       descripcion: this.formOferta.value.descripcion?.trim() ?? '',
       fecha_Inicio: this.formOferta.value.fechaInicio ? new Date(this.formOferta.value.fechaInicio).toISOString() : '',

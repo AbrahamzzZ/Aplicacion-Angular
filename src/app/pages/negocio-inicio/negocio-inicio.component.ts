@@ -55,17 +55,17 @@ export class NegocioInicioComponent {
       next: (data) =>{
         if (data){
           this.formNegocio.patchValue({
-            id: data.id,
+            id: data.idNegocio,
             nombre: data.nombre,
             telefono: data.telefono,
             ruc: data.ruc,
             direccion: data.direccion,
-            correoElectronico: data.correo_Electronico
+            correoElectronico: data.correoElectronico
           });
 
-          if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
-            this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
-            this.formNegocio.controls.imageBase64.setValue(data.imagenBase64);
+          if (data.logo && typeof data.logo === 'string') {
+            this.imagenURL = `data:image/*;base64,${data.logo}`;
+            this.formNegocio.controls.imageBase64.setValue(data.logo);
           } else {
             this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
           }
@@ -84,12 +84,12 @@ export class NegocioInicioComponent {
     const imagenFinal = nuevaImagen || imagenOriginal;
 
     const negocio: Partial<INegocio> = {
-      id: this.idNegocio || 0,
+      idNegocio: this.idNegocio || 0,
       nombre: this.formNegocio.value.nombre?.trim() ?? '',
       telefono: this.formNegocio.value.telefono ?? '',
       ruc: this.formNegocio.value.ruc ?? '',
       direccion: this.formNegocio.value.direccion ?? '',
-      correo_Electronico: this.formNegocio.value.correoElectronico?.trim() ?? '',
+      correoElectronico: this.formNegocio.value.correoElectronico?.trim() ?? '',
       logo: this.formNegocio.value.imagen ?? '',
       imagenBase64: imagenFinal
     };

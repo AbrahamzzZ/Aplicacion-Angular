@@ -101,14 +101,14 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
     }
 
     const sucursal: ISucursal = {
-      id: this.idSucursal || 0,
+      id_Sucursal: this.idSucursal || 0,
       oNegocio: this.negocio,
       codigo: Metodos.generarCodigo(),
-      nombre: this.formSucursal.value.nombre?.trim() ?? '',
-      direccion: this.formSucursal.value.direccion?.trim() ?? '',
+      nombre_Sucursal: this.formSucursal.value.nombre?.trim() ?? '',
+      direccion_Sucursal: this.formSucursal.value.direccion?.trim() ?? '',
       latitud: parseFloat(this.formSucursal.value.latitud ?? '0'),   
       longitud: parseFloat(this.formSucursal.value.longitud ?? '0'),
-      ciudad: this.formSucursal.value.ciudad?.trim() ?? '',
+      ciudad_Sucursal: this.formSucursal.value.ciudad?.trim() ?? '',
       estado: this.formSucursal.value.estado ?? false
     };
 

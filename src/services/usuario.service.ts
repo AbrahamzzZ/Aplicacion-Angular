@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IUsuario } from '../app/interfaces/usuario';
 import { IApi } from '../app/interfaces/api';
+import { IUsuarioRol } from '../app/interfaces/Dto/iusuario-rol';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class UsuarioService {
   constructor() {}
 
   lista() {
-    return this.http.get<IUsuario[]>(this.apiUrl);
+    return this.http.get<IUsuarioRol[]>(this.apiUrl);
   }
 
   obtener(id: number) {
-    return this.http.get<IUsuario>(`${this.apiUrl}/${id}`);
+    return this.http.get<IUsuarioRol>(`${this.apiUrl}/${id}`);
   }
 
   registrar(usuario: IUsuario) {

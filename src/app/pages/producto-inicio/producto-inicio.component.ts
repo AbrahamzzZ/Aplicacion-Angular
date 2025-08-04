@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../../utility/metodos';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { IProductoCategoria } from '../../interfaces/Dto/iproducto-categoria';
 
 @Component({
   selector: 'app-producto-inicio',
@@ -33,7 +34,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 export class ProductoInicioComponent implements AfterViewInit{
   private productoServicio = inject(ProductoService);
   private snackBar = inject(MatSnackBar);
-  public listaProducto = new MatTableDataSource<IProducto>();
+  public listaProducto = new MatTableDataSource<IProductoCategoria>();
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -75,12 +76,12 @@ export class ProductoInicioComponent implements AfterViewInit{
   eliminar(producto: IProducto) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
-      data: { mensaje: `¿Está seguro de eliminar este producto ${producto.nombre}?` }
+      data: { mensaje: `¿Está seguro de eliminar este producto ${producto.nombre_Producto}?` }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.productoServicio.eliminar(producto.id).subscribe({
+        this.productoServicio.eliminar(producto.id_Producto).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerProducto();
@@ -101,7 +102,7 @@ export class ProductoInicioComponent implements AfterViewInit{
   }
 
   editar(producto: IProducto) {
-    this.router.navigate(['producto/producto-editar', producto.id]);
+    this.router.navigate(['producto/producto-editar', producto.id_Producto]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -124,11 +125,11 @@ export class ProductoInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaProducto.data.map(producto => ({
-      ID: producto.id,
+      ID: producto.id_Producto,
       Código: producto.codigo,
-      Nombre: producto.nombre,
+      Nombre: producto.nombre_Producto,
       Descripción: producto.descripcion,
-      Categoría: producto.oCategoria.nombre,
+      Categoría: producto.nombre_Categoria,
       'País Origen': producto.pais_Origen,
       Stock: producto.stock,
       'Precio Compra': producto.precio_Compra,

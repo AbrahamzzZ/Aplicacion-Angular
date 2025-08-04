@@ -84,14 +84,14 @@ export class RegistroClienteComponent implements OnInit, CanComponentDeactive {
 
   registrarCliente() {
     const cliente: ICliente = {
-      id: this.idCliente || 0,
+      idCliente: this.idCliente || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formCliente.value.nombres?.trim() ?? '',
       apellidos: this.formCliente.value.apellidos?.trim() ?? '',
       cedula: this.formCliente.value.cedula?.trim() ?? '',
       telefono: this.formCliente.value.telefono?.trim() ?? '',
-      correo_Electronico: this.formCliente.value.correoElectronico?.trim() ?? '',
-      fecha_Registro: Metodos.getFechaCreacion()
+      correoElectronico: this.formCliente.value.correoElectronico?.trim() ?? '',
+      fechaRegistro: Metodos.getFechaCreacion()
     };
     
     this.formCliente.markAllAsTouched();

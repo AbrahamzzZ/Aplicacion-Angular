@@ -82,7 +82,7 @@ export class EditarUsuarioComponent implements OnInit {
             nombreCompleto: data.nombre_Completo,
             correoElectronico: data.correo_Electronico,
             clave: data.clave,
-            rol: data.oRol.id,
+            rol: data.id_Rol,
             estado: data.estado
           });
         }
@@ -108,10 +108,10 @@ export class EditarUsuarioComponent implements OnInit {
 
   editarUsuario(): void {
     const rolId = this.formUsuario.value.rol;
-    const rolSeleccionado = this.roles.find(p => p.id === rolId)?? {} as IRol;
+    const rolSeleccionado = this.roles.find(p => p.idRol === rolId)?? {} as IRol;
 
     const usuario: Partial<IUsuario> = {
-      id: this.idUsuario,
+      id_Usuario: this.idUsuario,
       nombre_Completo: this.formUsuario.value.nombreCompleto!,
       clave: this.formUsuario.value.clave!,
       correo_Electronico: this.formUsuario.value.correoElectronico!,

@@ -85,15 +85,15 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
 
   registrarProveedor() {
     const proveedor: IProveedor = {
-      id: this.idProveedor || 0,
+      idProveedor: this.idProveedor || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formProveedor.value.nombres?.trim() ?? '',
       apellidos: this.formProveedor.value.apellidos?.trim() ?? '',
       cedula: this.formProveedor.value.cedula?.trim() ?? '',
       telefono: this.formProveedor.value.telefono?.trim() ?? '',
-      correo_Electronico: this.formProveedor.value.correoElectronico?.trim() ?? '',
+      correoElectronico: this.formProveedor.value.correoElectronico?.trim() ?? '',
       estado: this.formProveedor.value.estado ?? false,
-      fecha_Registro: Metodos.getFechaCreacion()
+      fechaRegistro: Metodos.getFechaCreacion()
     };
 
     this.formProveedor.markAllAsTouched();

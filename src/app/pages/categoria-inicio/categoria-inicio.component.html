@@ -24,9 +24,9 @@
   
       <table class="table" mat-table [dataSource]="listaCategoria">
         <!-- No. -->
-        <ng-container matColumnDef="id">
+        <ng-container matColumnDef="idCategoria">
           <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id }}</td>
+          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.idCategoria }}</td>
         </ng-container>
   
         <!-- Código -->
@@ -36,9 +36,9 @@
         </ng-container>
   
         <!-- Nombre -->
-        <ng-container matColumnDef="nombre">
+        <ng-container matColumnDef="nombreCategoria">
           <th class="table__header" mat-header-cell *matHeaderCellDef>Nombre</th>
-          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+          <td class="table__cell" mat-cell *matCellDef="let element">{{ element.nombreCategoria}}</td>
         </ng-container>
 
         <!-- Estado -->
@@ -53,10 +53,10 @@
         </ng-container>
   
         <!-- Fecha de Registro -->
-        <ng-container matColumnDef="fecha_Creacion">
+        <ng-container matColumnDef="fechaCreacion">
           <th class="table__header" mat-header-cell *matHeaderCellDef>Fecha de Creación</th>
           <td class="table__cell" mat-cell *matCellDef="let element">
-            {{ getFechaRegistro(element.fecha_Creacion) }}
+            {{ getFechaRegistro(element.fechaCreacion) }}
           </td>
         </ng-container>
   
