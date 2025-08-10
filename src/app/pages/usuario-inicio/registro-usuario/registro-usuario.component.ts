@@ -86,7 +86,6 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
 
   registrarUsuario() {
     const rolId = this.formUsuario.value.rol;
-    const rolSeleccionado = this.roles.find(p => p.idRol === rolId)?? {} as IRol;
 
     const usuario: IUsuario = {
       id_Usuario: this.idUsuario || 0,
@@ -94,7 +93,7 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
       nombre_Completo: this.formUsuario.value.nombreCompleto?.trim() ?? '',
       clave: this.formUsuario.value.clave ?? '',
       correo_Electronico: this.formUsuario.value.correoElectronico?.trim() ?? '',
-      oRol: rolSeleccionado,
+      id_Rol: rolId ?? 0,
       estado: this.formUsuario.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()
     };

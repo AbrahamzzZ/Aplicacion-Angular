@@ -2,7 +2,6 @@ import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { SucursalService } from '../../../services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ISucursal } from '../../interfaces/sucursal';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +12,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../utility/metodos';
+import { ISucursalNegocio } from '../../interfaces/Dto/sucursal-negocio';
 
 @Component({
   selector: 'app-sucursal-inicio',
@@ -32,7 +32,7 @@ import { Metodos } from '../../../utility/metodos';
 export class SucursalInicioComponent implements AfterViewInit{
   private sucursalServicio = inject(SucursalService);
   private snackBar = inject(MatSnackBar);
-  public listaSucursal = new MatTableDataSource<ISucursal>();
+  public listaSucursal = new MatTableDataSource<ISucursalNegocio>();
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -69,7 +69,7 @@ export class SucursalInicioComponent implements AfterViewInit{
     });
   }
 
-  eliminar(sucursal: ISucursal) {
+  eliminar(sucursal: ISucursalNegocio) {
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
       data: {
@@ -99,7 +99,7 @@ export class SucursalInicioComponent implements AfterViewInit{
     this.router.navigate(['sucursal/sucursal-registro', 0]);
   }
 
-  editar(sucursal: ISucursal) {
+  editar(sucursal: ISucursalNegocio) {
     this.router.navigate(['sucursal/sucursal-editar', sucursal.id_Sucursal]);
   }
 

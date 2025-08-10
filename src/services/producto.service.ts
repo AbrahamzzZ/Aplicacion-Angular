@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IProducto } from '../app/interfaces/producto';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 import { IProductoCategoria } from '../app/interfaces/Dto/iproducto-categoria';
 import { IProductoRespuesta } from '../app/interfaces/Dto/iproducto-respuesta';
 
@@ -27,7 +27,7 @@ export class ProductoService {
   }
 
   editar(producto: Partial<IProducto>) {
-    return this.http.put<IApi>(this.apiUrl, producto);
+    return this.http.put<IApi>(`${this.apiUrl}/${producto.id_Producto}`, producto);
   }
 
   eliminar(id: number) {

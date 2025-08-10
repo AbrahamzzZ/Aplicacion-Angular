@@ -32,6 +32,7 @@ export class ClienteInicioComponent implements AfterViewInit{
   private clienteServicio = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
   public listaCliente = new MatTableDataSource<ICliente>();
+  public tituloExcel = 'Clientes';
   displayedColumns: string[] = [
     'id',
     'codigo',
@@ -78,7 +79,7 @@ export class ClienteInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.clienteServicio.eliminar(cliente.idCliente).subscribe({
+        this.clienteServicio.eliminar(cliente.id_Cliente).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerCliente();
@@ -99,7 +100,7 @@ export class ClienteInicioComponent implements AfterViewInit{
   }
 
   editar(cliente: ICliente) {
-    this.router.navigate(['cliente/cliente-editar', cliente.idCliente]);
+    this.router.navigate(['cliente/cliente-editar', cliente.id_Cliente]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -122,14 +123,14 @@ export class ClienteInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaCliente.data.map(cliente => ({
-      ID: cliente.idCliente,
+      ID: cliente.id_Cliente,
       Código: cliente.codigo,
       Nombres: cliente.nombres,
       Apellidos: cliente.apellidos,
       Cedula: cliente.cedula,
       Telefono: cliente.telefono,
-      'Correo Electronico': cliente.correoElectronico,
-      'Fecha Registro': this.getFechaRegistro(cliente.fechaRegistro)
+      'Correo Electronico': cliente.correo_Electronico,
+      'Fecha Registro': this.getFechaRegistro(cliente.fecha_Registro ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -137,7 +138,7 @@ export class ClienteInicioComponent implements AfterViewInit{
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
+    Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
       'Telefono', 'Correo Electronico', 'Fecha Registro'
     ]);

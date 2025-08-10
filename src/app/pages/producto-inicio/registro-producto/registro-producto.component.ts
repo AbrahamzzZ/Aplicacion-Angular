@@ -102,17 +102,16 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
 
   registrarProducto() {
     const categoriaId = this.formProducto.value.categoria;
-    const categoriaSeleccionada = this.categorias.find(p => p.idCategoria === categoriaId)?? {} as ICategoria;
 
     const producto: IProducto = {
       id_Producto: this.idProducto || 0,
       codigo: Metodos.generarCodigo(),
       nombre_Producto: this.formProducto.value.nombre?.trim() ?? '',
       descripcion: this.formProducto.value.descripcion?.trim() ?? '',
-      oCategoria: categoriaSeleccionada,
+      id_Categoria: categoriaId,
       pais_Origen: this.formProducto.value.paisOrigen?.trim() ?? '',
       estado: this.formProducto.value.estado ?? false
-    } as IProducto;
+    };
 
     this.formProducto.markAllAsTouched();
 

@@ -11,6 +11,7 @@ import { ISucursal } from '../../interfaces/sucursal';
 import { SucursalService } from '../../../services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
+import { ISucursalNegocio } from '../../interfaces/Dto/sucursal-negocio';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 
@@ -30,7 +31,7 @@ export class InicioComponent implements OnInit, OnDestroy{
   private snackBar = inject(MatSnackBar);
   private ofertaServicio = inject(OfertaService);
   private sucursalServcio = inject(SucursalService);
-  public sucursales: ISucursal[] = [];
+  public sucursales: ISucursalNegocio[] = [];
   public ofertas: IOfertaProducto[] = [];
   public ofertaActual: IOfertaProducto | null = null;
   private subscripcion!: Subscription;

@@ -101,7 +101,7 @@ export class CompraInicioComponent implements OnInit{
   agregarProducto() {
     if (this.productoSeleccionado && this.producto.cantidad > 0) {
 
-      if (!isNaN(this.productoSeleccionado.precio_Compra) && !isNaN(this.productoSeleccionado.precio_Venta) && this.producto.precioCompra > 0 && this.producto.precioVenta > 0) {
+      if (!isNaN(this.productoSeleccionado.precio_Compra ?? 0) && !isNaN(this.productoSeleccionado.precio_Venta ?? 0) && this.producto.precioCompra > 0 && this.producto.precioVenta > 0) {
 
         if (!Number.isInteger(this.producto.cantidad)) {
           this.mostrarMensaje('La cantidad debe ser un número entero.', 'error');

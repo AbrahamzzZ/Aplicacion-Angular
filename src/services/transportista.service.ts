@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { ITransportista } from '../app/interfaces/transportista';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +24,7 @@ export class TransportistaService {
   }
 
   editar(transportista: Partial<ITransportista>) {
-    return this.http.put<IApi>(this.apiUrl, transportista);
+    return this.http.put<IApi>(`${this.apiUrl}/${transportista.id_Transportista}`, transportista);
   }
 
   eliminar(id: number) {

@@ -43,7 +43,7 @@ export class EditarUsuarioComponent implements OnInit {
       '',
       [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]
     ],
-    clave: ['', [Validators.required, Validaciones.formatoClave()]],
+    clave: ['', [ Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     rol: [0, [Validators.required, Validaciones.rolRequerido()]],
     estado: [false]
@@ -81,14 +81,14 @@ export class EditarUsuarioComponent implements OnInit {
           this.formUsuario.patchValue({
             nombreCompleto: data.nombre_Completo,
             correoElectronico: data.correo_Electronico,
-            clave: data.clave,
+            clave: '',
             rol: data.id_Rol,
             estado: data.estado
           });
         }
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar la infomación del usuario.');
+        this.mostrarMensaje('Error al cargar la infomación del usuario.', 'error');
         console.error(err);
       }
     });
@@ -100,7 +100,7 @@ export class EditarUsuarioComponent implements OnInit {
         this.roles = rol;
       },
       error: (err) => {
-        this.mostrarMensaje('Error al cargar los roles.');
+        this.mostrarMensaje('Error al cargar los roles.', 'error');
         console.error(err);
       }
     });
@@ -108,14 +108,13 @@ export class EditarUsuarioComponent implements OnInit {
 
   editarUsuario(): void {
     const rolId = this.formUsuario.value.rol;
-    const rolSeleccionado = this.roles.find(p => p.idRol === rolId)?? {} as IRol;
 
     const usuario: Partial<IUsuario> = {
       id_Usuario: this.idUsuario,
       nombre_Completo: this.formUsuario.value.nombreCompleto!,
-      clave: this.formUsuario.value.clave!,
+      clave: this.formUsuario.value.clave,
       correo_Electronico: this.formUsuario.value.correoElectronico!,
-      oRol: rolSeleccionado!,
+      id_Rol: rolId ?? 0,
       estado: this.formUsuario.value.estado
     };
 
@@ -125,6 +124,7 @@ export class EditarUsuarioComponent implements OnInit {
       this.mostrarMensaje('Formulatio inválido', 'error');
       return;
     }
+    console.log(usuario);
 
     this.usuarioServicio.editar(usuario).subscribe({
       next: (data) => {

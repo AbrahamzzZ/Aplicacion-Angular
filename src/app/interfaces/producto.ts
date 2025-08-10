@@ -1,14 +1,12 @@
-import { ICategoria } from "../interfaces/categoria";
-
 export interface IProducto {
     id_Producto: number;
     codigo: string;
     descripcion: string;
     nombre_Producto: string;
-    oCategoria?: ICategoria;
+    id_Categoria?: number;
     pais_Origen: string;
-    stock: number;
-    precio_Compra: number;
-    precio_Venta: number;
+    stock?: number | undefined;
+    precio_Compra?: number;
+    precio_Venta?: number;
     estado: boolean;
 }

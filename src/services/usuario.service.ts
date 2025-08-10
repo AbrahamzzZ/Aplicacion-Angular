@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IUsuario } from '../app/interfaces/usuario';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 import { IUsuarioRol } from '../app/interfaces/Dto/iusuario-rol';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class UsuarioService {
   }
 
   editar(usuario: Partial<IUsuario>) {
-    return this.http.put<IApi>(this.apiUrl, usuario);
+    return this.http.put<IApi>(`${this.apiUrl}/${usuario.id_Usuario}`, usuario);
   }
 
   eliminar(id: number) {

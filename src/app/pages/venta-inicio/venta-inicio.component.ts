@@ -112,7 +112,7 @@ export class VentaInicioComponent {
         return;
       }
       
-      if(this.producto.cantidad <= this.productoSeleccionado.stock){
+      if(this.producto.cantidad <= this.productoSeleccionado.stock!){
         const precioVenta = Number(this.productoSeleccionado.precio_Venta);
         const cantidad = Number(this.producto.cantidad);
         const descuento = this.ofertaSeleccionado?.descuento ?? 0;

@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../utility/metodos';
-import { NgClass } from '@angular/common';
+import { NgClass} from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
 
@@ -33,6 +33,7 @@ export class OfertaInicioComponent implements AfterViewInit{
   private ofertaServicio = inject(OfertaService);
   private snackBar = inject(MatSnackBar);
   public listaOferta = new MatTableDataSource<IOfertaProducto>();
+  public tituloExcel = 'Ofertas';
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -100,7 +101,7 @@ export class OfertaInicioComponent implements AfterViewInit{
     this.router.navigate(['oferta/oferta-registro', 0]);
   }
 
-  editar(oferta: IOferta) {
+  editar(oferta: IOfertaProducto) {
     this.router.navigate(['oferta/oferta-editar', oferta.id_Oferta]);
   }
 
@@ -141,7 +142,7 @@ export class OfertaInicioComponent implements AfterViewInit{
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
+    Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID', 'Código', 'Nombre', 'Producto', 'Descripcion', 
       'Fecha Inicio', 'Fecha Fin', 'Descuento','Estado','Fecha Creacion'
     ]);

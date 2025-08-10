@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { INegocio } from '../app/interfaces/negocio';
-import { IApi } from '../app/interfaces/api';
-import { ProductoMasVendido } from '../app/interfaces/interfaces-negocio/producto-mas-vendido';
-import { ProductoMasComprado } from '../app/interfaces/interfaces-negocio/producto-mas-comprado';
-import { TopClientes } from '../app/interfaces/interfaces-negocio/top-clientes';
-import { ProveedorPreferido } from '../app/interfaces/interfaces-negocio/proveedor-preferido';
-import { TransportistaViaje } from '../app/interfaces/interfaces-negocio/transportista-viaje';
-import { EmpleadoProductivo } from '../app/interfaces/interfaces-negocio/empleado-productivo';
+import { IApi } from '../setting/api';
+import { ProductoMasVendido } from '../app/interfaces/Dto/producto-mas-vendido';
+import { ProductoMasComprado } from '../app/interfaces/Dto/producto-mas-comprado';
+import { TopClientes } from '../app/interfaces/Dto/top-clientes';
+import { ProveedorPreferido } from '../app/interfaces/Dto/proveedor-preferido';
+import { TransportistaViaje } from '../app/interfaces/Dto/transportista-viaje';
+import { EmpleadoProductivo } from '../app/interfaces/Dto/empleado-productivo';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class NegocioService {
   }
 
   editar(negocio: Partial<INegocio>) {
-    return this.http.put<IApi>(this.apiUrl, negocio);
+    return this.http.put<IApi>(`${this.apiUrl}/${negocio.id_Negocio}`, negocio);
   }
 
   obtenerProductosComprados(){

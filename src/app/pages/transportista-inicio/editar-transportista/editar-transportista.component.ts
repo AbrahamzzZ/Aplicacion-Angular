@@ -98,13 +98,13 @@ export class EditarTransportistaComponent implements OnInit {
             apellidos: data.apellidos,
             cedula: data.cedula,
             telefono: data.telefono,
-            correoElectronico: data.correoElectronico,
+            correoElectronico: data.correo_Electronico,
             estado: data.estado
           });
 
-          if (data.imagenBase64 && typeof data.imagenBase64 === 'string') {
-            this.imagenURL = `data:image/png;base64,${data.imagenBase64}`;
-            this.formTransportista.controls.imageBase64.setValue(data.imagenBase64);
+          if (data.imagen && typeof data.imagen === 'string') {
+            this.imagenURL = `data:image/*;base64,${data.imagen}`;
+            this.formTransportista.controls.imageBase64.setValue(data.imagen);
           } else {
             this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
           }
@@ -123,13 +123,13 @@ export class EditarTransportistaComponent implements OnInit {
     const imagenFinal = nuevaImagen || imagenOriginal;
 
     const transportista: Partial<ITransportista> = {
-      idTranportista: this.idTransportista || 0,
+      id_Transportista: this.idTransportista || 0,
       codigo: Metodos.generarCodigo(),
       nombres: this.formTransportista.value.nombres?.trim() ?? '',
       apellidos: this.formTransportista.value.apellidos?.trim() ?? '',
       cedula: this.formTransportista.value.cedula ?? '',
       telefono: this.formTransportista.value.telefono ?? '',
-      correoElectronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
+      correo_Electronico: this.formTransportista.value.correoElectronico?.trim() ?? '',
       imagen: this.formTransportista.value.imagen ?? '',
       imagenBase64: imagenFinal,
       estado: this.formTransportista.value.estado ?? false

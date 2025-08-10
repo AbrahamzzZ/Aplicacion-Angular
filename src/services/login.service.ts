@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { ILogin } from '../app/interfaces/login';
+import { ILogin } from '../app/interfaces/Dto/login';
 import { Observable } from 'rxjs';
 import { appsettings } from '../setting/appsettings';
-import { ITokenData } from '../app/interfaces/itoken-data';
+import { ITokenData } from '../setting/itoken-data';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';

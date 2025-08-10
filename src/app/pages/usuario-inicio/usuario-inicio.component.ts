@@ -45,6 +45,7 @@ export class UsuarioInicioComponent implements AfterViewInit{
     'fecha_Creacion',
     'accion'
   ];
+  public tituloExcel = 'Usuarios';
 
   constructor(
     private router: Router,
@@ -136,7 +137,7 @@ export class UsuarioInicioComponent implements AfterViewInit{
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
+    Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID', 'Código', 'Nombre Completo', 'Correo Electronico', 'Rol', 'Estado', 'Fecha Creacion'
     ]);
     this.mostrarMensaje("Excel generado exitosamente.", "success");
