@@ -34,6 +34,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
   public listaTransportista = new MatTableDataSource<ITransportista>();
+  public tituloExcel = 'Transportistas';
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -72,7 +73,6 @@ export class TransportistaInicioComponent implements AfterViewInit{
           }
           return transportista;
         });
-        console.log(this.listaTransportista);
       },
       error: (err) => {
         console.log(err.message);
@@ -90,7 +90,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.transportistaServicio.eliminar(transportista.idTranportista).subscribe({
+        this.transportistaServicio.eliminar(transportista.id_Transportista).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerTransportista();
@@ -111,7 +111,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
   }
 
   editar(transportista: ITransportista) {
-    this.router.navigate(['transportista/transportista-editar', transportista.idTranportista]);
+    this.router.navigate(['transportista/transportista-editar', transportista.id_Transportista]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -134,15 +134,15 @@ export class TransportistaInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaTransportista.data.map(transportista => ({
-      ID: transportista.idTranportista,
+      ID: transportista.id_Transportista,
       Código: transportista.codigo,
       Nombres: transportista.nombres,
       Apellidos: transportista.apellidos,
       Cedula: transportista.cedula,
       Telefono: transportista.telefono,
-      'Correo Electronico': transportista.correoElectronico,
+      'Correo Electronico': transportista.correo_Electronico,
       Estado: this.getEstado(transportista.estado),
-      'Fecha Registro': this.getFechaRegistro(transportista.fechaRegistro)
+      'Fecha Registro': this.getFechaRegistro(transportista.fecha_Registro ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -150,7 +150,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
+    Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
       'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
     ]);

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IOferta } from '../app/interfaces/oferta';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 import { IOfertaProducto } from '../app/interfaces/Dto/ioferta-producto';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class OfertaService {
   }
   
   obtener(id: number) {
-    return this.http.get<IOfertaProducto>(`${this.apiUrl}/${id}`);
+    return this.http.get<IOferta>(`${this.apiUrl}/${id}`);
   }
   
   registrar(oferta: IOferta) {
@@ -27,7 +27,7 @@ export class OfertaService {
   }
   
   editar(oferta: Partial<IOferta>) {
-    return this.http.put<IApi>(this.apiUrl, oferta);
+    return this.http.put<IApi>(`${this.apiUrl}/${oferta.id_Oferta}`, oferta);
   }
   
   eliminar(id: number) {

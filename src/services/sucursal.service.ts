@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { ISucursal } from '../app/interfaces/sucursal';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
+import { ISucursalNegocio } from '../app/interfaces/Dto/sucursal-negocio';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class SucursalService {
   constructor() {}
 
   lista() {
-    return this.http.get<ISucursal[]>(this.apiUrl);
+    return this.http.get<ISucursalNegocio[]>(this.apiUrl);
   }
 
   obtener(id: number) {
-    return this.http.get<ISucursal>(`${this.apiUrl}/${id}`);
+    return this.http.get<ISucursalNegocio>(`${this.apiUrl}/${id}`);
   }
 
   registrar(sucursal: ISucursal) {
@@ -26,7 +27,7 @@ export class SucursalService {
   }
 
   editar(sucursal: Partial<ISucursal>) {
-    return this.http.put<IApi>(this.apiUrl, sucursal);
+    return this.http.put<IApi>(`${this.apiUrl}/${sucursal.id_Sucursal}`, sucursal);
   }
 
   eliminar(id: number) {

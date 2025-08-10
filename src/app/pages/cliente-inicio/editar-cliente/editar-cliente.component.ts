@@ -89,7 +89,7 @@ export class EditarClienteComponent implements OnInit {
             apellidos: data.apellidos,
             cedula: data.cedula,
             telefono: data.telefono,
-            correoElectronico: data.correoElectronico
+            correoElectronico: data.correo_Electronico
           });
         }
       },
@@ -102,12 +102,12 @@ export class EditarClienteComponent implements OnInit {
 
   editarCliente(): void {
     const cliente: Partial<ICliente> = {
-      idCliente: this.idCliente,
+      id_Cliente: this.idCliente,
       nombres: this.formCliente.value.nombres!,
       apellidos: this.formCliente.value.apellidos!,
       cedula: this.formCliente.value.cedula!,
       telefono: this.formCliente.value.telefono!,
-      correoElectronico: this.formCliente.value.correoElectronico!
+      correo_Electronico: this.formCliente.value.correoElectronico!
     };
 
     this.formCliente.markAllAsTouched();

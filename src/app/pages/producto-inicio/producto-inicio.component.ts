@@ -35,6 +35,7 @@ export class ProductoInicioComponent implements AfterViewInit{
   private productoServicio = inject(ProductoService);
   private snackBar = inject(MatSnackBar);
   public listaProducto = new MatTableDataSource<IProductoCategoria>();
+  public tituloExcel = 'Productos';
   public displayedColumns: string[] = [
     'id',
     'codigo',

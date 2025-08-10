@@ -55,12 +55,12 @@ export class NegocioInicioComponent {
       next: (data) =>{
         if (data){
           this.formNegocio.patchValue({
-            id: data.idNegocio,
+            id: data.id_Negocio,
             nombre: data.nombre,
             telefono: data.telefono,
             ruc: data.ruc,
             direccion: data.direccion,
-            correoElectronico: data.correoElectronico
+            correoElectronico: data.correo_Electronico
           });
 
           if (data.logo && typeof data.logo === 'string') {
@@ -84,12 +84,12 @@ export class NegocioInicioComponent {
     const imagenFinal = nuevaImagen || imagenOriginal;
 
     const negocio: Partial<INegocio> = {
-      idNegocio: this.idNegocio || 0,
+      id_Negocio: this.idNegocio || 0,
       nombre: this.formNegocio.value.nombre?.trim() ?? '',
       telefono: this.formNegocio.value.telefono ?? '',
       ruc: this.formNegocio.value.ruc ?? '',
       direccion: this.formNegocio.value.direccion ?? '',
-      correoElectronico: this.formNegocio.value.correoElectronico?.trim() ?? '',
+      correo_Electronico: this.formNegocio.value.correoElectronico?.trim() ?? '',
       logo: this.formNegocio.value.imagen ?? '',
       imagenBase64: imagenFinal
     };

@@ -19,8 +19,6 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { IProducto } from '../../../interfaces/producto';
  import { MatNativeDateModule } from '@angular/material/core';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
-import { IProductoCategoria } from '../../../interfaces/Dto/iproducto-categoria';
-import { IOfertaProducto } from '../../../interfaces/Dto/ioferta-producto';
 
  @Component({
   selector: 'app-registro-oferta',
@@ -46,6 +44,7 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
   public productos:IProducto [] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  public oferta!: IOferta;
 
   public formOferta = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -104,16 +103,15 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
 
   registrarOferta() {
     const productoId = this.formOferta.value.producto;
-    const productoSeleccionado = this.productos.find(p => p.id_Producto === productoId)?? {} as IProducto;
-
+    
     const oferta: IOferta = {
       id_Oferta: this.idOferta || 0,
       codigo: Metodos.generarCodigo(),
       nombre_Oferta: this.formOferta.value.nombre?.trim() ?? '',
-      oProducto: productoSeleccionado,
+      id_Producto: productoId ?? 0,
       descripcion: this.formOferta.value.descripcion?.trim() ?? '',
-      fecha_Inicio: this.formOferta.value.fechaInicio ? new Date(this.formOferta.value.fechaInicio).toISOString() : '',
-      fecha_Fin: this.formOferta.value.fechaFin ? new Date(this.formOferta.value.fechaFin).toISOString() : '',
+      fecha_Inicio: this.formOferta.value.fechaInicio? this.formOferta.value.fechaInicio.toISOString().split('T')[0] : '',
+      fecha_Fin: this.formOferta.value.fechaFin? this.formOferta.value.fechaFin.toISOString().split('T')[0] : '',
       descuento: this.formOferta.value.descuento ?? 0,
       estado: this.formOferta.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()

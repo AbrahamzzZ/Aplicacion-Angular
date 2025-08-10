@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { ICliente } from '../app/interfaces/cliente';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class ClienteService {
   }
 
   editar(cliente: Partial<ICliente>) {
-    return this.http.put<IApi>(this.apiUrl, cliente);
+    return this.http.put<IApi>(`${this.apiUrl}/${cliente.id_Cliente}`, cliente);
   }
 
   eliminar(id: number) {

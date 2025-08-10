@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -90,7 +90,7 @@ export class EditarProveedorComponent implements OnInit {
             apellidos: data.apellidos,
             cedula: data.cedula,
             telefono: data.telefono,
-            correoElectronico: data.correoElectronico,
+            correoElectronico: data.correo_Electronico,
             estado: data.estado
           });
         }
@@ -104,12 +104,12 @@ export class EditarProveedorComponent implements OnInit {
 
   editarProveedor(): void {
     const proveedor: Partial<IProveedor> = {
-      idProveedor: this.idProveedor,
+      id_Proveedor: this.idProveedor,
       nombres: this.formProveedor.value.nombres!,
       apellidos: this.formProveedor.value.apellidos!,
       cedula: this.formProveedor.value.cedula!,
       telefono: this.formProveedor.value.telefono!,
-      correoElectronico: this.formProveedor.value.correoElectronico!,
+      correo_Electronico: this.formProveedor.value.correoElectronico!,
       estado: this.formProveedor.value.estado
     };
 

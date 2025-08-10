@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IProveedor } from '../app/interfaces/proveedor';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class ProveedorService {
   }
 
   editar(proveedor: Partial<IProveedor>) {
-    return this.http.put<IApi>(this.apiUrl, proveedor);
+    return this.http.put<IApi>(`${this.apiUrl}/${proveedor.id_Proveedor}`, proveedor);
   }
 
   eliminar(id: number) {

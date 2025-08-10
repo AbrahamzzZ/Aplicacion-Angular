@@ -104,7 +104,7 @@ export class EditarSucursalComponent implements OnInit{
   }
 
   editarSucursal(): void {
-    const proveedor: Partial<ISucursal> = {
+    const sucursal: Partial<ISucursal> = {
       id_Sucursal: this.idSucursal,
       nombre_Sucursal: this.formSucursal.value.nombre!,
       direccion_Sucursal: this.formSucursal.value.direccion!,
@@ -121,7 +121,7 @@ export class EditarSucursalComponent implements OnInit{
       return;
     }
 
-    this.sucursalServicio.editar(proveedor).subscribe({
+    this.sucursalServicio.editar(sucursal).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/sucursal']);

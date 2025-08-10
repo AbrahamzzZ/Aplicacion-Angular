@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { IVenta } from '../app/interfaces/venta';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 
 @Injectable({
   providedIn: 'root'

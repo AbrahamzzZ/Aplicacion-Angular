@@ -95,14 +95,10 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
   }
 
   registrarSucursal() {
-    if (!this.negocio) {
-      this.mostrarMensaje('No se ha cargado la información del negocio.', 'error');
-      return;
-    }
 
     const sucursal: ISucursal = {
       id_Sucursal: this.idSucursal || 0,
-      oNegocio: this.negocio,
+      id_Negocio: this.negocio.id_Negocio,
       codigo: Metodos.generarCodigo(),
       nombre_Sucursal: this.formSucursal.value.nombre?.trim() ?? '',
       direccion_Sucursal: this.formSucursal.value.direccion?.trim() ?? '',
@@ -113,11 +109,9 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
     };
 
     this.formSucursal.markAllAsTouched();
-    console.log(sucursal);
 
     if (!this.formSucursal.valid) {
       this.mostrarMensaje('Formulario inválido.', 'error');
-      console.log(this.formSucursal.valid);
       return;
     }
 

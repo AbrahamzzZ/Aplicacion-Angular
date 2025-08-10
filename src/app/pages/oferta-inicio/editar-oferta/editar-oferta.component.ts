@@ -16,7 +16,6 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
  import { Metodos } from '../../../../utility/metodos';
  import { Validaciones } from '../../../../utility/validaciones';
  import { IOferta } from '../../../interfaces/oferta';
-import { IProductoCategoria } from '../../../interfaces/Dto/iproducto-categoria';
 
  @Component({
   selector: 'app-editar-oferta',
@@ -41,6 +40,7 @@ export class EditarOfertaComponent implements OnInit{
   public productos:IProducto [] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  public oferta!: IOferta;
 
   public formOferta = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -129,15 +129,14 @@ export class EditarOfertaComponent implements OnInit{
 
   editarOferta(): void {
     const productoId = this.formOferta.value.producto;
-    const productoSeleccionado = this.productos.find(p => p.id_Producto === productoId)?? {} as IProducto;
 
     const oferta: Partial<IOferta> = {
       id_Oferta: this.idOferta,
       nombre_Oferta: this.formOferta.value.nombre!,
-      oProducto: productoSeleccionado!,
+      id_Producto: productoId,
       descripcion: this.formOferta.value.descripcion!,
-      fecha_Inicio: this.formOferta.value.fechaInicio? this.formOferta.value.fechaInicio.toISOString().split('T')[0] : undefined,
-      fecha_Fin: this.formOferta.value.fechaFin? this.formOferta.value.fechaFin.toISOString().split('T')[0] : undefined,
+      fecha_Inicio: this.formOferta.value.fechaInicio? this.formOferta.value.fechaInicio.toISOString().split('T')[0] : '',
+      fecha_Fin: this.formOferta.value.fechaFin? this.formOferta.value.fechaFin.toISOString().split('T')[0] : '',
       descuento: this.formOferta.value.descuento!,
       estado: this.formOferta.value.estado
     };

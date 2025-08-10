@@ -1,13 +1,13 @@
 export interface ITransportista {
-  idTranportista: number;
+  id_Transportista: number;
   codigo: string;
   nombres: string;
   apellidos: string;
   cedula: string;
   telefono: string;
-  correoElectronico: string;
-  imagen: string;
-  imagenBase64: string | Uint8Array | File | null;
+  correo_Electronico: string;
+  imagen?: string;
+  imagenBase64?: string | Uint8Array | File | null;
   estado: boolean;
-  fechaRegistro: string;
+  fecha_Registro?: string;
 }

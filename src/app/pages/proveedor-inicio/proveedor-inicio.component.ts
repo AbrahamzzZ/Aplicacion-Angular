@@ -34,6 +34,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
   private proveedorServicio = inject(ProveedorService);
   private snackBar = inject(MatSnackBar);
   public listaProveedor = new MatTableDataSource<IProveedor>();
+  public tituloExcel = 'Proveedores';
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -81,7 +82,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.proveedorServicio.eliminar(proveedor.idProveedor).subscribe({
+        this.proveedorServicio.eliminar(proveedor.id_Proveedor).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerProveedor();
@@ -102,7 +103,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
   }
 
   editar(proveedor: IProveedor) {
-    this.router.navigate(['proveedor/proveedor-editar', proveedor.idProveedor]);
+    this.router.navigate(['proveedor/proveedor-editar', proveedor.id_Proveedor]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -125,15 +126,15 @@ export class ProveedorInicioComponent implements AfterViewInit{
 
   exportarExcel() {
     const datos = this.listaProveedor.data.map(proveedor => ({
-      ID: proveedor.idProveedor,
+      ID: proveedor.id_Proveedor,
       Código: proveedor.codigo,
       Nombres: proveedor.nombres,
       Apellidos: proveedor.apellidos,
       Cedula: proveedor.cedula,
       Telefono: proveedor.telefono,
-      'Correo Electronico': proveedor.correoElectronico,
+      'Correo Electronico': proveedor.correo_Electronico,
       Estado: this.getEstado(proveedor.estado),
-      'Fecha Registro': this.getFechaRegistro(proveedor.fechaRegistro)
+      'Fecha Registro': this.getFechaRegistro(proveedor.fecha_Registro ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -141,7 +142,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
+    Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
       'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
     ]);

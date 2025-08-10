@@ -6,7 +6,7 @@ import { MatIcon } from '@angular/material/icon';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ILogin } from '../../interfaces/login';
+import { ILogin } from '../../interfaces/Dto/login';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -72,8 +72,13 @@ export class LoginComponent implements OnInit{
             }
           },
           error: (error) => {
-            console.error('Error al iniciar sesion: ', error);
-            this.mostrarMensaje('Correo o clave incorrecta.', 'error');
+            if (error.status === 500) {
+              this.mostrarMensaje('Su usuario está inactivo. Contacte con el administrador.', 'error');
+            } else if (error.status === 401) {
+              this.mostrarMensaje('Correo o clave incorrecta.', 'error');
+            } else {
+              this.mostrarMensaje('Error inesperado al iniciar sesión.', 'error');
+            }
           }
         });
     }

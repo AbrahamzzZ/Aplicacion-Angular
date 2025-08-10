@@ -130,13 +130,12 @@ export class ProductoEditarComponent implements OnInit {
 
   editarProducto(): void {
     const categoriaId = this.formProducto.value.categoria;
-    const categoriaSeleccionada = this.categorias.find(p => p.idCategoria === categoriaId)?? {} as ICategoria;
 
     const producto: Partial<IProducto> = {
       id_Producto: this.idProducto,
       nombre_Producto: this.formProducto.value.nombre!,
       descripcion: this.formProducto.value.descripcion!,
-      oCategoria: categoriaSeleccionada!,
+      id_Categoria: categoriaId,
       pais_Origen: this.formProducto.value.paisOrigen!,
       estado: this.formProducto.value.estado
     };

@@ -1,10 +1,10 @@
 export interface ICliente {
-  idCliente: number;
+  id_Cliente: number;
   codigo: string;
   nombres: string;
   apellidos: string;
   cedula: string;
   telefono: string;
-  correoElectronico: string;
-  fechaRegistro: string;
+  correo_Electronico: string;
+  fecha_Registro?: string;
 }

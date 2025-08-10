@@ -1,13 +1,12 @@
-import { INegocio } from "../interfaces/negocio";
-
-export interface ISucursal {
+export interface ISucursalNegocio {
     id_Sucursal: number;
     id_Negocio: number;
-    codigo: string;
+    nombre_Negocio: string;
     nombre_Sucursal: string;
     direccion_Sucursal: string;
+    ciudad_Sucursal: string;
     latitud: number;
     longitud: number;
-    ciudad_Sucursal: string;
     estado: boolean;
+    codigo: string;
 }

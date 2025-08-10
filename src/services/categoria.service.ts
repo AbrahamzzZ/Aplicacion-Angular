@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { ICategoria } from '../app/interfaces/categoria';
-import { IApi } from '../app/interfaces/api';
+import { IApi } from '../setting/api';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class CategoriaService {
   }
 
   editar(categoria: Partial<ICategoria>) {
-    return this.http.put<IApi>(this.apiUrl, categoria);
+    return this.http.put<IApi>(`${this.apiUrl}/${categoria.id_Categoria}`, categoria);
   }
 
   eliminar(id: number) {

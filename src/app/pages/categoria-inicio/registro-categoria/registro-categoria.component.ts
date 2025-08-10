@@ -69,12 +69,12 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
   }
 
   registrarCategoria() {
-    const usuario: ICategoria = {
-      idCategoria: this.idCategoria || 0,
+    const categoria: ICategoria = {
+      id_Categoria: this.idCategoria || 0,
       codigo: Metodos.generarCodigo(),
-      nombreCategoria: this.formCategoria.value.nombre?.trim() ?? '',
+      nombre_Categoria: this.formCategoria.value.nombre?.trim() ?? '',
       estado: this.formCategoria.value.estado ?? false,
-      fechaCreacion: Metodos.getFechaCreacion()
+      fecha_Creacion: Metodos.getFechaCreacion()
     };
 
     this.formCategoria.markAllAsTouched();
@@ -84,7 +84,7 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
       return;
     }
 
-    this.categoriaServicio.registrar(usuario).subscribe({
+    this.categoriaServicio.registrar(categoria).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/categoria'], { skipLocationChange: true });

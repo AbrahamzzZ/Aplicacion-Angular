@@ -32,6 +32,7 @@ export class CategoriaInicioComponent implements AfterViewInit{
   private categoriaServicio = inject(CategoriaService);
   private snackBar = inject(MatSnackBar);
   public listaCategoria = new MatTableDataSource<ICategoria>();
+  public tituloExcel = 'Categorías';
 displayedColumns: string[] = [
     'idCategoria',
     'codigo',
@@ -69,13 +70,13 @@ displayedColumns: string[] = [
     const dialogRef = this.dialog.open(DialogoConfirmacionComponent, {
       width: '350px',
       data: {
-        mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombreCategoria}?`
+        mensaje: `¿Está seguro de eliminar la categoría ${categoria.nombre_Categoria}?`
       }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.categoriaServicio.eliminar(categoria.idCategoria).subscribe({
+        this.categoriaServicio.eliminar(categoria.id_Categoria).subscribe({
           next: (data) => {
             if (data.isSuccess) {
               this.obtenerCategoria();
@@ -96,7 +97,7 @@ displayedColumns: string[] = [
   }
 
   editar(categoria: ICategoria) {
-    this.router.navigate(['categoria/categoria-editar', categoria.idCategoria]);
+    this.router.navigate(['categoria/categoria-editar', categoria.id_Categoria]);
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
@@ -119,11 +120,11 @@ displayedColumns: string[] = [
 
   exportarExcel() {
     const datos = this.listaCategoria.data.map(categoria => ({
-      ID: categoria.idCategoria,
+      ID: categoria.id_Categoria,
       Código: categoria.codigo,
-      Nombre: categoria.nombreCategoria,
+      Nombre: categoria.nombre_Categoria,
       Estado: this.getEstado(categoria.estado),
-      'Fecha Creacion': this.getFechaRegistro(categoria.fechaCreacion)
+      'Fecha Creacion': this.getFechaRegistro(categoria.fecha_Creacion ?? '')
     }));
 
     if (!datos || datos.length === 0) {
@@ -131,7 +132,7 @@ displayedColumns: string[] = [
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
+    Metodos.exportarExcel(this.tituloExcel, datos, [
       'ID', 'Código', 'Nombre', 'Estado', 'Fecha Creacion'
     ]);
     this.mostrarMensaje("Excel generado exitosamente.", "success");
