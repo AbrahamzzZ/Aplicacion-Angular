@@ -3,6 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { appsettings } from '../setting/appsettings';
 import { ICompra } from '../app/interfaces/compra';
 import { IApi } from '../setting/api';
+import { ICompraRepuesta } from '../app/interfaces/Dto/icompra-repuesta';
+import { IDetallesCompra } from '../app/interfaces/Dto/idetalles-compra';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +21,11 @@ export class CompraService {
   }
 
   obtener(documento: string){
-    return this.http.get<ICompra>(`${this.apiUrl}/${documento}`);
+    return this.http.get<ICompraRepuesta>(`${this.apiUrl}/${documento}`);
   }
 
   obtenerDetalleCompra(id: number){
-    return this.http.get<ICompra>(`${this.apiUrl}/detalles/${id}`);
+    return this.http.get<IDetallesCompra>(`${this.apiUrl}/detalles/${id}`);
   }
 
   registrar(compra: ICompra){

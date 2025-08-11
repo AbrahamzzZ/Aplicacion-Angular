@@ -1,19 +1,14 @@
-import { ICliente } from "./cliente";
 import { IDetalleVenta } from "./detalle-venta";
-import { IOferta } from "./oferta";
-import { IUsuario } from "./usuario";
 
 export interface IVenta {
     id: number;
-    numeroDocumento: string;
-    oUsuario: IUsuario;
-    oCliente: ICliente;
-    oOferta?: IOferta | null;
-    tipoDocumento: string;
-    montoPago: number;
-    montoCambio: number;
-    montoTotal: number;
+    numero_Documento: string;
+    id_Usuario: number;
+    id_Cliente: number;
+    tipo_Documento: string;
+    monto_Pago: number;
+    monto_Cambio: number;
+    monto_Total: number;
     descuento: number;
-    detalleVenta: IDetalleVenta [];
-    fecha_Venta: string;
+    detalles: IDetalleVenta [];
 }

@@ -1,4 +1,4 @@
-import { CurrencyPipe, formatDate } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -57,22 +57,30 @@ export class DetalleVentaComponent implements OnInit{
 
     this.servicio.obtener(numeroDocumento).subscribe({
       next: (venta) => {
-        const fechaFormateada = formatDate(venta.fecha_Venta, 'dd/MM/yyyy', 'en-US');
         this.venta.patchValue({
-          fecha: fechaFormateada,
-          tipoDocumento: venta.tipoDocumento,
-          codigoUsuario: venta.oUsuario.codigo,
-          nombreUsuario: venta.oUsuario.nombre_Completo,
-          nombresCliente: venta.oCliente.nombres,
-          apellidosCliente: venta.oCliente.apellidos,
-          cedulaCliente: venta.oCliente.cedula,
-          totalPagar: venta.montoTotal,
-          pagaCon: venta.montoPago,
-          cambio: venta.montoCambio,
+          fecha: venta.fecha_Venta,
+          tipoDocumento: venta.tipo_Documento,
+          codigoUsuario: venta.codigo_Usuario,
+          nombreUsuario: venta.nombre_Completo,
+          nombresCliente: venta.nombres_Cliente,
+          apellidosCliente: venta.apellidos_Cliente,
+          cedulaCliente: venta.cedula_Cliente,
+          totalPagar: venta.monto_Total,
+          pagaCon: venta.monto_Pago,
+          cambio: venta.monto_Cambio,
           conDescuento: venta.descuento
         });
 
-        this.dataSource.data = venta.detalleVenta;
+      this.servicio.obtenerDetalleVenta(venta.id_Venta).subscribe({
+        next: (detalle) => {
+
+          this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
+        },
+        error: (err) => {
+          console.error(err.message);
+          this.mostrarMensaje('Error al obtener el detalle de venta.', 'error');
+        }
+      });
       },
       error: (err) => {
         console.error(err.message);

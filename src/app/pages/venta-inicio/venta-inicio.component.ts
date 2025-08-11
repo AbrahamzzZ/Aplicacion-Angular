@@ -18,8 +18,6 @@ import { ModalOfertaComponent } from '../../components/modal/modal-oferta/modal-
 import { IOferta } from '../../interfaces/oferta';
 import { ModalProductoComponent } from '../../components/modal/modal-producto/modal-producto.component';
 import { Router } from '@angular/router';
-import { IUsuario } from '../../interfaces/usuario';
-import { Metodos } from '../../../utility/metodos';
 import { IVenta } from '../../interfaces/venta';
 import { IDetalleVenta } from '../../interfaces/detalle-venta';
 import { CurrencyPipe } from '@angular/common';
@@ -203,10 +201,10 @@ export class VentaInicioComponent {
     }
 
     const detalles: IDetalleVenta[] = this.productosAgregados.map(p => ({
-      idProducto: p.id,
-      Precio_Venta: Number(p.precioVenta),
+      id_Producto: p.id,
+      precio_Venta: Number(p.precioVenta),
       cantidad: p.cantidad,
-      SubTotal: p.subtotal,
+      subTotal: p.subtotal,
       descuento: p.descuento
     }));
 
@@ -214,20 +212,15 @@ export class VentaInicioComponent {
 
     const venta: IVenta = {
       id: 0, 
-      numeroDocumento: this.numeroDocumento,
-      oUsuario: {
-        id_Usuario: Number(datosToken?.nameid),
-        nombre_Completo: datosToken?.unique_name
-      } as IUsuario, 
-      oCliente: this.clienteSeleccionado,
-      oOferta: this.ofertaSeleccionado,
-      tipoDocumento: this.tipoComprobante,
-      montoTotal: this.totalSinDescuento,
-      montoCambio: this.cambio,
-      montoPago: this.pagaCon,
+      numero_Documento: this.numeroDocumento,
+      id_Usuario: Number(datosToken?.nameid),
+      id_Cliente: this.clienteSeleccionado.id_Cliente,
+      tipo_Documento: this.tipoComprobante,
+      monto_Total: this.totalSinDescuento,
+      monto_Cambio: this.cambio,
+      monto_Pago: this.pagaCon,
       descuento: this.totalConDescuento,
-      detalleVenta: detalles,
-      fecha_Venta: Metodos.getFechaCreacion()
+      detalles: detalles
     };
     console.log(venta);
     this.servicioVenta.registrar(venta).subscribe(response => {

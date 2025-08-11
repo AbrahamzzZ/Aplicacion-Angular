@@ -21,8 +21,6 @@ import { ICompra } from '../../interfaces/compra';
 import { CompraService } from '../../../services/compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from '../../../services/login.service';
-import { Metodos } from '../../../utility/metodos';
-import { IUsuario } from '../../interfaces/usuario';
 
 @Component({
   selector: 'app-compra-inicio',
@@ -152,28 +150,24 @@ export class CompraInicioComponent implements OnInit{
     }
 
     const detalles: IDetalleCompra[] = this.productosAgregados.map(p => ({
-      idProducto: p.id,
-      Precio_Compra: Number(p.precioCompra),
-      Precio_Venta: Number(p.precioVenta),
+      id_Producto: p.id,
+      precio_Compra: Number(p.precioCompra),
+      precio_Venta: Number(p.precioVenta),
       cantidad: p.cantidad,
-      SubTotal: p.subtotal
+      subTotal: p.subtotal
     }));
 
     const datosToken = this.loginServicio.obtenerDatosToken();
 
     const compra: ICompra = {
       id: 0, 
-      numeroDocumento: this.numeroDocumento,
-      oUsuario: {
-        id_Usuario: Number(datosToken?.nameid),
-        nombre_Completo: datosToken?.unique_name
-      } as IUsuario, 
-      oProveedor: this.proveedorSeleccionado,
-      oTransportista: this.transportistaSeleccionado,
-      tipoDocumento: this.tipoComprobante,
-      montoTotal: this.calcularTotal().toFixed(2),
-      detalleCompra: detalles,
-      fecha_Compra: Metodos.getFechaCreacion()
+      numero_Documento: this.numeroDocumento,
+      id_Usuario: Number(datosToken?.nameid),
+      id_Proveedor: this.proveedorSeleccionado.id_Proveedor,
+      id_Transportista: this.transportistaSeleccionado.id_Transportista,
+      tipo_Documento: this.tipoComprobante,
+      monto_Total: this.calcularTotal().toFixed(2),
+      detalles: detalles
     };
 
     this.servicioCompra.registrar(compra).subscribe(response => {
