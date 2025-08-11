@@ -13,6 +13,7 @@ import { CompraService } from '../../../../services/compra.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
+
 @Component({
   selector: 'app-detalle-compra',
   standalone: true,
@@ -24,10 +25,11 @@ export class DetalleCompraComponent {
   public mensajeBusqueda: string = '';
   public compra!: FormGroup;
   private snackBar = inject(MatSnackBar);
+  private servicio = inject(CompraService);
   public dataSource = new MatTableDataSource<any>();
   public columnasTabla: string[] = ['id', 'nombre', 'precio_Compra', 'precio_Venta', 'cantidad', 'subTotal'];
 
-  constructor(private fb: FormBuilder, private servicio: CompraService){}
+  constructor(private fb: FormBuilder){}
 
   ngOnInit(): void {
     this.compra = this.fb.group({
@@ -46,39 +48,48 @@ export class DetalleCompraComponent {
   }
 
   filtrarCompra(numeroDocumento: string){
-    this.mensajeBusqueda = '';
-    if (!numeroDocumento.trim()) return;
+  this.mensajeBusqueda = '';
+  if (!numeroDocumento.trim()) return;
 
-    if (numeroDocumento.length != 5) {
-      this.limpiar(); 
-      this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
-      return;
+  if (numeroDocumento.length != 5) {
+    this.limpiar(); 
+    this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
+    return;
+  }
+
+  this.servicio.obtener(numeroDocumento).subscribe({
+    next: (compra) => {
+
+      this.compra.patchValue({
+        fecha: compra.fecha_Compra,
+        tipoDocumento: compra.tipo_Documento,
+        codigoUsuario: compra.codigo_Usuario,
+        nombreUsuario: compra.nombre_Completo,
+        nombresProveedor: compra.nombres_Proveedor,
+        apellidosProveedor: compra.apellidos_Proveedor,
+        cedulaProveedor: compra.cedula_Proveedor,
+        nombresTransportista: compra.nombres_Transportista,
+        apellidosTransportista: compra.apellidos_Transportista,
+        cedulaTransportista: compra.cedula_Transportista,
+        totalPagar: compra.monto_Total,
+      });
+
+      this.servicio.obtenerDetalleCompra(compra.id_Compra).subscribe({
+        next: (detalle) => {
+
+          this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
+        },
+        error: (err) => {
+          console.error(err.message);
+          this.mostrarMensaje('Error al obtener el detalle de compra.', 'error');
+        }
+      });
+    },
+    error: (err) => {
+      console.error(err.message);
+      this.mostrarMensaje('Error al obtener compra.', 'error');
     }
-
-    this.servicio.obtener(numeroDocumento).subscribe({
-      next: (compra) => {
-        const fechaFormateada = formatDate(compra.fecha_Compra, 'dd/MM/yyyy', 'en-US');
-        this.compra.patchValue({
-          fecha: fechaFormateada,
-          tipoDocumento: compra.tipoDocumento,
-          codigoUsuario: compra.oUsuario.codigo,
-          nombreUsuario: compra.oUsuario.nombre_Completo,
-          nombresProveedor: compra.oProveedor.nombres,
-          apellidosProveedor: compra.oProveedor.apellidos,
-          cedulaProveedor: compra.oProveedor.cedula,
-          nombresTransportista: compra.oTransportista.nombres,
-          apellidosTransportista: compra.oTransportista.apellidos,
-          cedulaTransportista: compra.oTransportista.cedula,
-          totalPagar: compra.montoTotal,
-        });
-
-        this.dataSource.data = compra.detalleCompra;
-      },
-      error: (err) => {
-        console.error(err.message);
-        this.mostrarMensaje('Error al obtener compra:', 'error');
-      }
-    });
+  });
   }
 
   descargarPDF(){
@@ -112,7 +123,7 @@ export class DetalleCompraComponent {
 
       // Filas de datos 
       const filas = this.dataSource.data.map(item => ({
-        nombre: item.oProducto.nombre,
+        nombre: item.productos,
         cantidad: item.cantidad,
         precio_Compra: `$${item.precio_Venta.toFixed(2)}`,
         precio_Venta: `$${item.precio_Venta.toFixed(2)}`,
