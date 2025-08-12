@@ -21,6 +21,7 @@ import { ICompra } from '../../interfaces/compra';
 import { CompraService } from '../../../services/compra.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from '../../../services/login.service';
+import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
 
 @Component({
   selector: 'app-compra-inicio',
@@ -91,8 +92,10 @@ export class CompraInicioComponent implements OnInit{
   }
 
   obtenerNumeroDocumento() {
-    this.servicioCompra.obtenerNuevoNumeroDocumento().subscribe(response => {
-      this.numeroDocumento = response.numeroDocumento;
+    this.servicioCompra.obtenerNuevoNumeroDocumento().subscribe({
+      next:(resp: any) =>{
+        this.numeroDocumento = resp.data;
+      }
     });
   }
 
@@ -173,11 +176,15 @@ export class CompraInicioComponent implements OnInit{
     this.servicioCompra.registrar(compra).subscribe(response => {
       if (response.isSuccess) {
         this.mostrarMensaje('¡Compra registrada exitosamente!', 'success');
+        this.dialogo.open(DialogoNumeroDocumentoComponent, {
+          width: '400px',
+          data: { numeroDocumento: this.numeroDocumento }
+        });
         this.limpiar();
         this.router.navigate(['/compra']);
 
       } else {
-         this.mostrarMensaje('Error al registrar la compra', 'error');
+        this.mostrarMensaje('Error al registrar la compra', 'error');
           
       }
     });

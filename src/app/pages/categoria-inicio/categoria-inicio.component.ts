@@ -57,8 +57,8 @@ displayedColumns: string[] = [
 
   obtenerCategoria() {
     this.categoriaServicio.lista().subscribe({
-      next: (data) => {
-        this.listaCategoria.data = data;
+      next: (resp: any) => {
+        this.listaCategoria.data = resp.data;
       },
       error: (err) => {
         console.log(err.message);

@@ -105,7 +105,6 @@ export class EditarOfertaComponent implements OnInit{
             descuento: data.descuento,
             estado: data.estado
           });
-          console.log(data);
         }
       },
       error: (err) => {
@@ -117,8 +116,8 @@ export class EditarOfertaComponent implements OnInit{
 
   cargarProductos(): void {
     this.productoServicio.lista().subscribe({
-      next: (productos) => {
-        this.productos = productos;
+      next: (resp: any) => {
+        this.productos = resp.data;
       },
       error: (err) => {
         this.mostrarMensaje('Error al obtener el producto.');

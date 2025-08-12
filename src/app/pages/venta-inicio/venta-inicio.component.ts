@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 import { IVenta } from '../../interfaces/venta';
 import { IDetalleVenta } from '../../interfaces/detalle-venta';
 import { CurrencyPipe } from '@angular/common';
+import { DialogoNumeroDocumentoComponent } from '../../components/dialog/dialogo-numero-documento/dialogo-numero-documento.component';
 
 @Component({
   selector: 'app-venta-inicio',
@@ -97,8 +98,10 @@ export class VentaInicioComponent {
   }
 
   obtenerNumeroDocumento() {
-    this.servicioVenta.obtenerNuevoNumeroDocumento().subscribe(response => {
-      this.numeroDocumento = response.numeroDocumento;
+    this.servicioVenta.obtenerNuevoNumeroDocumento().subscribe({
+      next: (resp: any) =>{
+        this.numeroDocumento = resp.data;
+      }
     });
   }
 
@@ -218,7 +221,7 @@ export class VentaInicioComponent {
       tipo_Documento: this.tipoComprobante,
       monto_Total: this.totalSinDescuento,
       monto_Cambio: this.cambio,
-      monto_Pago: this.pagaCon,
+      monto_Pago: Number(this.pagaCon),
       descuento: this.totalConDescuento,
       detalles: detalles
     };
@@ -226,6 +229,10 @@ export class VentaInicioComponent {
     this.servicioVenta.registrar(venta).subscribe(response => {
       if (response.isSuccess) {
         this.mostrarMensaje('¡Venta registrada exitosamente!', 'success');
+        this.dialogo.open(DialogoNumeroDocumentoComponent, {
+          width: '400px',
+          data: { numeroDocumento: this.numeroDocumento }
+        });
         this.limpiar();
         this.router.navigate(['/venta']);
 

@@ -63,8 +63,8 @@ export class ProveedorInicioComponent implements AfterViewInit{
 
   obtenerProveedor() {
     this.proveedorServicio.lista().subscribe({
-      next: (data) => {
-        this.listaProveedor.data = data;
+      next: (resp: any) => {
+        this.listaProveedor.data = resp.data;
       },
       error: (err) => {
         console.log(err.message);

@@ -60,8 +60,8 @@ export class SucursalInicioComponent implements AfterViewInit{
 
   obtenerSucursal() {
     this.sucursalServicio.lista().subscribe({
-      next: (data) => {
-        this.listaSucursal.data = data;
+      next: (resp: any) => {
+        this.listaSucursal.data = resp.data;
       },
       error: (err) => {
         console.log(err.message);

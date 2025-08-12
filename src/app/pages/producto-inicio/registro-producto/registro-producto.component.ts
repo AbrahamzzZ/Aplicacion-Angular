@@ -91,8 +91,8 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     }
 
     this.categoriaServicio.lista().subscribe({
-      next: (data) => {
-        this.categorias = data;
+      next: (resp: any) => {
+        this.categorias = resp.data;
       },
       error: (err) => {
         console.error('Error al obtener las categorías:', err);

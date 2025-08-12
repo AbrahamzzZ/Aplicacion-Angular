@@ -64,8 +64,9 @@ export class TransportistaInicioComponent implements AfterViewInit{
 
   obtenerTransportista() {
     this.transportistaServicio.lista().subscribe({
-      next: (data) => {
-        this.listaTransportista.data = data.map((transportista) => {
+      next: (resp: any) => {
+        const arr = resp.data ?? [];
+        this.listaTransportista.data = arr.map((transportista: { imagen: string; }) => {
           if (transportista.imagen && typeof transportista.imagen === 'string') {
             transportista.imagen = `data:image/*;base64,${transportista.imagen}`;
           } else {
