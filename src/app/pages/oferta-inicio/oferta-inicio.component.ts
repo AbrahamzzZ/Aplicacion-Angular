@@ -62,8 +62,8 @@ export class OfertaInicioComponent implements AfterViewInit{
 
   obtenerOferta() {
     this.ofertaServicio.lista().subscribe({
-      next: (data) => {
-        this.listaOferta.data = data;
+      next: (resp: any) => {
+        this.listaOferta.data = resp.data;
       },
       error: (err) => {
         console.log(err.message);

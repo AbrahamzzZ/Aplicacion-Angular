@@ -118,8 +118,8 @@ export class ProductoEditarComponent implements OnInit {
 
   cargarCategorias(): void {
     this.categoriaServicio.lista().subscribe({
-      next: (categorias) => {
-        this.categorias = categorias;
+      next: (resp: any) => {
+        this.categorias = resp.data;
       },
       error: (err) => {
         this.mostrarMensaje('Error al cargar las categorías.');

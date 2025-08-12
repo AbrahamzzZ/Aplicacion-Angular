@@ -26,7 +26,7 @@ export class ModalProveedorComponent {
 
   obtenerProveedores() {
     this.proveedorService.lista().subscribe({
-      next: (data) => this.listaProveedores = data,
+      next: (resp: any) => this.listaProveedores = resp.data,
       error: (e) => console.error(e)
     });
   }

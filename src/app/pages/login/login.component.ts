@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit{
       };
         this.loginServicio.login(credenciales).subscribe({
           next: (response: any) => {
-            this.loginServicio.guardarToken(response.token);
+            this.loginServicio.guardarToken(response.data.token);
   
             if(response){
               this.loginServicio.iniciarMonitoreo();

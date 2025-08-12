@@ -27,7 +27,7 @@ export class ModalOfertaComponent {
 
   obtenerOfertas() {
     this.ofertaService.lista().subscribe({
-      next: (data) => this.listaOfertas = data,
+      next: (resp: any) => this.listaOfertas = resp.data,
       error: (e) => console.error(e)
     });
   }

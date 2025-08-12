@@ -62,8 +62,8 @@ export class UsuarioInicioComponent implements AfterViewInit{
 
   obtenerUsuario() {
     this.usuarioServicio.lista().subscribe({
-      next: (data) => {
-        this.listaUsuario.data = data;
+      next: (resp: any) => {
+        this.listaUsuario.data = resp.data;
       },
       error: (err) => {
         console.log(err.message);

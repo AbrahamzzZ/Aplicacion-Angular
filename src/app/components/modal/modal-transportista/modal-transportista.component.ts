@@ -26,7 +26,7 @@ export class ModalTransportistaComponent {
 
   obtenerTransportistas() {
     this.transportistaService.lista().subscribe({
-      next: (data) => this.listaTransportistas = data,
+      next: (resp: any) => this.listaTransportistas = resp.data,
       error: (e) => console.error(e)
     });
   }

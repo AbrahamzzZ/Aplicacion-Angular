@@ -60,8 +60,8 @@ export class ClienteInicioComponent implements AfterViewInit{
 
   obtenerCliente() {
     this.clienteServicio.lista().subscribe({
-      next: (data) => {
-        this.listaCliente.data = data;
+      next: (resp: any) => {
+        this.listaCliente.data = resp.data;
       },
       error: (err) => {
         console.log(err.message);

@@ -75,8 +75,8 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
     }
 
     this.rolServicio.lista().subscribe({
-      next: (data) => {
-        this.roles = data;
+      next: (resp: any) => {
+        this.roles = resp.data;
       },
       error: (err) => {
         console.error('Error al obtener los roles:', err);

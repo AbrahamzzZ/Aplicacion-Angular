@@ -65,8 +65,8 @@ export class ProductoInicioComponent implements AfterViewInit{
 
   obtenerProducto() {
     this.productoServicio.lista().subscribe({
-      next: (data) => {
-        this.listaProducto.data = data;
+      next: (reps: any) => {
+        this.listaProducto.data = reps.data;
       },
       error: (err) => {
         console.log(err.message);

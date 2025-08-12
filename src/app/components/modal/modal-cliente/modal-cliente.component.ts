@@ -25,7 +25,7 @@ export class ModalClienteComponent {
 
   obtenerClientes() {
     this.clienteService.lista().subscribe({
-      next: (data) => this.listaClientes = data,
+      next: (resp: any) => this.listaClientes = resp.data,
       error: (e) => console.error(e)
     });
   }

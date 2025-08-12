@@ -92,8 +92,8 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
     }
 
     this.productoServicio.lista().subscribe({
-      next: (data) => {
-        this.productos = data;
+      next: (resp: any) => {
+        this.productos = resp.data;
       },
       error: (err) => {
         console.error('Error al obtener los productos:', err);

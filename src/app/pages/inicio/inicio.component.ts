@@ -1,13 +1,11 @@
-import { Component, inject, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { OfertaService } from '../../../services/oferta.service';
-import { IOferta } from '../../interfaces/oferta';
 import { Subscription, interval } from 'rxjs';
 import { FormatoFechaPipe } from '../../pipes/formato-fecha.pipe';
 import * as L from 'leaflet';
-import { ISucursal } from '../../interfaces/sucursal';
 import { SucursalService } from '../../../services/sucursal.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
@@ -48,8 +46,8 @@ export class InicioComponent implements OnInit, OnDestroy{
 
   obtenerOfertas() {
     this.ofertaServicio.lista().subscribe({
-      next: (data) => {
-        this.ofertas = data;
+      next: (resp: any) => {
+        this.ofertas = resp.data;
         if (this.ofertas.length > 0) {
           this.iniciarRotacion();
         }
@@ -63,8 +61,8 @@ export class InicioComponent implements OnInit, OnDestroy{
 
   obtenerSucursales(){
     this.sucursalServcio.lista().subscribe({
-      next: (data) =>{
-        this.sucursales = data;
+      next: (resp: any) =>{
+        this.sucursales = resp.data;
         this.marcarSucursalesMapa();
       },
       error: (err) => {

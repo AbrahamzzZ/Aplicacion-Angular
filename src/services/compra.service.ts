@@ -6,8 +6,6 @@ import { IApi } from '../setting/api';
 import { ICompraRepuesta } from '../app/interfaces/Dto/icompra-repuesta';
 import { IDetallesCompra } from '../app/interfaces/Dto/idetalles-compra';
 
-
-
 @Injectable({
   providedIn: 'root'
 })

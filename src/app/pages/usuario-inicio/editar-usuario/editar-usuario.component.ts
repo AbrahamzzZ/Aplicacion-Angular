@@ -76,14 +76,14 @@ export class EditarUsuarioComponent implements OnInit {
 
   cargarUsuario(): void {
     this.usuarioServicio.obtener(this.idUsuario).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp.data) {
           this.formUsuario.patchValue({
-            nombreCompleto: data.nombre_Completo,
-            correoElectronico: data.correo_Electronico,
+            nombreCompleto: resp.data.nombre_Completo,
+            correoElectronico: resp.data.correo_Electronico,
             clave: '',
-            rol: data.id_Rol,
-            estado: data.estado
+            rol: resp.data.id_Rol,
+            estado: resp.data.estado
           });
         }
       },
@@ -96,8 +96,8 @@ export class EditarUsuarioComponent implements OnInit {
 
   cargarRoles(): void {
     this.rolServicio.lista().subscribe({
-      next: (rol) => {
-        this.roles = rol;
+      next: (resp: any) => {
+        this.roles = resp.data;
       },
       error: (err) => {
         this.mostrarMensaje('Error al cargar los roles.', 'error');
