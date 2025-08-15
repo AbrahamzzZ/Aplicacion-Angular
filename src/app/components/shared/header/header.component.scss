@@ -7,72 +7,54 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   flex-wrap: wrap;
 
-  .menu-container {
-    position: relative;
-
-    .menu {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      &__button,
-      &__trigger {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        color: #000;
-
-        mat-icon {
-          margin-right: 4px;
-        }
-      }
-    }
-
-    .menu-dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: #79acde;
-      padding: 10px;
-
-      .menu {
-        flex-direction: column;
-
-        &__button,
-        &__trigger {
-          width: 100%;
-          justify-content: flex-start;
-
-          mat-icon {
-            margin-right: 10px;
-          }
-        }
-      }
-    }
-  }
-
-  &__info-usuario {
+  .container__info-usuario,
+  .menu-container,
+  .container__salir {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center; 
   }
 
-  &__nombre-usuario {
+  .container__nombre-usuario {
     font-size: 16px;
     font-weight: bold;
     color: #000;
     padding: 5px 10px;
+    margin: 0;
   }
 
-  &__salir {
+  .menu {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+    &__button,
+    &__trigger {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      background: none;
+      border: none;
+      font-weight: bold;
+      color: #000;
+
+      mat-icon {
+        margin-right: 4px;
+      }
+    }
+
+  }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+
+    mat-icon {
+      font-size: 32px;
+      color: #000;
+    }
   }
 
   .salir__button {
@@ -90,19 +72,8 @@
       margin: 7px;
     }
   }
-
-  .hamburger {
-    display: none; 
-    background: none;
-    border: none;
-    cursor: pointer;
-
-    mat-icon {
-      font-size: 32px;
-      color: #000;
-    }
-  }
 }
+
 
 @media (max-width: 1024px) {
   .container {
@@ -145,7 +116,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .container {
     flex-direction: column;
     align-items: flex-start;
@@ -156,162 +127,40 @@
 
     .menu-container {
       width: 100%;
-
-      .menu-dropdown {
-        min-width: 240px;
-
-        .menu {
-          &__button,
-          &__trigger {
-            font-size: 14px;
-
-            mat-icon {
-              font-size: 20px;
-            }
-          }
-        }
-      }
     }
 
     .menu {
-      display: none !important;
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      gap: 5px;
     }
 
     .menu--abierto {
       display: flex !important;
-      flex-direction: column;
-      width: 100%;
     }
-  }
-}
 
-/*.container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  background: #79acde;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    .menu__button mat-icon,
+    .menu__trigger mat-icon {
+      font-size: 24px; 
+      min-width: 24px;
+      height: 24px;
+      line-height: 24px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .container__info-usuario {
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    padding: 5px 10px;
-  }
-
-  // Nuevo contenedor para fila inferior con menú y botones
-  .container__menu-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
+    .salir__button {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+      justify-content: flex-start;
 
       mat-icon {
-        font-size: 32px;
-        color: #000;
-      }
-    }
-
-    nav.menu {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-grow: 1;
-      justify-content: center;
-
-      &__button,
-      &__trigger {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        color: #000;
-
-        mat-icon {
-          margin-right: 4px;
-        }
-      }
-    }
-
-    .container__salir {
-      display: flex;
-      align-items: center;
-
-      .salir__button {
-        background: #79acde;
-        width: 50px;
-        height: 50px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        mat-icon {
-          font-size: 26px;
-          margin: 7px;
-        }
+        margin: 0;
+        font-size: 24px;
       }
     }
   }
 }
-
-
-@media (max-width: 768px) {
-  .container__menu-row {
-    .hamburger {
-      display: block;
-    }
-
-    nav.menu {
-      display: none;
-      flex-direction: column;
-      width: 100%;
-      background: #79acde;
-      margin-top: 10px;
-
-      &.menu--abierto {
-        display: flex;
-      }
-
-      &__button,
-      &__trigger {
-        width: 100%;
-        padding: 12px 16px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        justify-content: flex-start;
-        font-size: 14px;
-
-        mat-icon {
-          font-size: 20px;
-          margin-right: 10px;
-        }
-
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .container__menu-row {
-    nav.menu {
-      justify-content: flex-start;
-      gap: 10px;
-      flex-wrap: wrap; // importante para que no desborde
-    }
-  }
-}*/
