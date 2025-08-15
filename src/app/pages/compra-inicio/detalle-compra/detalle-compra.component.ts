@@ -1,4 +1,4 @@
-import { CurrencyPipe, formatDate } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -58,8 +58,8 @@ export class DetalleCompraComponent {
   }
 
   this.servicio.obtener(numeroDocumento).subscribe({
-    next: (compra) => {
-
+    next: (resp: any) => {
+      const compra = resp.data;
       this.compra.patchValue({
         fecha: compra.fecha_Compra,
         tipoDocumento: compra.tipo_Documento,
@@ -92,25 +92,39 @@ export class DetalleCompraComponent {
   });
   }
 
-  descargarPDF(){
+  descargarPDF() {
     const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
     const logoUrl = 'assets/images/logo.png';
     const img = new Image();
     img.src = logoUrl;
 
     img.onload = () => {
-      doc.addImage(img, 'PNG', 10, 10, 30, 30);
+      // Logo centrado
+      doc.addImage(img, 'PNG', (pageWidth - 30) / 2, 10, 30, 30);
 
+      // Título
       doc.setFontSize(16);
-      doc.text('Comprobante de Venta', 50, 20);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Comprobante de Compra', pageWidth / 2, 45, { align: 'center' });
 
-      doc.setFontSize(11);
-      doc.text(`Fecha: ${this.compra.value.fecha}`, 10, 50);
-      doc.text(`Vendedor: ${this.compra.value.nombreUsuario} (Código: ${this.compra.value.codigoUsuario})`, 10, 58);
-      doc.text(`Cliente: ${this.compra.value.nombresProveedor} ${this.compra.value.apellidosProveedor}`, 10, 66);
-      doc.text(`Cédula: ${this.compra.value.cedulaProveedor}`, 10, 72);
-      doc.text(`Cliente: ${this.compra.value.nombresTransportista} ${this.compra.value.apellidosTransportista}`, 10, 66);
-      doc.text(`Cédula: ${this.compra.value.cedulaTransportista}`, 10, 72);
+      // Línea separadora
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.5);
+      doc.line(10, 50, pageWidth - 10, 50);
+
+      // Información de la compra
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+
+      doc.text(`Fecha: ${this.compra.value.fecha}`, 10, 58);
+      doc.text(`Vendedor: ${this.compra.value.nombreUsuario} (Código: ${this.compra.value.codigoUsuario})`, 10, 64);
+
+      doc.text(`Proveedor: ${this.compra.value.nombresProveedor} ${this.compra.value.apellidosProveedor}`, 10, 70);
+      doc.text(`Cédula: ${this.compra.value.cedulaProveedor}`, 10, 76);
+
+      doc.text(`Transportista: ${this.compra.value.nombresTransportista} ${this.compra.value.apellidosTransportista}`, 10, 82);
+      doc.text(`Cédula: ${this.compra.value.cedulaTransportista}`, 10, 88);
 
       // Columnas de la tabla
       const columnas = [
@@ -121,34 +135,42 @@ export class DetalleCompraComponent {
         { header: 'Subtotal', dataKey: 'subTotal' }
       ];
 
-      // Filas de datos 
+      // Filas
       const filas = this.dataSource.data.map(item => ({
         nombre: item.productos,
         cantidad: item.cantidad,
-        precio_Compra: `$${item.precio_Venta.toFixed(2)}`,
+        precio_Compra: `$${item.precio_Compra.toFixed(2)}`,
         precio_Venta: `$${item.precio_Venta.toFixed(2)}`,
-        subTotal: `$${item.subTotal.toFixed(2)}`,
+        subTotal: `$${item.subTotal.toFixed(2)}`
       }));
 
+      // Tabla con estilo
       autoTable(doc, {
         columns: columnas,
         body: filas,
-        startY: 80,
-        styles: { halign: 'center' },
-        columnStyles: {
-          precio_Venta: { halign: 'right' },
-          subTotal: { halign: 'right' },
-          descuento: { halign: 'right' },
-          cantidad: { halign: 'right' }
-        }
+        startY: 95,
+        theme: 'grid',
+        headStyles: { fillColor: [39, 174, 96], textColor: 255, fontSize: 10 },
+        bodyStyles: { fontSize: 9 },
+        alternateRowStyles: { fillColor: [245, 245, 245] },
+        styles: { halign: 'center', cellPadding: 2 }
       });
 
-      // Total general al final
-      const finalY = (doc as any).lastAutoTable.finalY || 80;
+      // Totales
+      const finalY = (doc as any).lastAutoTable.finalY || 95;
+      doc.setFillColor(240, 240, 240);
+      doc.rect(10, finalY + 5, pageWidth - 20, 10, 'F');
 
-      doc.setFontSize(12);
-      doc.text(`Total a pagar: $${parseFloat(this.compra.value.totalPagar).toFixed(2)}`, 10, finalY + 10);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Total a pagar: $${parseFloat(this.compra.value.totalPagar).toFixed(2)}`, 12, finalY + 12);
 
+      // Mensaje final
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'italic');
+      doc.text('Gracias por su preferencia', pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+
+      // Guardar
       doc.save('detalle_compra.pdf');
     };
   }

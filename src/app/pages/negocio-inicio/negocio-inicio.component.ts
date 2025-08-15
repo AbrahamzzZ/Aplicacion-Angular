@@ -52,20 +52,20 @@ export class NegocioInicioComponent {
 
   cargarNegocio(): void{
     this.negocioServicio.obtener(this.idNegocio).subscribe({
-      next: (data) =>{
-        if (data){
+      next: (resp: any) =>{
+        if (resp){
           this.formNegocio.patchValue({
-            id: data.id_Negocio,
-            nombre: data.nombre,
-            telefono: data.telefono,
-            ruc: data.ruc,
-            direccion: data.direccion,
-            correoElectronico: data.correo_Electronico
+            id: resp.data.id_Negocio,
+            nombre: resp.data.nombre,
+            telefono: resp.data.telefono,
+            ruc: resp.data.ruc,
+            direccion: resp.data.direccion,
+            correoElectronico: resp.data.correo_Electronico
           });
 
-          if (data.logo && typeof data.logo === 'string') {
-            this.imagenURL = `data:image/*;base64,${data.logo}`;
-            this.formNegocio.controls.imageBase64.setValue(data.logo);
+          if (resp.data.logo && typeof resp.data.logo === 'string') {
+            this.imagenURL = `data:image/*;base64,${resp.data.logo}`;
+            this.formNegocio.controls.imageBase64.setValue(resp.data.logo);
           } else {
             this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
           }

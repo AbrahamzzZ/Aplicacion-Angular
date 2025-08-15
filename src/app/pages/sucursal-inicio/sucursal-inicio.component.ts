@@ -33,6 +33,7 @@ export class SucursalInicioComponent implements AfterViewInit{
   private sucursalServicio = inject(SucursalService);
   private snackBar = inject(MatSnackBar);
   public listaSucursal = new MatTableDataSource<ISucursalNegocio>();
+  public tituloExcel = 'Sucursales';
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -138,8 +139,8 @@ export class SucursalInicioComponent implements AfterViewInit{
       return;
     }
   
-    Metodos.exportarExcel('Productos', datos, [
-      'ID', 'Código', 'Nombre', 'Direccion', 'Latitud', 
+    Metodos.exportarExcel(this.tituloExcel, datos, [
+      'ID', 'Código', 'Nombres', 'Direccion', 'Latitud', 
       'Longitud', 'Ciudad', 'Estado'
     ]);
     this.mostrarMensaje("Excel generado exitosamente.", "success");

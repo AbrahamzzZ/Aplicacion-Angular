@@ -83,15 +83,15 @@ export class EditarProveedorComponent implements OnInit {
 
   cargarProvedor(): void {
     this.proveedorServicio.obtener(this.idProveedor).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
           this.formProveedor.patchValue({
-            nombres: data.nombres,
-            apellidos: data.apellidos,
-            cedula: data.cedula,
-            telefono: data.telefono,
-            correoElectronico: data.correo_Electronico,
-            estado: data.estado
+            nombres: resp.data.nombres,
+            apellidos: resp.data.apellidos,
+            cedula: resp.data.cedula,
+            telefono: resp.data.telefono,
+            correoElectronico: resp.data.correo_Electronico,
+            estado: resp.data.estado
           });
         }
       },

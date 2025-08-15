@@ -56,7 +56,8 @@ export class DetalleVentaComponent implements OnInit{
     }
 
     this.servicio.obtener(numeroDocumento).subscribe({
-      next: (venta) => {
+      next: (resp: any) => {
+        const venta = resp.data;
         this.venta.patchValue({
           fecha: venta.fecha_Venta,
           tipoDocumento: venta.tipo_Documento,
@@ -88,24 +89,43 @@ export class DetalleVentaComponent implements OnInit{
       }
     });
   }
-
-  descargarPDF(){
+  
+  descargarPDF() {
     const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
     const logoUrl = 'assets/images/logo.png';
     const img = new Image();
     img.src = logoUrl;
 
     img.onload = () => {
-      doc.addImage(img, 'PNG', 10, 10, 30, 30);
+      // Logo centrado
+      doc.addImage(img, 'PNG', (pageWidth - 30) / 2, 10, 30, 30);
 
+      // Nombre de la empresa
       doc.setFontSize(16);
-      doc.text('Comprobante de Venta', 50, 20);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Minimarket Paradisia', pageWidth / 2, 45, { align: 'center' });
 
-      doc.setFontSize(11);
-      doc.text(`Fecha: ${this.venta.value.fecha}`, 10, 50);
-      doc.text(`Vendedor: ${this.venta.value.nombreUsuario} (Código: ${this.venta.value.codigoUsuario})`, 10, 58);
-      doc.text(`Cliente: ${this.venta.value.nombresCliente} ${this.venta.value.apellidosCliente}`, 10, 66);
-      doc.text(`Cédula: ${this.venta.value.cedulaCliente}`, 10, 72);
+      // Subtítulo
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Comprobante de Venta', pageWidth / 2, 53, { align: 'center' });
+
+      // Línea separadora
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.5);
+      doc.line(10, 58, pageWidth - 10, 58);
+
+      // Información de la venta y cliente
+      doc.setFontSize(10);
+      doc.text(`Fecha: ${this.venta.value.fecha}`, 10, 66);
+      doc.text(`Tipo Doc: ${this.venta.value.tipoDocumento}`, 100, 66);
+
+      doc.text(`Vendedor: ${this.venta.value.nombreUsuario}`, 10, 72);
+      doc.text(`Código: ${this.venta.value.codigoUsuario}`, 100, 72);
+
+      doc.text(`Cliente: ${this.venta.value.nombresCliente} ${this.venta.value.apellidosCliente}`, 10, 78);
+      doc.text(`Cédula: ${this.venta.value.cedulaCliente}`, 100, 78);
 
       // Columnas de la tabla
       const columnas = [
@@ -113,39 +133,47 @@ export class DetalleVentaComponent implements OnInit{
         { header: 'Cantidad', dataKey: 'cantidad' },
         { header: 'Precio', dataKey: 'precio_Venta' },
         { header: 'Subtotal', dataKey: 'subTotal' },
-        { header: 'Descuento', dataKey: 'descuento'}
+        { header: 'Descuento', dataKey: 'descuento' }
       ];
 
-      // Filas de datos 
+      // Filas de datos
       const filas = this.dataSource.data.map(item => ({
-        nombre: item.oProducto.nombre,
+        nombre: item.productos,
         cantidad: item.cantidad,
         precio_Venta: `$${item.precio_Venta.toFixed(2)}`,
         subTotal: `$${item.subTotal.toFixed(2)}`,
         descuento: `${item.descuento}%`
       }));
 
+      // Tabla con diseño mejorado
       autoTable(doc, {
         columns: columnas,
         body: filas,
-        startY: 80,
-        styles: { halign: 'center' },
-        columnStyles: {
-          precio_Venta: { halign: 'right' },
-          subTotal: { halign: 'right' },
-          descuento: { halign: 'right' },
-          cantidad: { halign: 'right' }
-        }
+        startY: 85,
+        theme: 'grid',
+        headStyles: { fillColor: [41, 128, 185], textColor: 255, fontSize: 10 },
+        bodyStyles: { fontSize: 9 },
+        alternateRowStyles: { fillColor: [245, 245, 245] },
+        styles: { halign: 'center', cellPadding: 2 },
       });
 
-      // Total general al final
-      const finalY = (doc as any).lastAutoTable.finalY || 80;
+      // Totales en recuadro gris
+      const finalY = (doc as any).lastAutoTable.finalY || 85;
+      doc.setFillColor(240, 240, 240);
+      doc.rect(10, finalY + 5, pageWidth - 20, 20, 'F');
 
-      doc.setFontSize(12);
-      doc.text(`Total a pagar: $${parseFloat(this.venta.value.totalPagar).toFixed(2)}`, 10, finalY + 10);
-      doc.text(`Pagó con: $${parseFloat(this.venta.value.pagaCon).toFixed(2)}`, 10, finalY + 16);
-      doc.text(`Cambio: $${parseFloat(this.venta.value.cambio).toFixed(2)}`, 10, finalY + 22);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Total a pagar: $${parseFloat(this.venta.value.totalPagar).toFixed(2)}`, 12, finalY + 12);
+      doc.text(`Pagó con: $${parseFloat(this.venta.value.pagaCon).toFixed(2)}`, 12, finalY + 18);
+      doc.text(`Cambio: $${parseFloat(this.venta.value.cambio).toFixed(2)}`, 100, finalY + 12);
 
+      // Mensaje final
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'italic');
+      doc.text('¡Gracias por su compra!', pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+
+      // Guardar PDF
       doc.save('detalle_venta.pdf');
     };
   }

@@ -97,15 +97,15 @@ export class ProductoEditarComponent implements OnInit {
 
   cargarProducto(): void {
     this.productoServicio.obtener(this.idProducto).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
 
           this.formProducto.patchValue({
-            nombre: data.nombre_Producto,
-            descripcion: data.descripcion,
-            categoria: data.id_Categoria,
-            paisOrigen: data.pais_Origen,
-            estado: data.estado
+            nombre: resp.data.nombre_Producto,
+            descripcion: resp.data.descripcion,
+            categoria: resp.data.id_Categoria,
+            paisOrigen: resp.data.pais_Origen,
+            estado: resp.data.estado
           });
         }
       },

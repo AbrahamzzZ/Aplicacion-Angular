@@ -84,15 +84,15 @@ export class EditarSucursalComponent implements OnInit{
 
   cargarSucursal(): void {
     this.sucursalServicio.obtener(this.idSucursal).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
           this.formSucursal.patchValue({
-            nombre: data.nombre_Sucursal,
-            direccion: data.direccion_Sucursal,
-            latitud: data.latitud.toString(),
-            longitud: data.longitud.toString(),
-            ciudad: data.ciudad_Sucursal,
-            estado: data.estado
+            nombre: resp.data.nombre_Sucursal,
+            direccion: resp.data.direccion_Sucursal,
+            latitud: resp.data.latitud.toString(),
+            longitud: resp.data.longitud.toString(),
+            ciudad: resp.data.ciudad_Sucursal,
+            estado: resp.data.estado
           });
         }
       },

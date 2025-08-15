@@ -68,11 +68,11 @@ export class EditarCategoriaComponent implements OnInit{
 
   cargarCategoria(): void {
     this.categoriaServicio.obtener(this.idCategoria).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
           this.formCategoria.patchValue({
-            nombre: data.nombre_Categoria,
-            estado: data.estado
+            nombre: resp.data.nombre_Categoria,
+            estado: resp.data.estado
           });
         }
       },

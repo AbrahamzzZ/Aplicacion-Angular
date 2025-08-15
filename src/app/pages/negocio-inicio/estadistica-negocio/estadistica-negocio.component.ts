@@ -53,98 +53,110 @@ export class EstadisticaNegocioComponent {
   public chartPlugins = [];
 
   verEstadisticas1(){
-    this.negocioService.obtenerProductosComprados().subscribe(data => {
-      this.chartData = {
-        labels: data.map(item => item.nombreProducto),
-        datasets: [
-          {
-            data: data.map(item => item.cantidadComprada),
-            label: 'Cantidad Comprada',
-            backgroundColor: this.generarColores(data.length)
-          }
-        ]
-      };
-      this.chartType = 'bar';
+    this.negocioService.obtenerProductosComprados().subscribe({
+      next: (resp: any) =>{
+        this.chartData = {
+          labels: resp.data.map((item: { nombre_Producto: any; }) => item.nombre_Producto),
+          datasets: [
+            {
+              data: resp.data.map((item: { cantidad_Comprada: any; }) => item.cantidad_Comprada),
+              label: 'Cantidad Comprada',
+              backgroundColor: this.generarColores(resp.data.length)
+            }
+          ]
+        };
+        this.chartType = 'bar';
+      } 
     });
   }
 
   verEstadisticas2(){
-    this.negocioService.obtenerProductosVendidos().subscribe(data => {
-      this.chartData = {
-        labels: data.map(item => item.nombreProducto),
-        datasets: [
-          {
-            data: data.map(item => item.cantidadVendida),
-            label: 'Cantidad Vendida',
-            backgroundColor: this.generarColores(data.length)
-          }
-        ]
-      };
-      this.chartType = 'bar';
-    });
+    this.negocioService.obtenerProductosVendidos().subscribe({
+      next: (resp: any) =>{
+        this.chartData = {
+          labels: resp.data.map((item: {nombre_Producto: any; }) => item.nombre_Producto),
+          datasets: [
+            {
+              data: resp.data.map((item: {cantidad_Vendida: any} ) => item.cantidad_Vendida),
+              label: 'Cantidad Vendida',
+              backgroundColor: this.generarColores(resp.data.length)
+            }
+          ]
+        };
+        this.chartType = 'bar';
+        }
+    })
   }
 
   verEstadisticas3(){
-    this.negocioService.obtenerVentaEmpleados().subscribe(data => {
-      this.chartData = {
-        labels: data.map(item => item.nombreCompleto),
-        datasets: [
-          {
-            data: data.map(item => item.ventasRealizadas),
-            label: 'Ventas Realizadas',
-            backgroundColor: this.generarColores(data.length)
-          }
-        ]
-      };
-      this.chartType = 'pie';
+    this.negocioService.obtenerVentaEmpleados().subscribe({
+      next: (resp: any) =>{
+        this.chartData = {
+          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          datasets: [
+            {
+              data: resp.data.map((item: {ventas_Empleado: any;}) => item.ventas_Empleado),
+              label: 'Ventas Realizadas',
+              backgroundColor: this.generarColores(resp.data.length)
+            }
+          ]
+        };
+        this.chartType = 'pie';
+      }
     });
   }
 
   verEstadisticas4(){
-    this.negocioService.obtenerTopClientes().subscribe(data => {
-      this.chartData = {
-        labels: data.map(item => item.nombreCompleto),
-        datasets: [
-          {
-            data: data.map(item => item.cantidadCompras),
-            label: 'Compras Totales',
-            backgroundColor: this.generarColores(data.length)
-          }
-        ]
-      };
-      this.chartType = 'bar';
+    this.negocioService.obtenerTopClientes().subscribe({
+      next: (resp: any) =>{
+        this.chartData = {
+          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          datasets: [
+            {
+              data: resp.data.map((item: {compras_Totales: any;})=> item.compras_Totales),
+              label: 'Ventas Totales',
+              backgroundColor: this.generarColores(resp.data.length)
+            }
+          ]
+        };
+        this.chartType = 'bar';
+      }
     });
   }
 
   verEstadisticas5(){
-    this.negocioService.obtenerProveedorPreferencia().subscribe(data => {
-      this.chartData = {
-        labels: data.map(item => item.nombreCompleto),
-        datasets: [
-          {
-            data: data.map(item => item.comprasTotales),
-            label: 'Compras Totales',
-            backgroundColor: this.generarColores(data.length)
-          }
-        ]
-      };
-      this.chartType = 'pie';
+    this.negocioService.obtenerTopProveedores().subscribe({
+      next: (resp: any) =>{
+        this.chartData = {
+          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          datasets: [
+            {
+              data: resp.data.map((item: {compras_Totales: any;})=> item.compras_Totales),
+              label: 'Compras Totales',
+              backgroundColor: this.generarColores(resp.data.length)
+            }
+          ]
+        };
+        this.chartType = 'bar';
+      }
     });
   }
 
   verEstadisticas6(){
-    this.negocioService.obtenerTransportistaViajesRealizados().subscribe(data => {
-      this.chartData = {
-        labels: data.map(item => item.nombreCompleto),
-        datasets: [
-          {
-            data: data.map(item => item.viajesTotales),
-            label: 'Compras Totales',
-            backgroundColor: this.generarColores(data.length)
-          }
-        ]
-      };
-      this.chartType = 'pie';
+    this.negocioService.obtenerViajesTransportista().subscribe({
+      next: (resp: any) =>{
+        this.chartData = {
+          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          datasets: [
+            {
+              data: resp.data.map((item: {viajes_Realizados: any;}) => item.viajes_Realizados),
+              label: 'Compras Totales',
+              backgroundColor: this.generarColores(resp.data.length)
+            }
+          ]
+        };
+        this.chartType = 'pie';
+        }
     });
   }
 
