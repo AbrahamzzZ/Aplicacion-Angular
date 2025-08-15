@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Validaciones } from '../../../../utility/validaciones';
 import { MatCardModule } from '@angular/material/card';
@@ -82,14 +82,14 @@ export class EditarClienteComponent implements OnInit {
 
   cargarCliente(): void {
     this.clienteServicio.obtener(this.idCliente).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
           this.formCliente.patchValue({
-            nombres: data.nombres,
-            apellidos: data.apellidos,
-            cedula: data.cedula,
-            telefono: data.telefono,
-            correoElectronico: data.correo_Electronico
+            nombres: resp.data.nombres,
+            apellidos: resp.data.apellidos,
+            cedula: resp.data.cedula,
+            telefono: resp.data.telefono,
+            correoElectronico: resp.data.correo_Electronico
           });
         }
       },

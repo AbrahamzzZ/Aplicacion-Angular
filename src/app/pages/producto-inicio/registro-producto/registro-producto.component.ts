@@ -108,10 +108,11 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
       codigo: Metodos.generarCodigo(),
       nombre_Producto: this.formProducto.value.nombre?.trim() ?? '',
       descripcion: this.formProducto.value.descripcion?.trim() ?? '',
-      id_Categoria: categoriaId,
+      id_Categoria: categoriaId ?? 0,
       pais_Origen: this.formProducto.value.paisOrigen?.trim() ?? '',
       estado: this.formProducto.value.estado ?? false
     };
+    console.log(producto);
 
     this.formProducto.markAllAsTouched();
 

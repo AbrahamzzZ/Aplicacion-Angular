@@ -91,20 +91,20 @@ export class EditarTransportistaComponent implements OnInit {
 
   cargarTransportista(): void {
     this.transportistaServicio.obtener(this.idTransportista).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
           this.formTransportista.patchValue({
-            nombres: data.nombres,
-            apellidos: data.apellidos,
-            cedula: data.cedula,
-            telefono: data.telefono,
-            correoElectronico: data.correo_Electronico,
-            estado: data.estado
+            nombres: resp.data.nombres,
+            apellidos: resp.data.apellidos,
+            cedula: resp.data.cedula,
+            telefono: resp.data.telefono,
+            correoElectronico: resp.data.correo_Electronico,
+            estado: resp.data.estado
           });
 
-          if (data.imagen && typeof data.imagen === 'string') {
-            this.imagenURL = `data:image/*;base64,${data.imagen}`;
-            this.formTransportista.controls.imageBase64.setValue(data.imagen);
+          if (resp.data.imagen && typeof resp.data.imagen === 'string') {
+            this.imagenURL = `data:image/*;base64,${resp.data.imagen}`;
+            this.formTransportista.controls.imageBase64.setValue(resp.data.imagen);
           } else {
             this.imagenURL = '../assets/images/default-avatar.jpg'; // Imagen por defecto
           }

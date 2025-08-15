@@ -94,16 +94,16 @@ export class EditarOfertaComponent implements OnInit{
 
   cargarOferta(): void {
     this.ofertaServicio.obtener(this.idOferta).subscribe({
-      next: (data) => {
-        if (data) {
+      next: (resp: any) => {
+        if (resp) {
           this.formOferta.patchValue({
-            nombre: data.nombre_Oferta,
-            producto: data.id_Producto,
-            descripcion: data.descripcion,
-            fechaInicio: data.fecha_Inicio? new Date(data.fecha_Inicio) : undefined,
-            fechaFin: data.fecha_Fin? new Date(data.fecha_Fin) : undefined,
-            descuento: data.descuento,
-            estado: data.estado
+            nombre: resp.data.nombre_Oferta,
+            producto: resp.data.id_Producto,
+            descripcion: resp.data.descripcion,
+            fechaInicio: resp.data.fecha_Inicio? new Date(resp.data.fecha_Inicio) : undefined,
+            fechaFin: resp.data.fecha_Fin? new Date(resp.data.fecha_Fin) : undefined,
+            descuento: resp.data.descuento,
+            estado: resp.data.estado
           });
         }
       },

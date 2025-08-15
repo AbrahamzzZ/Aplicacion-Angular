@@ -1,134 +1,101 @@
 <div class="venta">
   <h1 class="venta__titulo">Detalle de la Venta</h1>
-</div>
 
-<div class="venta__contenedor">
-  <mat-card class="venta__formulario" [formGroup]="venta">
-    
-    <!-- Buscador -->
-    <div class="venta__busqueda">
-      <mat-form-field class="venta__busqueda-input" appearance="outline">
-        <mat-label>Buscar venta</mat-label>
-        <input
-          matInput
-          #searchInput
-          (keyup)="filtrarVenta(searchInput.value)"
-          placeholder="Ingrese un número de documento."
-        />
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+  <div class="venta__contenedor">
+    <mat-card class="venta__formulario" [formGroup]="venta">
 
-      @if(mensajeBusqueda){
-      <div class="venta__busqueda-mensaje">
-        <mat-icon color="warn">error</mat-icon>
-        <span class="venta__mensaje-error">{{ mensajeBusqueda }}</span>
+      <!-- Buscador -->
+      <div class="venta__busqueda">
+        <mat-form-field class="venta__busqueda-input" appearance="outline">
+          <mat-label>Buscar venta</mat-label>
+          <input
+            matInput
+            #searchInput
+            (keyup)="filtrarVenta(searchInput.value)"
+            placeholder="Ingrese un número de documento."
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        @if(mensajeBusqueda){
+        <div class="venta__busqueda-mensaje">
+          <mat-icon color="warn">error</mat-icon>
+          <span class="venta__mensaje-error">{{ mensajeBusqueda }}</span>
+        </div>
+        }
       </div>
-      }
-    </div>
 
-    <!-- Sección: Datos de la venta -->
-    <div class="venta__seccion venta__seccion--datos">
-      
-      <!-- Grupo: Fecha y tipo de documento -->
-      <div class="venta__grupo venta__grupo--fecha-comprobante">
-        <div class="venta__contenedor-grupo">
+      <!-- Sección: Datos + Cliente + Totales -->
+      <div class="venta__seccion">
+
+        <!-- Grupo: Datos -->
+        <div class="venta__grupo venta__grupo--datos">
           <mat-form-field appearance="outline">
             <mat-label>Fecha</mat-label>
             <input matInput formControlName="fecha" readonly />
           </mat-form-field>
-
           <mat-form-field appearance="outline">
             <mat-label>Tipo Documento</mat-label>
             <input matInput formControlName="tipoDocumento" readonly />
           </mat-form-field>
-
           <mat-form-field appearance="outline">
-              <mat-label>Código</mat-label>
-              <input matInput formControlName="codigoUsuario" readonly />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Usuario</mat-label>
-              <input matInput formControlName="nombreUsuario" readonly />
-            </mat-form-field>
-
-          <button class="venta__boton venta__boton--limpiar" mat-raised-button color="warn" (click)="limpiar()">
-            <mat-icon>cleaning_services</mat-icon>
-            Limpiar
+            <mat-label>Código</mat-label>
+            <input matInput formControlName="codigoUsuario" readonly />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Usuario</mat-label>
+            <input matInput formControlName="nombreUsuario" readonly />
+          </mat-form-field>
+          <button mat-raised-button color="warn" (click)="limpiar()">
+            <mat-icon>cleaning_services</mat-icon> Limpiar
           </button>
         </div>
-      </div>
 
-      <!-- Grupo: Usuario y Cliente -->
-      <div class="venta__grupo venta__grupo--usuario-cliente">
-        
-        <!-- Subgrupo: Usuario -->
-        <!--<div class="venta__subgrupo venta__subgrupo--usuario">
-          <div class="venta__contenedor-grupo">
-
-          </div>
-        </div>-->
-
-        <!-- Subgrupo: Cliente -->
-        <div class="venta__subgrupo venta__subgrupo--cliente">
-          <div class="venta__contenedor-grupo">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombres</mat-label>
-              <input matInput formControlName="nombresCliente" readonly />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Apellidos</mat-label>
-              <input matInput formControlName="apellidosCliente" readonly />
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-              <mat-label>Cédula</mat-label>
-              <input matInput formControlName="cedulaCliente" readonly />
-            </mat-form-field>
-          </div>
+        <!-- Grupo: Cliente -->
+        <div class="venta__grupo venta__grupo--cliente">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="nombresCliente" readonly />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="apellidosCliente" readonly />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cédula</mat-label>
+            <input matInput formControlName="cedulaCliente" readonly />
+          </mat-form-field>
         </div>
 
-      </div>
-    </div>
-
-    <!-- Sección: Productos -->
-    <div class="venta__seccion venta__seccion--productos">
-      
-      <!-- Totales y PDF -->
-      <div class="venta__totales">
-        <div class="venta__contenedor-grupo">
+        <!-- Grupo: Totales -->
+        <div class="venta__grupo venta__grupo--totales">
           <mat-form-field appearance="outline">
             <mat-label>Total a Pagar</mat-label>
             <input matInput formControlName="totalPagar" readonly />
           </mat-form-field>
-
           <mat-form-field appearance="outline">
             <mat-label>Con descuento</mat-label>
             <input matInput formControlName="conDescuento" readonly />
           </mat-form-field>
-
           <mat-form-field appearance="outline">
             <mat-label>Paga con</mat-label>
             <input matInput formControlName="pagaCon" readonly />
           </mat-form-field>
-
           <mat-form-field appearance="outline">
             <mat-label>Cambio</mat-label>
             <input matInput formControlName="cambio" readonly />
           </mat-form-field>
-
-          <button class="venta__boton venta__boton--descargar" mat-raised-button color="accent" (click)="descargarPDF()">
-            <mat-icon>add_circle</mat-icon>
-            Descargar PDF
+          <button mat-raised-button color="accent" (click)="descargarPDF()">
+            <mat-icon>add_circle</mat-icon> Descargar PDF
           </button>
         </div>
+
       </div>
 
       <!-- Tabla de productos -->
       <div class="venta__tabla">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          
+
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let element">{{ element.id_Producto }}</td>
@@ -163,6 +130,7 @@
           <tr mat-row *matRowDef="let row; columns: columnasTabla;"></tr>
         </table>
       </div>
-    </div>
-  </mat-card>
+
+    </mat-card>
+  </div>
 </div>

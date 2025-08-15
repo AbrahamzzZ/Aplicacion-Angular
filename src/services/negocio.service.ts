@@ -30,20 +30,20 @@ export class NegocioService {
     return this.http.get<ProductoMasComprado[]>(`${this.apiUrl}/producto-mas-comprado`);
   }
 
-  obtenerProveedorPreferencia(){
-    return this.http.get<ProveedorPreferido[]>(`${this.apiUrl}/proveedor-preferido`);
-  }
-
-  obtenerTransportistaViajesRealizados(){
-    return this.http.get<TransportistaViaje[]>(`${this.apiUrl}/transportista-viajes-realizados`);
-  }
-
   obtenerProductosVendidos(){
     return this.http.get<ProductoMasVendido[]>(`${this.apiUrl}/producto-mas-vendido`);
   }
 
   obtenerTopClientes(){
     return this.http.get<TopClientes[]>(`${this.apiUrl}/top-clientes`);
+  }
+
+  obtenerTopProveedores(){
+    return this.http.get<ProveedorPreferido[]>(`${this.apiUrl}/top-proveedores`);
+  }
+
+  obtenerViajesTransportista(){
+    return this.http.get<TransportistaViaje[]>(`${this.apiUrl}/viajes-transportista`);
   }
 
   obtenerVentaEmpleados(){

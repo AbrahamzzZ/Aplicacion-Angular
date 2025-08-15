@@ -130,7 +130,6 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
           this.router.navigate(['/oferta'], { skipLocationChange: true });
           this.mostrarMensaje('¡Oferta registrado exitosamente!', 'success');
         }
-        console.log(data);
       },
       error: (err: HttpErrorResponse) => {
         console.log('Error 400:', err.error);
