@@ -1,37 +1,35 @@
 <div class="compra">
   <h1 class="compra__titulo">Detalle de la Compra</h1>
-</div>
 
-<div class="compra__contenedor">
-  <mat-card class="compra__formulario" [formGroup]="compra">
-    
-    <!-- Buscador -->
-    <div class="compra__busqueda">
-      <mat-form-field class="compra__busqueda-input" appearance="outline">
-        <mat-label>Buscar compra</mat-label>
-        <input
-          matInput
-          #searchInput
-          (keyup)="filtrarCompra(searchInput.value)"
-          placeholder="Ingrese un número de documento."
-        />
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-
-      @if(mensajeBusqueda){
-      <div class="compra__busqueda-mensaje">
-        <mat-icon color="warn">error</mat-icon>
-        <span class="compra__mensaje-error">{{ mensajeBusqueda }}</span>
-      </div>
-      }
-    </div>
-
-    <!-- Sección: Datos de la compra -->
-    <div class="compra__seccion compra__seccion--datos">
+  <div class="compra__contenedor">
+    <mat-card class="compra__formulario" [formGroup]="compra">
       
-      <!-- Grupo: Fecha y tipo de documento -->
-      <div class="compra__grupo compra__grupo--fecha-comprobante">
-        <div class="compra__contenedor-grupo">
+      <!-- Buscador -->
+      <div class="compra__busqueda">
+        <mat-form-field class="compra__busqueda-input" appearance="outline">
+          <mat-label>Buscar compra</mat-label>
+          <input
+            matInput
+            #searchInput
+            (keyup)="filtrarCompra(searchInput.value)"
+            placeholder="Ingrese un número de documento."
+          />
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        @if(mensajeBusqueda){
+        <div class="compra__busqueda-mensaje">
+          <mat-icon color="warn">error</mat-icon>
+          <span class="compra__mensaje-error">{{ mensajeBusqueda }}</span>
+        </div>
+        }
+      </div>
+
+      <!-- Sección: Datos + Proveedor + Transportista + Totales -->
+      <div class="compra__seccion">
+        
+        <!-- Grupo: Datos -->
+        <div class="compra__grupo compra__grupo--datos">
           <mat-form-field appearance="outline">
             <mat-label>Fecha</mat-label>
             <input matInput formControlName="fecha" readonly />
@@ -57,62 +55,46 @@
             Limpiar
           </button>
         </div>
-      </div>
 
-      <!-- Grupo: Proveedor y Transportista-->
-      <div class="compra__grupo compra__grupo--proveedor-transportista">
-        
-        <!-- Subgrupo: Proveedor -->
-        <div class="compra__subgrupo compra__subgrupo--proveedor">
-          <div class="compra__contenedor-grupo">
+        <!-- Grupo: Proveedor -->
+        <div class="compra__grupo compra__grupo--proveedor">
 
-            <mat-form-field appearance="outline">
-              <mat-label>Nombres</mat-label>
-              <input matInput formControlName="nombresProveedor" readonly />
-            </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="nombresProveedor" readonly />
+          </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Apellidos</mat-label>
-              <input matInput formControlName="apellidosProveedor" readonly />
-            </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="apellidosProveedor" readonly />
+          </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Cédula</mat-label>
-              <input matInput formControlName="cedulaProveedor" readonly />
-            </mat-form-field>
-          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Cédula</mat-label>
+            <input matInput formControlName="cedulaProveedor" readonly />
+          </mat-form-field>
         </div>
 
-        <!-- Subgrupo: Transportista -->
-        <div class="compra__subgrupo compra__subgrupo--transportista
-">
-          <div class="compra__contenedor-grupo">
-            <mat-form-field appearance="outline">
-              <mat-label>Nombres</mat-label>
-              <input matInput formControlName="nombresTransportista" readonly />
-            </mat-form-field>
+        <!-- Grupo: Transportista -->
+        <div class="compra__grupo compra__grupo--transportista">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput formControlName="nombresTransportista" readonly />
+          </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Apellidos</mat-label>
-              <input matInput formControlName="apellidosTransportista" readonly />
-            </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="apellidosTransportista" readonly />
+          </mat-form-field>
 
-            <mat-form-field appearance="outline">
-              <mat-label>Cédula</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-label>Cédula</mat-label>
               <input matInput formControlName="cedulaTransportista" readonly />
             </mat-form-field>
           </div>
-        </div>
 
-      </div>
-    </div>
-
-    <!-- Sección: Productos -->
-    <div class="compra__seccion compra__seccion--productos">
-      
-      <!-- Total y PDF -->
-      <div class="compra__totales">
-        <div class="compra__contenedor-grupo">
+        <!-- Grupo: Totales -->
+        <div class="compra__grupo compra__grupo--totales">
           <mat-form-field appearance="outline">
             <mat-label>Total a Pagar</mat-label>
             <input matInput formControlName="totalPagar" readonly />
@@ -120,49 +102,52 @@
 
           <button class="compra__boton compra__boton--descargar" mat-raised-button color="accent" (click)="descargarPDF()">
             <mat-icon>add_circle</mat-icon>
-            Descargar PDF
-          </button>
+              Descargar PDF
+            </button>
         </div>
       </div>
+      
 
-      <!-- Tabla de productos -->
-      <div class="compra__tabla">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id_Producto }}</td>
-          </ng-container>
+        <!-- Tabla de productos -->
+        <div class="compra__tabla">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.id_Producto }}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef>Nombre</th>
-            <td mat-cell *matCellDef="let element">{{ element.productos }}</td>
-          </ng-container>
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let element">{{ element.productos }}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="precio_Compra">
-            <th mat-header-cell *matHeaderCellDef>Precio Compra</th>
-            <td mat-cell *matCellDef="let element">{{ element.precio_Compra | currency:'USD':'symbol' }}</td>
-          </ng-container>
+            <ng-container matColumnDef="precio_Compra">
+              <th mat-header-cell *matHeaderCellDef>Precio Compra</th>
+              <td mat-cell *matCellDef="let element">{{ element.precio_Compra | currency:'USD':'symbol' }}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="precio_Venta">
-            <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
-            <td mat-cell *matCellDef="let element">{{ element.precio_Venta | currency:'USD':'symbol' }}</td>
-          </ng-container>
+            <ng-container matColumnDef="precio_Venta">
+              <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
+              <td mat-cell *matCellDef="let element">{{ element.precio_Venta | currency:'USD':'symbol' }}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-            <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
-          </ng-container>
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+              <td mat-cell *matCellDef="let element">{{ element.cantidad }}</td>
+            </ng-container>
 
-          <ng-container matColumnDef="subTotal">
-            <th mat-header-cell *matHeaderCellDef>Subtotal</th>
-            <td mat-cell *matCellDef="let element">{{ element.subTotal | currency:'USD':'symbol' }}</td>
-          </ng-container>
+            <ng-container matColumnDef="subTotal">
+              <th mat-header-cell *matHeaderCellDef>Subtotal</th>
+              <td mat-cell *matCellDef="let element">{{ element.subTotal | currency:'USD':'symbol' }}</td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnasTabla;"></tr>
-        </table>
-      </div>
-    </div>
-  </mat-card>
+            <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnasTabla;"></tr>
+          </table>  
+        </div>
+
+    </mat-card>
+  </div>
 </div>
+

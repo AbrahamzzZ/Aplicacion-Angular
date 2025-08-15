@@ -3,31 +3,28 @@
     <span class="container__nombre-usuario">{{ nombreUsuario }}</span>
   </div>
 
-  <!-- Ícono hamburguesa solo en móviles -->
   <button class="hamburger" (click)="menuAbierto = !menuAbierto">
     <mat-icon>{{ menuAbierto ? 'close' : 'menu' }}</mat-icon>
   </button>
 
-  <!-- Menú principal -->
-  <nav [ngClass]="{ 'menu': true, 'menu--abierto': menuAbierto }">
-    <button mat-icon-button routerLink="/home" class="menu__button">
-      <mat-icon class="menu__icon">home</mat-icon>
-    </button>
+  <div class="menu-container">
+    <nav [ngClass]="{ 'menu': true, 'menu--abierto': menuAbierto }">
+      <button mat-icon-button routerLink="/home" class="menu__button">
+        <mat-icon class="menu__icon">home</mat-icon>
+      </button>
 
-    @for (menu of menus; track $index) {
-      <ng-container>
-        <button mat-button [routerLink]="menu.urlMenu" class="menu__trigger">
-          <mat-icon>{{ menu.nombreIcono }}</mat-icon>
-          {{ menu.nombreMenu }}
-        </button>
-      </ng-container>
-    }
-  </nav>
+      @for (menu of menus; track $index) {
+        <ng-container>
+          <button mat-button [routerLink]="menu.urlMenu" class="menu__trigger">
+            <mat-icon>{{ menu.nombreIcono }}</mat-icon>
+            {{ menu.nombreMenu }}
+          </button>
+        </ng-container>
+      }
 
-  <!-- Boton Salir-->
-  <span class="container__salir">
-    <button (click)="cerrarSesion()" class="salir__button">
-      <mat-icon>exit_to_app</mat-icon>
-    </button>
-  </span>
+      <button (click)="cerrarSesion()" class="salir__button">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </nav>
+  </div>
 </div>
