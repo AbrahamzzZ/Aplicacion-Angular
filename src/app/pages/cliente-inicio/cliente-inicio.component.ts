@@ -33,6 +33,8 @@ export class ClienteInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaCliente = new MatTableDataSource<ICliente>();
   public tituloExcel = 'Clientes';
+  public totalRegistros = 0;
+  public pageSize = 5;
   displayedColumns: string[] = [
     'id',
     'codigo',
@@ -49,23 +51,30 @@ export class ClienteInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerCliente();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaCliente.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerClientes(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaCliente.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerClientes(1, this.pageSize);
   }
 
-  obtenerCliente() {
-    this.clienteServicio.lista().subscribe({
+  obtenerClientes(pageNumber: number, pageSize: number) {
+    this.clienteServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        this.listaCliente.data = resp.data;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaCliente.data = arr.map((cl: ICliente) => {
+          return cl;
+        });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -82,7 +91,7 @@ export class ClienteInicioComponent implements AfterViewInit{
         this.clienteServicio.eliminar(cliente.id_Cliente).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerCliente();
+              this.obtenerClientes(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Cliente eliminado correctamente.', 'success');
             }
           },

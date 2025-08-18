@@ -35,6 +35,8 @@ export class ProveedorInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaProveedor = new MatTableDataSource<IProveedor>();
   public tituloExcel = 'Proveedores';
+  public totalRegistros = 0;
+  public pageSize = 5;
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -52,23 +54,30 @@ export class ProveedorInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerProveedor();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaProveedor.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerProveedores(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaProveedor.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerProveedores(1, this.pageSize);
   }
 
-  obtenerProveedor() {
-    this.proveedorServicio.lista().subscribe({
+  obtenerProveedores(pageNumber: number, pageSize: number) {
+    this.proveedorServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        this.listaProveedor.data = resp.data;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaProveedor.data = arr.map((c: IProveedor) => {
+          return c;
+        });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -85,7 +94,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
         this.proveedorServicio.eliminar(proveedor.id_Proveedor).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerProveedor();
+              this.obtenerProveedores(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Proveedor eliminado correctamente.', 'success');
             }
           },

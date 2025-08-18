@@ -17,6 +17,13 @@ export class OfertaService {
   lista() {
     return this.http.get<IOfertaProducto[]>(this.apiUrl);
   }
+
+  listaPaginada(pageNumber: number, pageSize: number) {
+    return this.http.get<{
+      data: IOferta[],
+      totalCount: number
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
   
   obtener(id: number) {
     return this.http.get<IOferta>(`${this.apiUrl}/${id}`);

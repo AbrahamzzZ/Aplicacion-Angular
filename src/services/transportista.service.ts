@@ -15,6 +15,13 @@ export class TransportistaService {
     return this.http.get<ITransportista[]>(this.apiUrl);
   }
 
+  listaPaginada(pageNumber: number, pageSize: number) {
+    return this.http.get<{
+      data: ITransportista[],
+      totalCount: number
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+
   obtener(id: number) {
     return this.http.get<ITransportista>(`${this.apiUrl}/${id}`);
   }

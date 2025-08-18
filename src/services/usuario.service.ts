@@ -18,6 +18,13 @@ export class UsuarioService {
     return this.http.get<IUsuarioRol[]>(this.apiUrl);
   }
 
+  listaPaginada(pageNumber: number, pageSize: number) {
+    return this.http.get<{
+      data: IUsuario[],
+      totalCount: number
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+
   obtener(id: number) {
     return this.http.get<IUsuarioRol>(`${this.apiUrl}/${id}`);
   }

@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../utility/metodos';
 import { ISucursalNegocio } from '../../interfaces/Dto/sucursal-negocio';
+import { ISucursal } from '../../interfaces/sucursal';
 
 @Component({
   selector: 'app-sucursal-inicio',
@@ -34,6 +35,8 @@ export class SucursalInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaSucursal = new MatTableDataSource<ISucursalNegocio>();
   public tituloExcel = 'Sucursales';
+  public totalRegistros = 0;
+  public pageSize = 5;
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -50,23 +53,30 @@ export class SucursalInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerSucursal();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaSucursal.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerSucursales(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaSucursal.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerSucursales(1, this.pageSize);
   }
 
-  obtenerSucursal() {
-    this.sucursalServicio.lista().subscribe({
+  obtenerSucursales(pageNumber: number, pageSize: number) {
+    this.sucursalServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        this.listaSucursal.data = resp.data;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaSucursal.data = arr.map((c: ISucursal) => {
+          return c;
+        });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -83,7 +93,7 @@ export class SucursalInicioComponent implements AfterViewInit{
         this.sucursalServicio.eliminar(sucursal.id_Sucursal).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerSucursal();
+              this.obtenerSucursales(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Sucursal eliminada correctamente.', 'success');
             }
           },
