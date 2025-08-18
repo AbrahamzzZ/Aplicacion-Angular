@@ -35,6 +35,8 @@ export class UsuarioInicioComponent implements AfterViewInit{
   private usuarioServicio = inject(UsuarioService);
   private snackBar = inject(MatSnackBar);
   public listaUsuario = new MatTableDataSource<IUsuarioRol>();
+  public totalRegistros = 0;
+  public pageSize = 5;
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -51,23 +53,30 @@ export class UsuarioInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerUsuario();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaUsuario.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerUsuarios(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaUsuario.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerUsuarios(1, this.pageSize);
   }
 
-  obtenerUsuario() {
-    this.usuarioServicio.lista().subscribe({
+  obtenerUsuarios(pageNumber: number, pageSize: number) {
+    this.usuarioServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        this.listaUsuario.data = resp.data;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaUsuario.data = arr.map((u: IUsuario) => {
+          return u;
+        });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -82,7 +91,7 @@ export class UsuarioInicioComponent implements AfterViewInit{
         this.usuarioServicio.eliminar(usuario.id_Usuario).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerUsuario();
+              this.obtenerUsuarios(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Usuario eliminado correctamente.', 'success');
             }
           },

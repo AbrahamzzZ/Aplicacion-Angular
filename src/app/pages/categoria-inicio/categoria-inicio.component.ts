@@ -33,7 +33,9 @@ export class CategoriaInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaCategoria = new MatTableDataSource<ICategoria>();
   public tituloExcel = 'Categorías';
-displayedColumns: string[] = [
+  public totalRegistros = 0;
+  public pageSize = 5;
+  displayedColumns: string[] = [
     'idCategoria',
     'codigo',
     'nombreCategoria',
@@ -46,23 +48,31 @@ displayedColumns: string[] = [
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerCategoria();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaCategoria.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerCategorias(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaCategoria.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerCategorias(1, this.pageSize);
   }
 
-  obtenerCategoria() {
-    this.categoriaServicio.lista().subscribe({
+  obtenerCategorias(pageNumber: number, pageSize: number) {
+    this.categoriaServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        this.listaCategoria.data = resp.data;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaCategoria.data = arr.map((c: ICategoria) => {
+          return c;
+        });
+        console.log(this.totalRegistros);
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -79,7 +89,7 @@ displayedColumns: string[] = [
         this.categoriaServicio.eliminar(categoria.id_Categoria).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerCategoria();
+              this.obtenerCategorias(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Categoría eliminado correctamente.', 'success');
             }
           },

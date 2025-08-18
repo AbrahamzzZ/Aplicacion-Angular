@@ -117,8 +117,8 @@
     </table>
 
     <mat-paginator
-      [length]="listaTransportista.data.length"
-      [pageSize]="5"
+      [length]="totalRegistros"
+      [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons>
     </mat-paginator>

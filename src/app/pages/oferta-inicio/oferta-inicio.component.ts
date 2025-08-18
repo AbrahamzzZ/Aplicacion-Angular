@@ -34,6 +34,8 @@ export class OfertaInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaOferta = new MatTableDataSource<IOfertaProducto>();
   public tituloExcel = 'Ofertas';
+  public totalRegistros = 0;
+  public pageSize = 5;
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -51,23 +53,30 @@ export class OfertaInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerOferta();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaOferta.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerOfertas(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaOferta.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerOfertas(1, this.pageSize);
   }
 
-  obtenerOferta() {
-    this.ofertaServicio.lista().subscribe({
+  obtenerOfertas(pageNumber: number, pageSize: number) {
+    this.ofertaServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        this.listaOferta.data = resp.data;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaOferta.data = arr.map((c: IOferta) => {
+          return c;
+        });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -84,7 +93,7 @@ export class OfertaInicioComponent implements AfterViewInit{
         this.ofertaServicio.eliminar(oferta.id_Oferta).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerOferta();
+              this.obtenerOfertas(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Oferta eliminado correctamente.', 'success');
             }
           },

@@ -35,6 +35,8 @@ export class TransportistaInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaTransportista = new MatTableDataSource<ITransportista>();
   public tituloExcel = 'Transportistas';
+  public totalRegistros = 0;
+  public pageSize = 5;
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -53,31 +55,36 @@ export class TransportistaInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerTransportista();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaTransportista.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerTransportistas(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaTransportista.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerTransportistas(1, this.pageSize);
   }
 
-  obtenerTransportista() {
-    this.transportistaServicio.lista().subscribe({
+  obtenerTransportistas(pageNumber: number, pageSize: number) {
+    this.transportistaServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data ?? [];
-        this.listaTransportista.data = arr.map((transportista: { imagen: string; }) => {
-          if (transportista.imagen && typeof transportista.imagen === 'string') {
-            transportista.imagen = `data:image/*;base64,${transportista.imagen}`;
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+
+        this.listaTransportista.data = arr.map((t: ITransportista) => {
+          if (t.imagen && typeof t.imagen === 'string') {
+            t.imagen = `data:image/*;base64,${t.imagen}`;
           } else {
-            transportista.imagen = 'assets/images/default-avatar.jpg'; // Imagen por defecto si no hay foto
+            t.imagen = 'assets/images/default-avatar.jpg';
           }
-          return transportista;
+          return t;
         });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -94,7 +101,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
         this.transportistaServicio.eliminar(transportista.id_Transportista).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerTransportista();
+              this.obtenerTransportistas(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Transportista eliminado correctamente.', 'success');
             }
           },

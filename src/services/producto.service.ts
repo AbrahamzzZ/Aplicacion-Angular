@@ -18,6 +18,13 @@ export class ProductoService {
     return this.http.get<IProductoCategoria[]>(this.apiUrl);
   }
 
+  listaPaginada(pageNumber: number, pageSize: number) {
+    return this.http.get<{
+      data: IProducto[],
+      totalCount: number
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+
   obtener(id: number) {
     return this.http.get<IProductoRespuesta>(`${this.apiUrl}/${id}`);
   }

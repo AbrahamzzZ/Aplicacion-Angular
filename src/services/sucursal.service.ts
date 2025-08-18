@@ -18,6 +18,13 @@ export class SucursalService {
     return this.http.get<ISucursalNegocio[]>(this.apiUrl);
   }
 
+  listaPaginada(pageNumber: number, pageSize: number) {
+    return this.http.get<{
+      data: ISucursal[],
+      totalCount: number
+    }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+  }
+
   obtener(id: number) {
     return this.http.get<ISucursalNegocio>(`${this.apiUrl}/${id}`);
   }

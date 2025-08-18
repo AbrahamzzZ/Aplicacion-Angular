@@ -36,6 +36,8 @@ export class ProductoInicioComponent implements AfterViewInit{
   private snackBar = inject(MatSnackBar);
   public listaProducto = new MatTableDataSource<IProductoCategoria>();
   public tituloExcel = 'Productos';
+  public totalRegistros = 0;
+  public pageSize = 5;
   public displayedColumns: string[] = [
     'id',
     'codigo',
@@ -54,23 +56,30 @@ export class ProductoInicioComponent implements AfterViewInit{
     private router: Router,
     private dialog: MatDialog
   ) {
-    this.obtenerProducto();
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.listaProducto.paginator = this.paginator;
+    this.paginator.page.subscribe(() => {
+      this.obtenerProductos(this.paginator.pageIndex + 1, this.paginator.pageSize);
+      if (this.listaProducto.data.length === 0 && this.paginator.hasPreviousPage()) {
+        this.paginator.previousPage();
+      }
+    });
+    this.obtenerProductos(1, this.pageSize);
   }
 
-  obtenerProducto() {
-    this.productoServicio.lista().subscribe({
-      next: (reps: any) => {
-        this.listaProducto.data = reps.data;
+  obtenerProductos(pageNumber: number, pageSize: number) {
+    this.productoServicio.listaPaginada(pageNumber, pageSize).subscribe({
+      next: (resp: any) => {
+        const arr = resp.data.items ?? []; 
+        this.totalRegistros = resp.data.totalCount; 
+        this.listaProducto.data = arr.map((c: IProducto) => {
+          return c;
+        });
       },
-      error: (err) => {
-        console.log(err.message);
-      }
+      error: (err) => console.error(err.message)
     });
   }
 
@@ -85,7 +94,7 @@ export class ProductoInicioComponent implements AfterViewInit{
         this.productoServicio.eliminar(producto.id_Producto).subscribe({
           next: (data) => {
             if (data.isSuccess) {
-              this.obtenerProducto();
+              this.obtenerProductos(this.paginator.pageIndex + 1, this.paginator.pageSize);
               this.mostrarMensaje('Producto eliminado correctamente.', 'success');
             }
           },
