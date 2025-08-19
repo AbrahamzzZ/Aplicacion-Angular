@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { ICliente } from '../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { NgIf } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-modal-cliente',
   standalone: true,
-  imports: [MatTableModule, MatIcon],
+  imports: [MatTableModule, MatIcon, MatLabel, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule],
   templateUrl: './modal-cliente.component.html',
   styleUrl: './modal-cliente.component.scss'
 })
 export class ModalClienteComponent {
-  listaClientes: ICliente[] = [];
+  dataSource = new MatTableDataSource<ICliente>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'accion'];
+  filtro: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<ModalClienteComponent>,
@@ -25,9 +31,32 @@ export class ModalClienteComponent {
 
   obtenerClientes() {
     this.clienteService.lista().subscribe({
-      next: (resp: any) => this.listaClientes = resp.data,
+      next: (resp: any) => {
+        this.dataSource.data = resp.data;
+
+        this.dataSource.filterPredicate = (data: ICliente, filter: string) => {
+          const termino = filter.trim().toLowerCase();
+          return (
+            data.nombres.toLowerCase().includes(termino) ||
+            data.apellidos.toLowerCase().includes(termino) ||
+            data.cedula.toLowerCase().includes(termino)
+          );
+        };
+      },
       error: (e) => console.error(e)
     });
+  }
+
+  aplicarFiltro(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.filtro = value;
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
+
+  limpiarFiltro(input: HTMLInputElement) {
+    input.value = '';
+    this.filtro = '';
+    this.dataSource.filter = '';
   }
 
   seleccionarCliente(cliente: ICliente) {

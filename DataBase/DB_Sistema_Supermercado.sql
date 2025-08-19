@@ -308,66 +308,16 @@ CREATE PROCEDURE PA_EDITAR_USUARIO(
 )
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @EsAdminActual BIT;
-    DECLARE @RolActual INT;
-    DECLARE @EstadoActual BIT;
-    DECLARE @TotalAdmins INT;
-
-    SELECT  @RolActual = u.ID_ROL, @EstadoActual = u.ESTADO FROM USUARIO u
-    WHERE u.ID_USUARIO = @Id_Usuario;
-
-    IF EXISTS (
-        SELECT 1 FROM USUARIO u
-        INNER JOIN ROL r ON u.ID_ROL = r.ID_ROL
-        WHERE u.ID_USUARIO = @Id_Usuario AND r.NOMBRE = 'Administrador' AND u.ESTADO = 1
-    )
-    BEGIN
-        SELECT @TotalAdmins = COUNT(*) FROM USUARIO u
-        INNER JOIN ROL r ON u.ID_ROL = r.ID_ROL
-        WHERE r.NOMBRE = 'Administrador' AND u.ESTADO = 1;
-
-        IF @TotalAdmins <= 1 AND (
-            @Estado = 0 OR @Id_Rol <> @RolActual
-        )
-        BEGIN
-            RAISERROR('No se puede modificar al único administrador activo para dejarlo sin rol o inactivo.', 16, 1);
-            RETURN;
-        END
-    END
-
-    UPDATE USUARIO SET NOMBRE_COMPLETO = @Nombre_Completo, CORREO_ELECTRONICO = @Correo_Electronico, CLAVE = @Clave, ID_ROL = @Id_Rol, ESTADO = @Estado
-    WHERE ID_USUARIO = @Id_Usuario;
+    UPDATE USUARIO SET NOMBRE_COMPLETO = @Nombre_Completo, CORREO_ELECTRONICO = @Correo_Electronico, CLAVE = @Clave, ID_ROL = @Id_Rol, ESTADO = @Estado WHERE ID_USUARIO = @Id_Usuario;
 END;
 GO
 
-CREATE PROCEDURE PA_ELIMINAR_USUARIO(
+CREATE  PROCEDURE PA_ELIMINAR_USUARIO(
 @Id_Usuario int
 )
 AS
 BEGIN
     SET NOCOUNT ON;
-
-    IF EXISTS (
-        SELECT 1 FROM USUARIO u
-        INNER JOIN ROL r ON u.ID_ROL = r.ID_ROL
-        WHERE u.ID_USUARIO = @Id_Usuario AND r.NOMBRE = 'Administrador' AND u.ESTADO = 1
-    )
-    BEGIN
-
-        DECLARE @TotalAdmins INT;
-        SELECT @TotalAdmins = COUNT(*)
-        FROM USUARIO u
-        INNER JOIN ROL r ON u.ID_ROL = r.ID_ROL
-        WHERE r.NOMBRE = 'Administrador' AND u.ESTADO = 1;
-
-        IF @TotalAdmins <= 1
-        BEGIN
-            RAISERROR('No se puede eliminar al único administrador activo.', 16, 1);
-            RETURN;
-        END
-    END
 
     DELETE FROM USUARIO WHERE ID_USUARIO = @Id_Usuario;
 END;

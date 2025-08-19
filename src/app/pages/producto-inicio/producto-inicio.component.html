@@ -118,7 +118,7 @@
     </mat-paginator>
 
     <!-- Mensaje cuando no hay datos -->
-    @if (listaProducto.data.length === 0) {
+    @if (listaProducto.filteredData.length === 0) {
       <div class="container__message">
         <mat-icon class="container__message__icon">info_outline</mat-icon>
         <span class="container__message__text">No hay productos que mostrar.</span>

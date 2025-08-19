@@ -1,22 +1,26 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IOferta } from '../../../interfaces/oferta';
 import { OfertaService } from '../../../../services/oferta.service';
 import { MatIcon } from '@angular/material/icon';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { IOfertaProducto } from '../../../interfaces/Dto/ioferta-producto';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-modal-oferta',
   standalone: true,
-  imports: [MatTableModule, MatIcon, NgClass],
+  imports: [MatTableModule, MatIcon, MatLabel, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule, NgClass],
   templateUrl: './modal-oferta.component.html',
   styleUrl: './modal-oferta.component.scss'
 })
 export class ModalOfertaComponent {
-  listaOfertas: IOfertaProducto[] = [];
+  dataSource = new MatTableDataSource<IOfertaProducto>([]);
   columnas: string[] = ['id', 'codigo', 'nombre', 'producto', 'estado', 'accion'];
+  filtro: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<ModalOfertaComponent>,
@@ -27,9 +31,32 @@ export class ModalOfertaComponent {
 
   obtenerOfertas() {
     this.ofertaService.lista().subscribe({
-      next: (resp: any) => this.listaOfertas = resp.data,
+      next: (resp: any) => {
+        this.dataSource.data = resp.data;
+
+        this.dataSource.filterPredicate = (data: IOfertaProducto, filter: string) => {
+          const termino = filter.trim().toLowerCase();
+          return (
+            data.nombre_Oferta.toLowerCase().includes(termino) ||
+            data.nombre_Producto.toLowerCase().includes(termino) ||
+            data.codigo.toLowerCase().includes(termino)
+          );
+        };
+      },
       error: (e) => console.error(e)
     });
+  }
+
+  aplicarFiltro(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.filtro = value;
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
+
+  limpiarFiltro(input: HTMLInputElement) {
+    input.value = '';
+    this.filtro = '';
+    this.dataSource.filter = '';
   }
 
   seleccionarOferta(oferta: IOferta) {
