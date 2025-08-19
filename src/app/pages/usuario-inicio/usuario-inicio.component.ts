@@ -14,6 +14,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../../utility/metodos';
 import { IUsuarioRol } from '../../interfaces/Dto/iusuario-rol';
+import { IApi } from '../../../setting/api';
 
 @Component({
   selector: 'app-usuario-inicio',

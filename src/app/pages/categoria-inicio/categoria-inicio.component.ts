@@ -24,7 +24,7 @@ import { NgClass } from '@angular/common';
       MatInputModule,
       RouterOutlet,
       NgClass,
-    MatPaginatorModule],
+      MatPaginatorModule],
   templateUrl: './categoria-inicio.component.html',
   styleUrl: './categoria-inicio.component.scss'
 })
@@ -70,7 +70,6 @@ export class CategoriaInicioComponent implements AfterViewInit{
         this.listaCategoria.data = arr.map((c: ICategoria) => {
           return c;
         });
-        console.log(this.totalRegistros);
       },
       error: (err) => console.error(err.message)
     });
