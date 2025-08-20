@@ -17,7 +17,12 @@
         <mat-icon>person_add</mat-icon> Registrar transportista
       </button>
 
-      <button class="container__excel__button" mat-raised-button color="accent" (click)="exportarExcel()">
+      <button
+        class="container__excel__button"
+        mat-raised-button
+        color="accent"
+        (click)="exportarExcel()"
+      >
         <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
       </button>
     </div>
@@ -26,7 +31,9 @@
       <!-- No. -->
       <ng-container matColumnDef="id">
         <th class="table__header" mat-header-cell *matHeaderCellDef>No.</th>
-        <td class="table__cell" mat-cell *matCellDef="let element">{{ element.id_Transportista }}</td>
+        <td class="table__cell" mat-cell *matCellDef="let element">
+          {{ element.id_Transportista }}
+        </td>
       </ng-container>
 
       <!-- Código -->
@@ -120,7 +127,8 @@
       [length]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons>
+      showFirstLastButtons
+    >
     </mat-paginator>
 
     <!-- Mensaje cuando no hay datos -->

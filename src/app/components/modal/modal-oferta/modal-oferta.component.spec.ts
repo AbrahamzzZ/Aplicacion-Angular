@@ -9,9 +9,8 @@ describe('ModalOfertaComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ModalOfertaComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ModalOfertaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

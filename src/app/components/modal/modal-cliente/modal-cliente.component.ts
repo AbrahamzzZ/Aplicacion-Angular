@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ICliente } from '../../../interfaces/cliente';
 import { ClienteService } from '../../../../services/cliente.service';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -13,18 +13,26 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-modal-cliente',
   standalone: true,
-  imports: [MatTableModule, MatIcon, MatLabel, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule],
+  imports: [
+    MatTableModule,
+    MatIcon,
+    MatLabel,
+    MatFormFieldModule,
+    NgIf,
+    MatButtonModule,
+    MatInputModule
+  ],
   templateUrl: './modal-cliente.component.html',
   styleUrl: './modal-cliente.component.scss'
 })
 export class ModalClienteComponent {
+  private clienteService = inject(ClienteService);
+  private dialogRef = inject(MatDialogRef<ModalClienteComponent>);
   dataSource = new MatTableDataSource<ICliente>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'accion'];
-  filtro: string = '';
+  filtro = '';
 
   constructor(
-    private dialogRef: MatDialogRef<ModalClienteComponent>,
-    private clienteService: ClienteService
   ) {
     this.obtenerClientes();
   }

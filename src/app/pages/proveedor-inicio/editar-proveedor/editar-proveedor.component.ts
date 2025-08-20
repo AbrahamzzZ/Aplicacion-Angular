@@ -30,6 +30,7 @@ export class EditarProveedorComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   idProveedor!: number;
 
   public formProveedor = this.formBuilder.nonNullable.group({
@@ -63,14 +64,12 @@ export class EditarProveedorComponent implements OnInit {
     const camposConDatos = camposEditables.some(
       (campo) => this.formProveedor.get(campo)?.value !== ''
     );
-  
+
     if (camposConDatos) {
       e.preventDefault();
-      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -140,7 +139,7 @@ export class EditarProveedorComponent implements OnInit {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -148,7 +147,6 @@ export class EditarProveedorComponent implements OnInit {
       panelClass: [className]
     });
   }
-
 
   get nombresField(): FormControl<string> {
     return this.formProveedor.controls.nombres;

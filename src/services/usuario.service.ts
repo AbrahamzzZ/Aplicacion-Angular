@@ -12,16 +12,14 @@ export class UsuarioService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Usuario';
 
-  constructor() {}
-
   lista() {
     return this.http.get<IUsuarioRol[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: IUsuario[],
-      totalCount: number
+      data: IUsuario[];
+      totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 

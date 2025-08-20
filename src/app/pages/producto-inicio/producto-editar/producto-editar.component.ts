@@ -1,10 +1,5 @@
 import { Component, HostListener, inject, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -37,10 +32,11 @@ import { ICategoria } from '../../../interfaces/categoria';
 export class ProductoEditarComponent implements OnInit {
   private productoServicio = inject(ProductoService);
   private categoriaServicio = inject(CategoriaService);
-  public categorias:ICategoria [] = [];
+  public categorias: ICategoria[] = [];
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuild = inject(FormBuilder);
+  private router = inject(Router);
   idProducto!: number;
 
   public formProducto = this.formBuild.nonNullable.group({
@@ -67,23 +63,18 @@ export class ProductoEditarComponent implements OnInit {
     estado: [false]
   });
 
-    @HostListener('window:beforeunload', ['$event'])
-    onBeforeReload(e: BeforeUnloadEvent) {
-      const camposEditables = ['nombre',
-      'descripcion',
-      'categoria',
-      'paisOrigen'];
-      const camposConDatos = camposEditables.some(
-        (campo) => this.formProducto.get(campo)?.value !== ''
-      );
-    
-      if (camposConDatos) {
-        e.preventDefault();
-        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
-      }
-    }  
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombre', 'descripcion', 'categoria', 'paisOrigen'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formProducto.get(campo)?.value !== ''
+    );
 
-  constructor(private router: Router) {}
+    if (camposConDatos) {
+      e.preventDefault();
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+    }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -99,7 +90,6 @@ export class ProductoEditarComponent implements OnInit {
     this.productoServicio.obtener(this.idProducto).subscribe({
       next: (resp: any) => {
         if (resp) {
-
           this.formProducto.patchValue({
             nombre: resp.data.nombre_Producto,
             descripcion: resp.data.descripcion,
@@ -167,7 +157,7 @@ export class ProductoEditarComponent implements OnInit {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

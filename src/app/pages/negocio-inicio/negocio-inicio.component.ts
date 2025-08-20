@@ -1,5 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,13 +22,23 @@ import { Validaciones } from '../../../utility/validaciones';
 @Component({
   selector: 'app-negocio-inicio',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule, MatCardModule, MatSelectModule, FormsModule, MatFormFieldModule, MatInputModule, MatIcon],
+  imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIcon
+  ],
   templateUrl: './negocio-inicio.component.html',
   styleUrl: './negocio-inicio.component.scss'
 })
 export class NegocioInicioComponent {
   public idNegocio = 1;
   public negocio!: FormGroup;
+  private router = inject(Router);
   private snackBar = inject(MatSnackBar);
   private activatedRoute = inject(ActivatedRoute);
   private negocioServicio = inject(NegocioService);
@@ -39,21 +56,19 @@ export class NegocioInicioComponent {
     imagen: ['']
   });
 
-  constructor(private router: Router){}
-
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) =>{
+    this.activatedRoute.params.subscribe((params) => {
       this.idNegocio = 1;
-      if (this.idNegocio){
+      if (this.idNegocio) {
         this.cargarNegocio();
       }
     });
   }
 
-  cargarNegocio(): void{
+  cargarNegocio(): void {
     this.negocioServicio.obtener(this.idNegocio).subscribe({
-      next: (resp: any) =>{
-        if (resp){
+      next: (resp: any) => {
+        if (resp) {
           this.formNegocio.patchValue({
             id: resp.data.id_Negocio,
             nombre: resp.data.nombre,
@@ -71,7 +86,7 @@ export class NegocioInicioComponent {
           }
         }
       },
-      error: (err) =>{
+      error: (err) => {
         this.mostrarMensaje('Error al obtener la información del negocio.');
         console.error(err);
       }
@@ -102,7 +117,6 @@ export class NegocioInicioComponent {
     }
 
     this.negocioServicio.editar(negocio).subscribe({
-      
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/negocio/1']);
@@ -111,7 +125,7 @@ export class NegocioInicioComponent {
       },
       error: (err) => {
         console.error(err);
-        this.mostrarMensaje('Error al editar la información del Negocio', 'error');      
+        this.mostrarMensaje('Error al editar la información del Negocio', 'error');
       }
     });
   }
@@ -139,7 +153,7 @@ export class NegocioInicioComponent {
     this.imagenURL = '';
   }
 
-  verEstadistica(){
+  verEstadistica() {
     this.router.navigate(['/negocio/1/estadistica']);
   }
 
@@ -149,7 +163,7 @@ export class NegocioInicioComponent {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

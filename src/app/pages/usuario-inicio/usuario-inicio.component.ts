@@ -14,7 +14,6 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { NgClass } from '@angular/common';
 import { Metodos } from '../../../utility/metodos';
 import { IUsuarioRol } from '../../interfaces/Dto/iusuario-rol';
-import { IApi } from '../../../setting/api/api';
 
 @Component({
   selector: 'app-usuario-inicio',
@@ -32,9 +31,11 @@ import { IApi } from '../../../setting/api/api';
   templateUrl: './usuario-inicio.component.html',
   styleUrl: './usuario-inicio.component.scss'
 })
-export class UsuarioInicioComponent implements AfterViewInit{
+export class UsuarioInicioComponent implements AfterViewInit {
   private usuarioServicio = inject(UsuarioService);
   private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   public listaUsuario = new MatTableDataSource<IUsuarioRol>();
   public totalRegistros = 0;
   public pageSize = 5;
@@ -49,12 +50,6 @@ export class UsuarioInicioComponent implements AfterViewInit{
     'accion'
   ];
   public tituloExcel = 'Usuarios';
-
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -71,8 +66,8 @@ export class UsuarioInicioComponent implements AfterViewInit{
   obtenerUsuarios(pageNumber: number, pageSize: number) {
     this.usuarioServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaUsuario.data = arr.map((u: IUsuario) => {
           return u;
         });
@@ -115,7 +110,7 @@ export class UsuarioInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -132,7 +127,7 @@ export class UsuarioInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaUsuario.data.map(usuario => ({
+    const datos = this.listaUsuario.data.map((usuario) => ({
       ID: usuario.id_Usuario,
       Código: usuario.codigo,
       'Nombre Completo': usuario.nombre_Completo,
@@ -143,14 +138,20 @@ export class UsuarioInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombre Completo', 'Correo Electronico', 'Rol', 'Estado', 'Fecha Creacion'
+      'ID',
+      'Código',
+      'Nombre Completo',
+      'Correo Electronico',
+      'Rol',
+      'Estado',
+      'Fecha Creacion'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

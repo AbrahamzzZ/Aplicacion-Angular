@@ -9,9 +9,8 @@ describe('DialogoNumeroDocumentoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DialogoNumeroDocumentoComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DialogoNumeroDocumentoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

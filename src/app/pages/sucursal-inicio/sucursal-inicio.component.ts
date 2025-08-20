@@ -18,7 +18,7 @@ import { ISucursal } from '../../interfaces/sucursal';
 @Component({
   selector: 'app-sucursal-inicio',
   standalone: true,
-  imports: [    
+  imports: [
     MatTableModule,
     MatButtonModule,
     MatIcon,
@@ -26,11 +26,14 @@ import { ISucursal } from '../../interfaces/sucursal';
     MatInputModule,
     RouterOutlet,
     NgClass,
-    MatPaginatorModule],
+    MatPaginatorModule
+  ],
   templateUrl: './sucursal-inicio.component.html',
   styleUrl: './sucursal-inicio.component.scss'
 })
-export class SucursalInicioComponent implements AfterViewInit{
+export class SucursalInicioComponent implements AfterViewInit {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   private sucursalServicio = inject(SucursalService);
   private snackBar = inject(MatSnackBar);
   public listaSucursal = new MatTableDataSource<ISucursalNegocio>();
@@ -49,12 +52,6 @@ export class SucursalInicioComponent implements AfterViewInit{
     'accion'
   ];
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -70,8 +67,8 @@ export class SucursalInicioComponent implements AfterViewInit{
   obtenerSucursales(pageNumber: number, pageSize: number) {
     this.sucursalServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaSucursal.data = arr.map((c: ISucursal) => {
           return c;
         });
@@ -116,7 +113,7 @@ export class SucursalInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -133,7 +130,7 @@ export class SucursalInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaSucursal.data.map(sucursal => ({
+    const datos = this.listaSucursal.data.map((sucursal) => ({
       ID: sucursal.id_Sucursal,
       Código: sucursal.codigo,
       Nombres: sucursal.nombre_Sucursal,
@@ -145,15 +142,21 @@ export class SucursalInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombres', 'Direccion', 'Latitud', 
-      'Longitud', 'Ciudad', 'Estado'
+      'ID',
+      'Código',
+      'Nombres',
+      'Direccion',
+      'Latitud',
+      'Longitud',
+      'Ciudad',
+      'Estado'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

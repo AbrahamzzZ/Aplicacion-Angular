@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IProveedor } from '../../../interfaces/proveedor';
-import { MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ProveedorService } from '../../../../services/proveedor.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
@@ -12,18 +12,26 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-modal-proveedor',
   standalone: true,
-  imports: [MatTableModule, MatIcon, NgClass, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule],
+  imports: [
+    MatTableModule,
+    MatIcon,
+    NgClass,
+    MatFormFieldModule,
+    NgIf,
+    MatButtonModule,
+    MatInputModule
+  ],
   templateUrl: './modal-proveedor.component.html',
   styleUrl: './modal-proveedor.component.scss'
 })
 export class ModalProveedorComponent {
+  private proveedorService = inject(ProveedorService);
+  private dialogRef = inject(MatDialogRef<ModalProveedorComponent>);
   dataSource = new MatTableDataSource<IProveedor>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'estado', 'accion'];
-  filtro: string = '';
+  filtro = '';
 
   constructor(
-    private dialogRef: MatDialogRef<ModalProveedorComponent>,
-    private proveedorService: ProveedorService
   ) {
     this.obtenerProveedores();
   }

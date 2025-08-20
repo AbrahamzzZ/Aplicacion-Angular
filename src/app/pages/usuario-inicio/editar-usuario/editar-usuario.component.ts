@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -32,10 +32,11 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 export class EditarUsuarioComponent implements OnInit {
   private usuarioServicio = inject(UsuarioService);
   private rolServicio = inject(RolService);
-  public roles:IRol [] = [];
+  public roles: IRol[] = [];
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   idUsuario!: number;
 
   formUsuario = this.formBuilder.nonNullable.group({
@@ -43,7 +44,7 @@ export class EditarUsuarioComponent implements OnInit {
       '',
       [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]
     ],
-    clave: ['', [ Validaciones.formatoClave()]],
+    clave: ['', [Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     rol: [0, [Validators.required, Validaciones.rolRequerido()]],
     estado: [false]
@@ -61,8 +62,6 @@ export class EditarUsuarioComponent implements OnInit {
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -146,7 +145,7 @@ export class EditarUsuarioComponent implements OnInit {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

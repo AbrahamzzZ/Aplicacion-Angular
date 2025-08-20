@@ -13,7 +13,7 @@
 
         <mat-form-field class="form__field">
           <mat-label>Nombre: </mat-label>
-          <input matInput type="text" formControlName="nombre" maxlength="30" minlength="4"/>
+          <input matInput type="text" formControlName="nombre" maxlength="30" minlength="4" />
           @if (nombreField.hasError('required')) {
             <mat-error class="form__error">Ingrese un nombre.</mat-error>
           } @else if (nombreField.hasError('minlength')) {
@@ -30,29 +30,35 @@
           <textarea matInput formControlName="descripcion" maxlength="50" minlength="4"></textarea>
           @if (descripcionField.hasError('required')) {
             <mat-error class="form__error">Ingrese una descripción.</mat-error>
-          }@else if (descripcionField.hasError('minlength')) {
+          } @else if (descripcionField.hasError('minlength')) {
             <mat-error class="form__error">Descripción demasiada corta.</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field class="form__field">
           <mat-label>Seleccione una categoría</mat-label>
-          <mat-select 
-            disableRipple 
+          <mat-select
+            disableRipple
             formControlName="categoria"
-            (selectionChange)="categoriaSeleccionada($event)">
+            (selectionChange)="categoriaSeleccionada($event)"
+          >
             @for (categoria of categorias; track $index) {
-              <mat-option [value]="categoria.id_Categoria">{{ categoria.nombre_Categoria }}</mat-option>
+              <mat-option [value]="categoria.id_Categoria">{{
+                categoria.nombre_Categoria
+              }}</mat-option>
             }
           </mat-select>
-          @if(categoriaSeleccionadaField.hasError('required') || categoriaSeleccionadaField.hasError('categoriaInvalida')){
+          @if (
+            categoriaSeleccionadaField.hasError('required') ||
+            categoriaSeleccionadaField.hasError('categoriaInvalida')
+          ) {
             <mat-error class="form__error">Debe seleccionar una categoría.</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field class="form__field">
           <mat-label>País de origen: </mat-label>
-          <input matInput type="text" formControlName="paisOrigen" maxlength="30" minlength="3"/>
+          <input matInput type="text" formControlName="paisOrigen" maxlength="30" minlength="3" />
           @if (paisOrigenField.hasError('required')) {
             <mat-error class="form__error">Ingrese un país.</mat-error>
           } @else if (paisOrigenField.hasError('minlength')) {
@@ -73,7 +79,13 @@
         >
           Registrar
         </button>
-        <button class="form__button" mat-raised-button color="primary" type="button" (click)="regresar()">
+        <button
+          class="form__button"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="regresar()"
+        >
           Regresar
         </button>
       </form>

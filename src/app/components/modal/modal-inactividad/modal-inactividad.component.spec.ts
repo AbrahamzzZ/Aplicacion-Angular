@@ -9,9 +9,8 @@ describe('ModalInactividadComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ModalInactividadComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ModalInactividadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

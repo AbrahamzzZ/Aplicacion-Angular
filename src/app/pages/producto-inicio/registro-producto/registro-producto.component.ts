@@ -38,9 +38,10 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
   private route = inject(ActivatedRoute);
   private productoServicio = inject(ProductoService);
   private categoriaServicio = inject(CategoriaService);
-  public categorias:ICategoria [] = [];
+  public categorias: ICategoria[] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
 
   public formProducto = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -67,23 +68,18 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
     estado: [false]
   });
 
-    @HostListener('window:beforeunload', ['$event'])
-    onBeforeReload(e: BeforeUnloadEvent) {
-      const camposEditables = ['nombre',
-      'descripcion',
-      'categoria',
-      'paisOrigen'];
-      const camposConDatos = camposEditables.some(
-        (campo) => this.formProducto.get(campo)?.value !== ''
-      );
-    
-      if (camposConDatos) {
-        e.preventDefault();
-        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
-      }
-    }
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombre', 'descripcion', 'categoria', 'paisOrigen'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formProducto.get(campo)?.value !== ''
+    );
 
-  constructor(private router: Router) {}
+    if (camposConDatos) {
+      e.preventDefault();
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+    }
+  }
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -146,7 +142,7 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -156,11 +152,7 @@ export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
   }
 
   canDeactive(): boolean | Observable<boolean> {
-    const camposEditables = [
-      'nombre',
-      'descripcion',
-      'paisOrigen'
-    ];
+    const camposEditables = ['nombre', 'descripcion', 'paisOrigen'];
     const camposVacios = camposEditables.some(
       (campo) => this.formProducto.get(campo)?.value === ''
     );

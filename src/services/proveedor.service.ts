@@ -11,16 +11,14 @@ export class ProveedorService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Proveedor';
 
-  constructor() {}
-
   lista() {
     return this.http.get<IProveedor[]>(this.apiUrl);
   }
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: IProveedor[],
-      totalCount: number
+      data: IProveedor[];
+      totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 

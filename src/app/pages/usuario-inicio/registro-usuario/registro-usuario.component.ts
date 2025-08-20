@@ -38,9 +38,10 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
   private route = inject(ActivatedRoute);
   private usuarioServicio = inject(UsuarioService);
   private rolServicio = inject(RolService);
-  public roles:IRol [] = [];
+  public roles: IRol[] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
 
   public formUsuario = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -66,8 +67,6 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -130,7 +129,7 @@ export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

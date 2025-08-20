@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-editar-categoria',
   standalone: true,
-  imports: [    
+  imports: [
     MatCardModule,
     MatInput,
     MatFormFieldModule,
@@ -27,7 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './editar-categoria.component.html',
   styleUrl: './editar-categoria.component.scss'
 })
-export class EditarCategoriaComponent implements OnInit{
+export class EditarCategoriaComponent implements OnInit {
   private categoriaServicio = inject(CategoriaService);
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
@@ -35,10 +35,7 @@ export class EditarCategoriaComponent implements OnInit{
   idCategoria!: number;
 
   formCategoria = this.formBuilder.nonNullable.group({
-    nombre: [
-      '',
-      [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]
-    ],
+    nombre: ['', [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]],
     estado: [false]
   });
 
@@ -117,7 +114,7 @@ export class EditarCategoriaComponent implements OnInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

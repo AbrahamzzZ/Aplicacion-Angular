@@ -1,70 +1,58 @@
 import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
- import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
- import { MatButton } from '@angular/material/button';
- import { MatCardModule } from '@angular/material/card';
- import { MatCheckboxModule } from '@angular/material/checkbox';
- import { MatFormFieldModule } from '@angular/material/form-field';
- import { MatInput } from '@angular/material/input';
- import { ActivatedRoute, Router } from '@angular/router';
- import { OfertaService } from '../../../../services/oferta.service';
- import { MatSnackBar } from '@angular/material/snack-bar';
- import { Metodos } from '../../../../utility/metodos';
- import { Validaciones } from '../../../../utility/validaciones';
- import { IOferta } from '../../../interfaces/oferta';
- import { HttpErrorResponse } from '@angular/common/http';
- import { Observable } from 'rxjs';
- import { MatSelectChange, MatSelectModule } from '@angular/material/select';
- import { MatDatepickerModule } from '@angular/material/datepicker';
- import { ProductoService } from '../../../../services/producto.service';
- import { IProducto } from '../../../interfaces/producto';
- import { MatNativeDateModule } from '@angular/material/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OfertaService } from '../../../../services/oferta.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Metodos } from '../../../../utility/metodos';
+import { Validaciones } from '../../../../utility/validaciones';
+import { IOferta } from '../../../interfaces/oferta';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ProductoService } from '../../../../services/producto.service';
+import { IProducto } from '../../../interfaces/producto';
+import { MatNativeDateModule } from '@angular/material/core';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 
- @Component({
+@Component({
   selector: 'app-registro-oferta',
   standalone: true,
-  imports: [ MatCardModule,
-      MatInput,
-      MatFormFieldModule,
-      MatButton,
-      MatCheckboxModule,
-      MatSelectModule,
-      MatDatepickerModule,
-      ReactiveFormsModule, 
-      MatNativeDateModule],
+  imports: [
+    MatCardModule,
+    MatInput,
+    MatFormFieldModule,
+    MatButton,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule
+  ],
   templateUrl: './registro-oferta.component.html',
   styleUrl: './registro-oferta.component.scss'
 })
-
-export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
+export class RegistroOfertaComponent implements OnInit, CanComponentDeactive {
   @Input('id') idOferta!: number;
   private route = inject(ActivatedRoute);
   private ofertaServicio = inject(OfertaService);
   private productoServicio = inject(ProductoService);
-  public productos:IProducto [] = [];
+  public productos: IProducto[] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   public oferta!: IOferta;
 
   public formOferta = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombre: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30)
-      ]
-    ],
+    nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
     producto: [0, [Validators.required, Validaciones.productoRequerido()]],
-    descripcion: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(250),
-      ]
-    ],
+    descripcion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(250)]],
     fechaInicio: [new Date(), [Validators.required]],
     fechaFin: [new Date(), [Validators.required, Validaciones.fechaFinValida(new Date())]],
     descuento: [0, [Validators.required, Validators.max(100), Validators.min(1)]],
@@ -77,14 +65,12 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
     const camposConDatos = camposEditables.some(
       (campo) => this.formOferta.get(campo)?.value !== ''
     );
-  
+
     if (camposConDatos) {
       e.preventDefault();
-      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -103,15 +89,19 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
 
   registrarOferta() {
     const productoId = this.formOferta.value.producto;
-    
+
     const oferta: IOferta = {
       id_Oferta: this.idOferta || 0,
       codigo: Metodos.generarCodigo(),
       nombre_Oferta: this.formOferta.value.nombre?.trim() ?? '',
       id_Producto: productoId ?? 0,
       descripcion: this.formOferta.value.descripcion?.trim() ?? '',
-      fecha_Inicio: this.formOferta.value.fechaInicio? this.formOferta.value.fechaInicio.toISOString().split('T')[0] : '',
-      fecha_Fin: this.formOferta.value.fechaFin? this.formOferta.value.fechaFin.toISOString().split('T')[0] : '',
+      fecha_Inicio: this.formOferta.value.fechaInicio
+        ? this.formOferta.value.fechaInicio.toISOString().split('T')[0]
+        : '',
+      fecha_Fin: this.formOferta.value.fechaFin
+        ? this.formOferta.value.fechaFin.toISOString().split('T')[0]
+        : '',
       descuento: this.formOferta.value.descuento ?? 0,
       estado: this.formOferta.value.estado ?? false,
       fecha_Creacion: Metodos.getFechaCreacion()
@@ -144,7 +134,7 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -154,13 +144,8 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
   }
 
   canDeactive(): boolean | Observable<boolean> {
-    const camposEditables = [
-      'nombre',
-      'descripcion'
-    ];
-    const camposVacios = camposEditables.some(
-      (campo) => this.formOferta.get(campo)?.value === ''
-    );
+    const camposEditables = ['nombre', 'descripcion'];
+    const camposVacios = camposEditables.some((campo) => this.formOferta.get(campo)?.value === '');
     const camposConDatos = camposEditables.some(
       (campo) => this.formOferta.get(campo)?.value !== ''
     );
@@ -185,11 +170,11 @@ export class RegistroOfertaComponent implements OnInit, CanComponentDeactive{
     return this.formOferta.controls.producto;
   }
 
-  get fechaInicioField(): FormControl<Date>{
+  get fechaInicioField(): FormControl<Date> {
     return this.formOferta.controls.fechaInicio;
   }
 
-  get fechaFinField(): FormControl<Date>{
+  get fechaFinField(): FormControl<Date> {
     return this.formOferta.controls.fechaFin;
   }
 

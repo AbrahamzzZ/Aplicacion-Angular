@@ -31,33 +31,20 @@ import { NegocioService } from '../../../../services/negocio.service';
   templateUrl: './registrar-sucursal.component.html',
   styleUrl: './registrar-sucursal.component.scss'
 })
-export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
+export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive {
   @Input('id') idSucursal!: number;
   private route = inject(ActivatedRoute);
   private sucursalServicio = inject(SucursalService);
   private negocioServicio = inject(NegocioService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   public negocio!: INegocio;
 
   public formSucursal = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombre: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30)
-      ]
-    ],
-    direccion: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(90)
-      ]
-    ],
+    nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
+    direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(90)]],
     latitud: ['', [Validators.required, Validaciones.coordenadaValida()]],
     longitud: ['', [Validators.required, Validaciones.coordenadaValida()]],
     ciudad: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
@@ -70,14 +57,12 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
     const camposConDatos = camposEditables.some(
       (campo) => this.formSucursal.get(campo)?.value !== ''
     );
-  
+
     if (camposConDatos) {
       e.preventDefault();
-      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -85,24 +70,23 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
     }
 
     this.negocioServicio.obtener(1).subscribe({
-    next: (data) => {
-      this.negocio = data;
-    },
-    error: (err) => {
-      this.mostrarMensaje('Error al obtener la información del negocio', err);
-    }
-  });
+      next: (data) => {
+        this.negocio = data;
+      },
+      error: (err) => {
+        this.mostrarMensaje('Error al obtener la información del negocio', err);
+      }
+    });
   }
 
   registrarSucursal() {
-
     const sucursal: ISucursal = {
       id_Sucursal: this.idSucursal || 0,
       id_Negocio: this.negocio.id_Negocio,
       codigo: Metodos.generarCodigo(),
       nombre_Sucursal: this.formSucursal.value.nombre?.trim() ?? '',
       direccion_Sucursal: this.formSucursal.value.direccion?.trim() ?? '',
-      latitud: parseFloat(this.formSucursal.value.latitud ?? '0'),   
+      latitud: parseFloat(this.formSucursal.value.latitud ?? '0'),
       longitud: parseFloat(this.formSucursal.value.longitud ?? '0'),
       ciudad_Sucursal: this.formSucursal.value.ciudad?.trim() ?? '',
       estado: this.formSucursal.value.estado ?? false
@@ -140,7 +124,7 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

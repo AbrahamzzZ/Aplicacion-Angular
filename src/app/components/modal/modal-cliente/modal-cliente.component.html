@@ -2,7 +2,12 @@
 
 <mat-form-field appearance="outline" class="buscador">
   <mat-label>Buscar cliente</mat-label>
-  <input matInput #inputBuscador  (keyup)="aplicarFiltro($event)" placeholder="Ingrese nombre, apellido o cédula">
+  <input
+    matInput
+    #inputBuscador
+    (keyup)="aplicarFiltro($event)"
+    placeholder="Ingrese nombre, apellido o cédula"
+  />
   <button mat-icon-button matSuffix *ngIf="filtro" (click)="limpiarFiltro(inputBuscador)">
     <mat-icon>close</mat-icon>
   </button>
@@ -10,31 +15,30 @@
 
 <div class="clientes-scroll">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.id_Cliente}} </td>
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let cliente">{{ cliente.id_Cliente }}</td>
     </ng-container>
 
     <ng-container matColumnDef="nombres">
-      <th mat-header-cell *matHeaderCellDef> Nombres </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.nombres}} </td>
+      <th mat-header-cell *matHeaderCellDef>Nombres</th>
+      <td mat-cell *matCellDef="let cliente">{{ cliente.nombres }}</td>
     </ng-container>
 
     <ng-container matColumnDef="apellidos">
-      <th mat-header-cell *matHeaderCellDef> Apellidos </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.apellidos}} </td>
+      <th mat-header-cell *matHeaderCellDef>Apellidos</th>
+      <td mat-cell *matCellDef="let cliente">{{ cliente.apellidos }}</td>
     </ng-container>
 
     <ng-container matColumnDef="cedula">
-      <th mat-header-cell *matHeaderCellDef> Cédula </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.cedula}} </td>
+      <th mat-header-cell *matHeaderCellDef>Cédula</th>
+      <td mat-cell *matCellDef="let cliente">{{ cliente.cedula }}</td>
     </ng-container>
 
     <ng-container matColumnDef="accion">
-      <th mat-header-cell *matHeaderCellDef> Acción </th>
+      <th mat-header-cell *matHeaderCellDef>Acción</th>
       <td mat-cell *matCellDef="let cliente">
-        <div style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center">
           <button mat-button color="primary" (click)="seleccionarCliente(cliente)">
             <mat-icon>check_circle</mat-icon> Seleccionar
           </button>
@@ -43,10 +47,9 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
   </table>
 </div>
-
 
 <div class="boton-cerrar">
   <button mat-button (click)="cerrar()">Cerrar</button>

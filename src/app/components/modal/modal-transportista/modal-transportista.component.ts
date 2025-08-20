@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ITransportista } from '../../../interfaces/transportista';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TransportistaService } from '../../../../services/transportista.service';
@@ -12,19 +12,26 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-modal-transportista',
   standalone: true,
-  imports: [MatTableModule, MatIcon, NgClass, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule],
+  imports: [
+    MatTableModule,
+    MatIcon,
+    NgClass,
+    MatFormFieldModule,
+    NgIf,
+    MatButtonModule,
+    MatInputModule
+  ],
   templateUrl: './modal-transportista.component.html',
   styleUrl: './modal-transportista.component.scss'
 })
 export class ModalTransportistaComponent {
+  private transportistaService = inject(TransportistaService);
+  private dialogRef = inject(MatDialogRef<ModalTransportistaComponent>);
   dataSource = new MatTableDataSource<ITransportista>([]);
   columnas: string[] = ['id', 'nombres', 'apellidos', 'cedula', 'estado', 'accion'];
-  filtro: string = '';
-
+  filtro = '';
 
   constructor(
-    private dialogRef: MatDialogRef<ModalTransportistaComponent>,
-    private transportistaService: TransportistaService
   ) {
     this.obtenerTransportistas();
   }

@@ -65,18 +65,18 @@ export class EditarTransportistaComponent implements OnInit {
     estado: [false]
   });
 
-    @HostListener('window:beforeunload', ['$event'])
-    onBeforeReload(e: BeforeUnloadEvent) {
-      const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-      const camposConDatos = camposEditables.some(
-        (campo) => this.formTransportista.get(campo)?.value !== ''
-      );
-    
-      if (camposConDatos) {
-        e.preventDefault();
-        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
-      }
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formTransportista.get(campo)?.value !== ''
+    );
+
+    if (camposConDatos) {
+      e.preventDefault();
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
+  }
 
   constructor(private router: Router) {}
 
@@ -158,7 +158,7 @@ export class EditarTransportistaComponent implements OnInit {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -166,7 +166,7 @@ export class EditarTransportistaComponent implements OnInit {
       panelClass: [className]
     });
   }
-  
+
   regresar() {
     this.router.navigate(['/transportista']);
   }

@@ -8,10 +8,8 @@ import { IApi } from '../setting/api/api';
   providedIn: 'root'
 })
 export class ClienteService {
-  
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Cliente';
-  constructor() {}
 
   lista() {
     return this.http.get<ICliente[]>(this.apiUrl);
@@ -19,8 +17,8 @@ export class ClienteService {
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: ICliente[],
-      totalCount: number
+      data: ICliente[];
+      totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 

@@ -3,7 +3,6 @@
 
   <div class="venta__contenedor">
     <mat-card class="venta__formulario" [formGroup]="venta">
-
       <!-- Buscador -->
       <div class="venta__busqueda">
         <mat-form-field class="venta__busqueda-input" appearance="outline">
@@ -17,17 +16,16 @@
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
 
-        @if(mensajeBusqueda){
-        <div class="venta__busqueda-mensaje">
-          <mat-icon color="warn">error</mat-icon>
-          <span class="venta__mensaje-error">{{ mensajeBusqueda }}</span>
-        </div>
+        @if (mensajeBusqueda) {
+          <div class="venta__busqueda-mensaje">
+            <mat-icon color="warn">error</mat-icon>
+            <span class="venta__mensaje-error">{{ mensajeBusqueda }}</span>
+          </div>
         }
       </div>
 
       <!-- Sección: Datos + Cliente + Totales -->
       <div class="venta__seccion">
-
         <!-- Grupo: Datos -->
         <div class="venta__grupo venta__grupo--datos">
           <mat-form-field appearance="outline">
@@ -49,6 +47,24 @@
           <button mat-raised-button color="warn" (click)="limpiar()">
             <mat-icon>cleaning_services</mat-icon> Limpiar
           </button>
+        </div>
+
+        <!-- Grupo: Sucursal -->
+        <div class="venta__grupo venta__grupo--sucursal">
+          <mat-form-field appearance="outline">
+            <mat-label>Código</mat-label>
+            <input matInput formControlName="codigoSucursal" readonly />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombreSucursal" readonly />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="direccionSucursal" readonly />
+          </mat-form-field>
         </div>
 
         <!-- Grupo: Cliente -->
@@ -89,13 +105,11 @@
             <mat-icon>add_circle</mat-icon> Descargar PDF
           </button>
         </div>
-
       </div>
 
       <!-- Tabla de productos -->
       <div class="venta__tabla">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID</th>
             <td mat-cell *matCellDef="let element">{{ element.id_Producto }}</td>
@@ -108,7 +122,9 @@
 
           <ng-container matColumnDef="precio_Venta">
             <th mat-header-cell *matHeaderCellDef>Precio Venta</th>
-            <td mat-cell *matCellDef="let element">{{ element.precio_Venta | currency:'USD':'symbol' }}</td>
+            <td mat-cell *matCellDef="let element">
+              {{ element.precio_Venta | currency: 'USD' : 'symbol' }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="cantidad">
@@ -118,7 +134,9 @@
 
           <ng-container matColumnDef="subTotal">
             <th mat-header-cell *matHeaderCellDef>Subtotal</th>
-            <td mat-cell *matCellDef="let element">{{ element.subTotal | currency:'USD':'symbol' }}</td>
+            <td mat-cell *matCellDef="let element">
+              {{ element.subTotal | currency: 'USD' : 'symbol' }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="descuento">
@@ -127,10 +145,9 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnasTabla;"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnasTabla"></tr>
         </table>
       </div>
-
     </mat-card>
   </div>
 </div>

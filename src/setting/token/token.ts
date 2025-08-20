@@ -1,3 +1,3 @@
 export interface IToken {
-    nombre_completo: string;
+  nombre_completo: string;
 }

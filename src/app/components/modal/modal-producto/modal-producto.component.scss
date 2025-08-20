@@ -1,6 +1,6 @@
 :host {
   display: block;
-  max-height: 90vh; 
+  max-height: 90vh;
   overflow: hidden;
   padding: 20px;
   background-color: #fff;
@@ -9,7 +9,7 @@
 }
 
 .productos-scroll {
-  max-height: 60vh; 
+  max-height: 60vh;
   overflow-y: auto;
   margin-bottom: 16px;
 }
@@ -50,7 +50,8 @@ td {
   text-align: center;
 }
 
-td.mat-cell, th.mat-header-cell {
+td.mat-cell,
+th.mat-header-cell {
   display: flex;
   align-items: center;
   justify-content: center;

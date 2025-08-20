@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -12,15 +12,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './dialogo-numero-documento.component.scss'
 })
 export class DialogoNumeroDocumentoComponent {
+  private snackBar = inject(MatSnackBar);
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { numeroDocumento: string },
-    private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<DialogoNumeroDocumentoComponent>
+
   ) {}
 
   copiar() {
     navigator.clipboard.writeText(this.data.numeroDocumento).then(() => {
-      this.snackBar.open('Número copiado al portapapeles', 'Cerrar', { duration: 2000 });
+      this.mostrarMensaje('Número copiado al portapapeles.', 'success');
+    });
+  }
+
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
+    const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
+
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: [className]
     });
   }
 }

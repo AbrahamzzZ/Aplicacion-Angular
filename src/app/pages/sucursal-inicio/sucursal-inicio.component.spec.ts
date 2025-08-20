@@ -9,9 +9,8 @@ describe('SucursalInicioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SucursalInicioComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(SucursalInicioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -9,9 +9,8 @@ describe('ModalSucursalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ModalSucursalComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ModalSucursalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

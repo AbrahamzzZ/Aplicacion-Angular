@@ -16,7 +16,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './estadistica-negocio.component.scss'
 })
 export class EstadisticaNegocioComponent {
-
   private negocioService = inject(NegocioService);
   private snackBar = inject(MatSnackBar);
   public chartType: ChartType = 'bar';
@@ -27,7 +26,7 @@ export class EstadisticaNegocioComponent {
       {
         data: [],
         label: '',
-        backgroundColor: [],
+        backgroundColor: []
       }
     ]
   };
@@ -36,13 +35,21 @@ export class EstadisticaNegocioComponent {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
-      },
-    },
+        display: true
+      }
+    }
   };
 
   private generarColores(cantidad: number): string[] {
-    const coloresBase = ['#42A5F5', '#66BB6A', '#FFA726', '#26A69A', '#AB47BC', '#EF5350', '#8D6E63'];
+    const coloresBase = [
+      '#42A5F5',
+      '#66BB6A',
+      '#FFA726',
+      '#26A69A',
+      '#AB47BC',
+      '#EF5350',
+      '#8D6E63'
+    ];
     let colores: string[] = [];
     for (let i = 0; i < cantidad; i++) {
       colores.push(coloresBase[i % coloresBase.length]);
@@ -52,50 +59,50 @@ export class EstadisticaNegocioComponent {
 
   public chartPlugins = [];
 
-  verEstadisticas1(){
+  verEstadisticas1() {
     this.negocioService.obtenerProductosComprados().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.chartData = {
-          labels: resp.data.map((item: { nombre_Producto: any; }) => item.nombre_Producto),
+          labels: resp.data.map((item: { nombre_Producto: any }) => item.nombre_Producto),
           datasets: [
             {
-              data: resp.data.map((item: { cantidad_Comprada: any; }) => item.cantidad_Comprada),
+              data: resp.data.map((item: { cantidad_Comprada: any }) => item.cantidad_Comprada),
               label: 'Cantidad Comprada',
               backgroundColor: this.generarColores(resp.data.length)
             }
           ]
         };
         this.chartType = 'bar';
-      } 
+      }
     });
   }
 
-  verEstadisticas2(){
+  verEstadisticas2() {
     this.negocioService.obtenerProductosVendidos().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.chartData = {
-          labels: resp.data.map((item: {nombre_Producto: any; }) => item.nombre_Producto),
+          labels: resp.data.map((item: { nombre_Producto: any }) => item.nombre_Producto),
           datasets: [
             {
-              data: resp.data.map((item: {cantidad_Vendida: any} ) => item.cantidad_Vendida),
+              data: resp.data.map((item: { cantidad_Vendida: any }) => item.cantidad_Vendida),
               label: 'Cantidad Vendida',
               backgroundColor: this.generarColores(resp.data.length)
             }
           ]
         };
         this.chartType = 'bar';
-        }
-    })
+      }
+    });
   }
 
-  verEstadisticas3(){
+  verEstadisticas3() {
     this.negocioService.obtenerVentaEmpleados().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.chartData = {
-          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          labels: resp.data.map((item: { nombre_Completo: any }) => item.nombre_Completo),
           datasets: [
             {
-              data: resp.data.map((item: {ventas_Empleado: any;}) => item.ventas_Empleado),
+              data: resp.data.map((item: { ventas_Empleado: any }) => item.ventas_Empleado),
               label: 'Ventas Realizadas',
               backgroundColor: this.generarColores(resp.data.length)
             }
@@ -106,14 +113,14 @@ export class EstadisticaNegocioComponent {
     });
   }
 
-  verEstadisticas4(){
+  verEstadisticas4() {
     this.negocioService.obtenerTopClientes().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.chartData = {
-          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          labels: resp.data.map((item: { nombre_Completo: any }) => item.nombre_Completo),
           datasets: [
             {
-              data: resp.data.map((item: {compras_Totales: any;})=> item.compras_Totales),
+              data: resp.data.map((item: { compras_Totales: any }) => item.compras_Totales),
               label: 'Ventas Totales',
               backgroundColor: this.generarColores(resp.data.length)
             }
@@ -124,14 +131,14 @@ export class EstadisticaNegocioComponent {
     });
   }
 
-  verEstadisticas5(){
+  verEstadisticas5() {
     this.negocioService.obtenerTopProveedores().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.chartData = {
-          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          labels: resp.data.map((item: { nombre_Completo: any }) => item.nombre_Completo),
           datasets: [
             {
-              data: resp.data.map((item: {compras_Totales: any;})=> item.compras_Totales),
+              data: resp.data.map((item: { compras_Totales: any }) => item.compras_Totales),
               label: 'Compras Totales',
               backgroundColor: this.generarColores(resp.data.length)
             }
@@ -142,31 +149,33 @@ export class EstadisticaNegocioComponent {
     });
   }
 
-  verEstadisticas6(){
+  verEstadisticas6() {
     this.negocioService.obtenerViajesTransportista().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.chartData = {
-          labels: resp.data.map((item: {nombre_Completo: any;}) => item.nombre_Completo),
+          labels: resp.data.map((item: { nombre_Completo: any }) => item.nombre_Completo),
           datasets: [
             {
-              data: resp.data.map((item: {viajes_Realizados: any;}) => item.viajes_Realizados),
+              data: resp.data.map((item: { viajes_Realizados: any }) => item.viajes_Realizados),
               label: 'Compras Totales',
               backgroundColor: this.generarColores(resp.data.length)
             }
           ]
         };
         this.chartType = 'pie';
-        }
+      }
     });
   }
 
   descargarPDF(): void {
-    const chartElement = document.querySelector('.estadistica-negocio__grafico-contenedor') as HTMLElement;
+    const chartElement = document.querySelector(
+      '.estadistica-negocio__grafico-contenedor'
+    ) as HTMLElement;
 
     if (!chartElement || chartElement.clientHeight === 0) {
       console.error('El gráfico no está visible o no tiene datos.');
       this.mostrarMensaje('No se encontró el gráfico o no hay datos para mostrar.', 'error');
-      return; 
+      return;
     }
 
     const doc = new jsPDF({
@@ -180,7 +189,6 @@ export class EstadisticaNegocioComponent {
     img.src = logoUrl;
 
     img.onload = () => {
-
       doc.addImage(img, 'PNG', 10, 10, 30, 30);
       doc.setFontSize(16);
       doc.text('Reporte Estadístico del Negocio', 50, 20);
@@ -189,7 +197,7 @@ export class EstadisticaNegocioComponent {
       const fecha = new Date().toLocaleString();
       doc.text(`Fecha de generación: ${fecha}`, 10, 50);
 
-      html2canvas(chartElement).then(canvas => {
+      html2canvas(chartElement).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdfWidth = doc.internal.pageSize.getWidth() - 20;
         const imgProps = doc.getImageProperties(imgData);
@@ -204,7 +212,7 @@ export class EstadisticaNegocioComponent {
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

@@ -1,26 +1,27 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
- import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
- import { MatButton } from '@angular/material/button';
- import { MatCardModule } from '@angular/material/card';
- import { MatCheckboxModule } from '@angular/material/checkbox';
- import { MatNativeDateModule } from '@angular/material/core';
- import { MatDatepickerModule } from '@angular/material/datepicker';
- import { MatFormFieldModule } from '@angular/material/form-field';
- import { MatInput } from '@angular/material/input';
- import { MatSelectChange, MatSelectModule } from '@angular/material/select';
- import { ActivatedRoute, Router } from '@angular/router';
- import { ProductoService } from '../../../../services/producto.service';
- import { OfertaService } from '../../../../services/oferta.service';
- import { MatSnackBar } from '@angular/material/snack-bar';
- import { IProducto } from '../../../interfaces/producto';
- import { Metodos } from '../../../../utility/metodos';
- import { Validaciones } from '../../../../utility/validaciones';
- import { IOferta } from '../../../interfaces/oferta';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductoService } from '../../../../services/producto.service';
+import { OfertaService } from '../../../../services/oferta.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { IProducto } from '../../../interfaces/producto';
+import { Metodos } from '../../../../utility/metodos';
+import { Validaciones } from '../../../../utility/validaciones';
+import { IOferta } from '../../../interfaces/oferta';
 
- @Component({
+@Component({
   selector: 'app-editar-oferta',
   standalone: true,
-  imports: [MatCardModule,
+  imports: [
+    MatCardModule,
     MatInput,
     MatButton,
     MatFormFieldModule,
@@ -28,39 +29,27 @@ import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
     MatSelectModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    MatNativeDateModule],
+    MatNativeDateModule
+  ],
   templateUrl: './editar-oferta.component.html',
   styleUrl: './editar-oferta.component.scss'
 })
-export class EditarOfertaComponent implements OnInit{
+export class EditarOfertaComponent implements OnInit {
   idOferta!: number;
   private activatedRoute = inject(ActivatedRoute);
   private ofertaServicio = inject(OfertaService);
   private productoServicio = inject(ProductoService);
-  public productos:IProducto [] = [];
+  public productos: IProducto[] = [];
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   public oferta!: IOferta;
 
   public formOferta = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombre: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30)
-      ]
-    ],
+    nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
     producto: [0, [Validators.required, Validaciones.productoRequerido()]],
-    descripcion: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(250),
-      ]
-    ],
+    descripcion: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(250)]],
     fechaInicio: [new Date(), [Validators.required]],
     fechaFin: [new Date(), [Validators.required, Validaciones.fechaFinValida(new Date())]],
     descuento: [0, [Validators.required, Validators.max(100), Validators.min(1)]],
@@ -73,14 +62,12 @@ export class EditarOfertaComponent implements OnInit{
     const camposConDatos = camposEditables.some(
       (campo) => this.formOferta.get(campo)?.value !== ''
     );
-  
+
     if (camposConDatos) {
       e.preventDefault();
-      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -100,8 +87,8 @@ export class EditarOfertaComponent implements OnInit{
             nombre: resp.data.nombre_Oferta,
             producto: resp.data.id_Producto,
             descripcion: resp.data.descripcion,
-            fechaInicio: resp.data.fecha_Inicio? new Date(resp.data.fecha_Inicio) : undefined,
-            fechaFin: resp.data.fecha_Fin? new Date(resp.data.fecha_Fin) : undefined,
+            fechaInicio: resp.data.fecha_Inicio ? new Date(resp.data.fecha_Inicio) : undefined,
+            fechaFin: resp.data.fecha_Fin ? new Date(resp.data.fecha_Fin) : undefined,
             descuento: resp.data.descuento,
             estado: resp.data.estado
           });
@@ -134,8 +121,12 @@ export class EditarOfertaComponent implements OnInit{
       nombre_Oferta: this.formOferta.value.nombre!,
       id_Producto: productoId,
       descripcion: this.formOferta.value.descripcion!,
-      fecha_Inicio: this.formOferta.value.fechaInicio? this.formOferta.value.fechaInicio.toISOString().split('T')[0] : '',
-      fecha_Fin: this.formOferta.value.fechaFin? this.formOferta.value.fechaFin.toISOString().split('T')[0] : '',
+      fecha_Inicio: this.formOferta.value.fechaInicio
+        ? this.formOferta.value.fechaInicio.toISOString().split('T')[0]
+        : '',
+      fecha_Fin: this.formOferta.value.fechaFin
+        ? this.formOferta.value.fechaFin.toISOString().split('T')[0]
+        : '',
       descuento: this.formOferta.value.descuento!,
       estado: this.formOferta.value.estado
     };
@@ -147,7 +138,7 @@ export class EditarOfertaComponent implements OnInit{
       return;
     }
 
-    this.ofertaServicio.editar( oferta).subscribe({
+    this.ofertaServicio.editar(oferta).subscribe({
       next: (data) => {
         if (data.isSuccess) {
           this.router.navigate(['/oferta']);
@@ -167,7 +158,7 @@ export class EditarOfertaComponent implements OnInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -193,11 +184,11 @@ export class EditarOfertaComponent implements OnInit{
     return this.formOferta.controls.producto;
   }
 
-  get fechaInicioField(): FormControl<Date>{
+  get fechaInicioField(): FormControl<Date> {
     return this.formOferta.controls.fechaInicio;
   }
 
-  get fechaFinField(): FormControl<Date>{
+  get fechaFinField(): FormControl<Date> {
     return this.formOferta.controls.fechaFin;
   }
 

@@ -9,9 +9,8 @@ describe('EditarSucursalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [EditarSucursalComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(EditarSucursalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

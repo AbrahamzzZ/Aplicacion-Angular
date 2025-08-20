@@ -17,18 +17,22 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-categoria-inicio',
   standalone: true,
-  imports: [ MatTableModule,
-      MatButtonModule,
-      MatIcon,
-      MatFormFieldModule,
-      MatInputModule,
-      RouterOutlet,
-      NgClass,
-      MatPaginatorModule],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIcon,
+    MatFormFieldModule,
+    MatInputModule,
+    RouterOutlet,
+    NgClass,
+    MatPaginatorModule
+  ],
   templateUrl: './categoria-inicio.component.html',
   styleUrl: './categoria-inicio.component.scss'
 })
-export class CategoriaInicioComponent implements AfterViewInit{
+export class CategoriaInicioComponent implements AfterViewInit {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   private categoriaServicio = inject(CategoriaService);
   private snackBar = inject(MatSnackBar);
   public listaCategoria = new MatTableDataSource<ICategoria>();
@@ -43,12 +47,6 @@ export class CategoriaInicioComponent implements AfterViewInit{
     'fechaCreacion',
     'accion'
   ];
-
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -65,8 +63,8 @@ export class CategoriaInicioComponent implements AfterViewInit{
   obtenerCategorias(pageNumber: number, pageSize: number) {
     this.categoriaServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaCategoria.data = arr.map((c: ICategoria) => {
           return c;
         });
@@ -111,7 +109,7 @@ export class CategoriaInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -128,7 +126,7 @@ export class CategoriaInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaCategoria.data.map(categoria => ({
+    const datos = this.listaCategoria.data.map((categoria) => ({
       ID: categoria.id_Categoria,
       Código: categoria.codigo,
       Nombre: categoria.nombre_Categoria,
@@ -137,14 +135,18 @@ export class CategoriaInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombre', 'Estado', 'Fecha Creacion'
+      'ID',
+      'Código',
+      'Nombre',
+      'Estado',
+      'Fecha Creacion'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

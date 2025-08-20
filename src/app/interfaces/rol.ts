@@ -1,4 +1,4 @@
-export interface IRol{
-    idRol: number;
-    nombre: string;
+export interface IRol {
+  idRol: number;
+  nombre: string;
 }

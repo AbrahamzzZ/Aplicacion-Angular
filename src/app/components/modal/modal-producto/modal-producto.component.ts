@@ -13,15 +13,23 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-modal-producto',
   standalone: true,
-  imports: [MatTableModule, MatIcon, NgClass, MatLabel, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule],
+  imports: [
+    MatTableModule,
+    MatIcon,
+    NgClass,
+    MatLabel,
+    MatFormFieldModule,
+    NgIf,
+    MatButtonModule,
+    MatInputModule
+  ],
   templateUrl: './modal-producto.component.html',
   styleUrl: './modal-producto.component.scss'
 })
 export class ModalProductoComponent {
   dataSource = new MatTableDataSource<IProducto>([]);
-  columnas: string[] = ['id', 'codigo','nombre', 'stock', 'estado', 'accion'];
+  columnas: string[] = ['id', 'codigo', 'nombre', 'stock', 'estado', 'accion'];
   filtro: string = '';
-
 
   constructor(
     private dialogRef: MatDialogRef<ModalProductoComponent>,

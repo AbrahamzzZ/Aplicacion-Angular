@@ -1,4 +1,4 @@
 export interface ProductoMasVendido {
-    nombreProducto: string;
-    cantidadVendida: number;
+  nombreProducto: string;
+  cantidadVendida: number;
 }
