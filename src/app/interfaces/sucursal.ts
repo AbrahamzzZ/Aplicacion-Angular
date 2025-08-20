@@ -1,5 +1,3 @@
-import { INegocio } from "../interfaces/negocio";
-
 export interface ISucursal {
     id_Sucursal: number;
     id_Negocio: number;

@@ -4,6 +4,7 @@ export interface IVenta {
     id: number;
     numero_Documento: string;
     id_Usuario: number;
+    id_Sucursal?: number;
     id_Cliente: number;
     tipo_Documento: string;
     monto_Pago: number;

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/appsettings';
+import { appsettings } from '../setting/api/appsettings';
 import { ISucursal } from '../app/interfaces/sucursal';
-import { IApi } from '../setting/api';
+import { IApi } from '../setting/api/api';
 import { ISucursalNegocio } from '../app/interfaces/Dto/sucursal-negocio';
 
 @Injectable({
