@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/appsettings';
+import { appsettings } from '../setting/api/appsettings';
 import { ICompra } from '../app/interfaces/compra';
-import { IApi } from '../setting/api';
+import { IApi } from '../setting/api/api';
 import { ICompraRepuesta } from '../app/interfaces/Dto/icompra-repuesta';
 import { IDetallesCompra } from '../app/interfaces/Dto/idetalles-compra';
 

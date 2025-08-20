@@ -36,8 +36,6 @@ export class InicioComponent implements OnInit, OnDestroy{
   private indiceOferta = 0;
   private map: L.Map | undefined;
 
-  
-
   ngOnInit(): void {
     this.obtenerOfertas();
     this.obtenerSucursales();

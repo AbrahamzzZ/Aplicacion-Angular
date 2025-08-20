@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { appsettings } from '../setting/appsettings';
+import { appsettings } from '../setting/api/appsettings';
 import { IProducto } from '../app/interfaces/producto';
-import { IApi } from '../setting/api';
+import { IApi } from '../setting/api/api';
 import { IProductoCategoria } from '../app/interfaces/Dto/iproducto-categoria';
 import { IProductoRespuesta } from '../app/interfaces/Dto/iproducto-respuesta';
 
