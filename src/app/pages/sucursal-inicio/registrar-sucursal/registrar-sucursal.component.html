@@ -12,53 +12,53 @@
         </mat-form-field>
 
         <mat-form-field class="form__field">
-            <mat-label>Nombre: </mat-label>
-            <input matInput type="text" formControlName="nombre" maxlength="30" minlength="5" />
-            @if (nombreField.hasError('required')) {
-                <mat-error class="form__error">Ingrese un nombre.</mat-error>
-            } @else if (nombreField.hasError('minlength')) {
-                <mat-error class="form__error">Nombre demasiado corto.</mat-error>
-            } 
+          <mat-label>Nombre: </mat-label>
+          <input matInput type="text" formControlName="nombre" maxlength="30" minlength="5" />
+          @if (nombreField.hasError('required')) {
+            <mat-error class="form__error">Ingrese un nombre.</mat-error>
+          } @else if (nombreField.hasError('minlength')) {
+            <mat-error class="form__error">Nombre demasiado corto.</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field class="form__field">
-            <mat-label>Dirección: </mat-label>
-            <input matInput type="text" formControlName="direccion" maxlength="90" minlength="3" />
-            @if (direccionField.hasError('required')) {
-                <mat-error class="form__error">Ingrese una dirección.</mat-error>
-            } @else if (direccionField.hasError('minlength')) {
-                <mat-error class="form__error">Dirección demasiada corta.</mat-error>
-            } 
+          <mat-label>Dirección: </mat-label>
+          <input matInput type="text" formControlName="direccion" maxlength="90" minlength="3" />
+          @if (direccionField.hasError('required')) {
+            <mat-error class="form__error">Ingrese una dirección.</mat-error>
+          } @else if (direccionField.hasError('minlength')) {
+            <mat-error class="form__error">Dirección demasiada corta.</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field class="form__field">
-            <mat-label>Latitud: </mat-label>
-            <input matInput formControlName="latitud" />
-            @if (latitudField.hasError('required')) {
-                <mat-error class="form__error">Ingrese una latitud.</mat-error>
-            }@else if (latitudField.hasError('coordenadaInvalida')) {
-                <mat-error class="form__error">Ingrese una latitud válida (ej: -2.224610).</mat-error>
-            }
+          <mat-label>Latitud: </mat-label>
+          <input matInput formControlName="latitud" />
+          @if (latitudField.hasError('required')) {
+            <mat-error class="form__error">Ingrese una latitud.</mat-error>
+          } @else if (latitudField.hasError('coordenadaInvalida')) {
+            <mat-error class="form__error">Ingrese una latitud válida (ej: -2.224610).</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field class="form__field">
-            <mat-label>Longitud: </mat-label>
-            <input matInput formControlName="longitud" />
-            @if (longitudField.hasError('required')) {
-                <mat-error class="form__error">Ingrese una longitud.</mat-error>
-            } @else if (longitudField.hasError('coordenadaInvalida')) {
-                <mat-error class="form__error">Ingrese una longitud válida (ej: -79.897900).</mat-error>
-            }
+          <mat-label>Longitud: </mat-label>
+          <input matInput formControlName="longitud" />
+          @if (longitudField.hasError('required')) {
+            <mat-error class="form__error">Ingrese una longitud.</mat-error>
+          } @else if (longitudField.hasError('coordenadaInvalida')) {
+            <mat-error class="form__error">Ingrese una longitud válida (ej: -79.897900).</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field class="form__field">
-            <mat-label>Ciudad: </mat-label>
-            <input matInput type="text" formControlName="ciudad" maxlength="90" minlength="3"/>
-            @if (ciudadField.hasError('required')) {
-                <mat-error class="form__error">Ingrese el nombre de una ciudad.</mat-error>
-            } @else if (direccionField.hasError('minlength')) {
-                <mat-error class="form__error">El nombre de la ciudad demasiada corto.</mat-error>
-            } 
+          <mat-label>Ciudad: </mat-label>
+          <input matInput type="text" formControlName="ciudad" maxlength="90" minlength="3" />
+          @if (ciudadField.hasError('required')) {
+            <mat-error class="form__error">Ingrese el nombre de una ciudad.</mat-error>
+          } @else if (direccionField.hasError('minlength')) {
+            <mat-error class="form__error">El nombre de la ciudad demasiada corto.</mat-error>
+          }
         </mat-form-field>
 
         <mat-checkbox class="form__checkbox" formControlName="estado">Activo</mat-checkbox>
@@ -72,7 +72,13 @@
         >
           Registrar
         </button>
-        <button class="form__button" mat-raised-button color="primary" type="button" (click)="regresar()">
+        <button
+          class="form__button"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="regresar()"
+        >
           Regresar
         </button>
       </form>

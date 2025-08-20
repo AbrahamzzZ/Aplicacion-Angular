@@ -1,4 +1,4 @@
 export interface TopClientes {
-    nombreCompleto: string;
-    cantidadCompras: number;
+  nombreCompleto: string;
+  cantidadCompras: number;
 }

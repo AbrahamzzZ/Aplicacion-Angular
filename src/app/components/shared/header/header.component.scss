@@ -11,7 +11,7 @@
   .menu-container,
   .container__salir {
     display: flex;
-    align-items: center; 
+    align-items: center;
   }
 
   .container__nombre-usuario {
@@ -41,7 +41,6 @@
         margin-right: 4px;
       }
     }
-
   }
 
   .hamburger {
@@ -74,7 +73,6 @@
   }
 }
 
-
 @media (max-width: 1024px) {
   .container {
     .menu-container {
@@ -94,7 +92,7 @@
       }
 
       .menu {
-        display: none; 
+        display: none;
       }
     }
 
@@ -142,10 +140,10 @@
 
     .menu__button mat-icon,
     .menu__trigger mat-icon {
-      font-size: 24px; 
+      font-size: 24px;
       min-width: 24px;
       height: 24px;
-      line-height: 24px; 
+      line-height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;

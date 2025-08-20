@@ -13,12 +13,13 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class ModalInactividadComponent {
   private servicio = inject(LoginService);
+  private dialogRef = inject(MatDialogRef<ModalInactividadComponent>);
 
-  constructor(public dialogRef: MatDialogRef<ModalInactividadComponent>,
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: { tiempoRestante: number }
   ) {}
-  
-  continuar(){
+
+  continuar() {
     this.dialogRef.close(true);
     this.servicio.resetear();
   }

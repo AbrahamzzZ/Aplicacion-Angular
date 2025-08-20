@@ -8,7 +8,7 @@
       <form class="form" [formGroup]="formTransportista">
         <mat-form-field class="form__field">
           <mat-label>Nombres: </mat-label>
-          <input matInput type="text" formControlName="nombres" maxlength="30" minlength="5"/>
+          <input matInput type="text" formControlName="nombres" maxlength="30" minlength="5" />
           @if (nombresField.hasError('required')) {
             <mat-error class="form__error">Ingrese sus nombres.</mat-error>
           } @else if (nombresField.hasError('minlength')) {
@@ -20,7 +20,7 @@
 
         <mat-form-field class="form__field">
           <mat-label>Apellidos: </mat-label>
-          <input matInput type="text" formControlName="apellidos" maxlength="30" minlength="5"/>
+          <input matInput type="text" formControlName="apellidos" maxlength="30" minlength="5" />
           @if (apellidosField.hasError('required')) {
             <mat-error class="form__error">Ingrese sus apellidos.</mat-error>
           } @else if (apellidosField.hasError('minlength')) {
@@ -82,7 +82,9 @@
                 {{ imagenURL ? 'Archivo seleccionado' : '' }}
               </span>
             </label>
-            @if (imagenBase64Field.invalid && (imagenBase64Field.dirty || imagenBase64Field.touched)) {
+            @if (
+              imagenBase64Field.invalid && (imagenBase64Field.dirty || imagenBase64Field.touched)
+            ) {
               <mat-error class="form__error"
                 >Es obligatorio subir una foto del transportista.</mat-error
               >
@@ -109,7 +111,13 @@
         >
           Editar
         </button>
-        <button class="form__button" mat-raised-button color="primary" type="button" (click)="regresar()">
+        <button
+          class="form__button"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="regresar()"
+        >
           Regresar
         </button>
       </form>

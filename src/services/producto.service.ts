@@ -12,7 +12,6 @@ import { IProductoRespuesta } from '../app/interfaces/Dto/iproducto-respuesta';
 export class ProductoService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Producto';
-  constructor() {}
 
   lista() {
     return this.http.get<IProductoCategoria[]>(this.apiUrl);
@@ -20,8 +19,8 @@ export class ProductoService {
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: IProducto[],
-      totalCount: number
+      data: IProducto[];
+      totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 

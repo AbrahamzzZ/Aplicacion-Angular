@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -16,18 +16,39 @@ import autoTable from 'jspdf-autotable';
 @Component({
   selector: 'app-detalle-venta',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, MatSelectModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatTableModule, MatIcon, CurrencyPipe],
+  imports: [
+    MatButtonModule,
+    MatCardModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatIcon,
+    CurrencyPipe
+  ],
   templateUrl: './detalle-venta.component.html',
   styleUrl: './detalle-venta.component.scss'
 })
-export class DetalleVentaComponent implements OnInit{
+export class DetalleVentaComponent implements OnInit {
   public mensajeBusqueda: string = '';
   public venta!: FormGroup;
   private snackBar = inject(MatSnackBar);
   public dataSource = new MatTableDataSource<any>();
-  public columnasTabla: string[] = ['id', 'nombre', 'precio_Venta', 'cantidad', 'subTotal', 'descuento'];
+  public columnasTabla: string[] = [
+    'id',
+    'nombre',
+    'precio_Venta',
+    'cantidad',
+    'subTotal',
+    'descuento'
+  ];
 
-  constructor(private fb: FormBuilder, private servicio: VentaService){}
+  constructor(
+    private fb: FormBuilder,
+    private servicio: VentaService
+  ) {}
 
   ngOnInit(): void {
     this.venta = this.fb.group({
@@ -35,6 +56,9 @@ export class DetalleVentaComponent implements OnInit{
       tipoDocumento: [''],
       codigoUsuario: [''],
       nombreUsuario: [''],
+      codigoSucursal: [''],
+      nombreSucursal: [''],
+      direccionSucursal: [''],
       nombresCliente: [''],
       apellidosCliente: [''],
       cedulaCliente: [''],
@@ -45,12 +69,12 @@ export class DetalleVentaComponent implements OnInit{
     });
   }
 
-  filtrarVenta(numeroDocumento: string){
+  filtrarVenta(numeroDocumento: string) {
     this.mensajeBusqueda = '';
     if (!numeroDocumento.trim()) return;
 
     if (numeroDocumento.length != 5) {
-      this.limpiar(); 
+      this.limpiar();
       this.mensajeBusqueda = 'No existe ningún detalle de venta con ese número de documento.';
       return;
     }
@@ -63,6 +87,9 @@ export class DetalleVentaComponent implements OnInit{
           tipoDocumento: venta.tipo_Documento,
           codigoUsuario: venta.codigo_Usuario,
           nombreUsuario: venta.nombre_Completo,
+          codigoSucursal: venta.codigo,
+          nombreSucursal: venta.nombre_Sucursal,
+          direccionSucursal: venta.direccion_Sucursal,
           nombresCliente: venta.nombres_Cliente,
           apellidosCliente: venta.apellidos_Cliente,
           cedulaCliente: venta.cedula_Cliente,
@@ -72,16 +99,15 @@ export class DetalleVentaComponent implements OnInit{
           conDescuento: venta.descuento
         });
 
-      this.servicio.obtenerDetalleVenta(venta.id_Venta).subscribe({
-        next: (detalle) => {
-
-          this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
-        },
-        error: (err) => {
-          console.error(err.message);
-          this.mostrarMensaje('Error al obtener el detalle de venta.', 'error');
-        }
-      });
+        this.servicio.obtenerDetalleVenta(venta.id_Venta).subscribe({
+          next: (detalle) => {
+            this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
+          },
+          error: (err) => {
+            console.error(err.message);
+            this.mostrarMensaje('Error al obtener el detalle de venta.', 'error');
+          }
+        });
       },
       error: (err) => {
         console.error(err.message);
@@ -89,7 +115,7 @@ export class DetalleVentaComponent implements OnInit{
       }
     });
   }
-  
+
   descargarPDF() {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -116,16 +142,23 @@ export class DetalleVentaComponent implements OnInit{
       doc.setLineWidth(0.5);
       doc.line(10, 58, pageWidth - 10, 58);
 
-      // Información de la venta y cliente
+      // Información de la venta
       doc.setFontSize(10);
       doc.text(`Fecha: ${this.venta.value.fecha}`, 10, 66);
-      doc.text(`Tipo Doc: ${this.venta.value.tipoDocumento}`, 100, 66);
+      doc.text(`Tipo Doc: ${this.venta.value.tipoDocumento}`, 110, 66);
 
-      doc.text(`Vendedor: ${this.venta.value.nombreUsuario}`, 10, 72);
-      doc.text(`Código: ${this.venta.value.codigoUsuario}`, 100, 72);
+      doc.text(`Sucursal: ${this.venta.value.nombreSucursal}`, 10, 72);
+      doc.text(`Dirección: ${this.venta.value.direccionSucursal}`, 110, 72);
 
-      doc.text(`Cliente: ${this.venta.value.nombresCliente} ${this.venta.value.apellidosCliente}`, 10, 78);
-      doc.text(`Cédula: ${this.venta.value.cedulaCliente}`, 100, 78);
+      doc.text(`Vendedor: ${this.venta.value.nombreUsuario}`, 10, 78);
+      doc.text(`Código: ${this.venta.value.codigoUsuario}`, 110, 78);
+
+      doc.text(
+        `Cliente: ${this.venta.value.nombresCliente} ${this.venta.value.apellidosCliente}`,
+        10,
+        84
+      );
+      doc.text(`Cédula: ${this.venta.value.cedulaCliente}`, 110, 84);
 
       // Columnas de la tabla
       const columnas = [
@@ -137,7 +170,7 @@ export class DetalleVentaComponent implements OnInit{
       ];
 
       // Filas de datos
-      const filas = this.dataSource.data.map(item => ({
+      const filas = this.dataSource.data.map((item) => ({
         nombre: item.productos,
         cantidad: item.cantidad,
         precio_Venta: `$${item.precio_Venta.toFixed(2)}`,
@@ -149,12 +182,12 @@ export class DetalleVentaComponent implements OnInit{
       autoTable(doc, {
         columns: columnas,
         body: filas,
-        startY: 85,
+        startY: 90,
         theme: 'grid',
         headStyles: { fillColor: [41, 128, 185], textColor: 255, fontSize: 10 },
         bodyStyles: { fontSize: 9 },
         alternateRowStyles: { fillColor: [245, 245, 245] },
-        styles: { halign: 'center', cellPadding: 2 },
+        styles: { halign: 'center', cellPadding: 2 }
       });
 
       // Totales en recuadro gris
@@ -164,28 +197,34 @@ export class DetalleVentaComponent implements OnInit{
 
       doc.setFontSize(11);
       doc.setFont('helvetica', 'bold');
-      doc.text(`Total a pagar: $${parseFloat(this.venta.value.totalPagar).toFixed(2)}`, 12, finalY + 12);
+      doc.text(
+        `Total a pagar: $${parseFloat(this.venta.value.totalPagar).toFixed(2)}`,
+        12,
+        finalY + 12
+      );
       doc.text(`Pagó con: $${parseFloat(this.venta.value.pagaCon).toFixed(2)}`, 12, finalY + 18);
       doc.text(`Cambio: $${parseFloat(this.venta.value.cambio).toFixed(2)}`, 100, finalY + 12);
 
       // Mensaje final
       doc.setFontSize(9);
       doc.setFont('helvetica', 'italic');
-      doc.text('¡Gracias por su compra!', pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+      doc.text('¡Gracias por su compra!', pageWidth / 2, doc.internal.pageSize.getHeight() - 10, {
+        align: 'center'
+      });
 
       // Guardar PDF
       doc.save('detalle_venta.pdf');
     };
   }
 
-  limpiar(){
+  limpiar() {
     this.venta.reset();
     this.dataSource.data = [];
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

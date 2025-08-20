@@ -9,9 +9,8 @@ describe('RegistrarSucursalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RegistrarSucursalComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(RegistrarSucursalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

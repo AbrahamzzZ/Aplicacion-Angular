@@ -9,7 +9,6 @@ import { IApi } from '../setting/api/api';
 export class TransportistaService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Transportista';
-  constructor() {}
 
   lista() {
     return this.http.get<ITransportista[]>(this.apiUrl);
@@ -17,8 +16,8 @@ export class TransportistaService {
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: ITransportista[],
-      totalCount: number
+      data: ITransportista[];
+      totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 

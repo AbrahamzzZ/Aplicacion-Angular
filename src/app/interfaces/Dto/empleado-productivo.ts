@@ -1,4 +1,4 @@
 export interface EmpleadoProductivo {
-    nombreCompleto: string;
-    ventasRealizadas: number;
+  nombreCompleto: string;
+  ventasRealizadas: number;
 }

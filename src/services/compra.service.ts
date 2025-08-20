@@ -12,21 +12,20 @@ import { IDetallesCompra } from '../app/interfaces/Dto/idetalles-compra';
 export class CompraService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Compra';
-  constructor() { }
 
-  obtenerNuevoNumeroDocumento(){
+  obtenerNuevoNumeroDocumento() {
     return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);
   }
 
-  obtener(documento: string){
+  obtener(documento: string) {
     return this.http.get<ICompraRepuesta>(`${this.apiUrl}/${documento}`);
   }
 
-  obtenerDetalleCompra(id: number){
+  obtenerDetalleCompra(id: number) {
     return this.http.get<IDetallesCompra>(`${this.apiUrl}/detalles/${id}`);
   }
 
-  registrar(compra: ICompra){
+  registrar(compra: ICompra) {
     return this.http.post<IApi>(this.apiUrl, compra);
   }
 }

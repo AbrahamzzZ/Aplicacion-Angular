@@ -7,13 +7,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RolGuard implements CanMatch {
-  constructor(private authService: LoginService, private router: Router) {}
+  constructor(
+    private authService: LoginService,
+    private router: Router
+  ) {}
 
   canMatch(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> {
     const permisos = this.authService.obtenerPermisosDesdeToken();
-    const url = '/' + segments.map(s => s.path).join('/');
-    
-    if (permisos.some(p => url.startsWith(p))) { //Verifica si la URL actual comienza con algun permiso
+    const url = '/' + segments.map((s) => s.path).join('/');
+
+    if (permisos.some((p) => url.startsWith(p))) {
+      //Verifica si la URL actual comienza con algun permiso
       return true;
     } else {
       this.router.navigate(['/home']); // redirigir si no tiene permiso

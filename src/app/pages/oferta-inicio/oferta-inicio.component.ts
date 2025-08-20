@@ -11,27 +11,31 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoConfirmacionComponent } from '../../components/dialog/dialogo-confirmacion/dialogo-confirmacion.component';
 import { Metodos } from '../../../utility/metodos';
-import { NgClass} from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { IOfertaProducto } from '../../interfaces/Dto/ioferta-producto';
 
 @Component({
   selector: 'app-oferta-inicio',
   standalone: true,
-  imports: [MatTableModule,
-      MatButtonModule,
-      MatIcon,
-      NgClass,
-      MatFormFieldModule,
-      MatInputModule,
-      RouterOutlet,
-      MatPaginatorModule],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatIcon,
+    NgClass,
+    MatFormFieldModule,
+    MatInputModule,
+    RouterOutlet,
+    MatPaginatorModule
+  ],
   templateUrl: './oferta-inicio.component.html',
   styleUrl: './oferta-inicio.component.scss'
 })
-export class OfertaInicioComponent implements AfterViewInit{
+export class OfertaInicioComponent implements AfterViewInit {
   private ofertaServicio = inject(OfertaService);
   private snackBar = inject(MatSnackBar);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   public listaOferta = new MatTableDataSource<IOfertaProducto>();
   public tituloExcel = 'Ofertas';
   public totalRegistros = 0;
@@ -49,12 +53,6 @@ export class OfertaInicioComponent implements AfterViewInit{
     'accion'
   ];
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -70,8 +68,8 @@ export class OfertaInicioComponent implements AfterViewInit{
   obtenerOfertas(pageNumber: number, pageSize: number) {
     this.ofertaServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaOferta.data = arr.map((c: IOferta) => {
           return c;
         });
@@ -116,7 +114,7 @@ export class OfertaInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -133,7 +131,7 @@ export class OfertaInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaOferta.data.map(oferta => ({
+    const datos = this.listaOferta.data.map((oferta) => ({
       ID: oferta.id_Oferta,
       Código: oferta.codigo,
       Nombre: oferta.nombre_Oferta,
@@ -147,15 +145,23 @@ export class OfertaInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombre', 'Producto', 'Descripcion', 
-      'Fecha Inicio', 'Fecha Fin', 'Descuento','Estado','Fecha Creacion'
+      'ID',
+      'Código',
+      'Nombre',
+      'Producto',
+      'Descripcion',
+      'Fecha Inicio',
+      'Fecha Fin',
+      'Descuento',
+      'Estado',
+      'Fecha Creacion'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

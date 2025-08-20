@@ -9,9 +9,8 @@ describe('LoginLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LoginLayoutComponent]
-    })
-    .compileComponents();
-    
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LoginLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

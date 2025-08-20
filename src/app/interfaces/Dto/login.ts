@@ -1,4 +1,4 @@
 export interface ILogin {
-    correo_Electronico: string;
-    clave: string;
+  correo_Electronico: string;
+  clave: string;
 }

@@ -31,7 +31,9 @@ import { IProductoCategoria } from '../../interfaces/Dto/iproducto-categoria';
   templateUrl: './producto-inicio.component.html',
   styleUrl: './producto-inicio.component.scss'
 })
-export class ProductoInicioComponent implements AfterViewInit{
+export class ProductoInicioComponent implements AfterViewInit {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   private productoServicio = inject(ProductoService);
   private snackBar = inject(MatSnackBar);
   public listaProducto = new MatTableDataSource<IProductoCategoria>();
@@ -52,12 +54,6 @@ export class ProductoInicioComponent implements AfterViewInit{
     'accion'
   ];
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -73,8 +69,8 @@ export class ProductoInicioComponent implements AfterViewInit{
   obtenerProductos(pageNumber: number, pageSize: number) {
     this.productoServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaProducto.data = arr.map((c: IProducto) => {
           return c;
         });
@@ -117,7 +113,7 @@ export class ProductoInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -134,7 +130,7 @@ export class ProductoInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaProducto.data.map(producto => ({
+    const datos = this.listaProducto.data.map((producto) => ({
       ID: producto.id_Producto,
       Código: producto.codigo,
       Nombre: producto.nombre_Producto,
@@ -148,15 +144,23 @@ export class ProductoInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel('Productos', datos, [
-      'ID', 'Código', 'Nombre', 'Descripción', 'Categoría', 
-      'País Origen', 'Stock', 'Precio Compra', 'Precio Venta', 'Estado'
+      'ID',
+      'Código',
+      'Nombre',
+      'Descripción',
+      'Categoría',
+      'País Origen',
+      'Stock',
+      'Precio Compra',
+      'Precio Venta',
+      'Estado'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

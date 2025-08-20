@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { ILogin } from '../app/interfaces/Dto/login';
 import { Observable } from 'rxjs';
 import { appsettings } from '../setting/api/appsettings';
@@ -13,13 +13,15 @@ import { ModalInactividadComponent } from '../app/components/modal/modal-inactiv
   providedIn: 'root'
 })
 export class LoginService {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+  private ngZone = inject(NgZone);
+  private dialog = inject(MatDialog);
   private timeoutInMs: number = 10 * 60 * 1000; // 10 minutos
   private timeoutId: any;
-  private apiUrl: string = appsettings.apiUrl + 'Usuario';;
+  private apiUrl: string = appsettings.apiUrl + 'Usuario';
 
-  constructor(private http: HttpClient, private router: Router, private ngZone: NgZone, private dialog: MatDialog) {}
-
-  login(credenciales: ILogin): Observable<any> {
+  login(credenciales: ILogin): Observable<unknown> {
     return this.http.post(`${this.apiUrl}/login`, credenciales);
   }
 
@@ -59,10 +61,10 @@ export class LoginService {
   obtenerPermisosDesdeToken(): string[] {
     const token = localStorage.getItem('token');
     if (!token) return [];
-  
+
     const payload = JSON.parse(atob(token.split('.')[1]));
-    const permisos = payload['permiso']; 
-  
+    const permisos = payload['permiso'];
+
     return Array.isArray(permisos) ? permisos : [permisos];
   }
 
@@ -70,7 +72,7 @@ export class LoginService {
     this.resetear();
 
     const eventos = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
-    eventos.forEach(event => {
+    eventos.forEach((event) => {
       window.addEventListener(event, () => this.resetear());
     });
   }
@@ -106,13 +108,11 @@ export class LoginService {
       }
     }, 1000);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       clearInterval(interval);
       if (result === true) {
-
         this.resetear();
       } else {
-
         this.logoutPorInactividad();
       }
     });
@@ -122,7 +122,7 @@ export class LoginService {
     clearTimeout(this.timeoutId);
     const eventos = ['mousemove', 'mousedown', 'keypress', 'touchstart', 'scroll'];
 
-    eventos.forEach(event => {
+    eventos.forEach((event) => {
       window.removeEventListener(event, this.resetear.bind(this));
     });
   }
@@ -135,7 +135,7 @@ export class LoginService {
     });
   }
 
-  logout(){
+  logout() {
     this.detenerMonitoreo();
     this.eliminarToken();
     this.router.navigate(['/login'], {

@@ -1,4 +1,4 @@
 export interface ProveedorPreferido {
-    nombreCompleto: string;
-    comprasTotales: number;
+  nombreCompleto: string;
+  comprasTotales: number;
 }

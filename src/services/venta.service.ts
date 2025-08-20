@@ -12,21 +12,20 @@ import { IDetallesVenta } from '../app/interfaces/Dto/idetalles-venta';
 export class VentaService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Venta';
-  constructor() { }
 
-  obtenerNuevoNumeroDocumento(){
+  obtenerNuevoNumeroDocumento() {
     return this.http.get<{ numeroDocumento: string }>(`${this.apiUrl}/numero-documento`);
   }
 
-  obtener(documento: string){
+  obtener(documento: string) {
     return this.http.get<IVentaRepuesta>(`${this.apiUrl}/${documento}`);
   }
 
-  obtenerDetalleVenta(id: number){
+  obtenerDetalleVenta(id: number) {
     return this.http.get<IDetallesVenta>(`${this.apiUrl}/detalles/${id}`);
   }
 
-  registrar(venta: IVenta){
+  registrar(venta: IVenta) {
     return this.http.post<IApi>(this.apiUrl, venta);
   }
 }

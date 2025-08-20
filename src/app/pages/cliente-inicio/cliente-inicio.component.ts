@@ -28,7 +28,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   templateUrl: './cliente-inicio.component.html',
   styleUrl: './cliente-inicio.component.scss'
 })
-export class ClienteInicioComponent implements AfterViewInit{
+export class ClienteInicioComponent implements AfterViewInit {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   private clienteServicio = inject(ClienteService);
   private snackBar = inject(MatSnackBar);
   public listaCliente = new MatTableDataSource<ICliente>();
@@ -47,12 +49,6 @@ export class ClienteInicioComponent implements AfterViewInit{
     'accion'
   ];
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -68,8 +64,8 @@ export class ClienteInicioComponent implements AfterViewInit{
   obtenerClientes(pageNumber: number, pageSize: number) {
     this.clienteServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaCliente.data = arr.map((cl: ICliente) => {
           return cl;
         });
@@ -114,7 +110,7 @@ export class ClienteInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -131,7 +127,7 @@ export class ClienteInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaCliente.data.map(cliente => ({
+    const datos = this.listaCliente.data.map((cliente) => ({
       ID: cliente.id_Cliente,
       Código: cliente.codigo,
       Nombres: cliente.nombres,
@@ -143,15 +139,21 @@ export class ClienteInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
-      'Telefono', 'Correo Electronico', 'Fecha Registro'
+      'ID',
+      'Código',
+      'Nombres',
+      'Apellidos',
+      'Cedula',
+      'Telefono',
+      'Correo Electronico',
+      'Fecha Registro'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getFechaRegistro(fecha: string): string {

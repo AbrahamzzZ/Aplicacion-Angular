@@ -30,7 +30,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   templateUrl: './proveedor-inicio.component.html',
   styleUrl: './proveedor-inicio.component.scss'
 })
-export class ProveedorInicioComponent implements AfterViewInit{
+export class ProveedorInicioComponent implements AfterViewInit {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   private proveedorServicio = inject(ProveedorService);
   private snackBar = inject(MatSnackBar);
   public listaProveedor = new MatTableDataSource<IProveedor>();
@@ -50,12 +52,6 @@ export class ProveedorInicioComponent implements AfterViewInit{
     'accion'
   ];
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -71,8 +67,8 @@ export class ProveedorInicioComponent implements AfterViewInit{
   obtenerProveedores(pageNumber: number, pageSize: number) {
     this.proveedorServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
         this.listaProveedor.data = arr.map((c: IProveedor) => {
           return c;
         });
@@ -117,7 +113,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -134,7 +130,7 @@ export class ProveedorInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaProveedor.data.map(proveedor => ({
+    const datos = this.listaProveedor.data.map((proveedor) => ({
       ID: proveedor.id_Proveedor,
       Código: proveedor.codigo,
       Nombres: proveedor.nombres,
@@ -147,15 +143,22 @@ export class ProveedorInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
-      'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
+      'ID',
+      'Código',
+      'Nombres',
+      'Apellidos',
+      'Cedula',
+      'Telefono',
+      'Correo Electronico',
+      'Estado',
+      'Fecha Registro'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

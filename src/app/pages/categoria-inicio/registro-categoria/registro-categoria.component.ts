@@ -31,36 +31,32 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
   templateUrl: './registro-categoria.component.html',
   styleUrl: './registro-categoria.component.scss'
 })
-export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
+export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive {
   @Input('id') idCategoria!: number;
   private route = inject(ActivatedRoute);
   private categoriaServicio = inject(CategoriaService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
 
   public formCategoria = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombre: [
-      '',
-      [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]
-    ],
+    nombre: ['', [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]],
     estado: [false]
   });
 
   @HostListener('window:beforeunload', ['$event'])
-    onBeforeReload(e: BeforeUnloadEvent) {
-      const camposEditables = ['nombreCompleto', 'clave', 'correoElectronico'];
-      const camposConDatos = camposEditables.some(
-        (campo) => this.formCategoria.get(campo)?.value !== ''
-      );
-  
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombreCompleto', 'clave', 'correoElectronico'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formCategoria.get(campo)?.value !== ''
+    );
+
     if (camposConDatos) {
       e.preventDefault();
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-  
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -109,7 +105,7 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -120,7 +116,9 @@ export class RegistroCategoriaComponent implements OnInit, CanComponentDeactive{
 
   canDeactive(): boolean | Observable<boolean> {
     const camposEditables = ['nombre'];
-    const camposVacios = camposEditables.some((campo) => this.formCategoria.get(campo)?.value === '');
+    const camposVacios = camposEditables.some(
+      (campo) => this.formCategoria.get(campo)?.value === ''
+    );
     const camposConDatos = camposEditables.some(
       (campo) => this.formCategoria.get(campo)?.value !== ''
     );

@@ -9,10 +9,8 @@ import { ISucursalNegocio } from '../app/interfaces/Dto/sucursal-negocio';
   providedIn: 'root'
 })
 export class SucursalService {
-
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Sucursal';
-  constructor() {}
 
   lista() {
     return this.http.get<ISucursalNegocio[]>(this.apiUrl);
@@ -20,8 +18,8 @@ export class SucursalService {
 
   listaPaginada(pageNumber: number, pageSize: number) {
     return this.http.get<{
-      data: ISucursal[],
-      totalCount: number
+      data: ISucursal[];
+      totalCount: number;
     }>(`${this.apiUrl}/paginacion?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 

@@ -26,32 +26,18 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   templateUrl: './editar-sucursal.component.html',
   styleUrl: './editar-sucursal.component.scss'
 })
-export class EditarSucursalComponent implements OnInit{
-
+export class EditarSucursalComponent implements OnInit {
   private sucursalServicio = inject(SucursalService);
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   public idSucursal!: number;
 
   public formSucursal = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
-    nombre: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30)
-      ]
-    ],
-    direccion: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(90)
-      ]
-    ],
+    nombre: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
+    direccion: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(90)]],
     latitud: ['', [Validators.required, Validaciones.coordenadaValida()]],
     longitud: ['', [Validators.required, Validaciones.coordenadaValida()]],
     ciudad: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
@@ -64,14 +50,12 @@ export class EditarSucursalComponent implements OnInit{
     const camposConDatos = camposEditables.some(
       (campo) => this.formSucursal.get(campo)?.value !== ''
     );
-  
+
     if (camposConDatos) {
       e.preventDefault();
-      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -141,7 +125,7 @@ export class EditarSucursalComponent implements OnInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

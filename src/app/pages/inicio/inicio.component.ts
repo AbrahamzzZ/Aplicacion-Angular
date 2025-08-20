@@ -25,7 +25,7 @@ L.Icon.Default.mergeOptions({
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.scss'
 })
-export class InicioComponent implements OnInit, OnDestroy{
+export class InicioComponent implements OnInit, OnDestroy {
   private snackBar = inject(MatSnackBar);
   private ofertaServicio = inject(OfertaService);
   private sucursalServcio = inject(SucursalService);
@@ -57,9 +57,9 @@ export class InicioComponent implements OnInit, OnDestroy{
     });
   }
 
-  obtenerSucursales(){
+  obtenerSucursales() {
     this.sucursalServcio.lista().subscribe({
-      next: (resp: any) =>{
+      next: (resp: any) => {
         this.sucursales = resp.data;
         this.marcarSucursalesMapa();
       },
@@ -90,7 +90,7 @@ export class InicioComponent implements OnInit, OnDestroy{
   }
 
   marcarSucursalesMapa(): void {
-    const sucursalInicial = this.sucursales.find(s => s.latitud && s.longitud);
+    const sucursalInicial = this.sucursales.find((s) => s.latitud && s.longitud);
     if (!sucursalInicial) return;
 
     if (!this.map) {
@@ -101,11 +101,9 @@ export class InicioComponent implements OnInit, OnDestroy{
       }).addTo(this.map);
     }
 
-    this.sucursales.forEach(sucursal => {
+    this.sucursales.forEach((sucursal) => {
       if (sucursal.latitud && sucursal.longitud) {
-        L.marker([sucursal.latitud, sucursal.longitud])
-          .addTo(this.map!)
-          .bindPopup(`
+        L.marker([sucursal.latitud, sucursal.longitud]).addTo(this.map!).bindPopup(`
             <strong>${sucursal.nombre_Sucursal}</strong><br>
             ${sucursal.direccion_Sucursal}<br>
             📍 ${sucursal.ciudad_Sucursal}
@@ -116,7 +114,7 @@ export class InicioComponent implements OnInit, OnDestroy{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

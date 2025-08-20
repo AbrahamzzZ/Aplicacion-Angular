@@ -40,6 +40,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   public imagenURL: string | ArrayBuffer | null = null;
 
   public formTransportista = this.formBuilder.nonNullable.group({
@@ -65,25 +66,23 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
     cedula: ['', [Validators.required, Validaciones.soloNumeros()]],
     telefono: ['', [Validators.required, Validaciones.soloNumeros()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
-    imageBase64: ['',[Validators.required]],
+    imageBase64: ['', [Validators.required]],
     imagen: [''],
     estado: [false]
   });
 
-    @HostListener('window:beforeunload', ['$event'])
-    onBeforeReload(e: BeforeUnloadEvent) {
-      const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
-      const camposConDatos = camposEditables.some(
-        (campo) => this.formTransportista.get(campo)?.value !== ''
-      );
-    
-      if (camposConDatos) {
-        e.preventDefault();
-        e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
-      }
-    }
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeReload(e: BeforeUnloadEvent) {
+    const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
+    const camposConDatos = camposEditables.some(
+      (campo) => this.formTransportista.get(campo)?.value !== ''
+    );
 
-  constructor(private router: Router) {}
+    if (camposConDatos) {
+      e.preventDefault();
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+    }
+  }
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -139,7 +138,7 @@ export class RegistroTransportistaComponent implements OnInit, CanComponentDeact
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

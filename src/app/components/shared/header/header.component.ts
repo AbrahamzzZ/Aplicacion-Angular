@@ -16,13 +16,13 @@ import { NgClass } from '@angular/common';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  public nombreUsuario: string = ''; 
+  public nombreUsuario = '';
   public menus: IMenu[] = [];
+  private router = inject(Router);
   private loginServicio = inject(LoginService);
   private menuServicio = inject(MenuService);
-  public menuAbierto: boolean = false;
+  public menuAbierto = false;
 
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     const datosToken = this.loginServicio.obtenerDatosToken();
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     this.router.navigate(['/login']);
     this.loginServicio.logout();
   }

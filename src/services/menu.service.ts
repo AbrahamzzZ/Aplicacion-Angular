@@ -10,9 +10,7 @@ export class MenuService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Menu';
 
-  constructor() { }
-
-  obtener(id: number){
+  obtener(id: number) {
     return this.http.get<IMenu[]>(`${this.apiUrl}/${id}`);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, NgModule, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatCardModule,
+  imports: [
+    MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIcon,
@@ -23,32 +24,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   public hide = true;
   private loginServicio = inject(LoginService);
   public loginForm!: FormGroup;
   private snackBar = inject(MatSnackBar);
+  private router = inject(Router)
+  private route = inject(ActivatedRoute)
 
-  constructor(private router: Router, private route: ActivatedRoute){}
-  
   ngOnInit() {
     this.loginForm = new FormGroup({
-      correoElectronico: new FormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
-      clave: new FormControl('', [
-        Validators.required
-      ])
+      correoElectronico: new FormControl('', [Validators.required, Validators.email]),
+      clave: new FormControl('', [Validators.required])
     });
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (params['motivo'] === 'inactividad') {
         this.mostrarMensaje('La sesión fue cerrada por inactividad', 'error');
       }
     });
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (params['motivo'] === 'sesion') {
         this.mostrarMensaje('La sesión fue cerrada exitosamente', 'success');
       }
@@ -61,32 +57,35 @@ export class LoginComponent implements OnInit{
         correo_Electronico: this.loginForm.get('correoElectronico')?.value,
         clave: this.loginForm.get('clave')?.value
       };
-        this.loginServicio.login(credenciales).subscribe({
-          next: (response: any) => {
-            this.loginServicio.guardarToken(response.data.token);
-  
-            if(response){
-              this.loginServicio.iniciarMonitoreo();
-              this.mostrarMensaje('Inicio de sesión exitoso', 'success');
-              this.router.navigate(['/home']);
-            }
-          },
-          error: (error) => {
-            if (error.status === 500) {
-              this.mostrarMensaje('Su usuario está inactivo. Contacte con el administrador.', 'error');
-            } else if (error.status === 401) {
-              this.mostrarMensaje('Correo o clave incorrecta.', 'error');
-            } else {
-              this.mostrarMensaje('Error inesperado al iniciar sesión.', 'error');
-            }
+      this.loginServicio.login(credenciales).subscribe({
+        next: (response: any) => {
+          this.loginServicio.guardarToken(response.data.token);
+
+          if (response) {
+            this.loginServicio.iniciarMonitoreo();
+            this.mostrarMensaje('Inicio de sesión exitoso', 'success');
+            this.router.navigate(['/home']);
           }
-        });
+        },
+        error: (error) => {
+          if (error.status === 500) {
+            this.mostrarMensaje(
+              'Su usuario está inactivo. Contacte con el administrador.',
+              'error'
+            );
+          } else if (error.status === 401) {
+            this.mostrarMensaje('Correo o clave incorrecta.', 'error');
+          } else {
+            this.mostrarMensaje('Error inesperado al iniciar sesión.', 'error');
+          }
+        }
+      });
     }
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Bienvenido al Sistema', {
       duration: 3000,
       horizontalPosition: 'end',

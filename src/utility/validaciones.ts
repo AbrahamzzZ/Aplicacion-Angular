@@ -40,17 +40,17 @@ export class Validaciones {
   }
 
   static formatoClave(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const valor = control.value?.trim();
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valor = control.value?.trim();
 
-    if (!valor) {
-      return null;
-    }
+      if (!valor) {
+        return null;
+      }
 
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&+./_\-])[A-Za-z\d@$!%*?&+./_\-]{8,}$/;
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&+./_\-])[A-Za-z\d@$!%*?&+./_\-]{8,}$/;
 
-    return regex.test(valor) ? null : { formatoClave: true };
-  };
+      return regex.test(valor) ? null : { formatoClave: true };
+    };
   }
 
   static fechaFinValida(fechaCreacion: Date): ValidatorFn {
@@ -109,5 +109,4 @@ export class Validaciones {
       return null;
     };
   }
-
 }

@@ -13,7 +13,16 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-modal-oferta',
   standalone: true,
-  imports: [MatTableModule, MatIcon, MatLabel, MatFormFieldModule, NgIf, MatButtonModule, MatInputModule, NgClass],
+  imports: [
+    MatTableModule,
+    MatIcon,
+    MatLabel,
+    MatFormFieldModule,
+    NgIf,
+    MatButtonModule,
+    MatInputModule,
+    NgClass
+  ],
   templateUrl: './modal-oferta.component.html',
   styleUrl: './modal-oferta.component.scss'
 })
@@ -66,7 +75,7 @@ export class ModalOfertaComponent {
   cerrar() {
     this.dialogRef.close();
   }
-  
+
   getEstado(estado: boolean): string {
     return estado ? 'Activo' : 'No Activo';
   }

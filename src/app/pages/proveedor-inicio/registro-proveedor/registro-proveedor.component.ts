@@ -35,6 +35,7 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
   private proveedorServicio = inject(ProveedorService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
 
   public formProveedor = this.formBuilder.nonNullable.group({
     codigo: [Metodos.generarCodigo()],
@@ -63,19 +64,17 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
   });
 
   @HostListener('window:beforeunload', ['$event'])
-	onBeforeReload(e: BeforeUnloadEvent) {
+  onBeforeReload(e: BeforeUnloadEvent) {
     const camposEditables = ['nombres', 'apellidos', 'cedula', 'telefono', 'correoElectronico'];
     const camposConDatos = camposEditables.some(
       (campo) => this.formProveedor.get(campo)?.value !== ''
     );
-  
+
     if (camposConDatos) {
       e.preventDefault();
-      e.returnValue = '';  // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
+      e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
-	}
-
-  constructor(private router: Router) {}
+  }
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
@@ -128,7 +127,7 @@ export class RegistroProveedorComponent implements OnInit, CanComponentDeactive 
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

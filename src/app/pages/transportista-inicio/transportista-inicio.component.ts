@@ -30,7 +30,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
   templateUrl: './transportista-inicio.component.html',
   styleUrl: './transportista-inicio.component.scss'
 })
-export class TransportistaInicioComponent implements AfterViewInit{
+export class TransportistaInicioComponent implements AfterViewInit {
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
   public listaTransportista = new MatTableDataSource<ITransportista>();
@@ -51,12 +53,6 @@ export class TransportistaInicioComponent implements AfterViewInit{
     'accion'
   ];
 
-  constructor(
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
@@ -72,8 +68,8 @@ export class TransportistaInicioComponent implements AfterViewInit{
   obtenerTransportistas(pageNumber: number, pageSize: number) {
     this.transportistaServicio.listaPaginada(pageNumber, pageSize).subscribe({
       next: (resp: any) => {
-        const arr = resp.data.items ?? []; 
-        this.totalRegistros = resp.data.totalCount; 
+        const arr = resp.data.items ?? [];
+        this.totalRegistros = resp.data.totalCount;
 
         this.listaTransportista.data = arr.map((t: ITransportista) => {
           if (t.imagen && typeof t.imagen === 'string') {
@@ -124,7 +120,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',
@@ -141,7 +137,7 @@ export class TransportistaInicioComponent implements AfterViewInit{
   }
 
   exportarExcel() {
-    const datos = this.listaTransportista.data.map(transportista => ({
+    const datos = this.listaTransportista.data.map((transportista) => ({
       ID: transportista.id_Transportista,
       Código: transportista.codigo,
       Nombres: transportista.nombres,
@@ -154,15 +150,22 @@ export class TransportistaInicioComponent implements AfterViewInit{
     }));
 
     if (!datos || datos.length === 0) {
-      this.mostrarMensaje("No hay datos disponibles para exportar a Excel.", "error");
+      this.mostrarMensaje('No hay datos disponibles para exportar a Excel.', 'error');
       return;
     }
-  
+
     Metodos.exportarExcel(this.tituloExcel, datos, [
-      'ID', 'Código', 'Nombres', 'Apellidos', 'Cedula', 
-      'Telefono', 'Correo Electronico', 'Estado', 'Fecha Registro'
+      'ID',
+      'Código',
+      'Nombres',
+      'Apellidos',
+      'Cedula',
+      'Telefono',
+      'Correo Electronico',
+      'Estado',
+      'Fecha Registro'
     ]);
-    this.mostrarMensaje("Excel generado exitosamente.", "success");
+    this.mostrarMensaje('Excel generado exitosamente.', 'success');
   }
 
   getEstado(estado: boolean): string {

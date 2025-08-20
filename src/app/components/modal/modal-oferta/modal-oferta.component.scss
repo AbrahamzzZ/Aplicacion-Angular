@@ -7,7 +7,7 @@
 }
 
 .ofertas-scroll {
-  max-height: 60vh; 
+  max-height: 60vh;
   overflow-y: auto;
   margin-bottom: 16px;
 }
@@ -49,25 +49,26 @@ td {
 }
 
 /* Centrar contenido de celdas */
-  td.mat-cell, th.mat-header-cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+td.mat-cell,
+th.mat-header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .table__estado-activo {
-    color: green;
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-  }
+.table__estado-activo {
+  color: green;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+}
 
- .table__estado-no-activo {
-    color: red;
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-  }
+.table__estado-no-activo {
+  color: red;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+}
 
 /* Hover fila */
 tr:hover {

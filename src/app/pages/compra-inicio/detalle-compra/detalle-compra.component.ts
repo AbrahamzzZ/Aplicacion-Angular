@@ -13,11 +13,21 @@ import { CompraService } from '../../../../services/compra.service';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-
 @Component({
   selector: 'app-detalle-compra',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, MatSelectModule, ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, MatTableModule, MatIcon, CurrencyPipe],
+  imports: [
+    MatButtonModule,
+    MatCardModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatIcon,
+    CurrencyPipe
+  ],
   templateUrl: './detalle-compra.component.html',
   styleUrl: './detalle-compra.component.scss'
 })
@@ -27,9 +37,16 @@ export class DetalleCompraComponent {
   private snackBar = inject(MatSnackBar);
   private servicio = inject(CompraService);
   public dataSource = new MatTableDataSource<any>();
-  public columnasTabla: string[] = ['id', 'nombre', 'precio_Compra', 'precio_Venta', 'cantidad', 'subTotal'];
+  public columnasTabla: string[] = [
+    'id',
+    'nombre',
+    'precio_Compra',
+    'precio_Venta',
+    'cantidad',
+    'subTotal'
+  ];
 
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.compra = this.fb.group({
@@ -37,59 +54,64 @@ export class DetalleCompraComponent {
       tipoDocumento: [''],
       codigoUsuario: [''],
       nombreUsuario: [''],
+      codigoSucursal: [''],
+      nombreSucursal: [''],
+      direccionSucursal: [''],
       nombresProveedor: [''],
       apellidosProveedor: [''],
       cedulaProveedor: [''],
       nombresTransportista: [''],
       apellidosTransportista: [''],
       cedulaTransportista: [''],
-      totalPagar: [''],
+      totalPagar: ['']
     });
   }
 
-  filtrarCompra(numeroDocumento: string){
-  this.mensajeBusqueda = '';
-  if (!numeroDocumento.trim()) return;
+  filtrarCompra(numeroDocumento: string) {
+    this.mensajeBusqueda = '';
+    if (!numeroDocumento.trim()) return;
 
-  if (numeroDocumento.length != 5) {
-    this.limpiar(); 
-    this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
-    return;
-  }
-
-  this.servicio.obtener(numeroDocumento).subscribe({
-    next: (resp: any) => {
-      const compra = resp.data;
-      this.compra.patchValue({
-        fecha: compra.fecha_Compra,
-        tipoDocumento: compra.tipo_Documento,
-        codigoUsuario: compra.codigo_Usuario,
-        nombreUsuario: compra.nombre_Completo,
-        nombresProveedor: compra.nombres_Proveedor,
-        apellidosProveedor: compra.apellidos_Proveedor,
-        cedulaProveedor: compra.cedula_Proveedor,
-        nombresTransportista: compra.nombres_Transportista,
-        apellidosTransportista: compra.apellidos_Transportista,
-        cedulaTransportista: compra.cedula_Transportista,
-        totalPagar: compra.monto_Total,
-      });
-
-      this.servicio.obtenerDetalleCompra(compra.id_Compra).subscribe({
-        next: (detalle) => {
-
-          this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
-        },
-        error: (err) => {
-          console.error(err.message);
-          this.mostrarMensaje('Error al obtener el detalle de compra.', 'error');
-        }
-      });
-    },
-    error: (err) => {
-      console.error(err.message);
-      this.mostrarMensaje('Error al obtener compra.', 'error');
+    if (numeroDocumento.length != 5) {
+      this.limpiar();
+      this.mensajeBusqueda = 'No existe ningún detalle de compra con ese número de documento.';
+      return;
     }
-  });
+
+    this.servicio.obtener(numeroDocumento).subscribe({
+      next: (resp: any) => {
+        const compra = resp.data;
+        this.compra.patchValue({
+          fecha: compra.fecha_Compra,
+          tipoDocumento: compra.tipo_Documento,
+          codigoUsuario: compra.codigo_Usuario,
+          nombreUsuario: compra.nombre_Completo,
+          codigoSucursal: compra.codigo,
+          nombreSucursal: compra.nombre_Sucursal,
+          direccionSucursal: compra.direccion_Sucursal,
+          nombresProveedor: compra.nombres_Proveedor,
+          apellidosProveedor: compra.apellidos_Proveedor,
+          cedulaProveedor: compra.cedula_Proveedor,
+          nombresTransportista: compra.nombres_Transportista,
+          apellidosTransportista: compra.apellidos_Transportista,
+          cedulaTransportista: compra.cedula_Transportista,
+          totalPagar: compra.monto_Total
+        });
+
+        this.servicio.obtenerDetalleCompra(compra.id_Compra).subscribe({
+          next: (detalle) => {
+            this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
+          },
+          error: (err) => {
+            console.error(err.message);
+            this.mostrarMensaje('Error al obtener el detalle de compra.', 'error');
+          }
+        });
+      },
+      error: (err) => {
+        console.error(err.message);
+        this.mostrarMensaje('Error al obtener compra.', 'error');
+      }
+    });
   }
 
   descargarPDF() {
@@ -103,28 +125,45 @@ export class DetalleCompraComponent {
       // Logo centrado
       doc.addImage(img, 'PNG', (pageWidth - 30) / 2, 10, 30, 30);
 
-      // Título
+      // Nombre empresa
       doc.setFontSize(16);
       doc.setFont('helvetica', 'bold');
-      doc.text('Comprobante de Compra', pageWidth / 2, 45, { align: 'center' });
+      doc.text('Minimarket Paradisia', pageWidth / 2, 45, { align: 'center' });
+
+      // Subtítulo
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Comprobante de Compra', pageWidth / 2, 53, { align: 'center' });
 
       // Línea separadora
       doc.setDrawColor(0);
       doc.setLineWidth(0.5);
-      doc.line(10, 50, pageWidth - 10, 50);
+      doc.line(10, 58, pageWidth - 10, 58);
 
       // Información de la compra
       doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
+      doc.text(`Fecha: ${this.compra.value.fecha}`, 10, 66);
+      doc.text(`Tipo Doc: ${this.compra.value.tipoDocumento}`, 110, 66);
 
-      doc.text(`Fecha: ${this.compra.value.fecha}`, 10, 58);
-      doc.text(`Vendedor: ${this.compra.value.nombreUsuario} (Código: ${this.compra.value.codigoUsuario})`, 10, 64);
+      doc.text(`Sucursal: ${this.compra.value.nombreSucursal}`, 10, 72);
+      doc.text(`Dirección: ${this.compra.value.direccionSucursal}`, 110, 72);
 
-      doc.text(`Proveedor: ${this.compra.value.nombresProveedor} ${this.compra.value.apellidosProveedor}`, 10, 70);
-      doc.text(`Cédula: ${this.compra.value.cedulaProveedor}`, 10, 76);
+      doc.text(`Vendedor: ${this.compra.value.nombreUsuario}`, 10, 78);
+      doc.text(`Código: ${this.compra.value.codigoUsuario}`, 110, 78);
 
-      doc.text(`Transportista: ${this.compra.value.nombresTransportista} ${this.compra.value.apellidosTransportista}`, 10, 82);
-      doc.text(`Cédula: ${this.compra.value.cedulaTransportista}`, 10, 88);
+      doc.text(
+        `Proveedor: ${this.compra.value.nombresProveedor} ${this.compra.value.apellidosProveedor}`,
+        10,
+        84
+      );
+      doc.text(`Cédula: ${this.compra.value.cedulaProveedor}`, 110, 84);
+
+      doc.text(
+        `Transportista: ${this.compra.value.nombresTransportista} ${this.compra.value.apellidosTransportista}`,
+        10,
+        90
+      );
+      doc.text(`Cédula: ${this.compra.value.cedulaTransportista}`, 110, 90);
 
       // Columnas de la tabla
       const columnas = [
@@ -135,8 +174,8 @@ export class DetalleCompraComponent {
         { header: 'Subtotal', dataKey: 'subTotal' }
       ];
 
-      // Filas
-      const filas = this.dataSource.data.map(item => ({
+      // Filas de datos
+      const filas = this.dataSource.data.map((item) => ({
         nombre: item.productos,
         cantidad: item.cantidad,
         precio_Compra: `$${item.precio_Compra.toFixed(2)}`,
@@ -144,45 +183,54 @@ export class DetalleCompraComponent {
         subTotal: `$${item.subTotal.toFixed(2)}`
       }));
 
-      // Tabla con estilo
+      // Tabla con diseño igual al de ventas
       autoTable(doc, {
         columns: columnas,
         body: filas,
-        startY: 95,
+        startY: 100,
         theme: 'grid',
-        headStyles: { fillColor: [39, 174, 96], textColor: 255, fontSize: 10 },
+        headStyles: { fillColor: [41, 128, 185], textColor: 255, fontSize: 10 },
         bodyStyles: { fontSize: 9 },
         alternateRowStyles: { fillColor: [245, 245, 245] },
         styles: { halign: 'center', cellPadding: 2 }
       });
 
-      // Totales
+      // Totales en recuadro gris
       const finalY = (doc as any).lastAutoTable.finalY || 95;
       doc.setFillColor(240, 240, 240);
-      doc.rect(10, finalY + 5, pageWidth - 20, 10, 'F');
+      doc.rect(10, finalY + 5, pageWidth - 20, 20, 'F');
 
       doc.setFontSize(11);
       doc.setFont('helvetica', 'bold');
-      doc.text(`Total a pagar: $${parseFloat(this.compra.value.totalPagar).toFixed(2)}`, 12, finalY + 12);
+      doc.text(
+        `Total a pagar: $${parseFloat(this.compra.value.totalPagar).toFixed(2)}`,
+        12,
+        finalY + 12
+      );
 
       // Mensaje final
       doc.setFontSize(9);
       doc.setFont('helvetica', 'italic');
-      doc.text('Gracias por su preferencia', pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+      doc.text(
+        '¡Gracias por su preferencia!',
+        pageWidth / 2,
+        doc.internal.pageSize.getHeight() - 10,
+        { align: 'center' }
+      );
 
-      // Guardar
+      // Guardar PDF
       doc.save('detalle_compra.pdf');
     };
   }
-  
-  limpiar(){
+
+  limpiar() {
     this.compra.reset();
     this.dataSource.data = [];
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
     const className = tipo === 'success' ? 'success-snackbar' : 'error-snackbar';
-    
+
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
       horizontalPosition: 'end',

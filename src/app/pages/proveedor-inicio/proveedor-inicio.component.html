@@ -16,8 +16,13 @@
       <button class="container__search__button" mat-raised-button color="primary" (click)="nuevo()">
         <mat-icon>person_add</mat-icon> Registrar proveedor
       </button>
-      
-      <button class="container__excel__button" mat-raised-button color="accent" (click)="exportarExcel()">
+
+      <button
+        class="container__excel__button"
+        mat-raised-button
+        color="accent"
+        (click)="exportarExcel()"
+      >
         <mat-icon class="container__excel__icon">file_download</mat-icon> Exportar a Excel
       </button>
     </div>
@@ -112,7 +117,8 @@
       [length]="totalRegistros"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons>
+      showFirstLastButtons
+    >
     </mat-paginator>
 
     <!-- Mensaje cuando no hay datos -->

@@ -16,7 +16,6 @@ import { EmpleadoProductivo } from '../app/interfaces/Dto/empleado-productivo';
 export class NegocioService {
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Negocio';
-  constructor() {}
 
   obtener(id: number) {
     return this.http.get<INegocio>(`${this.apiUrl}/${id}`);
@@ -26,27 +25,27 @@ export class NegocioService {
     return this.http.put<IApi>(`${this.apiUrl}/${negocio.id_Negocio}`, negocio);
   }
 
-  obtenerProductosComprados(){
+  obtenerProductosComprados() {
     return this.http.get<ProductoMasComprado[]>(`${this.apiUrl}/producto-mas-comprado`);
   }
 
-  obtenerProductosVendidos(){
+  obtenerProductosVendidos() {
     return this.http.get<ProductoMasVendido[]>(`${this.apiUrl}/producto-mas-vendido`);
   }
 
-  obtenerTopClientes(){
+  obtenerTopClientes() {
     return this.http.get<TopClientes[]>(`${this.apiUrl}/top-clientes`);
   }
 
-  obtenerTopProveedores(){
+  obtenerTopProveedores() {
     return this.http.get<ProveedorPreferido[]>(`${this.apiUrl}/top-proveedores`);
   }
 
-  obtenerViajesTransportista(){
+  obtenerViajesTransportista() {
     return this.http.get<TransportistaViaje[]>(`${this.apiUrl}/viajes-transportista`);
   }
 
-  obtenerVentaEmpleados(){
+  obtenerVentaEmpleados() {
     return this.http.get<EmpleadoProductivo[]>(`${this.apiUrl}/empleados-productivos`);
   }
 }
