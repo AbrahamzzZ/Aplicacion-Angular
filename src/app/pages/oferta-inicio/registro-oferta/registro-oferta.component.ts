@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -38,7 +38,7 @@ import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guar
   styleUrl: './registro-oferta.component.scss'
 })
 export class RegistroOfertaComponent implements OnInit, CanComponentDeactive {
-  @Input('id') idOferta!: number;
+  private idOferta!: number;
   private route = inject(ActivatedRoute);
   private ofertaServicio = inject(OfertaService);
   private productoServicio = inject(ProductoService);

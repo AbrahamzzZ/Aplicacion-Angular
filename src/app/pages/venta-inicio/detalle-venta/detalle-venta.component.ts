@@ -32,9 +32,11 @@ import autoTable from 'jspdf-autotable';
   styleUrl: './detalle-venta.component.scss'
 })
 export class DetalleVentaComponent implements OnInit {
-  public mensajeBusqueda: string = '';
+  public mensajeBusqueda = '';
   public venta!: FormGroup;
   private snackBar = inject(MatSnackBar);
+  private servicio = inject(VentaService);
+  private fb = inject(FormBuilder);
   public dataSource = new MatTableDataSource<any>();
   public columnasTabla: string[] = [
     'id',
@@ -44,11 +46,6 @@ export class DetalleVentaComponent implements OnInit {
     'subTotal',
     'descuento'
   ];
-
-  constructor(
-    private fb: FormBuilder,
-    private servicio: VentaService
-  ) {}
 
   ngOnInit(): void {
     this.venta = this.fb.group({

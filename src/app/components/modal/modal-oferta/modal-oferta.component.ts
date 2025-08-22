@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { IOferta } from '../../../interfaces/oferta';
@@ -27,13 +27,13 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './modal-oferta.component.scss'
 })
 export class ModalOfertaComponent {
+  private ofertaService = inject(OfertaService);
+  private dialogRef = inject(MatDialogRef<ModalOfertaComponent>);
   dataSource = new MatTableDataSource<IOfertaProducto>([]);
   columnas: string[] = ['id', 'codigo', 'nombre', 'producto', 'estado', 'accion'];
-  filtro: string = '';
+  filtro = '';
 
   constructor(
-    private dialogRef: MatDialogRef<ModalOfertaComponent>,
-    private ofertaService: OfertaService
   ) {
     this.obtenerOfertas();
   }

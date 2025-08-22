@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -35,7 +35,7 @@ import { Validaciones } from '../../../utility/validaciones';
   templateUrl: './negocio-inicio.component.html',
   styleUrl: './negocio-inicio.component.scss'
 })
-export class NegocioInicioComponent {
+export class NegocioInicioComponent implements OnInit{
   public idNegocio = 1;
   public negocio!: FormGroup;
   private router = inject(Router);

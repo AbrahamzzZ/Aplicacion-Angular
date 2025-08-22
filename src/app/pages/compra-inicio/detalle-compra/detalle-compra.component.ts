@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -31,9 +31,10 @@ import autoTable from 'jspdf-autotable';
   templateUrl: './detalle-compra.component.html',
   styleUrl: './detalle-compra.component.scss'
 })
-export class DetalleCompraComponent {
-  public mensajeBusqueda: string = '';
+export class DetalleCompraComponent implements OnInit{
+  public mensajeBusqueda = '';
   public compra!: FormGroup;
+  private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
   private servicio = inject(CompraService);
   public dataSource = new MatTableDataSource<any>();
@@ -45,8 +46,6 @@ export class DetalleCompraComponent {
     'cantidad',
     'subTotal'
   ];
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.compra = this.fb.group({

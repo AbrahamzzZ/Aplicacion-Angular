@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +34,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
   styleUrl: './registro-producto.component.scss'
 })
 export class RegistroProductoComponent implements OnInit, CanComponentDeactive {
-  @Input('id') idProducto!: number;
+  private idProducto!: number;
   private route = inject(ActivatedRoute);
   private productoServicio = inject(ProductoService);
   private categoriaServicio = inject(CategoriaService);

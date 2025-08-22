@@ -1,4 +1,4 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
@@ -13,11 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DialogoNumeroDocumentoComponent {
   private snackBar = inject(MatSnackBar);
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { numeroDocumento: string },
-
-  ) {}
+  public data = inject<{ numeroDocumento: string }>(MAT_DIALOG_DATA);
 
   copiar() {
     navigator.clipboard.writeText(this.data.numeroDocumento).then(() => {

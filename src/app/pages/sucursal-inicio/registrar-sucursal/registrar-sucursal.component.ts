@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CanComponentDeactive } from '../../../guards/formulario-incompleto.guard';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,7 +32,7 @@ import { NegocioService } from '../../../../services/negocio.service';
   styleUrl: './registrar-sucursal.component.scss'
 })
 export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive {
-  @Input('id') idSucursal!: number;
+  private idSucursal!: number;
   private route = inject(ActivatedRoute);
   private sucursalServicio = inject(SucursalService);
   private negocioServicio = inject(NegocioService);

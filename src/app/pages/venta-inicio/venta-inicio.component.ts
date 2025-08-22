@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,7 +42,7 @@ import { ISucursal } from '../../interfaces/sucursal';
   templateUrl: './venta-inicio.component.html',
   styleUrl: './venta-inicio.component.scss'
 })
-export class VentaInicioComponent {
+export class VentaInicioComponent implements OnInit{
   private router = inject(Router);
   private dialog = inject(MatDialog);
   public hoy = new Date().toISOString().substring(0, 10);

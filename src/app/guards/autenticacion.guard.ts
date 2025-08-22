@@ -9,7 +9,8 @@ export class Autenticacion implements CanActivate {
   private loginService = inject(LoginService);
   private router = inject(Router);
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
     const token = this.loginService.obtenerToken();
 
     if (token) {
