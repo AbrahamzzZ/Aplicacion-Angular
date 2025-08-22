@@ -29,8 +29,8 @@ Está diseñado para la gestión integral de operaciones de un negocio, con cont
 
 ## 🛠 Tecnologías utilizadas
 
-- **Frontend:** Angular 17, Angular Material, SCSS
-- **Backend:** .NET 7, API REST, C#
+- **Frontend:** Angular 17, Angular Material, SCSS, ESLint, Prettier
+- **Backend:** .NET 7, API REST, C#, MSTest, Moq
 - **Base de datos:** SQL Server
 - **Seguridad:** JWT, cifrado SHA-256
 - **Reportes:** PDF, Excel
@@ -79,8 +79,30 @@ Mensajes.cs → Mensajes comunes.
 
 Paginacion.cs → Paginación en consultas.
 
+**Utilities / Security**
+
 Encriptacion.cs → Cifrado de contraseña
 
+## ✅ Buenas practicas
+Pruebas unitarias con MSTest y Moq:
+
+  - Tests para Controllers validando respuestas HTTP y estados.
+  
+  - Tests para Services asegurando la lógica de negocio.
+  
+  - Uso de Moq para simular dependencias (repositorios, servicios externos).
+
+ESLint configurado para mantener un código consistente.
+
+  - Prettier integrado para formato automático y estilo uniforme.
+  
+  - Configuración para:
+  
+    - Estándares de Angular y TypeScript.
+    
+    - Reglas personalizadas para evitar malas prácticas.
+    
+    - Integración con VS Code (guardado automático formatea el código).
 
 ## ⚙ Instalación y ejecución
 
@@ -89,19 +111,21 @@ Encriptacion.cs → Cifrado de contraseña
 **Clonar repositorio**
 git clone <https://github.com/AbrahamzzZ/Sistema-Supermercado-Backend.git>
 
-**Entrar a la carpeta del backend**
-cd backend
+**Abrir solución**
+Abrir backend.sln en Visual Studio.
 
 **Restaurar dependencias**
-dotnet restore
+
+En Visual Studio: Herramientas → Administrador de paquetes NuGet → Restaurar paquetes.
 
 **Ejecutar**
-dotnet run
+Presionar F5 o seleccionar IIS Express / Proyecto y ejecutar la API REST desde Visual Studio.
+
 
 ### 2️⃣ Frontend (Angular 17)
 
 **Clonar repositorio**
-git clone <https://github.com/AbrahamzzZ/Sistema-Supermercado-Backend.git>
+git clone <https://github.com/AbrahamzzZ/Sistema-Supermercardo-Frontend.git>
 
 **Entrar a la carpeta del frontend**
 cd Frontend
