@@ -47,41 +47,41 @@ La API está organizada en capas para garantizar escalabilidad y mantenibilidad:
 
 **Controllers**
 
-Reciben solicitudes HTTP, validan parámetros y delegan la lógica de negocio a los servicios.
+  - Reciben solicitudes HTTP, validan parámetros y delegan la lógica de negocio a los servicios.
 
 **Services**
 
-Contienen la lógica de negocio por módulo.
-
-Implementan interfaces para inyección de dependencias.
+  - Contienen la lógica de negocio por módulo.
+  
+  - Implementan interfaces para inyección de dependencias.
 
 **Repository**
 
-Acceso a datos usando Entity Framework.
-
-Clases y interfaces por módulo.
+  - Acceso a datos usando Entity Framework.
+  
+  - Clases y interfaces por módulo.
 
 **Models**
 
-Clases generadas por EF (Database First).
-
-DTOs para transferencia de datos.
+  - Clases generadas por EF (Database First).
+  
+  - DTOs para transferencia de datos.
 
 **Helpers**
 
-Funciones auxiliares (e.g., Token.cs para generar/validar JWT).
+  - Funciones auxiliares (e.g., Token.cs para generar/validar JWT).
 
 **Utilities / Shared**
 
-ApiResponse.cs → Respuestas estándar.
-
-Mensajes.cs → Mensajes comunes.
-
-Paginacion.cs → Paginación en consultas.
+  - ApiResponse.cs → Respuestas estándar.
+  
+  - Mensajes.cs → Mensajes comunes.
+  
+  - Paginacion.cs → Paginación en consultas.
 
 **Utilities / Security**
 
-Encriptacion.cs → Cifrado de contraseña
+  - Encriptacion.cs → Cifrado de contraseña
 
 ## ✅ Buenas practicas
 Pruebas unitarias con MSTest y Moq:
@@ -112,6 +112,7 @@ ESLint configurado para mantener un código consistente.
 git clone <https://github.com/AbrahamzzZ/Sistema-Supermercado-Backend.git>
 
 **Abrir solución**
+
 Abrir backend.sln en Visual Studio.
 
 **Restaurar dependencias**
@@ -119,6 +120,7 @@ Abrir backend.sln en Visual Studio.
 En Visual Studio: Herramientas → Administrador de paquetes NuGet → Restaurar paquetes.
 
 **Ejecutar**
+
 Presionar F5 o seleccionar IIS Express / Proyecto y ejecutar la API REST desde Visual Studio.
 
 
@@ -128,10 +130,13 @@ Presionar F5 o seleccionar IIS Express / Proyecto y ejecutar la API REST desde V
 git clone <https://github.com/AbrahamzzZ/Sistema-Supermercardo-Frontend.git>
 
 **Entrar a la carpeta del frontend**
+
 cd Frontend
 
 **Instalar dependencias**
+
 npm install
 
 **Ejecutar en modo desarrollo**
+
 ng serve
