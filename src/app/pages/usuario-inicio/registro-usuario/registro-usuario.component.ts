@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +34,7 @@ import { MatSelectChange, MatSelectModule } from '@angular/material/select';
   styleUrl: './registro-usuario.component.scss'
 })
 export class RegistroUsuarioComponent implements OnInit, CanComponentDeactive {
-  @Input('id') idUsuario!: number;
+  private idUsuario!: number;
   private route = inject(ActivatedRoute);
   private usuarioServicio = inject(UsuarioService);
   private rolServicio = inject(RolService);

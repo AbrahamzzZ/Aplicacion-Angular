@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CanMatch, Route, Router, UrlSegment } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Observable } from 'rxjs';
@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RolGuard implements CanMatch {
-  constructor(
-    private authService: LoginService,
-    private router: Router
-  ) {}
+
+  private router = inject(Router);
+  private authService = inject(LoginService);
 
   canMatch(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> {
     const permisos = this.authService.obtenerPermisosDesdeToken();

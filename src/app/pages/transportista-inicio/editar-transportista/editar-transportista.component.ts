@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,7 +35,8 @@ export class EditarTransportistaComponent implements OnInit {
   private transportistaServicio = inject(TransportistaService);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
-  idTransportista!: number;
+  private router = inject(Router);
+  private idTransportista!: number;
   public imagenURL: string | null = null;
 
   public formTransportista = this.formBuilder.nonNullable.group({
@@ -77,8 +78,6 @@ export class EditarTransportistaComponent implements OnInit {
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {

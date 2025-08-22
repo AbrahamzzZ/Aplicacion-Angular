@@ -46,9 +46,8 @@ export class Validaciones {
       if (!valor) {
         return null;
       }
-
-      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&+./_\-])[A-Za-z\d@$!%*?&+./_\-]{8,}$/;
-
+      
+      const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\W]{8,}$/
       return regex.test(valor) ? null : { formatoClave: true };
     };
   }

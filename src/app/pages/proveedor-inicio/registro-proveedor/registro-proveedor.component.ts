@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -30,7 +30,7 @@ import { Observable } from 'rxjs';
   styleUrl: './registro-proveedor.component.scss'
 })
 export class RegistroProveedorComponent implements OnInit, CanComponentDeactive {
-  @Input('id') idProveedor!: number;
+  private idProveedor!: number;
   private route = inject(ActivatedRoute);
   private proveedorServicio = inject(ProveedorService);
   private snackBar = inject(MatSnackBar);

@@ -30,6 +30,7 @@ export class EditarClienteComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
   private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
   idCliente!: number;
 
   public formCliente = this.formBuilder.nonNullable.group({
@@ -68,8 +69,6 @@ export class EditarClienteComponent implements OnInit {
       e.returnValue = ''; // Esto es necesario para mostrar el mensaje de confirmación en algunos navegadores.
     }
   }
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {

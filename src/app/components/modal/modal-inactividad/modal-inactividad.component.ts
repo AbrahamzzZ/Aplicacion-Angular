@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LoginService } from '../../../../services/login.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,11 +14,8 @@ import { MatIcon } from '@angular/material/icon';
 export class ModalInactividadComponent {
   private servicio = inject(LoginService);
   private dialogRef = inject(MatDialogRef<ModalInactividadComponent>);
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { tiempoRestante: number }
-  ) {}
-
+  public data = inject<{ tiempoRestante: string }>(MAT_DIALOG_DATA);
+  
   continuar() {
     this.dialogRef.close(true);
     this.servicio.resetear();

@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IProducto } from '../../../interfaces/producto';
 import { ProductoService } from '../../../../services/producto.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass, NgIf } from '@angular/common';
-import { IProductoCategoria } from '../../../interfaces/Dto/iproducto-categoria';
 import { MatButtonModule } from '@angular/material/button';
 import { MatLabel, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -27,13 +26,13 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './modal-producto.component.scss'
 })
 export class ModalProductoComponent {
+  private productoService = inject(ProductoService);
+  private dialogRef = inject(MatDialogRef<ModalProductoComponent>);
   dataSource = new MatTableDataSource<IProducto>([]);
   columnas: string[] = ['id', 'codigo', 'nombre', 'stock', 'estado', 'accion'];
-  filtro: string = '';
+  filtro = '';
 
   constructor(
-    private dialogRef: MatDialogRef<ModalProductoComponent>,
-    private productoService: ProductoService
   ) {
     this.obtenerProductos();
   }

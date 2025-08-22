@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  autor: string = 'Abraham Andres Farfan Sanchez';
-  telefono: string = '0987654321';
-  year: number = new Date().getFullYear();
+  public autor = 'Abraham Andres Farfan Sanchez';
+  public telefono = '0987654321';
+  public year: number = new Date().getFullYear();
 }
