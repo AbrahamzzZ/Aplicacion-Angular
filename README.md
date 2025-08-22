@@ -87,7 +87,7 @@ Encriptacion.cs → Cifrado de contraseña
 ### 1️⃣ Backend (.NET)
 
 **Clonar repositorio**
-git clone <https://github.com/AbrahamzzZ/Aplicacion-Angular.git>
+git clone <https://github.com/AbrahamzzZ/Sistema-Supermercado-Backend.git>
 
 **Entrar a la carpeta del backend**
 cd backend
@@ -98,7 +98,10 @@ dotnet restore
 **Ejecutar**
 dotnet run
 
-# 2️⃣ Frontend (Angular 17)
+### 2️⃣ Frontend (Angular 17)
+
+**Clonar repositorio**
+git clone <https://github.com/AbrahamzzZ/Sistema-Supermercado-Backend.git>
 
 **Entrar a la carpeta del frontend**
 cd Frontend
