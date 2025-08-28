@@ -168,46 +168,58 @@ export class EstadisticaNegocioComponent {
   }
 
   descargarPDF(): void {
-    const chartElement = document.querySelector(
-      '.estadistica-negocio__grafico-contenedor'
-    ) as HTMLElement;
+  const chartElement = document.querySelector(
+    '.estadistica-negocio__grafico-contenedor'
+  ) as HTMLElement;
 
-    if (!chartElement || chartElement.clientHeight === 0) {
-      console.error('El gráfico no está visible o no tiene datos.');
-      this.mostrarMensaje('No se encontró el gráfico o no hay datos para mostrar.', 'error');
-      return;
-    }
+  const tieneDatos =
+    this.chartData &&
+    this.chartData.datasets &&
+    this.chartData.datasets.length > 0 &&
+    this.chartData.datasets.some(dataset =>
+      Array.isArray(dataset.data) && dataset.data.length > 0
+    );
 
-    const doc = new jsPDF({
-      orientation: 'landscape',
-      unit: 'mm',
-      format: 'a4'
+  if (!tieneDatos) {
+    this.mostrarMensaje('No hay datos cargados para exportar.', 'error');
+    return;
+  }
+
+  if (!chartElement || chartElement.clientHeight === 0) {
+    this.mostrarMensaje('No se encontró el gráfico o no hay datos para mostrar.', 'error');
+    return;
+  }
+
+  const doc = new jsPDF({
+    orientation: 'landscape',
+    unit: 'mm',
+    format: 'a4'
+  });
+
+  const logoUrl = 'assets/images/logo.png';
+  const img = new Image();
+  img.src = logoUrl;
+
+  img.onload = () => {
+    doc.addImage(img, 'PNG', 10, 10, 30, 30);
+    doc.setFontSize(16);
+    doc.text('Reporte Estadístico del Negocio', 50, 20);
+
+    doc.setFontSize(11);
+    const fecha = new Date().toLocaleString();
+    doc.text(`Fecha de generación: ${fecha}`, 10, 50);
+
+    html2canvas(chartElement).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdfWidth = doc.internal.pageSize.getWidth() - 20;
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      const startY = 70;
+      doc.addImage(imgData, 'PNG', 10, startY, pdfWidth, pdfHeight);
+      doc.save('reporte_estadistico_negocio.pdf');
     });
-
-    const logoUrl = 'assets/images/logo.png';
-    const img = new Image();
-    img.src = logoUrl;
-
-    img.onload = () => {
-      doc.addImage(img, 'PNG', 10, 10, 30, 30);
-      doc.setFontSize(16);
-      doc.text('Reporte Estadístico del Negocio', 50, 20);
-
-      doc.setFontSize(11);
-      const fecha = new Date().toLocaleString();
-      doc.text(`Fecha de generación: ${fecha}`, 10, 50);
-
-      html2canvas(chartElement).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdfWidth = doc.internal.pageSize.getWidth() - 20;
-        const imgProps = doc.getImageProperties(imgData);
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-        const startY = 70;
-        doc.addImage(imgData, 'PNG', 10, startY, pdfWidth, pdfHeight);
-        doc.save('reporte_estadistico_negocio.pdf');
-      });
-    };
+  };
   }
 
   mostrarMensaje(mensaje: string, tipo: 'success' | 'error' = 'success') {
