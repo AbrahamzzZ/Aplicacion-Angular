@@ -14,7 +14,7 @@ import { MatIcon } from '@angular/material/icon';
 export class ModalInactividadComponent {
   private servicio = inject(LoginService);
   private dialogRef = inject(MatDialogRef<ModalInactividadComponent>);
-  public data = inject<{ tiempoRestante: string }>(MAT_DIALOG_DATA);
+  public data = inject<{ tiempoRestante: number }>(MAT_DIALOG_DATA);
   
   continuar() {
     this.dialogRef.close(true);
