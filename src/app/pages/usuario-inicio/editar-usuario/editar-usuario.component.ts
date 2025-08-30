@@ -44,7 +44,7 @@ export class EditarUsuarioComponent implements OnInit {
       '',
       [Validators.required, Validaciones.soloLetras(), Validators.maxLength(70)]
     ],
-    clave: ['', [Validaciones.formatoClave()]],
+    clave: ['', [Validators.minLength(10), Validaciones.formatoClave()]],
     correoElectronico: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
     rol: [0, [Validators.required, Validaciones.rolRequerido()]],
     estado: [false]

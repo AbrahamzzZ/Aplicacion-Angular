@@ -32,6 +32,8 @@
               >La contraseña debe tener mínimo 8 caracteres, incluyendo letras, números y un
               carácter especial.</mat-error
             >
+          } @else if (claveField.hasError('minlength')) {
+            <mat-error class="form__error">La clave debe tener mínimo 10 caracteres.</mat-error>
           }
         </mat-form-field>
 

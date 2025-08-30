@@ -34,6 +34,8 @@
           <input matInput type="text" formControlName="clave" />
           @if (claveField.hasError('required')) {
             <mat-error class="form__error">Ingrese su clave.</mat-error>
+          } @else if (claveField.hasError('minlength')) {
+            <mat-error class="form__error">La clave debe tener mínimo 10 caracteres.</mat-error>
           } @else if (claveField.hasError('formatoClave')) {
             <mat-error class="form__error"
               >La contraseña debe tener mínimo 8 caracteres, incluyendo letras, números y un
