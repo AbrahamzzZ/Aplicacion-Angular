@@ -287,6 +287,7 @@ export class VentaInicioComponent implements OnInit{
   }
 
   limpiar() {
+    this.sucursalSelecionada = null;
     this.clienteSeleccionado = null;
     this.ofertaSeleccionado = null;
     this.productoSeleccionado = null;
