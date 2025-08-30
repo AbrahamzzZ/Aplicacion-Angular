@@ -70,8 +70,8 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive 
     }
 
     this.negocioServicio.obtener(1).subscribe({
-      next: (data) => {
-        this.negocio = data;
+      next: (resp: any) => {
+        this.negocio = resp.data;
       },
       error: (err) => {
         this.mostrarMensaje('Error al obtener la información del negocio', err);
@@ -98,6 +98,8 @@ export class RegistrarSucursalComponent implements OnInit, CanComponentDeactive 
       this.mostrarMensaje('Formulario inválido.', 'error');
       return;
     }
+
+    console.log('Sucursal a registrar:', sucursal);
 
     this.sucursalServicio.registrar(sucursal).subscribe({
       next: (data) => {
