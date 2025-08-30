@@ -97,7 +97,8 @@ export class DetalleCompraComponent implements OnInit{
         });
 
         this.servicio.obtenerDetalleCompra(compra.id_Compra).subscribe({
-          next: (detalle) => {
+          next: (resp: any) => {
+            const detalle = resp.data;
             this.dataSource.data = Array.isArray(detalle) ? detalle : [detalle];
           },
           error: (err) => {
